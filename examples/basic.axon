@@ -1,0 +1,18 @@
+(* Basic AXON examples for parser testing *)
+
+QRY(@agent-a>@agent-b): status(@web-server)
+
+RPL(@agent-b>@agent-a): {status:#healthy, uptime:99.7%, latency:45ms}
+
+REQ(@orchestrator>@worker): fetch("https://api.example.com/data")
+
+INF(@monitor>@admin): #alert{level:3, service:@payments}
+
+PRO(@supplier>@buyer): {item:#widget, qty:10000, price:2.50usd}
+
+ACC(@buyer>@supplier): _
+
+ERR(@service>@caller): {code:404, what:"not found", retry:F}
+
+[id:"m-001", ^:3]
+CMD(@admin>@server): restart()

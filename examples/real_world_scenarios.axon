@@ -1,0 +1,103 @@
+(* ============================================================ *)
+(* AXON Real-World Scenario Examples                            *)
+(* ============================================================ *)
+
+(* --- Scenario 1: CI/CD Pipeline Orchestration --- *)
+
+REQ(@ci>@builder): build({repo:"app-main", branch:"feat-auth", commit:"a3f7b2c"})
+RPL(@builder>@ci): {status:#success, artifact:"build-1729.tar.gz", duration:45s}
+REQ(@ci>@tester): test({artifact:"build-1729.tar.gz", suite:#integration})
+RPL(@tester>@ci): {status:#pass, passed:142, failed:0, skipped:3, duration:120s}
+REQ(@ci>@deployer): deploy({artifact:"build-1729.tar.gz", env:#staging})
+RPL(@deployer>@ci): {status:#success, url:"staging.app.com", health:#green}
+INF(@ci>@team): #pipeline{commit:"a3f7b2c", result:#success, env:#staging, url:"staging.app.com"}
+
+(* --- Scenario 2: Incident Response --- *)
+
+[^:4]
+PUB(@monitor>@oncall): #incident{severity:2, service:@payments, symptom:"latency>2s", onset:1707600000}
+ACK(@oncall>@monitor): _
+QRY(@oncall>@payments): diagnostics({depth:3, window:300s})
+RPL(@payments>@oncall): {
+  bottleneck:@db-primary,
+  queries_slow:[#q-user-lookup, #q-balance-check],
+  connections:{active:95, max:100},
+  suggestion:#scale-read-replicas
+}
+REQ(@oncall>@infra): scale(@db-read-replica, count:3->5, priority:#urgent)
+ACK(@infra>@oncall): {eta:120s}
+INF(@infra>@oncall): scale.complete({target:@db-read-replica, count:5, health:#green})
+INF(@oncall>@team): #incident-resolved{
+  root_cause:@db-primary & connection.pool.exhaustion,
+  fix:#scale-read-replicas & 3..5,
+  duration:180s
+}
+
+(* --- Scenario 3: Research Agent Collaboration --- *)
+
+REQ(@coordinator>@researcher-1): analyze({
+  topic:"quantum error correction",
+  scope:#survey,
+  sources:50..100,
+  deadline:3600s
+})
+REQ(@coordinator>@researcher-2): analyze({
+  topic:"topological qubits",
+  scope:#deep-dive,
+  sources:20..30,
+  deadline:3600s
+})
+RPL(@researcher-1>@coordinator): {
+  findings:[
+    {claim:"surface codes achieve threshold 1%", confidence:92%, refs:12},
+    {claim:"real-time decoding feasible at scale", confidence:78%, refs:8}
+  ],
+  gaps:["hardware noise models incomplete", "no consensus on overhead"]
+}
+RPL(@researcher-2>@coordinator): {
+  findings:[
+    {claim:"majorana zero modes demonstrated", confidence:65%, refs:5},
+    {claim:"topological advantage requires >1000 qubits", confidence:85%, refs:15}
+  ],
+  gaps:["fabrication challenges unresolved"]
+}
+REQ(@coordinator>@synthesizer): synthesize({
+  inputs:[@researcher-1.findings, @researcher-2.findings],
+  format:#executive-summary,
+  length:500..1000
+})
+
+(* --- Scenario 4: E-Commerce Agent Negotiation --- *)
+
+PRO(@supplier>@buyer): {
+  item:#widget-x,
+  qty:10000,
+  unit_price:2.50usd,
+  delivery:"2025-03-15",
+  terms:#net-30
+}
+CTR(@buyer>@supplier): {
+  item:#widget-x,
+  qty:10000,
+  unit_price:2.20usd,
+  delivery:"2025-03-15",
+  terms:#net-30
+} <- market.avg(#widget-x) = 2.15usd
+CTR(@supplier>@buyer): {
+  item:#widget-x,
+  qty:10000,
+  unit_price:2.35usd,
+  delivery:"2025-03-10",
+  terms:#net-30
+} <- early.delivery.premium
+ACC(@buyer>@supplier): _
+INF(@supplier>@buyer): #order{id:"PO-2025-4471", confirmed:T}
+
+(* --- Scenario 5: Autonomous Vehicle Fleet Coordination --- *)
+
+[^:5, ttl:2s]
+PUB(@vehicle-7>@fleet): {pos:{lat:59.334, lon:18.063}, speed:45, heading:270, battery:72%, passengers:3}
+REQ(@dispatch>@vehicle-7): pickup({loc:{lat:59.340, lon:18.070}, passenger:"P-8821", eta_max:300s})
+RPL(@vehicle-7>@dispatch): {accept:T, eta:180s, route:#optimal}
+INF(@vehicle-7>@dispatch): pickup.complete({passenger:"P-8821", ts:1707600180})
+INF(@vehicle-7>@dispatch): dropoff.complete({passenger:"P-8821", ts:1707600600, fare:12.50usd})

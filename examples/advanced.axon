@@ -1,0 +1,28 @@
+(* Advanced AXON examples *)
+
+(* Multi-agent routing *)
+REQ(@planner>[@w1, @w2, @w3]): {task:#process, split:[0..1000, 1001..2000, 2001..3000]}
+
+(* Chained actions *)
+REQ(@ci>@pipeline): fetch("repo") -> build(#release) -> test(#integration)
+
+(* Causal chain *)
+INF(@monitor>@admin): #alert{level:3} <- cpu_high <- #spike{src:@web}
+
+(* Parallel actions *)
+REQ(@manager>@team): analyze($data) & summarize($data)
+
+(* Negotiation *)
+PRO(@a>@b): {action:#migrate, target:@server-2, window:"02:00-04:00"}
+CTR(@b>@a): {action:#migrate, target:@server-2, window:"04:00-06:00"} <- load.peak("02:00-03:00")
+ACC(@a>@b): _
+
+(* Subscription *)
+SUB(@dash>@monitor): #metrics{src:@prod, interval:30s}
+PUB(@monitor>@dash): {cpu:72%, mem:4.2GB, req:1250}
+
+(* Wildcard sender *)
+CMD(*>@failed-agents): restart()
+
+(* Approximate values *)
+INF(@sensor>@ctrl): {temp:~342.5, confidence:~80%}
