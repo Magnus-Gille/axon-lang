@@ -43,12 +43,22 @@ This project uses a **Claude Code + Codex adversarial review** process. The goal
 
 The point is not consensus — it's surfacing blind spots. Documented disagreements are valuable.
 
+## Two Research Tracks
+
+This project pursues two independent but complementary research tracks:
+
+- **Track A — AXON language evaluation**: Does AXON beat controlled English + function calling for agent-to-agent communication? Empirical question answered by the 6-experiment validation plan. See `debate/experiment-plan/STATUS.md`.
+- **Track B — Adversarial methodology evaluation**: Does structured cross-model adversarial review (Claude↔Codex) catch more real issues than self-review? Answered by collecting structured data from every debate. See `debate/methodology-summary.md`.
+
+Every debate feeds Track B. All future debates must capture: per-point metadata, self-review ablation, cost logging, and frozen artifact snapshots (see the `/debate-codex` skill for the full protocol).
+
 ## Current State
 
 - 12 known parser bugs (see `debate/summary.md`)
 - ~100 critique points raised, ~85% resolved
 - 6-experiment validation plan designed but not yet implemented
-- Core open question: does AXON beat controlled English + function calling? This is empirical — no premature claims.
+- Core open question (Track A): does AXON beat controlled English + function calling? This is empirical — no premature claims.
+- Methodology paper (Track B): publishable as registered pilot + prospective protocol paper if 6-item checklist is met
 
 ## Conventions
 

@@ -23,8 +23,14 @@ codex exec --full-auto "<prompt>" 2>&1
 
 ## Debate Protocol
 
+### Step 0: Snapshot the artifact
+Save a frozen copy of the artifact being reviewed. All review conditions (self-review, Codex neutral, Codex adversarial) must run against this same snapshot. This prevents confounding condition effects with artifact evolution.
+
 ### Step 1: Write the draft
 Write Claude's position/assessment/plan to `debate/<topic>-claude-draft.md`.
+
+### Step 1.5: Self-review ablation
+Before invoking Codex, Claude critiques its own draft. Write to `debate/<topic>-claude-self-review.md`. This serves as the baseline condition for the methodology study (Track B). Be genuinely critical — this data is used to measure whether cross-model review adds value over self-review.
 
 ### Step 2: Invoke Codex (Round 1 critique)
 ```bash
@@ -68,6 +74,36 @@ Create `debate/<topic>-summary.md` with:
 - New issues from later rounds
 - Final verdict (both sides' positions)
 - List of all debate files
+
+### Step 7: Structured critique log
+Create `debate/<topic>-critique-log.json` with every critique point from all rounds:
+
+```json
+[
+  {
+    "id": "<topic>-C01",
+    "source": "codex-round-1",
+    "text": "Brief description of the critique point",
+    "classification": "valid | partially_valid | invalid",
+    "impact": "changed | acknowledged | rejected",
+    "severity": "critical | major | minor",
+    "caught_by_self_review": true | false
+  }
+]
+```
+
+This structured data feeds the methodology study (Track B). Classification and impact should be filled after the debate concludes.
+
+### Step 8: Log costs
+Record per-invocation costs at the end of the summary file:
+
+```
+## Costs
+| Invocation | Tokens (in/out) | API cost | Wall-clock time | Model version |
+|------------|-----------------|----------|-----------------|---------------|
+| Codex R1   | X / Y           | $Z       | Ns              | gpt-5.3-codex |
+| Codex R2   | X / Y           | $Z       | Ns              | gpt-5.3-codex |
+```
 
 ## Prompting Principles for Codex
 
