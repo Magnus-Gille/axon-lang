@@ -1,0 +1,182 @@
+[
+  {
+    "id": "W0-C01",
+    "source": "codex-round-1",
+    "text": "Spec freeze too shallow — tier field definitions conflict between section 2 and metadata table",
+    "classification": "valid",
+    "impact": "changed",
+    "severity": "critical",
+    "caught_by_self_review": false
+  },
+  {
+    "id": "W0-C02",
+    "source": "codex-round-1",
+    "text": "Escape semantics mismatch — spec claims \\u{XXXX} but parser doesn't implement it",
+    "classification": "valid",
+    "impact": "changed",
+    "severity": "major",
+    "caught_by_self_review": false
+  },
+  {
+    "id": "W0-C03",
+    "source": "codex-round-1",
+    "text": "Identifier lexical mismatch — spec requires letter-first, parser accepts digit-first",
+    "classification": "valid",
+    "impact": "changed",
+    "severity": "major",
+    "caught_by_self_review": false
+  },
+  {
+    "id": "W0-C04",
+    "source": "codex-round-1",
+    "text": "Metadata type contract not executable — grammar allows any expression, table claims types",
+    "classification": "partially_valid",
+    "impact": "changed",
+    "severity": "major",
+    "caught_by_self_review": false
+  },
+  {
+    "id": "W0-C05",
+    "source": "codex-round-1",
+    "text": "Transition/typing rules are prose-only, not mechanically decidable",
+    "classification": "valid",
+    "impact": "acknowledged",
+    "severity": "minor",
+    "caught_by_self_review": true
+  },
+  {
+    "id": "W0-C06",
+    "source": "codex-round-1",
+    "text": "Level 2 validator missing type checks, duplicate key detection, version check, re-link integrity",
+    "classification": "valid",
+    "impact": "changed",
+    "severity": "critical",
+    "caught_by_self_review": false
+  },
+  {
+    "id": "W0-C07",
+    "source": "codex-round-1",
+    "text": "Classify Level 3 checks as deterministic/context-required/spec-ambiguous",
+    "classification": "valid",
+    "impact": "changed",
+    "severity": "major",
+    "caught_by_self_review": false
+  },
+  {
+    "id": "W0-C08",
+    "source": "codex-round-1",
+    "text": "Full experiment library build is premature — defer to after Exp 0 gate",
+    "classification": "valid",
+    "impact": "changed",
+    "severity": "major",
+    "caught_by_self_review": true
+  },
+  {
+    "id": "W0-C09",
+    "source": "codex-round-1",
+    "text": "FIPA-ACL baseline required by STATUS.md but absent from 5 conditions",
+    "classification": "partially_valid",
+    "impact": "acknowledged",
+    "severity": "major",
+    "caught_by_self_review": false
+  },
+  {
+    "id": "W0-C10",
+    "source": "codex-round-1",
+    "text": "Secondary endpoints (auditability, composability, verifiability) missing from prereg outline",
+    "classification": "valid",
+    "impact": "changed",
+    "severity": "minor",
+    "caught_by_self_review": false
+  },
+  {
+    "id": "W0-C11",
+    "source": "codex-round-1",
+    "text": "Need executable evaluation harness, not just docs and stubs",
+    "classification": "partially_valid",
+    "impact": "changed",
+    "severity": "major",
+    "caught_by_self_review": false
+  },
+  {
+    "id": "W0-C12",
+    "source": "codex-round-1",
+    "text": "Deferring all 12 parser bugs is high risk — gate-affecting mismatches must be fixed",
+    "classification": "partially_valid",
+    "impact": "changed",
+    "severity": "critical",
+    "caught_by_self_review": false
+  },
+  {
+    "id": "W0-C13",
+    "source": "codex-round-1",
+    "text": "Reorder: executable Exp 0 harness before fairness/prereg docs",
+    "classification": "valid",
+    "impact": "changed",
+    "severity": "major",
+    "caught_by_self_review": false
+  },
+  {
+    "id": "W0-C14",
+    "source": "codex-round-2",
+    "text": "FIPA-ACL: 'JSON FC subsumes FIPA' is an argument, not a baseline — needs governance approval",
+    "classification": "partially_valid",
+    "impact": "acknowledged",
+    "severity": "major",
+    "caught_by_self_review": false
+  },
+  {
+    "id": "W0-C15",
+    "source": "codex-round-2",
+    "text": "Identifier normative freeze needs to be explicit, testable, with forward-compatibility plan",
+    "classification": "valid",
+    "impact": "acknowledged",
+    "severity": "major",
+    "caught_by_self_review": false
+  },
+  {
+    "id": "W0-C16",
+    "source": "codex-round-2",
+    "text": "Duplicate metadata keys should be error not warning for Exp 0 gating",
+    "classification": "partially_valid",
+    "impact": "acknowledged",
+    "severity": "major",
+    "caught_by_self_review": false
+  },
+  {
+    "id": "W0-C17",
+    "source": "codex-round-2",
+    "text": "Internal contradiction: plan says both 'parser is normative' and 'identifier legality is gate-affecting, fix now'",
+    "classification": "valid",
+    "impact": "acknowledged",
+    "severity": "major",
+    "caught_by_self_review": false
+  },
+  {
+    "id": "W0-C18",
+    "source": "codex-round-2",
+    "text": "Parser fixes should come before or alongside validator build, not after",
+    "classification": "valid",
+    "impact": "acknowledged",
+    "severity": "major",
+    "caught_by_self_review": false
+  },
+  {
+    "id": "W0-C19",
+    "source": "codex-round-2",
+    "text": "Known Gaps appendix needs acceptance semantics — how each bug class affects Exp 0 eligibility",
+    "classification": "valid",
+    "impact": "acknowledged",
+    "severity": "minor",
+    "caught_by_self_review": false
+  },
+  {
+    "id": "W0-C20",
+    "source": "codex-round-2",
+    "text": "Produce machine-checkable conformance corpus as Week 0 exit gate",
+    "classification": "valid",
+    "impact": "acknowledged",
+    "severity": "critical",
+    "caught_by_self_review": false
+  }
+]
