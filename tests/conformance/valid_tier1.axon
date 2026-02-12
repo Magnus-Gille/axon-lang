@@ -1,0 +1,16 @@
+(* Valid Tier 1 messages — minimum parseable *)
+
+[id:"t1-001", %%:1]
+QRY(@a>@b): status(@server)
+
+[id:"t1-002", %%:1]
+INF(@a>@b): "hello"
+
+[id:"t1-003", %%:1]
+RPL(@b>@a): {status:#healthy, uptime:99.7%}
+
+[id:"t1-004", %%:1]
+CMD(@admin>@server): restart()
+
+[id:"t1-005", %%:1]
+ERR(@svc>@caller): {code:404, what:"not found"}

@@ -1,0 +1,24 @@
+(* One valid message per core performative *)
+
+INF(@a>@b): "data"
+QRY(@a>@b): status(@x)
+RPL(@b>@a): {val:42}
+CFM(@b>@a): T
+DNY(@b>@a): F
+ERR(@svc>@caller): {code:500, what:"internal error"}
+
+REQ(@a>@b): process($data)
+CMD(@admin>@server): shutdown()
+PRO(@a>@b): {action:#migrate}
+ACC(@b>@a): _
+REJ(@b>@a): {reason:"too expensive"}
+CTR(@b>@a): {action:#migrate, window:"04:00-06:00"}
+DEL(@a>@b): REQ(*>@team): complete(#task-1)
+CAN(@a>@b): _
+
+SUB(@dash>@monitor): #metrics{src:@prod}
+UNS(@dash>@monitor): #metrics{src:@prod}
+PUB(@monitor>@dash): {cpu:72%}
+ACK(@b>@a): _
+NAK(@b>@a): {reason:#unauthorized}
+SYN(@a>@b): {state:{version:3}}

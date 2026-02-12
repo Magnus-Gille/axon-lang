@@ -1,0 +1,10 @@
+(* Valid Tier 2 messages — interop compliant *)
+
+[id:"t2-001", %%:1, re:"t1-001", ts:1707600000, ctx:"conv-1"]
+RPL(@b>@a): {status:#healthy, uptime:99.7%, latency:45ms}
+
+[id:"t2-002", %%:1, re:"t1-003", ts:1707600001, ctx:"conv-1"]
+CFM(@b>@a): T
+
+[id:"t2-003", %%:1, re:"t1-004", ts:1707600002, ctx:"ops-42"]
+ACK(@server>@admin): _

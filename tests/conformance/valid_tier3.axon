@@ -1,0 +1,7 @@
+(* Valid Tier 3 messages — production certified *)
+
+[id:"t3-001", %%:1, re:"t2-001", ts:1707600001, ctx:"conv-1", sig:"ed25519:abc123", authz:"role:admin", tenant:"acme", err_ns:"acme.infra"]
+INF(@b>@a): #all-clear
+
+[id:"t3-002", %%:1, re:"t2-002", ts:1707600002, ctx:"ops-42", sig:"ed25519:def456", authz:"role:ops", tenant:"acme", err_ns:"acme.ops"]
+CMD(@admin>@server): restart()

@@ -1,0 +1,68 @@
+{
+  "description": "Exp 0 learnability tasks at 3 complexity levels",
+  "tasks": [
+    {
+      "id": "L1-01",
+      "level": 1,
+      "description": "Simple status query",
+      "instruction": "Agent A asks Agent B for the status of a web server.",
+      "expected_elements": ["sender", "receiver", "query_intent", "target_server"]
+    },
+    {
+      "id": "L1-02",
+      "level": 1,
+      "description": "Simple inform",
+      "instruction": "Agent B tells Agent A that the server is healthy with 99.7% uptime.",
+      "expected_elements": ["sender", "receiver", "inform_intent", "status", "uptime_value"]
+    },
+    {
+      "id": "L1-03",
+      "level": 1,
+      "description": "Simple error report",
+      "instruction": "A service agent reports a 404 not-found error to the caller agent.",
+      "expected_elements": ["sender", "receiver", "error_intent", "error_code", "error_description"]
+    },
+    {
+      "id": "L2-01",
+      "level": 2,
+      "description": "Request with structured data",
+      "instruction": "A CI agent requests a builder agent to build a specific repo branch and commit.",
+      "expected_elements": ["sender", "receiver", "request_intent", "repo", "branch", "commit"]
+    },
+    {
+      "id": "L2-02",
+      "level": 2,
+      "description": "Proposal with counter",
+      "instruction": "A supplier proposes selling 10000 widgets at $2.50 each. The buyer counters with $2.20, citing market average of $2.15.",
+      "expected_elements": ["sender", "receiver", "propose_intent", "item", "quantity", "price", "counter_intent", "justification"]
+    },
+    {
+      "id": "L2-03",
+      "level": 2,
+      "description": "Multi-agent task distribution",
+      "instruction": "A planner distributes a data processing task across 3 workers, splitting range 0-3000 into three equal segments.",
+      "expected_elements": ["sender", "receivers_multiple", "request_intent", "task_type", "data_ranges"]
+    },
+    {
+      "id": "L3-01",
+      "level": 3,
+      "description": "Chained pipeline with metadata",
+      "instruction": "An orchestrator instructs a pipeline to fetch a URL, parse it as JSON, then store the result in a database. Include message ID and protocol version.",
+      "expected_elements": ["sender", "receiver", "request_intent", "sequence_of_actions", "metadata_id", "metadata_version"]
+    },
+    {
+      "id": "L3-02",
+      "level": 3,
+      "description": "Incident response with causal chain",
+      "instruction": "A monitor publishes a severity-2 incident alert about payments service with latency > 2s. Include priority level 4, the causal chain (high latency caused by database connection pool exhaustion caused by traffic spike), and a resolution recommendation.",
+      "expected_elements": ["sender", "receiver", "alert_intent", "severity", "priority", "causal_chain", "recommendation"]
+    },
+    {
+      "id": "L3-03",
+      "level": 3,
+      "description": "Full conversation with reply threading",
+      "instruction": "Write a 3-message conversation: (1) Agent A queries Agent B for diagnostics, (2) Agent B replies with bottleneck info and connection stats, (3) Agent A requests scaling. All messages must have IDs, protocol version, timestamps, and reply-to links.",
+      "expected_elements": ["multiple_messages", "reply_threading", "metadata_complete", "diagnostics_data", "scaling_request"]
+    }
+  ]
+}

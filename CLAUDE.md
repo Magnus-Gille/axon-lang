@@ -1,6 +1,6 @@
 # AXON — Agent eXchange Optimized Notation
 
-A research language for agent-to-agent communication. Draft v0.1.
+A research language for agent-to-agent communication. v0.1-experimental.
 
 ## Quick Reference
 
@@ -16,17 +16,44 @@ python3 src/axon_parser.py --check examples/real_world_scenarios.axon
 
 # Stdin
 echo 'QRY(@a>@b): status(@srv)' | python3 src/axon_parser.py -
+
+# Tier validation (1=Core, 2=Interop, 3=Production)
+python3 src/axon_validator.py --tier 1 examples/basic.axon
+python3 src/axon_validator.py --tier 2 tests/conformance/valid_tier2.axon
+
+# Conformance tests
+python3 -m pytest tests/conformance/
+python3 -m pytest tests/test_validator.py
+
+# Exp 0 dry run
+python3 experiments/exp0_learnability/run.py --dry-run
 ```
 
-No external dependencies — stdlib Python only.
+Parser and validator are stdlib Python only. Experiments require `tiktoken` (`pip install -r experiments/requirements.txt`).
 
 ## Project Structure
 
 - `spec/SPECIFICATION.md` — Formal grammar, type system, compliance tiers
 - `src/axon_parser.py` — Reference parser (lexer + recursive descent)
+- `src/axon_validator.py` — 3-level conformance validator (syntax, tier compliance, semantics)
 - `examples/` — `.axon` files and English comparisons
+- `tests/conformance/` — Canonical conformance corpus (valid + invalid cases)
+- `tests/test_validator.py` — Validator unit tests
+- `experiments/` — Experiment infrastructure (Exp 0–5)
+  - `experiments/lib/` — Shared utilities (token counter, condition adapters)
+  - `experiments/exp0_learnability/` — Learnability gate experiment
+  - `experiments/FAIRNESS.md` — Fairness protocol for 6-condition design
+  - `experiments/PREREGISTRATION.md` — Pre-registered analysis plan
 - `RESEARCH.md` — Evidence-backed rationale (20+ sources)
 - `debate/` — Adversarial review transcripts and outcomes
+
+### 6 Experimental Conditions
+1. Free-form English (baseline)
+2. Structured English
+3. Instruction-matched English
+4. JSON Function Calling
+5. FIPA-ACL
+6. AXON
 
 ## Adversarial Debate Workflow
 
@@ -54,9 +81,11 @@ Every debate feeds Track B. All future debates must capture: per-point metadata,
 
 ## Current State
 
-- 12 known parser bugs (see `debate/summary.md`)
+- Spec frozen at `v0.1-experimental` — 4 gate-blocking parser bugs fixed
+- Conformance test corpus: 25 tests passing (valid corpus + invalid input cases)
+- Validator: 3-level checker (syntax, tier compliance, semantics) — 29 tests passing
+- Exp 0 infrastructure: 6 conditions, 9 tasks, dry-run mode operational
 - ~100 critique points raised, ~85% resolved
-- 6-experiment validation plan designed but not yet implemented
 - Core open question (Track A): does AXON beat controlled English + function calling? This is empirical — no premature claims.
 - Methodology paper (Track B): publishable as registered pilot + prospective protocol paper if 6-item checklist is met
 

@@ -161,6 +161,14 @@ class Lexer:
 
     def _read_identifier(self) -> str:
         start = self.pos
+        # First character must be a letter per spec: identifier = letter { letter | digit | "-" | "_" }
+        if self.pos < len(self.source) and self.source[self.pos].isalpha():
+            self._advance()
+        else:
+            raise LexerError(
+                f"Identifier must start with a letter, got {self.source[self.pos]!r}",
+                self.line, self.col,
+            )
         while self.pos < len(self.source) and (
             self.source[self.pos].isalnum()
             or self.source[self.pos] == "_"
@@ -177,7 +185,7 @@ class Lexer:
                and self.source[self.pos] == "."
                and self._peek_at(1) is not None
                and self._peek_at(1) != "."
-               and (self._peek_at(1).isalpha() or self._peek_at(1) == "_")):
+               and self._peek_at(1).isalpha()):
             self._advance()  # consume "."
             result += "." + self._read_identifier()
         return result
@@ -212,6 +220,7 @@ class Lexer:
 
             # Comments: (* ... *) — but not (*> which is routing with wildcard
             if ch == "(" and self._peek_at(1) == "*" and self._peek_at(2) != ">":
+                comment_line, comment_col = self.line, self.col
                 self._advance()
                 self._advance()
                 depth = 1
@@ -226,6 +235,8 @@ class Lexer:
                         self._advance()
                     else:
                         self._advance()
+                if depth > 0:
+                    raise LexerError("Unterminated comment", comment_line, comment_col)
                 continue
 
             if ch == "\n":
@@ -531,12 +542,15 @@ class Parser:
         while self._peek().type != TokenType.RBRACKET:
             if fields:
                 self._expect(TokenType.COMMA)
+            key_tok = self._peek()
             if self._peek().type == TokenType.CARET:
                 key = self._advance().value
             elif self._peek().type == TokenType.DOUBLE_PERCENT:
                 key = self._advance().value
             else:
                 key = self._expect(TokenType.IDENT).value
+            if key in fields:
+                raise ParseError(f"Duplicate metadata key '{key}'", key_tok)
             self._expect(TokenType.COLON)
             val = self._parse_expression()
             fields[key] = val

@@ -1,8 +1,8 @@
-# AXON Language Specification — Draft v0.1
+# AXON Language Specification — v0.1-experimental
 
 ## Agent eXchange Optimized Notation
 
-> **Status**: Draft. Efficiency claims are hypotheses pending benchmarking.
+> **Status**: v0.1-experimental. Efficiency claims are hypotheses pending benchmarking.
 
 ---
 
@@ -46,7 +46,8 @@ QRY(@a>@b): status(@x)
 
 #### Tier 2: Interop Compliant (recommended for multi-agent systems)
 
-Adds: `re` (reply-to), `ts` (timestamp), `ctx` (conversation ID).
+Adds required: `re` (reply-to), `ts` (timestamp), `ctx` (conversation ID).
+Optional at this tier: `sig` (signature), `authz` (authorization scope).
 
 ```
 [id:"m2", %%:1, re:"m1", ts:1707600000, ctx:"conv-42"]
@@ -218,7 +219,8 @@ primary        = "~" primary
 atom           = string | number | boolean | null | ref | var | path ;
 
 string         = '"' { char | escape } '"' ;
-escape         = "\\" ( '"' | "\\" | "n" | "t" | "u{" hex_digit "}" ) ;
+escape         = "\\" ( '"' | "\\" | "n" | "t" ) ;
+(* Reserved, not yet implemented: | "u{" hex_digit "}" *)
 number         = [ "-" ] digit { digit } [ "." digit { digit } ] [ unit ] ;
 boolean        = "T" | "F" ;
 null           = "_" ;
@@ -253,7 +255,8 @@ unit           = "%" | "ms" | "s" | "min" | "h" | "d"
 ```ebnf
 meta           = "[" meta_field { "," meta_field } "]" ;
 meta_field     = meta_key ":" expression ;
-meta_key       = "id" | "re" | "ts" | "ttl" | "^" | "ctx" | "%%"
+meta_key       = core_meta_key | identifier ;
+core_meta_key  = "id" | "re" | "ts" | "ttl" | "^" | "ctx" | "%%"
                | "sig" | "authz" | "tenant" | "err_ns" ;
 ```
 
@@ -340,19 +343,21 @@ Here `$url` is an input binding (must be resolved by context) and `$result` is a
 
 ### 7.1 Metadata Fields by Tier
 
-| Field | Tier 1 | Tier 2 | Tier 3 | Type | Meaning |
-|-------|--------|--------|--------|------|---------|
-| `id` | Required | Required | Required | string | Unique message identifier |
-| `%%` | Required | Required | Required | number | Protocol version |
-| `re` | Optional | Required | Required | string | In-reply-to message ID |
-| `ts` | Optional | Required | Required | number | Unix timestamp (seconds) |
-| `ctx` | Optional | Required | Required | string | Conversation/context ID |
-| `ttl` | Optional | Optional | Optional | number | Time-to-live (seconds) |
-| `^` | Optional | Optional | Optional | number | Priority (0=low, 5=critical) |
-| `sig` | — | Optional | Required | string | Cryptographic signature |
-| `authz` | — | Optional | Required | string | Authorization scope |
-| `tenant` | — | — | Required | string | Tenant identifier |
-| `err_ns` | — | — | Required | string | Error namespace for taxonomy |
+| Field | Tier 1 | Tier 2 | Tier 3 | Type | Constraint | Meaning |
+|-------|--------|--------|--------|------|------------|---------|
+| `id` | Required | Required | Required | string | non-empty | Unique message identifier |
+| `%%` | Required | Required | Required | number | positive integer | Protocol version (must be supported) |
+| `re` | Optional | Required | Required | string | valid message id | In-reply-to message ID |
+| `ts` | Optional | Required | Required | number | positive integer | Unix timestamp (seconds) |
+| `ctx` | Optional | Required | Required | string | non-empty | Conversation/context ID |
+| `ttl` | Optional | Optional | Optional | number | positive integer | Time-to-live (seconds) |
+| `^` | Optional | Optional | Optional | number | integer 0-5 | Priority (0=low, 5=critical) |
+| `sig` | — | Optional | Required | string | non-empty | Cryptographic signature |
+| `authz` | — | Optional | Required | string | non-empty | Authorization scope |
+| `tenant` | — | — | Required | string | non-empty | Tenant identifier |
+| `err_ns` | — | — | Required | string | non-empty | Error namespace for taxonomy |
+
+Duplicate metadata keys within a single meta block are invalid and must be rejected.
 
 ### 7.2 Examples by Tier
 
@@ -486,7 +491,7 @@ INF(@sensor>@controller): #ont.industrial.temp{val:342.5, unit:#celsius, loc:@zo
 
 - Strings use `"` delimiters with `\"` for literal quotes and `\\` for literal backslash
 - Newlines in strings: `\n`, tabs: `\t`
-- Unicode: `\u{XXXX}` within strings
+- Unicode: `\u{XXXX}` within strings (reserved, not yet implemented)
 - Binary data: base64-encoded strings with `#b64` tag: `#b64{"data":"SGVsbG8="}`
 
 ## 13. Protocol Versioning
@@ -566,3 +571,27 @@ INF(@coordinator>[@voter-1, @voter-2, @voter-3]): {
   threshold_met:T
 }
 ```
+
+## Appendix C: Known Gaps
+
+> These are documented limitations of v0.1-experimental. Each is classified by severity and impact on Experiment 0 eligibility.
+
+| # | Gap | Severity | Exp 0 Impact | Status |
+|---|-----|----------|--------------|--------|
+| 1 | `\u{XXXX}` unicode escapes defined in grammar but not implemented in parser | Low | None — no test case requires unicode escapes | Reserved |
+| 2 | Variable scope rules are informal ("message level") with no formal binding semantics | Medium | Low — Exp 0 tasks use simple single-message variable references | Spec-ambiguous |
+| 3 | No formal error recovery strategy — parser aborts on first error | Medium | None — Exp 0 measures correctness, not error recovery | Deferred |
+| 4 | `&` and `|` operator admissibility rules (§6.4) are not enforced by parser | Low | None — validator handles semantic checks | Deferred to validator |
+| 5 | Unit category cross-comparison (§6.4 rule 1) not enforced at parse time | Low | None — validator handles semantic checks | Deferred to validator |
+| 6 | Transaction profile metadata keys (`txn_id`, `txn_state`) not in core meta_key set | Low | None — profile extensions now supported via `meta_key = core_meta_key \| identifier` | Resolved |
+
+### Bug Classifications (from adversarial review)
+
+**Gate-blocking (fixed in v0.1-experimental):**
+- Identifier legality: digit-first segments were accepted by parser but forbidden by spec grammar
+- Unclosed comment EOF: parser silently consumed instead of raising error
+- `a->b` tokenization: `-` in identifiers consumed the `-` from `->` operator
+- Duplicate metadata keys: silently overwritten instead of rejected
+
+**Non-blocking (deferred):**
+- Remaining items from debate/summary.md — semantic checks delegated to validator

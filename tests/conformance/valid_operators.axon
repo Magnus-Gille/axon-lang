@@ -1,0 +1,53 @@
+(* Edge cases for operators and expressions *)
+
+(* Sequence operator *)
+INF(@a>@b): x -> y -> z
+
+(* Causal chain — right associative *)
+INF(@a>@b): alert <- high-cpu <- spike
+
+(* Parallel composition *)
+REQ(@a>@b): task-1 & task-2 & task-3
+
+(* Disjunction *)
+INF(@a>@b): option-a | option-b
+
+(* Comparisons *)
+INF(@a>@b): x > 10
+INF(@a>@b): x < 100
+INF(@a>@b): x >= 10
+INF(@a>@b): x <= 100
+INF(@a>@b): x != y
+INF(@a>@b): x = y
+
+(* Range *)
+INF(@a>@b): 1..100
+
+(* Approximate *)
+INF(@a>@b): ~42
+
+(* Nested message *)
+DEL(@ceo>@vp): REQ(*>@team): complete(#project-x)
+
+(* Wildcard endpoint *)
+CMD(*>@all): sync()
+
+(* Agent list endpoint *)
+REQ(@a>[@b, @c, @d]): broadcast("hello")
+
+(* Nested comments *)
+(* outer (* inner *) still outer *)
+INF(@a>@b): "after nested comment"
+
+(* Tagged record *)
+INF(@a>@b): #task{id:"t-1", status:#done}
+
+(* Extension performative *)
+X.trade.BID(@buyer>@exchange): {symbol:"AAPL", qty:100}
+
+(* Profile extension metadata keys *)
+[id:"m1", %%:1, txn_id:"tx-42"]
+PRO(@a>@b): {action:#debit}
+
+(* Mixed named and positional args *)
+INF(@a>@b): func(1, name:"val", 3)
