@@ -55,3 +55,21 @@
 4. Pre-registration completed before data collection
 
 **Estimated revised cost:** ~$75-100 (up from $50-70 due to expanded conditions and cross-model tests)
+
+---
+
+## Publishability Debate (Round 2)
+
+A follow-up 2-round debate assessed publishability, use cases, and testability. See `debate/publishability-summary.md` for full details.
+
+### Key additions to the plan
+1. **Semantic validation required** — `validate()` is parse-only; must enforce tier compliance and performative transition rules before experiments
+2. **FIPA baseline required** — with symmetric adaptation budget (prompt/training budget fixed across conditions)
+3. **Niche benefits must be preregistered** — auditability, composability, formal verifiability as secondary endpoints
+4. **"Naturalness" must be operationalized** — specific error classes, recovery latency, schema-violation rates
+5. **Paper focus must be prioritized** — AXON evaluation vs adversarial methodology; splitting claims weakens both
+6. **No numeric venue probabilities** — publication conditional on completed experiments
+7. **Token efficiency data is illustrative only** — 66% from 8 hand-crafted examples is not evidential
+
+### Critical path verdict (both sides agree)
+Build and freeze a preregistered, executable evaluation harness that enforces semantic conformance and defines fairness constraints for all baselines — before any headline experiments.

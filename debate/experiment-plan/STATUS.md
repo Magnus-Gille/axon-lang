@@ -1,23 +1,36 @@
 # AXON Experiment Plan — Resume Guide
 
 ## Quick Context
-We designed a 6-experiment validation framework for AXON, then ran a 3-round adversarial debate (Claude vs Codex GPT-5.3) to stress-test the methodology. The plan is now debate-hardened and ready for implementation.
+We designed a 6-experiment validation framework for AXON, then ran a 3-round adversarial debate (Claude vs Codex GPT-5.3) to stress-test the methodology. A second 2-round debate on publishability, use cases, and testability further refined the plan.
 
 ## Where We Left Off
-**Status: Plan complete, implementation not started.**
+**Status: Plan complete, implementation not started. Publishability debate complete — critical path clarified.**
 
 ## What to Do Next
-Start implementing the experiment infrastructure. Begin with Week 0 prerequisites:
 
-1. **Freeze the spec** — resolve metadata inconsistencies in `spec/SPECIFICATION.md` (grammar-level `meta_key` vs profile-level `txn_id`/`txn_state`), tag as `v0.1-experimental`
-2. **Build conformance checker** — extend `src/axon_parser.py` with Level 2 (tier compliance) validation
-3. **Set up `experiments/` directory** — see the plan for full directory structure
-4. **Build shared libraries** — `token_counter.py`, `api_client.py`, `axon_validator.py`, `judge.py`, `conversation.py`, `stats.py`
+### Critical path (from publishability debate)
+The single most important step is to **build and freeze a preregistered, executable evaluation harness** that enforces semantic conformance and defines fairness constraints for all baselines — before running any experiments.
+
+### Week 0 prerequisites (updated)
+
+1. **Extend `validate()` beyond parse-only** — enforce tier compliance, performative transition rules, and metadata requirements. Current `validate()` (`src/axon_parser.py:803-809`) only checks syntax. Semantic claims require semantic validation.
+2. **Freeze the spec** — resolve metadata inconsistencies (`meta_key` vs profile-level keys), tag as `v0.1-experimental`
+3. **Define fairness constraints for all 5 conditions** — including symmetric FIPA-ACL adaptation budget (prompt/training budget fixed across conditions)
+4. **Preregister endpoints** — primary: task success + token efficiency; secondary: niche benefits (auditability, composability, formal verifiability). Niche benefits must be preregistered, not added post-hoc.
+5. **Operationalize "naturalness"** — define concrete metrics: error classes, recovery latency, schema-violation rates
+6. **Set up `experiments/` directory** and build shared libraries (`token_counter.py`, `api_client.py`, `axon_validator.py`, `judge.py`, `conversation.py`, `stats.py`)
+
+### Publishability constraints (debate-hardened)
+- No numeric venue probability estimates — publication is conditional on completed experiments
+- Token efficiency data (66% from 8 examples) is illustrative only, not evidential
+- FIPA-ACL baseline is required, not optional
+- Interop claims scoped to tested model pairs only
+- Prioritize one paper focus (AXON evaluation vs adversarial methodology) — splitting weakens both
 
 ## Key Files
 - **Full plan:** Read the plan file (ask Claude to show it)
-- **Debate transcript:** `debate/experiment-plan/` (6 files: proposal, critique, response-1, rebuttal-1, response-2, final-verdict)
-- **Debate summary:** `debate/experiment-plan/summary.md`
+- **Experiment debate:** `debate/experiment-plan/` (6 files + summary)
+- **Publishability debate:** `debate/publishability-*.md` (4 files + summary)
 - **AXON parser:** `src/axon_parser.py`
 - **AXON spec:** `spec/SPECIFICATION.md`
 
