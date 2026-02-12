@@ -1,0 +1,92 @@
+[
+  {
+    "id": "cfp-C01",
+    "source": "codex-round-1",
+    "text": "30-minute confidence level is overstated — zero validation cannot sustain a full talk without drifting into speculative claims",
+    "classification": "valid",
+    "impact": "changed",
+    "severity": "major",
+    "caught_by_self_review": true
+  },
+  {
+    "id": "cfp-C02",
+    "source": "codex-round-1",
+    "text": "No confirmed CFP scope — reasoning from event name alone is insufficient for confident venue-fit claims",
+    "classification": "valid",
+    "impact": "acknowledged",
+    "severity": "major",
+    "caught_by_self_review": true
+  },
+  {
+    "id": "cfp-C03",
+    "source": "codex-round-1",
+    "text": "MCP/function-calling objection doesn't kill AXON but sets very high burden of proof — AXON must show measurable gains over MCP+structured outputs+conventions",
+    "classification": "valid",
+    "impact": "acknowledged",
+    "severity": "critical",
+    "caught_by_self_review": true
+  },
+  {
+    "id": "cfp-C04",
+    "source": "codex-round-1",
+    "text": "Track B (methodology) is over-projected as 30-min anchor — agent devs prioritize shipping, not meta-process review",
+    "classification": "valid",
+    "impact": "changed",
+    "severity": "major",
+    "caught_by_self_review": false
+  },
+  {
+    "id": "cfp-C05",
+    "source": "codex-round-1",
+    "text": "Lightning talk outline is overloaded — 5 minutes cannot fit problem+concept+3 examples+uncertainty+CTA",
+    "classification": "valid",
+    "impact": "changed",
+    "severity": "minor",
+    "caught_by_self_review": false
+  },
+  {
+    "id": "cfp-C06",
+    "source": "codex-round-1",
+    "text": "30-minute structure has zero slack and live debate demo is high-risk and time-volatile",
+    "classification": "valid",
+    "impact": "changed",
+    "severity": "major",
+    "caught_by_self_review": false
+  },
+  {
+    "id": "cfp-C07",
+    "source": "codex-round-1",
+    "text": "Perception risk is worse than rejection — can pre-bias future reception when real results arrive",
+    "classification": "valid",
+    "impact": "changed",
+    "severity": "critical",
+    "caught_by_self_review": false
+  },
+  {
+    "id": "cfp-C08",
+    "source": "codex-round-2",
+    "text": "Token-count experiment alone doesn't meet burden for 30-minute talk — token compression is not protocol utility",
+    "classification": "valid",
+    "impact": "acknowledged",
+    "severity": "major",
+    "caught_by_self_review": false
+  },
+  {
+    "id": "cfp-C09",
+    "source": "codex-round-2",
+    "text": "30-minute conditional defense has no hard go/no-go threshold — 'may be achievable' is not a decision criterion",
+    "classification": "valid",
+    "impact": "acknowledged",
+    "severity": "minor",
+    "caught_by_self_review": false
+  },
+  {
+    "id": "cfp-C10",
+    "source": "codex-round-2",
+    "text": "Proposal must front-load epistemic honesty with falsifiable value claim — not 'a better standard' but 'a protocol hypothesis with a working prototype'",
+    "classification": "valid",
+    "impact": "acknowledged",
+    "severity": "critical",
+    "caught_by_self_review": false
+  }
+]
