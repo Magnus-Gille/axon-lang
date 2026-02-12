@@ -32,33 +32,7 @@ No external dependencies — stdlib Python only.
 
 This project uses a **Claude Code + Codex adversarial review** process. The goal is to stress-test every significant decision through structured critique.
 
-### How it works
-
-For each major chunk of work (spec changes, experiment design, research claims):
-
-1. **Claude Code** produces a draft (plan, spec section, evaluation, etc.)
-2. **Codex is invoked headlessly** with a prompt to act as a grounded-but-adversarial reviewer — poking holes, demanding evidence, surfacing unstated assumptions
-3. **Claude Code** responds to the critique, conceding valid points and defending where warranted
-4. Repeat for 2-4 rounds until convergence or clear disagreement is documented
-5. **Outcomes are recorded** in `debate/` with explicit lists of agreements, concessions, and unresolved disputes
-
-### Prompting Codex
-
-Run Codex CLI in headless mode. The adversarial prompt should:
-
-- Ask Codex to critique the specific artifact (not generate alternatives)
-- Instruct it to be skeptical but intellectually honest — no strawmanning
-- Ground critique in evidence, not opinion
-- Flag unsupported claims, missing baselines, and methodological gaps
-- Acknowledge strengths before attacking weaknesses
-
-### Recording outcomes
-
-Each debate round should produce:
-
-- `debate/<topic>-codex-critique.md` — Codex's critique
-- `debate/<topic>-claude-response-N.md` — Claude's responses
-- `debate/summary.md` — Updated with agreements/disagreements
+**Always use the `/debate-codex` skill** (defined in `.claude/skills/debate-codex/SKILL.md`) to run debates. It handles the full lifecycle: Codex CLI invocation, multi-round structure, and outcome recording.
 
 ### When to trigger a debate
 
