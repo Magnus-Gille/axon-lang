@@ -73,3 +73,31 @@ A follow-up 2-round debate assessed publishability, use cases, and testability. 
 
 ### Critical path verdict (both sides agree)
 Build and freeze a preregistered, executable evaluation harness that enforces semantic conformance and defines fairness constraints for all baselines — before any headline experiments.
+
+---
+
+## Methodology Debate (Round 3)
+
+A 2-round debate assessed whether the adversarial Claude↔Codex debate process itself is publishable. See `debate/methodology-summary.md` for full details.
+
+### Agreed framing
+Publishable as a **registered pilot + prospective protocol paper**, not a confirmatory methodology study.
+
+### 6-item publishability checklist
+1. Preregistered protocol with primary endpoints, stopping rules, analysis hierarchy
+2. Frozen artifact snapshots with randomized/counterbalanced review order
+3. Blinded multi-rater adjudication; inter-rater reliability reported
+4. Claims scoped to studied workflow/domain
+5. Human-comparison claims dropped unless calibration arm included
+6. Exploratory (retrospective) separated from confirmatory (prospective) analyses
+
+### Changes to debate workflow
+All future debates must capture:
+- Per-point structured metadata (ID, classification, impact, severity)
+- Self-review ablation (Claude critiques own draft before Codex invocation)
+- Cost logging (tokens, API dollars, wall-clock time)
+- Frozen artifact snapshots before any review condition
+
+### Two research tracks confirmed
+- **Track A**: AXON language evaluation (does it beat function calling?)
+- **Track B**: Adversarial methodology evaluation (does cross-model review catch more issues than self-review?)

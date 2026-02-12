@@ -4,7 +4,7 @@
 We designed a 6-experiment validation framework for AXON, then ran a 3-round adversarial debate (Claude vs Codex GPT-5.3) to stress-test the methodology. A second 2-round debate on publishability, use cases, and testability further refined the plan.
 
 ## Where We Left Off
-**Status: Plan complete, implementation not started. Publishability debate complete — critical path clarified.**
+**Status: Plan complete, implementation not started. Publishability and methodology debates complete — two research tracks clarified.**
 
 ## What to Do Next
 
@@ -25,12 +25,30 @@ The single most important step is to **build and freeze a preregistered, executa
 - Token efficiency data (66% from 8 examples) is illustrative only, not evidential
 - FIPA-ACL baseline is required, not optional
 - Interop claims scoped to tested model pairs only
-- Prioritize one paper focus (AXON evaluation vs adversarial methodology) — splitting weakens both
+
+### Research Track B: Adversarial Methodology Paper
+
+A separate 2-round debate established that the Claude↔Codex debate process itself is publishable as a **registered pilot + prospective protocol paper**. See `debate/methodology-summary.md` for full details.
+
+**Publishability checklist (6 items, all required):**
+1. Preregistered protocol — primary endpoints, stopping rules, analysis hierarchy
+2. Frozen artifact snapshots — all review conditions run against same version, order randomized
+3. Blinded multi-rater adjudication — not just project author; inter-rater reliability reported
+4. Narrow scope claims — "Claude-authored artifacts reviewed by Codex in this project"
+5. Drop human-comparison claims unless calibration arm included
+6. Separate exploratory (retrospective 115 points) from confirmatory (prospective under protocol)
+
+**Practical changes to all future debates:**
+- Structured per-point metadata: ID, classification (valid/partial/invalid), impact, severity
+- Self-review ablation: Claude critiques its own draft before Codex sees it
+- Cost logging: tokens, API dollars, wall-clock time per invocation
+- Artifact snapshots: freeze before any review condition
 
 ## Key Files
 - **Full plan:** Read the plan file (ask Claude to show it)
 - **Experiment debate:** `debate/experiment-plan/` (6 files + summary)
 - **Publishability debate:** `debate/publishability-*.md` (4 files + summary)
+- **Methodology debate:** `debate/methodology-*.md` (4 files + summary)
 - **AXON parser:** `src/axon_parser.py`
 - **AXON spec:** `spec/SPECIFICATION.md`
 
