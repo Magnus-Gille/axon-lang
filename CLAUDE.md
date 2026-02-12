@@ -82,11 +82,12 @@ Every debate feeds Track B. All future debates must capture: per-point metadata,
 ## Current State
 
 - Spec frozen at `v0.1-experimental` — 4 gate-blocking parser bugs fixed
-- Conformance test corpus: 25 tests passing (valid corpus + invalid input cases)
-- Validator: 3-level checker (syntax, tier compliance, semantics) — 29 tests passing
-- Exp 0 infrastructure: 6 conditions, 9 tasks, dry-run mode operational
+- Conformance test corpus: 54 tests passing
+- Validator: 3-level checker (syntax, tier compliance, semantics)
+- **Exp 0 complete** (preliminary): AXON passes learnability gate on Sonnet (89%) and GPT-5.3 (100%), fails on Haiku (78% — matches JSON FC). See `experiments/exp0_learnability/RESULTS.md`.
+- Exp 0 runner uses CLI tools (`claude -p`, `codex exec`) — zero API cost
 - ~100 critique points raised, ~85% resolved
-- Core open question (Track A): does AXON beat controlled English + function calling? This is empirical — no premature claims.
+- Core open question (Track A): does AXON beat controlled English + function calling? Exp 0 is promising but preliminary.
 - Methodology paper (Track B): publishable as registered pilot + prospective protocol paper if 6-item checklist is met
 
 ## Conventions

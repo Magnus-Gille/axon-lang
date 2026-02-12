@@ -34,6 +34,15 @@ Operators:
 - ..  range (1..10)
 - ~   approximate (~42)
 
-Example:
+Important:
+- $ is the variable sigil, NOT a currency symbol. Write 2.50usd not $2.50usd.
+- Use #tag{...} for labeled records: #status{health:"ok", uptime:99.7%}
+- Use function call syntax for operations: fetch($url) -> parse("json") -> store($db)
+- Do NOT attach {records} directly to identifiers or calls. Write #diagnostics{scope:"full"} not diagnostics{scope:"full"}.
+
+Examples:
 [id:"m1", %%:1]
 QRY(@agent-a>@agent-b): status(@web-server)
+
+[id:"m2", %%:1, re:"m1"]
+INF(@agent-b>@agent-a): #status{server:@web-server, health:#healthy, uptime:99.7%}

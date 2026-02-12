@@ -4,21 +4,29 @@
 We designed a 6-experiment validation framework for AXON, then ran a 3-round adversarial debate (Claude vs Codex GPT-5.3) to stress-test the methodology. A second 2-round debate on publishability, use cases, and testability further refined the plan.
 
 ## Where We Left Off
-**Status: Plan complete, implementation not started. Publishability and methodology debates complete — two research tracks clarified.**
+**Status: Exp 0 (learnability gate) complete — passes on 2/3 models. Week 0 prerequisites done.**
+
+## What Happened
+
+### Week 0 (completed 2026-02-12)
+All prerequisites implemented: spec frozen at v0.1-experimental, parser bugs fixed, 3-level validator built, conformance test corpus (54 tests passing), Exp 0 infrastructure operational.
+
+### Exp 0: Learnability Gate (completed 2026-02-12)
+Ran 6 conditions x 9 tasks x 3 models (Claude Haiku, Claude Sonnet, GPT-5.3 Codex). CLI-based runner using existing subscriptions — zero API cost. See `experiments/exp0_learnability/RESULTS.md` for full analysis.
+
+**Gate result**: PASS on Sonnet (89%) and GPT-5.3 (100%), FAIL on Haiku (78%). AXON matches JSON FC compliance on every model — the relative criterion is met everywhere. Only the absolute 80% threshold blocks Haiku.
+
+**Key findings**: (1) AXON is not uniquely hard — JSON FC fails at equal rates; (2) AXON beats FIPA-ACL on Sonnet (89% vs 78%); (3) prompt engineering improved Haiku by 22pp; (4) AXON is 30% more compact than JSON FC; (5) all "failures" are semantically correct but syntactically strict.
 
 ## What to Do Next
 
-### Critical path (from publishability debate)
-The single most important step is to **build and freeze a preregistered, executable evaluation harness** that enforces semantic conformance and defines fairness constraints for all baselines — before running any experiments.
+### Immediate
+1. **Decide gate disposition**: Exp 0 passes on 2/3 models. Proceed with larger models only, or iterate prompt/parser for small-model support?
+2. **Run 3x replications**: Current results are single-run. Preregistration requires 3 runs per cell for variance estimation.
+3. **Consider parser relaxation**: Two error classes (`ident{record}`, `&` in routing) are reasonable syntax the parser could accept.
 
-### Week 0 prerequisites (updated)
-
-1. **Extend `validate()` beyond parse-only** — enforce tier compliance, performative transition rules, and metadata requirements. Current `validate()` (`src/axon_parser.py:803-809`) only checks syntax. Semantic claims require semantic validation.
-2. **Freeze the spec** — resolve metadata inconsistencies (`meta_key` vs profile-level keys), tag as `v0.1-experimental`
-3. **Define fairness constraints for all 5 conditions** — including symmetric FIPA-ACL adaptation budget (prompt/training budget fixed across conditions)
-4. **Preregister endpoints** — primary: task success + token efficiency; secondary: niche benefits (auditability, composability, formal verifiability). Niche benefits must be preregistered, not added post-hoc.
-5. **Operationalize "naturalness"** — define concrete metrics: error classes, recovery latency, schema-violation rates
-6. **Set up `experiments/` directory** and build shared libraries (`token_counter.py`, `api_client.py`, `axon_validator.py`, `judge.py`, `conversation.py`, `stats.py`)
+### Next experiments
+After gate disposition is decided, Exp 1 (Token Efficiency) and Exp 3 (Compositionality) are co-primary and should run next.
 
 ### Publishability constraints (debate-hardened)
 - No numeric venue probability estimates — publication is conditional on completed experiments
@@ -55,7 +63,7 @@ A separate 2-round debate established that the Claude↔Codex debate process its
 ## Experiment Overview
 | # | Name | Role | Status |
 |---|------|------|--------|
-| 0 | Learnability | Gate (must pass first) | Not started |
+| 0 | Learnability | Gate (must pass first) | **PASS** (2/3 models, preliminary 1-run) |
 | 1 | Token Efficiency | Co-primary | Not started |
 | 2 | Agent Debate | Applied evaluation | Not started |
 | 3 | Coordination | Co-primary | Not started |

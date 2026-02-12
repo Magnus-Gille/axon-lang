@@ -37,6 +37,7 @@ def validate_output(condition: str, output: str) -> dict:
             "valid": bool,
             "errors": list[str],
             "condition": str,
+            "stripped_fences": bool,
         }
     """
     validators = {
@@ -54,6 +55,19 @@ def validate_output(condition: str, output: str) -> dict:
     return validators[condition](output)
 
 
+import re
+
+_FENCE_RE = re.compile(r"^```[\w]*\n(.*?)```\s*$", re.DOTALL)
+
+
+def _strip_code_fences(output: str) -> tuple[str, bool]:
+    """Strip markdown code fences if present. Returns (cleaned, was_stripped)."""
+    m = _FENCE_RE.match(output.strip())
+    if m:
+        return m.group(1).strip(), True
+    return output, False
+
+
 def _validate_english(output: str) -> dict:
     """English conditions: pass-through (any non-empty output is valid)."""
     errors = []
@@ -65,19 +79,21 @@ def _validate_english(output: str) -> dict:
 def _validate_json_fc(output: str) -> dict:
     """JSON function calling: must be valid JSON."""
     errors = []
+    cleaned, stripped = _strip_code_fences(output)
     try:
-        parsed = json.loads(output)
+        parsed = json.loads(cleaned)
         if not isinstance(parsed, (dict, list)):
             errors.append("Top-level JSON must be object or array")
     except json.JSONDecodeError as e:
         errors.append(f"Invalid JSON: {e}")
-    return {"valid": len(errors) == 0, "errors": errors, "condition": "json_fc"}
+    return {"valid": len(errors) == 0, "errors": errors, "condition": "json_fc", "stripped_fences": stripped}
 
 
 def _validate_fipa_acl(output: str) -> dict:
     """FIPA-ACL: basic structural check for performative presence."""
     errors = []
-    output_stripped = output.strip()
+    output_stripped, stripped = _strip_code_fences(output)
+    output_stripped = output_stripped.strip()
     if not output_stripped:
         errors.append("Empty output")
     else:
@@ -90,17 +106,18 @@ def _validate_fipa_acl(output: str) -> dict:
         has_perf = any(f"({p}" in lower or f"{p}\n" in lower for p in fipa_performatives)
         if not has_perf:
             errors.append("No recognized FIPA-ACL performative found")
-    return {"valid": len(errors) == 0, "errors": errors, "condition": "fipa_acl"}
+    return {"valid": len(errors) == 0, "errors": errors, "condition": "fipa_acl", "stripped_fences": stripped}
 
 
 def _validate_axon(output: str) -> dict:
     """AXON: must parse successfully via the AXON parser."""
     errors = []
+    cleaned, stripped = _strip_code_fences(output)
     try:
         from axon_parser import parse
-        messages = parse(output)
+        messages = parse(cleaned)
         if len(messages) == 0:
             errors.append("No messages parsed")
     except Exception as e:
         errors.append(f"AXON parse error: {e}")
-    return {"valid": len(errors) == 0, "errors": errors, "condition": "axon"}
+    return {"valid": len(errors) == 0, "errors": errors, "condition": "axon", "stripped_fences": stripped}

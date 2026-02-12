@@ -1,0 +1,828 @@
+{
+  "experiment": "exp0_learnability",
+  "model": "claude-sonnet",
+  "model_display": "Claude Sonnet 4.5",
+  "timestamp": "2026-02-12T20:58:08.099175+00:00",
+  "total_runs": 54,
+  "valid_count": 50,
+  "results": [
+    {
+      "task_id": "L1-01",
+      "condition": "free_english",
+      "model": "claude-sonnet",
+      "run_number": 1,
+      "output": "QRY(@A>@B): status(@web_server)",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 12,
+        "o200k_base": 12
+      },
+      "latency_ms": 8039,
+      "timestamp": "2026-02-12T20:49:41.746522+00:00"
+    },
+    {
+      "task_id": "L1-02",
+      "condition": "free_english",
+      "model": "claude-sonnet",
+      "run_number": 1,
+      "output": "RSP(@b>@a): status(@srv) = {health: \"healthy\", uptime: 99.7%}",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 26,
+        "o200k_base": 26
+      },
+      "latency_ms": 8633,
+      "timestamp": "2026-02-12T20:49:50.381521+00:00"
+    },
+    {
+      "task_id": "L1-03",
+      "condition": "free_english",
+      "model": "claude-sonnet",
+      "run_number": 1,
+      "output": "```axon\nERR(@service>@caller): 404_not_found\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 15,
+        "o200k_base": 15
+      },
+      "latency_ms": 7461,
+      "timestamp": "2026-02-12T20:49:57.844090+00:00"
+    },
+    {
+      "task_id": "L2-01",
+      "condition": "free_english",
+      "model": "claude-sonnet",
+      "run_number": 1,
+      "output": "QRY(@ci>@builder): build(repo=\"project-x\", branch=\"feature/auth\", commit=\"a3f7b9c\")",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 28,
+        "o200k_base": 28
+      },
+      "latency_ms": 8086,
+      "timestamp": "2026-02-12T20:50:05.931803+00:00"
+    },
+    {
+      "task_id": "L2-02",
+      "condition": "free_english",
+      "model": "claude-sonnet",
+      "run_number": 1,
+      "output": "PROP(@supplier>@buyer): {\n  offer: {\n    item: \"widgets\",\n    qty: 10000,\n    price: 2.50,\n    currency: \"USD\"\n  }\n};\n\nPROP(@buyer>@supplier): {\n  counter_offer: {\n    item: \"widgets\",\n    qty: 10000,\n    price: 2.20,\n    currency: \"USD\"\n  },\n  justification: {\n    market_avg: 2.15,\n    currency: \"USD\"\n  }\n}",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 104,
+        "o200k_base": 104
+      },
+      "latency_ms": 9540,
+      "timestamp": "2026-02-12T20:50:15.472849+00:00"
+    },
+    {
+      "task_id": "L2-03",
+      "condition": "free_english",
+      "model": "claude-sonnet",
+      "run_number": 1,
+      "output": "QRY(@planner>@worker1, @worker2, @worker3): process(range(0,1000), range(1000,2000), range(2000,3000))",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 41,
+        "o200k_base": 40
+      },
+      "latency_ms": 8010,
+      "timestamp": "2026-02-12T20:50:23.483622+00:00"
+    },
+    {
+      "task_id": "L3-01",
+      "condition": "free_english",
+      "model": "claude-sonnet",
+      "run_number": 1,
+      "output": "```axon\nMSG[id:m-001,v:0.1](@orchestrator>@pipeline): \n  INST(fetch(url:\"https://api.example.com/data\")) -> \n  INST(parse(fmt:\"json\")) -> \n  INST(store(db:\"main\"))\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 53,
+        "o200k_base": 53
+      },
+      "latency_ms": 9466,
+      "timestamp": "2026-02-12T20:50:32.951331+00:00"
+    },
+    {
+      "task_id": "L3-02",
+      "condition": "free_english",
+      "model": "claude-sonnet",
+      "run_number": 1,
+      "output": "```axon\nALT(@monitor>@oncall)[p:4,sev:2]: \n  incident(payments_service) \n  & condition(latency > 2000ms)\n  & cause(db_connection_pool_exhaustion \n      <- traffic_spike)\n  -> recommend(scale_db_pool | rate_limit_upstream)\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 68,
+        "o200k_base": 66
+      },
+      "latency_ms": 9156,
+      "timestamp": "2026-02-12T20:50:42.108836+00:00"
+    },
+    {
+      "task_id": "L3-03",
+      "condition": "free_english",
+      "model": "claude-sonnet",
+      "run_number": 1,
+      "output": "```axon\nMSG(@agentA>@agentB#msg001)[proto=axon/0.1, ts=2024-01-15T14:32:00Z]:\n  QRY: diagnostics(@service_mesh) {\n    metrics: [\"latency\", \"throughput\", \"error_rate\"],\n    timeWindow: \"5m\"\n  }\n\nMSG(@agentB>@agentA#msg002)[proto=axon/0.1, ts=2024-01-15T14:32:03Z, reply=msg001]:\n  RPT: diagnostics(@service_mesh) {\n    bottleneck: \"db_connection_pool\",\n    stats: {\n      active_connections: 95,\n      max_connections: 100,\n      avg_latency_ms: 450,\n      error_rate: 0.03\n    }\n  }\n\nMSG(@agentA>@agentB#msg003)[proto=axon/0.1, ts=2024-01-15T14:32:08Z, reply=msg002]:\n  CMD: scale(@service_mesh) {\n    component: \"db_connection_pool\",\n    target_capacity: 200,\n    priority: \"high\"\n  }\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 241,
+        "o200k_base": 244
+      },
+      "latency_ms": 13571,
+      "timestamp": "2026-02-12T20:50:55.682099+00:00"
+    },
+    {
+      "task_id": "L1-01",
+      "condition": "structured_english",
+      "model": "claude-sonnet",
+      "run_number": 1,
+      "output": "FROM: agent-a\nTO: agent-b\nTYPE: query\nCONTENT: What is the status of web-server?",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 24,
+        "o200k_base": 24
+      },
+      "latency_ms": 8492,
+      "timestamp": "2026-02-12T20:51:04.176478+00:00"
+    },
+    {
+      "task_id": "L1-02",
+      "condition": "structured_english",
+      "model": "claude-sonnet",
+      "run_number": 1,
+      "output": "FROM: agent-b\nTO: agent-a\nTYPE: inform\nCONTENT: Server is healthy with 99.7% uptime.",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 27,
+        "o200k_base": 27
+      },
+      "latency_ms": 7995,
+      "timestamp": "2026-02-12T20:51:12.173250+00:00"
+    },
+    {
+      "task_id": "L1-03",
+      "condition": "structured_english",
+      "model": "claude-sonnet",
+      "run_number": 1,
+      "output": "FROM: service-agent\nTO: caller-agent\nTYPE: error\nCONTENT: 404 not-found error",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 21,
+        "o200k_base": 21
+      },
+      "latency_ms": 7480,
+      "timestamp": "2026-02-12T20:51:19.654432+00:00"
+    },
+    {
+      "task_id": "L2-01",
+      "condition": "structured_english",
+      "model": "claude-sonnet",
+      "run_number": 1,
+      "output": "FROM: ci-agent\nTO: builder-agent\nTYPE: request\nCONTENT: Build repository branch 'main' at commit SHA '3f7a9c2b1e4d8a6f5c9e2b7d4a1f8c3e6b9d2a5f'",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 67,
+        "o200k_base": 67
+      },
+      "latency_ms": 10933,
+      "timestamp": "2026-02-12T20:51:30.589116+00:00"
+    },
+    {
+      "task_id": "L2-02",
+      "condition": "structured_english",
+      "model": "claude-sonnet",
+      "run_number": 1,
+      "output": "FROM: buyer-agent\nTO: supplier-agent\nTYPE: reject\nCONTENT: Counter-offer of $2.50/unit rejected. Market analysis shows average price at $2.15/unit. Propose revised price of $2.20/unit for 10000 widgets ($22,000 total). Justification: our offer represents +2.3% premium over market average while your initial ask represents +16.3% premium. Request response with revised pricing or volume discount structure.",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 97,
+        "o200k_base": 97
+      },
+      "latency_ms": 9864,
+      "timestamp": "2026-02-12T20:51:40.454610+00:00"
+    },
+    {
+      "task_id": "L2-03",
+      "condition": "structured_english",
+      "model": "claude-sonnet",
+      "run_number": 1,
+      "output": "FROM: coordinator\nTO: worker-pool\nTYPE: request\nCONTENT: Distribute data processing task across 3 workers. Worker-1 processes range 0-999, Worker-2 processes range 1000-1999, Worker-3 processes range 2000-2999. Execute in parallel and report completion status.",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 68,
+        "o200k_base": 68
+      },
+      "latency_ms": 8012,
+      "timestamp": "2026-02-12T20:51:48.468126+00:00"
+    },
+    {
+      "task_id": "L3-01",
+      "condition": "structured_english",
+      "model": "claude-sonnet",
+      "run_number": 1,
+      "output": "FROM: orchestrator\nTO: pipeline\nTYPE: request\nCONTENT: REQ(@orchestrator>@pipeline v1.0 mid:req-001): SEQ(fetch(url:\"https://api.example.com/data\"), parse(format:\"json\"), store(target:@database))",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 52,
+        "o200k_base": 54
+      },
+      "latency_ms": 8484,
+      "timestamp": "2026-02-12T20:51:56.953107+00:00"
+    },
+    {
+      "task_id": "L3-02",
+      "condition": "structured_english",
+      "model": "claude-sonnet",
+      "run_number": 1,
+      "output": "FROM: incident-monitor\nTO: incident-response-team\nTYPE: inform\nCONTENT: INC(@incident-monitor>@incident-response-team)[sev=2,pri=4]: payments_service.latency > 2s | CAUSE: traffic_spike -> db_connection_pool_exhaustion -> high_latency | REC: scale_db_connection_pool(min=50, max=200) && enable_connection_timeout(30s)",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 83,
+        "o200k_base": 82
+      },
+      "latency_ms": 10482,
+      "timestamp": "2026-02-12T20:52:07.436261+00:00"
+    },
+    {
+      "task_id": "L3-03",
+      "condition": "structured_english",
+      "model": "claude-sonnet",
+      "run_number": 1,
+      "output": "```axon\nMSG-001(@agent-a > @agent-b) [v1.0] [2024-01-15T10:30:00Z]:\n  QRY: diagnostics(target: @api-gateway, metrics: [latency, throughput, errors])\n\nMSG-002(@agent-b > @agent-a) [v1.0] [2024-01-15T10:30:05Z] [re: MSG-001]:\n  RPL: diagnostics_result(\n    bottleneck: {component: \"database-pool\", utilization: 0.95},\n    connections: {active: 487, max: 500, queue_depth: 23},\n    latency_p99: 1250ms\n  )\n\nMSG-003(@agent-a > @agent-b) [v1.0] [2024-01-15T10:30:10Z] [re: MSG-002]:\n  REQ: scale(target: @database-pool, action: increase_capacity, new_max: 750)\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 215,
+        "o200k_base": 217
+      },
+      "latency_ms": 12287,
+      "timestamp": "2026-02-12T20:52:19.724799+00:00"
+    },
+    {
+      "task_id": "L1-01",
+      "condition": "instruction_matched_english",
+      "model": "claude-sonnet",
+      "run_number": 1,
+      "output": "[message-id: m1]\n[timestamp: 1732894561]\nQUERY (agent-a -> agent-b):\n  target: web-server\n  property: status",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 34,
+        "o200k_base": 34
+      },
+      "latency_ms": 8824,
+      "timestamp": "2026-02-12T20:52:28.550872+00:00"
+    },
+    {
+      "task_id": "L1-02",
+      "condition": "instruction_matched_english",
+      "model": "claude-sonnet",
+      "run_number": 1,
+      "output": "[message-id: m1]\nREPLY (agent-b -> agent-a):\n  target: web-server\n  property: status\n  value: healthy\n  uptime: 99.7%",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 40,
+        "o200k_base": 40
+      },
+      "latency_ms": 8569,
+      "timestamp": "2026-02-12T20:52:37.121288+00:00"
+    },
+    {
+      "task_id": "L1-03",
+      "condition": "instruction_matched_english",
+      "model": "claude-sonnet",
+      "run_number": 1,
+      "output": "[message-id: m1]\n[timestamp: 1735251840]\nERROR (service-agent -> caller-agent):\n  code: 404\n  message: \"resource not found\"\n  resource: requested-endpoint",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 44,
+        "o200k_base": 44
+      },
+      "latency_ms": 8228,
+      "timestamp": "2026-02-12T20:52:45.350309+00:00"
+    },
+    {
+      "task_id": "L2-01",
+      "condition": "instruction_matched_english",
+      "model": "claude-sonnet",
+      "run_number": 1,
+      "output": "[message-id: m847]\nREQUEST (ci-agent -> builder-agent):\n  action: build\n  repository: target-repo\n  branch: main\n  commit: abc123def456\n  priority: normal",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 44,
+        "o200k_base": 44
+      },
+      "latency_ms": 8527,
+      "timestamp": "2026-02-12T20:52:53.878273+00:00"
+    },
+    {
+      "task_id": "L2-02",
+      "condition": "instruction_matched_english",
+      "model": "claude-sonnet",
+      "run_number": 1,
+      "output": "[message-id: m1]\n[timestamp: 1735865421]\nPROPOSE (supplier -> buyer):\n  item: widgets\n  quantity: 10000\n  unit-price: 2.50\n  currency: USD\n  total: 25000.00\n\n[message-id: m2]\n[reply-to: m1]\n[timestamp: 1735865422]\nCOUNTER (buyer -> supplier):\n  item: widgets\n  quantity: 10000\n  unit-price: 2.20\n  currency: USD\n  total: 22000.00\n  justification: market-average\n  market-average: 2.15",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 137,
+        "o200k_base": 137
+      },
+      "latency_ms": 9839,
+      "timestamp": "2026-02-12T20:53:03.719420+00:00"
+    },
+    {
+      "task_id": "L2-03",
+      "condition": "instruction_matched_english",
+      "model": "claude-sonnet",
+      "run_number": 1,
+      "output": "[message-id: m001]\n[timestamp: 1735433127]\nCOMMAND (planner -> worker-1):\n  task: process-data\n  range: {start: 0, end: 999}\n  segment-id: 1\n\nCOMMAND (planner -> worker-2):\n  task: process-data\n  range: {start: 1000, end: 1999}\n  segment-id: 2\n\nCOMMAND (planner -> worker-3):\n  task: process-data\n  range: {start: 2000, end: 2999}\n  segment-id: 3",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 127,
+        "o200k_base": 124
+      },
+      "latency_ms": 8909,
+      "timestamp": "2026-02-12T20:53:12.630201+00:00"
+    },
+    {
+      "task_id": "L3-01",
+      "condition": "instruction_matched_english",
+      "model": "claude-sonnet",
+      "run_number": 1,
+      "output": "[message-id: m47f3a2c9]\n[protocol-version: AXON/0.1]\nCMD (@orchestrator > @pipeline):\n  action: execute\n  steps: [\n    {operation: fetch, target: {url: $URL}},\n    {operation: parse, format: json, input: $fetch.result},\n    {operation: store, target: {db: $DB_CONN}, data: $parse.result}\n  ]\n  timeout: 30s",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 101,
+        "o200k_base": 101
+      },
+      "latency_ms": 9746,
+      "timestamp": "2026-02-12T20:53:22.377709+00:00"
+    },
+    {
+      "task_id": "L3-02",
+      "condition": "instruction_matched_english",
+      "model": "claude-sonnet",
+      "run_number": 1,
+      "output": "[message-id: m47]\n[timestamp: 1738208765]\nPUBLISH (monitor-01 -> incident-handler):\n  event-type: incident-alert\n  severity: 2\n  priority: 4\n  service: payments-service\n  condition: latency > 2s\n  causal-chain: [\n    {effect: high-latency, value: 2100ms},\n    {cause: db-connection-pool-exhaustion, pool-size: 50, active: 50},\n    {root-cause: traffic-spike, rps: 1847, baseline: 320}\n  ]\n  recommendation: scale-db-connection-pool\n  action: increase-pool-size-to-100",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 148,
+        "o200k_base": 149
+      },
+      "latency_ms": 10647,
+      "timestamp": "2026-02-12T20:53:33.026344+00:00"
+    },
+    {
+      "task_id": "L3-03",
+      "condition": "instruction_matched_english",
+      "model": "claude-sonnet",
+      "run_number": 1,
+      "output": "```\n[message-id: msg-001]\n[protocol-version: 1.0]\n[timestamp: 1704067200]\nQUERY (agent-a -> agent-b):\n  target: system-diagnostics\n  metrics: [bottleneck-status, connection-stats, resource-utilization]\n  priority: high\n```\n\n```\n[message-id: msg-002]\n[protocol-version: 1.0]\n[timestamp: 1704067215]\n[reply-to: msg-001]\nREPLY (agent-b -> agent-a):\n  target: system-diagnostics\n  bottleneck-status: database-connection-pool\n  connection-stats: {\n    active: 245,\n    max: 250,\n    waiting: 89,\n    avg-wait-time-ms: 1847\n  }\n  resource-utilization: {\n    cpu: 78,\n    memory: 82,\n    disk-io: 45\n  }\n  severity: critical\n```\n\n```\n[message-id: msg-003]\n[protocol-version: 1.0]\n[timestamp: 1704067230]\n[reply-to: msg-002]\nREQUEST (agent-a -> agent-b):\n  action: scale-resources\n  target: database-connection-pool\n  parameters: {\n    new-max-connections: 500,\n    scaling-strategy: gradual,\n    validation: required\n  }\n  reason: critical-bottleneck-detected\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 295,
+        "o200k_base": 300
+      },
+      "latency_ms": 12248,
+      "timestamp": "2026-02-12T20:53:45.275872+00:00"
+    },
+    {
+      "task_id": "L1-01",
+      "condition": "json_fc",
+      "model": "claude-sonnet",
+      "run_number": 1,
+      "output": "```json\n{\n  \"performative\": \"query\",\n  \"from\": \"agent-a\",\n  \"to\": \"agent-b\",\n  \"content\": {\n    \"target\": \"web-server\",\n    \"property\": \"status\"\n  }\n}\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 52,
+        "o200k_base": 52
+      },
+      "latency_ms": 8410,
+      "timestamp": "2026-02-12T20:53:53.688152+00:00"
+    },
+    {
+      "task_id": "L1-02",
+      "condition": "json_fc",
+      "model": "claude-sonnet",
+      "run_number": 1,
+      "output": "```json\n{\n  \"performative\": \"inform\",\n  \"from\": \"agent-b\",\n  \"to\": \"agent-a\",\n  \"content\": {\n    \"subject\": \"server\",\n    \"status\": \"healthy\",\n    \"uptime\": \"99.7%\"\n  }\n}\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 60,
+        "o200k_base": 61
+      },
+      "latency_ms": 9284,
+      "timestamp": "2026-02-12T20:54:02.973962+00:00"
+    },
+    {
+      "task_id": "L1-03",
+      "condition": "json_fc",
+      "model": "claude-sonnet",
+      "run_number": 1,
+      "output": "```json\n{\n  \"performative\": \"error\",\n  \"from\": \"service-agent\",\n  \"to\": \"caller-agent\",\n  \"content\": {\n    \"error_type\": \"not_found\",\n    \"code\": 404,\n    \"message\": \"Resource not found\"\n  }\n}\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 62,
+        "o200k_base": 62
+      },
+      "latency_ms": 8207,
+      "timestamp": "2026-02-12T20:54:11.182150+00:00"
+    },
+    {
+      "task_id": "L2-01",
+      "condition": "json_fc",
+      "model": "claude-sonnet",
+      "run_number": 1,
+      "output": "```json\n{\n  \"performative\": \"request\",\n  \"from\": \"ci-agent\",\n  \"to\": \"builder-agent\",\n  \"content\": {\n    \"action\": \"build\",\n    \"target\": {\n      \"repository\": \"https://github.com/example/repo.git\",\n      \"branch\": \"main\",\n      \"commit\": \"a1b2c3d4e5f6\"\n    },\n    \"parameters\": {\n      \"build_type\": \"release\",\n      \"run_tests\": true\n    }\n  },\n  \"id\": \"build-req-001\",\n  \"timestamp\": 1703001234\n}\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 133,
+        "o200k_base": 133
+      },
+      "latency_ms": 9101,
+      "timestamp": "2026-02-12T20:54:20.284132+00:00"
+    },
+    {
+      "task_id": "L2-02",
+      "condition": "json_fc",
+      "model": "claude-sonnet",
+      "run_number": 1,
+      "output": "```json\n{\n  \"performative\": \"counter\",\n  \"from\": \"buyer\",\n  \"to\": \"supplier\",\n  \"content\": {\n    \"original_offer\": {\n      \"quantity\": 10000,\n      \"unit_price\": 2.50,\n      \"total\": 25000\n    },\n    \"counter_offer\": {\n      \"quantity\": 10000,\n      \"unit_price\": 2.20,\n      \"total\": 22000\n    },\n    \"justification\": {\n      \"market_average\": 2.15,\n      \"note\": \"Counter offer of $2.20/unit reflects current market conditions\"\n    }\n  }\n}\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 139,
+        "o200k_base": 139
+      },
+      "latency_ms": 8635,
+      "timestamp": "2026-02-12T20:54:28.920877+00:00"
+    },
+    {
+      "task_id": "L2-03",
+      "condition": "json_fc",
+      "model": "claude-sonnet",
+      "run_number": 1,
+      "output": "```json\n{\n  \"performative\": \"command\",\n  \"from\": \"planner\",\n  \"to\": [\"worker-1\", \"worker-2\", \"worker-3\"],\n  \"content\": {\n    \"task\": \"process_data\",\n    \"assignments\": [\n      {\n        \"worker\": \"worker-1\",\n        \"range\": {\"start\": 0, \"end\": 1000}\n      },\n      {\n        \"worker\": \"worker-2\",\n        \"range\": {\"start\": 1000, \"end\": 2000}\n      },\n      {\n        \"worker\": \"worker-3\",\n        \"range\": {\"start\": 2000, \"end\": 3000}\n      }\n    ]\n  },\n  \"id\": \"task-dist-001\",\n  \"timestamp\": 1703001600\n}\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 175,
+        "o200k_base": 175
+      },
+      "latency_ms": 9080,
+      "timestamp": "2026-02-12T20:54:38.002810+00:00"
+    },
+    {
+      "task_id": "L3-01",
+      "condition": "json_fc",
+      "model": "claude-sonnet",
+      "run_number": 1,
+      "output": "```json\n{\n  \"performative\": \"command\",\n  \"from\": \"orchestrator\",\n  \"to\": \"pipeline\",\n  \"content\": {\n    \"action\": \"execute\",\n    \"steps\": [\n      {\n        \"operation\": \"fetch\",\n        \"target\": \"url\",\n        \"url\": \"<URL>\"\n      },\n      {\n        \"operation\": \"parse\",\n        \"format\": \"json\"\n      },\n      {\n        \"operation\": \"store\",\n        \"target\": \"database\"\n      }\n    ]\n  },\n  \"id\": \"msg_001\",\n  \"protocol_version\": \"1.0\"\n}\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 131,
+        "o200k_base": 131
+      },
+      "latency_ms": 9299,
+      "timestamp": "2026-02-12T20:54:47.303628+00:00"
+    },
+    {
+      "task_id": "L3-02",
+      "condition": "json_fc",
+      "model": "claude-sonnet",
+      "run_number": 1,
+      "output": "```json\n{\n  \"performative\": \"publish\",\n  \"from\": \"monitor-system\",\n  \"to\": [\"incident-response\", \"ops-team\", \"payments-team\"],\n  \"content\": {\n    \"alert_type\": \"incident\",\n    \"severity\": 2,\n    \"priority\": 4,\n    \"service\": \"payments\",\n    \"issue\": \"latency_threshold_exceeded\",\n    \"threshold\": \"2s\",\n    \"causal_chain\": [\n      {\n        \"effect\": \"high_latency\",\n        \"cause\": \"database_connection_pool_exhaustion\"\n      },\n      {\n        \"effect\": \"database_connection_pool_exhaustion\",\n        \"cause\": \"traffic_spike\"\n      }\n    ],\n    \"resolution_recommendation\": \"scale_database_connection_pool\"\n  },\n  \"id\": \"alert-payments-latency-001\",\n  \"timestamp\": 1704067200\n}\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 186,
+        "o200k_base": 188
+      },
+      "latency_ms": 10015,
+      "timestamp": "2026-02-12T20:54:57.319910+00:00"
+    },
+    {
+      "task_id": "L3-03",
+      "condition": "json_fc",
+      "model": "claude-sonnet",
+      "run_number": 1,
+      "output": "```json\n{\n  \"protocol\": \"axon/0.1\",\n  \"id\": \"msg-a001\",\n  \"timestamp\": 1704067200,\n  \"performative\": \"query\",\n  \"from\": \"agent-a\",\n  \"to\": \"agent-b\",\n  \"content\": {\n    \"target\": \"diagnostics\",\n    \"properties\": [\"bottleneck\", \"connection_stats\"]\n  }\n}\n```\n\n```json\n{\n  \"protocol\": \"axon/0.1\",\n  \"id\": \"msg-b002\",\n  \"timestamp\": 1704067215,\n  \"reply_to\": \"msg-a001\",\n  \"performative\": \"reply\",\n  \"from\": \"agent-b\",\n  \"to\": \"agent-a\",\n  \"content\": {\n    \"bottleneck\": {\n      \"component\": \"database\",\n      \"type\": \"connection_pool\",\n      \"utilization\": 0.94\n    },\n    \"connection_stats\": {\n      \"active\": 188,\n      \"idle\": 12,\n      \"max_capacity\": 200,\n      \"avg_wait_ms\": 340\n    }\n  }\n}\n```\n\n```json\n{\n  \"protocol\": \"axon/0.1\",\n  \"id\": \"msg-a003\",\n  \"timestamp\": 1704067230,\n  \"reply_to\": \"msg-b002\",\n  \"performative\": \"request\",\n  \"from\": \"agent-a\",\n  \"to\": \"agent-b\",\n  \"content\": {\n    \"action\": \"scale\",\n    \"target\": \"database_connection_pool\",\n    \"parameters\": {\n      \"new_capacity\": 400,\n      \"reason\": \"high_utilization\"\n    }\n  }\n}\n```",
+      "valid": false,
+      "errors": [
+        "Invalid JSON: Extra data: line 13 column 1 (char 245)"
+      ],
+      "token_counts": {
+        "cl100k_base": 357,
+        "o200k_base": 357
+      },
+      "latency_ms": 12175,
+      "timestamp": "2026-02-12T20:55:09.496838+00:00"
+    },
+    {
+      "task_id": "L1-01",
+      "condition": "fipa_acl",
+      "model": "claude-sonnet",
+      "run_number": 1,
+      "output": "```\n(query-ref\n  :sender agent-a\n  :receiver agent-b\n  :content \"((status web-server))\"\n  :reply-with msg-001\n  :language SL\n  :ontology system-monitoring\n)\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 48,
+        "o200k_base": 49
+      },
+      "latency_ms": 9459,
+      "timestamp": "2026-02-12T20:55:18.957750+00:00"
+    },
+    {
+      "task_id": "L1-02",
+      "condition": "fipa_acl",
+      "model": "claude-sonnet",
+      "run_number": 1,
+      "output": "(inform\n  :sender agent-b\n  :receiver agent-a\n  :content \"((server-status healthy) (uptime 99.7))\"\n  :language SL\n)",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 37,
+        "o200k_base": 39
+      },
+      "latency_ms": 8163,
+      "timestamp": "2026-02-12T20:55:27.122610+00:00"
+    },
+    {
+      "task_id": "L1-03",
+      "condition": "fipa_acl",
+      "model": "claude-sonnet",
+      "run_number": 1,
+      "output": "(failure\n  :sender service-agent\n  :receiver caller-agent\n  :content \"((resource-not-found 404))\"\n  :language SL\n)",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 32,
+        "o200k_base": 33
+      },
+      "latency_ms": 12216,
+      "timestamp": "2026-02-12T20:55:39.340577+00:00"
+    },
+    {
+      "task_id": "L2-01",
+      "condition": "fipa_acl",
+      "model": "claude-sonnet",
+      "run_number": 1,
+      "output": "```\n(request\n  :sender ci-agent\n  :receiver builder-agent\n  :content \"((build :repo <repo-url> :branch <branch-name> :commit <commit-sha>))\"\n  :reply-with msg-001\n  :language SL\n  :ontology ci-build\n)\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 63,
+        "o200k_base": 64
+      },
+      "latency_ms": 8416,
+      "timestamp": "2026-02-12T20:55:47.757796+00:00"
+    },
+    {
+      "task_id": "L2-02",
+      "condition": "fipa_acl",
+      "model": "claude-sonnet",
+      "run_number": 1,
+      "output": "(cfp\n  :sender buyer-agent\n  :receiver supplier-agent\n  :content \"((proposal (item widget) (quantity 10000) (unit-price 2.20) (justification (market-average 2.15))))\"\n  :reply-with m1\n  :in-reply-to cfp-001\n  :language SL\n  :ontology procurement\n)",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 79,
+        "o200k_base": 80
+      },
+      "latency_ms": 10297,
+      "timestamp": "2026-02-12T20:55:58.056663+00:00"
+    },
+    {
+      "task_id": "L2-03",
+      "condition": "fipa_acl",
+      "model": "claude-sonnet",
+      "run_number": 1,
+      "output": "(request\n  :sender planner\n  :receiver (worker-1 worker-2 worker-3)\n  :content \"((process-range worker-1 0 999) (process-range worker-2 1000 1999) (process-range worker-3 2000 2999))\"\n  :reply-with task-dist-001\n  :language SL\n  :ontology data-processing\n)",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 83,
+        "o200k_base": 84
+      },
+      "latency_ms": 9244,
+      "timestamp": "2026-02-12T20:56:07.302247+00:00"
+    },
+    {
+      "task_id": "L3-01",
+      "condition": "fipa_acl",
+      "model": "claude-sonnet",
+      "run_number": 1,
+      "output": "```\n(request\n  :sender orchestrator\n  :receiver pipeline\n  :content \"((action fetch-parse-store)\n            (url ?target-url)\n            (format json)\n            (destination database))\"\n  :reply-with msg-001\n  :protocol fipa-request\n  :protocol-version 1.0\n  :language SL\n  :ontology data-pipeline\n)\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 80,
+        "o200k_base": 82
+      },
+      "latency_ms": 9145,
+      "timestamp": "2026-02-12T20:56:16.448819+00:00"
+    },
+    {
+      "task_id": "L3-02",
+      "condition": "fipa_acl",
+      "model": "claude-sonnet",
+      "run_number": 1,
+      "output": "```\nINF(@monitor>@ops):\n  incident(\n    id=inc-20240115-001,\n    service=payments,\n    severity=2,\n    priority=4,\n    metric=latency,\n    threshold_exceeded=2000ms,\n    causal_chain=[\n      cause(traffic_spike, timestamp=2024-01-15T14:32:00Z),\n      effect(db_connection_pool_exhaustion, cause=traffic_spike),\n      effect(high_latency, cause=db_connection_pool_exhaustion)\n    ],\n    recommendation=scale_connection_pool(target=200, current=50)\n  )\n```",
+      "valid": false,
+      "errors": [
+        "No recognized FIPA-ACL performative found"
+      ],
+      "token_counts": {
+        "cl100k_base": 126,
+        "o200k_base": 126
+      },
+      "latency_ms": 10046,
+      "timestamp": "2026-02-12T20:56:26.496398+00:00"
+    },
+    {
+      "task_id": "L3-03",
+      "condition": "fipa_acl",
+      "model": "claude-sonnet",
+      "run_number": 1,
+      "output": "```axon\nQRY(@agentA>@agentB #req001 @v1 ~2024-01-15T10:30:00Z): diagnostics(system)\n\nINF(@agentB>@agentA #rsp001 @v1 ~2024-01-15T10:30:02Z <<#req001): {\n  bottleneck: \"cpu_utilization_95%\",\n  connections: {active: 847, max: 1000, idle: 23},\n  memory_usage: \"12.4GB/16GB\"\n}\n\nREQ(@agentA>@agentB #req002 @v1 ~2024-01-15T10:30:05Z <<#rsp001): scale(instances: +3, target_cpu: 70%)\n```",
+      "valid": false,
+      "errors": [
+        "No recognized FIPA-ACL performative found"
+      ],
+      "token_counts": {
+        "cl100k_base": 159,
+        "o200k_base": 159
+      },
+      "latency_ms": 11966,
+      "timestamp": "2026-02-12T20:56:38.463998+00:00"
+    },
+    {
+      "task_id": "L1-01",
+      "condition": "axon",
+      "model": "claude-sonnet",
+      "run_number": 1,
+      "output": "[id:\"m1\", %%:1, ts:1704067200000]\nQRY(@agent-a>@agent-b): status(@web-server)",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 31,
+        "o200k_base": 31
+      },
+      "latency_ms": 8049,
+      "timestamp": "2026-02-12T20:56:46.522015+00:00"
+    },
+    {
+      "task_id": "L1-02",
+      "condition": "axon",
+      "model": "claude-sonnet",
+      "run_number": 1,
+      "output": "[id:\"m2\", %%:1]\nINF(@agent-b>@agent-a): #status{server:#healthy, uptime:99.7%}",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 31,
+        "o200k_base": 31
+      },
+      "latency_ms": 7607,
+      "timestamp": "2026-02-12T20:56:54.130707+00:00"
+    },
+    {
+      "task_id": "L1-03",
+      "condition": "axon",
+      "model": "claude-sonnet",
+      "run_number": 1,
+      "output": "[id:\"e1\", %%:1, ts:1704067200]\nERR(@service>@caller): #http_error{code:404, status:\"not-found\", resource:_, message:\"Resource not found\"}",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 44,
+        "o200k_base": 44
+      },
+      "latency_ms": 10373,
+      "timestamp": "2026-02-12T20:57:04.505693+00:00"
+    },
+    {
+      "task_id": "L2-01",
+      "condition": "axon",
+      "model": "claude-sonnet",
+      "run_number": 1,
+      "output": "[id:\"ci-001\", %%:1, ts:1735563982, ^:4]\nREQ(@ci-agent>@builder-agent): build(#task{repo:\"invent-new-language\", branch:\"main\", commit:\"a7f3c92\", trigger:#ci})",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 57,
+        "o200k_base": 56
+      },
+      "latency_ms": 9536,
+      "timestamp": "2026-02-12T20:57:14.043932+00:00"
+    },
+    {
+      "task_id": "L2-02",
+      "condition": "axon",
+      "model": "claude-sonnet",
+      "run_number": 1,
+      "output": "[id:\"m1\", %%:1, ts:1735780953]\nPRO(@supplier>@buyer): #offer{product:\"widgets\", quantity:10000, price:2.50usd}\n\n[id:\"m2\", %%:1, re:\"m1\", ts:1735780954]\nCTR(@buyer>@supplier): #counteroffer{product:\"widgets\", quantity:10000, price:2.20usd} <- #market{average:2.15usd}",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 102,
+        "o200k_base": 99
+      },
+      "latency_ms": 9856,
+      "timestamp": "2026-02-12T20:57:23.902953+00:00"
+    },
+    {
+      "task_id": "L2-03",
+      "condition": "axon",
+      "model": "claude-sonnet",
+      "run_number": 1,
+      "output": "[id:\"m1\", %%:1, ts:1735265982]\nCMD(@planner>@worker-1 & @worker-2 & @worker-3): process(#task{range:0..3000, partition:[{worker:@worker-1, segment:0..999}, {worker:@worker-2, segment:1000..1999}, {worker:@worker-3, segment:2000..2999}]})",
+      "valid": false,
+      "errors": [
+        "AXON parse error: Parse error at 2:24: Expected ) (got &: '&')"
+      ],
+      "token_counts": {
+        "cl100k_base": 92,
+        "o200k_base": 91
+      },
+      "latency_ms": 11847,
+      "timestamp": "2026-02-12T20:57:35.751831+00:00"
+    },
+    {
+      "task_id": "L3-01",
+      "condition": "axon",
+      "model": "claude-sonnet",
+      "run_number": 1,
+      "output": "[id:\"m1\", %%:1]\nCMD(@orchestrator>@pipeline): fetch($url) -> parse(\"json\") -> store($db)",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 31,
+        "o200k_base": 31
+      },
+      "latency_ms": 8518,
+      "timestamp": "2026-02-12T20:57:44.271032+00:00"
+    },
+    {
+      "task_id": "L3-02",
+      "condition": "axon",
+      "model": "claude-sonnet",
+      "run_number": 1,
+      "output": "[id:\"inc-001\", %%:1, ts:1735678234, ^:4]\nPUB(@payments-monitor>@incident-response): #alert{severity:2, service:@payments-service, metric:\"latency\", threshold:2000ms, current:~2400ms, cause:(#traffic-spike -> #db-pool-exhaustion -> #high-latency), recommendation:\"scale db connection pool | add rate limiting | enable auto-scaling\"}",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 96,
+        "o200k_base": 96
+      },
+      "latency_ms": 10534,
+      "timestamp": "2026-02-12T20:57:54.807957+00:00"
+    },
+    {
+      "task_id": "L3-03",
+      "condition": "axon",
+      "model": "claude-sonnet",
+      "run_number": 1,
+      "output": "```axon\n[id:\"msg-001\", %%:1, ts:1704067200000]\nQRY(@agent-a>@agent-b): diagnostics(#request{scope:\"full\", include:[#bottlenecks, #connections]})\n\n[id:\"msg-002\", %%:1, re:\"msg-001\", ts:1704067201500]\nRPL(@agent-b>@agent-a): #diagnostics{bottleneck:#cpu{usage:94.3%, queue_depth:847}, connections:#stats{active:1203, peak:1450, dropped:23}}\n\n[id:\"msg-003\", %%:1, re:\"msg-002\", ts:1704067203000]\nREQ(@agent-a>@agent-b): scale(#horizontal{instances:3..5, trigger_threshold:85%})\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 171,
+        "o200k_base": 171
+      },
+      "latency_ms": 13288,
+      "timestamp": "2026-02-12T20:58:08.098844+00:00"
+    }
+  ]
+}

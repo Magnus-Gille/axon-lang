@@ -1,0 +1,828 @@
+{
+  "experiment": "exp0_learnability",
+  "model": "claude-haiku",
+  "model_display": "Claude Haiku 4.5",
+  "timestamp": "2026-02-12T21:05:21.279059+00:00",
+  "total_runs": 54,
+  "valid_count": 50,
+  "results": [
+    {
+      "task_id": "L1-01",
+      "condition": "free_english",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "QRY(@A>@B): status(@web_server)",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 12,
+        "o200k_base": 12
+      },
+      "latency_ms": 6452,
+      "timestamp": "2026-02-12T20:58:32.424177+00:00"
+    },
+    {
+      "task_id": "L1-02",
+      "condition": "free_english",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "Let me check the AXON specification directly from the project files to understand the format for agent-to-agent messages:\n\nBased on the AXON specification for agent-to-agent communication, here is Agent B's message to Agent A:\n\n```\nINF(@B>@A): status(@srv, uptime: 99.7%)\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 65,
+        "o200k_base": 64
+      },
+      "latency_ms": 8943,
+      "timestamp": "2026-02-12T20:58:41.368911+00:00"
+    },
+    {
+      "task_id": "L1-03",
+      "condition": "free_english",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "```\nERR(@svc>@caller): 404-not-found\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 14,
+        "o200k_base": 14
+      },
+      "latency_ms": 7108,
+      "timestamp": "2026-02-12T20:58:48.478330+00:00"
+    },
+    {
+      "task_id": "L2-01",
+      "condition": "free_english",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "Based on the project context from CLAUDE.md, this is about AXON \u2014 a research language for agent-to-agent communication. The task asks for a CI agent to request a builder agent to build a specific repo branch and commit in AXON format.\n\nHere is the message in AXON format:\n\n```\nREQ(@ci>@builder): build(repo=\"invent-new-language\", branch=\"main\", commit=\"abc123def456\")\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 88,
+        "o200k_base": 87
+      },
+      "latency_ms": 9585,
+      "timestamp": "2026-02-12T20:58:58.065232+00:00"
+    },
+    {
+      "task_id": "L2-02",
+      "condition": "free_english",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "I don't have enough context about who I'm responding as (supplier or buyer) or what format is required for this message. Please clarify:\n\n1. **Am I the supplier or the buyer?**\n2. **What format should the response be in?** (email, proposal, counter-offer document, etc.)\n3. **Any specific tone or constraints?** (aggressive, collaborative, professional, etc.)",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 85,
+        "o200k_base": 83
+      },
+      "latency_ms": 9542,
+      "timestamp": "2026-02-12T20:59:07.608763+00:00"
+    },
+    {
+      "task_id": "L2-03",
+      "condition": "free_english",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "I don't have sufficient context stored to understand what format is required for this response. Could you clarify:\n\n1. What specific format should the message be in?\n2. What is the required output (e.g., AXON notation, a specific protocol, pseudocode)?\n\nOnce you provide those details, I can generate the appropriate message for the planner distributing the task across 3 workers for range 0-3000.",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 84,
+        "o200k_base": 83
+      },
+      "latency_ms": 9792,
+      "timestamp": "2026-02-12T20:59:17.402242+00:00"
+    },
+    {
+      "task_id": "L3-01",
+      "condition": "free_english",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "```axon\nCMD(orchestrator>pipeline): fetch_parse_store(\n  url=\"https://api.example.com/data\",\n  format=json,\n  destination=database,\n  msgid=\"cmd-12847-fetch-parse-store\",\n  version=\"0.1\"\n)\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 55,
+        "o200k_base": 55
+      },
+      "latency_ms": 9662,
+      "timestamp": "2026-02-12T20:59:27.065742+00:00"
+    },
+    {
+      "task_id": "L3-02",
+      "condition": "free_english",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "Based on the AXON specification context provided, here is the incident alert message:\n\n```\nALERT(severity:2, priority:4, service:payments):\n  latency > 2s\n  CAUSAL[\n    traffic_spike \u2192 db_pool_exhaustion \u2192 high_latency\n  ]\n  RECOMMEND: scale_db_connections | add_read_replicas\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 76,
+        "o200k_base": 77
+      },
+      "latency_ms": 10637,
+      "timestamp": "2026-02-12T20:59:37.704535+00:00"
+    },
+    {
+      "task_id": "L3-03",
+      "condition": "free_english",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "```\n[1]\nid: msg-001\nprotocol: axon/0.1\ntimestamp: 2024-01-15T09:23:14Z\nfrom: @agentA\nto: @agentB\ntype: QRY\npayload: {\n  action: \"diagnostics\",\n  scope: [\"bottleneck\", \"connection_stats\"],\n  format: \"detailed\"\n}\n\n[2]\nid: msg-002\nprotocol: axon/0.1\ntimestamp: 2024-01-15T09:24:32Z\nfrom: @agentB\nto: @agentA\ntype: RPL\nreply_to: msg-001\npayload: {\n  diagnostics: {\n    bottleneck: {\n      resource: \"cpu\",\n      utilization: 87.3,\n      threshold: 80,\n      severity: \"high\"\n    },\n    connection_stats: {\n      active_connections: 142,\n      avg_latency_ms: 45.2,\n      packet_loss_pct: 0.3,\n      bandwidth_mbps: 89.7\n    }\n  }\n}\n\n[3]\nid: msg-003\nprotocol: axon/0.1\ntimestamp: 2024-01-15T09:26:47Z\nfrom: @agentA\nto: @agentB\ntype: CMD\nreply_to: msg-002\npayload: {\n  action: \"scale\",\n  target: \"cpu\",\n  direction: \"up\",\n  factor: 1.5,\n  timeout_sec: 300\n}\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 325,
+        "o200k_base": 326
+      },
+      "latency_ms": 10761,
+      "timestamp": "2026-02-12T20:59:48.467326+00:00"
+    },
+    {
+      "task_id": "L1-01",
+      "condition": "structured_english",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "FROM: agent-a\nTO: agent-b\nTYPE: query\nCONTENT: What is the status of web-server?",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 24,
+        "o200k_base": 24
+      },
+      "latency_ms": 6687,
+      "timestamp": "2026-02-12T20:59:55.155386+00:00"
+    },
+    {
+      "task_id": "L1-02",
+      "condition": "structured_english",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "FROM: agent-b\nTO: agent-a\nTYPE: inform\nCONTENT: The server is healthy with 99.7% uptime.",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 28,
+        "o200k_base": 28
+      },
+      "latency_ms": 6376,
+      "timestamp": "2026-02-12T21:00:01.533064+00:00"
+    },
+    {
+      "task_id": "L1-03",
+      "condition": "structured_english",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "FROM: service-agent\nTO: caller-agent\nTYPE: error\nCONTENT: 404 not-found error \u2014 the requested resource could not be located.",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 30,
+        "o200k_base": 30
+      },
+      "latency_ms": 6635,
+      "timestamp": "2026-02-12T21:00:08.169921+00:00"
+    },
+    {
+      "task_id": "L2-01",
+      "condition": "structured_english",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "FROM: ci-agent\nTO: builder-agent\nTYPE: request\nCONTENT: Please build repo branch main at commit a1b2c3d4e5f6g7h8i9j0. Include full test suite execution and report build artifacts to ci-agent upon completion.",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 59,
+        "o200k_base": 59
+      },
+      "latency_ms": 7644,
+      "timestamp": "2026-02-12T21:00:15.814783+00:00"
+    },
+    {
+      "task_id": "L2-02",
+      "condition": "structured_english",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "FROM: negotiation-agent\nTO: supplier-agent\nTYPE: propose\nCONTENT: Counter-proposal received at $2.20/unit. Market data supports $2.15 average. Recommend revised offer: $2.25/unit for 10,000 widgets, splitting the gap between original $2.50 and market benchmark. This maintains margin while demonstrating market awareness. Alternatively, maintain $2.30 if volume commitment extends to 15,000 units within 12 months. Please advise.",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 98,
+        "o200k_base": 98
+      },
+      "latency_ms": 7613,
+      "timestamp": "2026-02-12T21:00:23.429119+00:00"
+    },
+    {
+      "task_id": "L2-03",
+      "condition": "structured_english",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "FROM: task-coordinator\nTO: worker-pool\nTYPE: request\nCONTENT: Distribute data processing task across 3 workers. Worker-1 process range 0-1000, Worker-2 process range 1000-2000, Worker-3 process range 2000-3000. Report completion status upon finish.",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 69,
+        "o200k_base": 69
+      },
+      "latency_ms": 8285,
+      "timestamp": "2026-02-12T21:00:31.714966+00:00"
+    },
+    {
+      "task_id": "L3-01",
+      "condition": "structured_english",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "FROM: orchestrator\nTO: pipeline\nTYPE: request\nCONTENT: Fetch URL https://api.example.com/data, parse response as JSON, store result in database. Message ID: msg-2024-001. Protocol version: 1.0.",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 52,
+        "o200k_base": 52
+      },
+      "latency_ms": 6565,
+      "timestamp": "2026-02-12T21:00:38.281203+00:00"
+    },
+    {
+      "task_id": "L3-02",
+      "condition": "structured_english",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "FROM: monitor-system\nTO: incident-management\nTYPE: inform\nCONTENT: SEVERITY-2 INCIDENT ALERT: payments service experiencing latency > 2s. PRIORITY-LEVEL: 4. CAUSAL-CHAIN: traffic spike \u2192 database connection pool exhaustion \u2192 high latency. RESOLUTION-RECOMMENDATION: increase database connection pool size, implement connection pooling timeout, scale payment service instances, monitor latency metrics post-deployment.",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 89,
+        "o200k_base": 89
+      },
+      "latency_ms": 8129,
+      "timestamp": "2026-02-12T21:00:46.411352+00:00"
+    },
+    {
+      "task_id": "L3-03",
+      "condition": "structured_english",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "```\nMESSAGE-1\nID: msg-a-001\nFROM: agent-diagnostic\nTO: agent-system-monitor\nTYPE: query\nPROTOCOL: AXON/0.1\nTIMESTAMP: 2025-01-15T14:32:18.445Z\nCONTENT: diag(@system-monitor): [cpu_usage, memory_peak, connection_count, latency_p99]\n\n---\n\nMESSAGE-2\nID: msg-b-001\nFROM: agent-system-monitor\nTO: agent-diagnostic\nTYPE: reply\nPROTOCOL: AXON/0.1\nTIMESTAMP: 2025-01-15T14:32:21.103Z\nREPLY-TO: msg-a-001\nCONTENT: diag_result(\n  bottleneck=memory,\n  memory_peak=87.3%,\n  cpu_usage=42.1%,\n  connection_count=1247,\n  connection_limit=2048,\n  latency_p99=185ms,\n  saturation_trend=rising\n)\n\n---\n\nMESSAGE-3\nID: msg-a-002\nFROM: agent-diagnostic\nTO: agent-system-monitor\nTYPE: request\nPROTOCOL: AXON/0.1\nTIMESTAMP: 2025-01-15T14:32:24.667Z\nREPLY-TO: msg-b-001\nCONTENT: scale(@system-monitor): [memory_pool+=512MB, connection_limit*=1.5]\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 296,
+        "o200k_base": 297
+      },
+      "latency_ms": 11371,
+      "timestamp": "2026-02-12T21:00:57.783865+00:00"
+    },
+    {
+      "task_id": "L1-01",
+      "condition": "instruction_matched_english",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "[message-id: m1]\nQUERY (Agent-A -> Agent-B):\n  target: web-server\n  property: status",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 25,
+        "o200k_base": 25
+      },
+      "latency_ms": 7161,
+      "timestamp": "2026-02-12T21:01:04.946491+00:00"
+    },
+    {
+      "task_id": "L1-02",
+      "condition": "instruction_matched_english",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "[message-id: m1]\nINFORM (agent-b -> agent-a):\n  subject: server-health\n  status: healthy\n  uptime: 99.7%",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 35,
+        "o200k_base": 35
+      },
+      "latency_ms": 6808,
+      "timestamp": "2026-02-12T21:01:11.755399+00:00"
+    },
+    {
+      "task_id": "L1-03",
+      "condition": "instruction_matched_english",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "[message-id: m1]\nERROR (service-agent -> caller-agent):\n  error-code: 404\n  error-type: not-found\n  description: The requested resource could not be found\n  timestamp: 1704067200",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 48,
+        "o200k_base": 48
+      },
+      "latency_ms": 6859,
+      "timestamp": "2026-02-12T21:01:18.615654+00:00"
+    },
+    {
+      "task_id": "L2-01",
+      "condition": "instruction_matched_english",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "[message-id: m1]\nREQUEST (ci-agent -> builder-agent):\n  action: build\n  repository: {repo-url}\n  branch: {branch-name}\n  commit: {commit-hash}\n  priority: standard\n  notify-on-completion: true",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 53,
+        "o200k_base": 54
+      },
+      "latency_ms": 8156,
+      "timestamp": "2026-02-12T21:01:26.773106+00:00"
+    },
+    {
+      "task_id": "L2-02",
+      "condition": "instruction_matched_english",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "[message-id: m1]\nCOUNTER (buyer -> supplier):\n  offer-price: 2.20\n  quantity: 10000\n  justification: market-average-cited-at-2.15\n  rationale: current-proposal-exceeds-prevailing-market-rate",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 56,
+        "o200k_base": 55
+      },
+      "latency_ms": 6908,
+      "timestamp": "2026-02-12T21:01:33.682145+00:00"
+    },
+    {
+      "task_id": "L2-03",
+      "condition": "instruction_matched_english",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "[message-id: m1]\nCOMMAND (planner -> worker-1):\n  task: process-segment\n  range-start: 0\n  range-end: 1000\n  segment-id: segment-1\n\n[message-id: m2]\nCOMMAND (planner -> worker-2):\n  task: process-segment\n  range-start: 1000\n  range-end: 2000\n  segment-id: segment-2\n\n[message-id: m3]\nCOMMAND (planner -> worker-3):\n  task: process-segment\n  range-start: 2000\n  range-end: 3000\n  segment-id: segment-3",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 139,
+        "o200k_base": 136
+      },
+      "latency_ms": 7743,
+      "timestamp": "2026-02-12T21:01:41.426896+00:00"
+    },
+    {
+      "task_id": "L3-01",
+      "condition": "instruction_matched_english",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "[message-id: m-7f2a9c1d]\n[protocol-version: 1.0]\nCOMMAND (orchestrator -> pipeline):\n  action: execute-workflow\n  steps:\n    - step-id: 1\n      operation: fetch-url\n      parameters:\n        url: {url}\n    - step-id: 2\n      operation: parse-json\n      parameters:\n        input: {step-1-output}\n    - step-id: 3\n      operation: store-database\n      parameters:\n        data: {step-2-output}\n        table: {target-table}\n  workflow-id: wf-fetch-parse-store\n  timestamp: 1704067200",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 142,
+        "o200k_base": 143
+      },
+      "latency_ms": 7771,
+      "timestamp": "2026-02-12T21:01:49.199078+00:00"
+    },
+    {
+      "task_id": "L3-02",
+      "condition": "instruction_matched_english",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "[message-id: incident-alert-001]\nPUBLISH (monitor -> incident-management):\n  incident-type: severity-2\n  service: payments\n  metric: latency\n  threshold: >2s\n  priority-level: 4\n  causal-chain:\n    - cause: traffic spike\n      effect: database connection pool exhaustion\n    - cause: database connection pool exhaustion\n      effect: high latency\n  resolution-recommendation: Scale database connection pool capacity and implement rate limiting on ingress traffic to prevent future exhaustion events\n  timestamp: 1704067200",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 115,
+        "o200k_base": 115
+      },
+      "latency_ms": 8789,
+      "timestamp": "2026-02-12T21:01:57.989805+00:00"
+    },
+    {
+      "task_id": "L3-03",
+      "condition": "instruction_matched_english",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "[message-id: msg_001]\n[protocol-version: 1.0]\n[timestamp: 1704067200]\nQUERY (agent-a -> agent-b):\n  target: agent-b\n  diagnostics: full\n  scope: performance\n  include: bottleneck, latency, throughput\n\n[message-id: msg_002]\n[protocol-version: 1.0]\n[timestamp: 1704067215]\n[reply-to: msg_001]\nREPLY (agent-b -> agent-a):\n  status: ok\n  bottleneck:\n    component: database-query-pool\n    utilization: 94%\n    queue-depth: 342\n  connection-stats:\n    active-connections: 487\n    avg-latency-ms: 245\n    throughput-rps: 1203\n    error-rate: 0.002\n\n[message-id: msg_003]\n[protocol-version: 1.0]\n[timestamp: 1704067230]\n[reply-to: msg_002]\nREQUEST (agent-a -> agent-b):\n  action: scale\n  target: database-query-pool\n  scaling-factor: 1.5\n  priority: high\n  deadline-seconds: 300",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 246,
+        "o200k_base": 250
+      },
+      "latency_ms": 8998,
+      "timestamp": "2026-02-12T21:02:06.989304+00:00"
+    },
+    {
+      "task_id": "L1-01",
+      "condition": "json_fc",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "```json\n{\n  \"performative\": \"query\",\n  \"from\": \"agent-a\",\n  \"to\": \"agent-b\",\n  \"content\": {\n    \"target\": \"web-server\",\n    \"property\": \"status\"\n  }\n}\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 52,
+        "o200k_base": 52
+      },
+      "latency_ms": 7409,
+      "timestamp": "2026-02-12T21:02:14.400008+00:00"
+    },
+    {
+      "task_id": "L1-02",
+      "condition": "json_fc",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "```json\n{\n  \"performative\": \"inform\",\n  \"from\": \"agent-b\",\n  \"to\": \"agent-a\",\n  \"content\": {\n    \"status\": \"healthy\",\n    \"uptime\": 0.997\n  }\n}\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 53,
+        "o200k_base": 54
+      },
+      "latency_ms": 6913,
+      "timestamp": "2026-02-12T21:02:21.314035+00:00"
+    },
+    {
+      "task_id": "L1-03",
+      "condition": "json_fc",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "```json\n{\n  \"performative\": \"inform\",\n  \"from\": \"service-agent\",\n  \"to\": \"caller-agent\",\n  \"content\": {\n    \"status\": \"error\",\n    \"code\": 404,\n    \"message\": \"not-found\",\n    \"description\": \"The requested resource was not found\"\n  }\n}\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 71,
+        "o200k_base": 71
+      },
+      "latency_ms": 6742,
+      "timestamp": "2026-02-12T21:02:28.057441+00:00"
+    },
+    {
+      "task_id": "L2-01",
+      "condition": "json_fc",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "```json\n{\n  \"performative\": \"request\",\n  \"from\": \"ci-agent\",\n  \"to\": \"builder-agent\",\n  \"content\": {\n    \"action\": \"build\",\n    \"repository\": \"invent-new-language\",\n    \"branch\": \"main\",\n    \"commit\": \"HEAD\"\n  }\n}\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 68,
+        "o200k_base": 67
+      },
+      "latency_ms": 6854,
+      "timestamp": "2026-02-12T21:02:34.912969+00:00"
+    },
+    {
+      "task_id": "L2-02",
+      "condition": "json_fc",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "```json\n{\n  \"performative\": \"counter\",\n  \"from\": \"buyer\",\n  \"to\": \"supplier\",\n  \"content\": {\n    \"proposal\": \"purchase 10000 widgets at $2.20 per unit\",\n    \"total_cost\": 22000,\n    \"reasoning\": \"Market average pricing at $2.15 supports a counter at $2.20. This reflects current competitive rates while acknowledging the supplier's position above baseline.\",\n    \"next_steps\": \"We can proceed with this pricing or explore a volume commitment for further optimization.\"\n  }\n}\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 120,
+        "o200k_base": 120
+      },
+      "latency_ms": 7330,
+      "timestamp": "2026-02-12T21:02:42.244216+00:00"
+    },
+    {
+      "task_id": "L2-03",
+      "condition": "json_fc",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "```json\n{\n  \"performative\": \"request\",\n  \"from\": \"planner\",\n  \"to\": [\"worker-1\", \"worker-2\", \"worker-3\"],\n  \"content\": {\n    \"task\": \"process_data\",\n    \"segments\": [\n      {\n        \"worker_id\": \"worker-1\",\n        \"range\": {\"start\": 0, \"end\": 1000}\n      },\n      {\n        \"worker_id\": \"worker-2\",\n        \"range\": {\"start\": 1000, \"end\": 2000}\n      },\n      {\n        \"worker_id\": \"worker-3\",\n        \"range\": {\"start\": 2000, \"end\": 3000}\n      }\n    ]\n  }\n}\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 158,
+        "o200k_base": 157
+      },
+      "latency_ms": 7156,
+      "timestamp": "2026-02-12T21:02:49.401949+00:00"
+    },
+    {
+      "task_id": "L3-01",
+      "condition": "json_fc",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "```json\n{\n  \"performative\": \"command\",\n  \"from\": \"orchestrator\",\n  \"to\": \"pipeline\",\n  \"content\": {\n    \"tasks\": [\n      {\n        \"action\": \"fetch\",\n        \"target\": \"url\",\n        \"protocol_version\": \"1.0\"\n      },\n      {\n        \"action\": \"parse\",\n        \"format\": \"json\"\n      },\n      {\n        \"action\": \"store\",\n        \"destination\": \"database\"\n      }\n    ]\n  },\n  \"id\": \"msg-orch-001\",\n  \"timestamp\": 1704067200\n}\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 129,
+        "o200k_base": 129
+      },
+      "latency_ms": 8751,
+      "timestamp": "2026-02-12T21:02:58.154967+00:00"
+    },
+    {
+      "task_id": "L3-02",
+      "condition": "json_fc",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "```\nPUB(monitor>*): incident(\n  service=\"payments\",\n  severity=2,\n  priority=4,\n  alert=\"latency > 2s\",\n  causal_chain=[\n    traffic_spike,\n    -> database_connection_pool_exhaustion,\n    -> high_latency\n  ],\n  resolution=\"Scale database connection pool and implement traffic rate limiting\"\n)\n```",
+      "valid": false,
+      "errors": [
+        "Invalid JSON: Expecting value: line 1 column 1 (char 0)"
+      ],
+      "token_counts": {
+        "cl100k_base": 75,
+        "o200k_base": 74
+      },
+      "latency_ms": 8957,
+      "timestamp": "2026-02-12T21:03:07.113753+00:00"
+    },
+    {
+      "task_id": "L3-03",
+      "condition": "json_fc",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "```json\n{\n  \"performative\": \"query\",\n  \"from\": \"agent-a\",\n  \"to\": \"agent-b\",\n  \"content\": {\n    \"target\": \"system\",\n    \"property\": \"diagnostics\",\n    \"query_type\": \"full_health_check\"\n  },\n  \"id\": \"m1-a2b-query\",\n  \"timestamp\": 1704067200,\n  \"context\": \"diagnostics-session-001\",\n  \"metadata\": {\n    \"protocol_version\": \"1.0\",\n    \"priority\": \"high\"\n  }\n}\n```\n\n```json\n{\n  \"performative\": \"reply\",\n  \"from\": \"agent-b\",\n  \"to\": \"agent-a\",\n  \"content\": {\n    \"diagnostics\": {\n      \"bottleneck\": \"memory_allocation\",\n      \"severity\": \"medium\",\n      \"details\": \"Heap utilization at 87%, GC pause time elevated\",\n      \"connection_stats\": {\n        \"active_connections\": 2847,\n        \"failed_connections\": 12,\n        \"avg_latency_ms\": 145,\n        \"throughput_mbps\": 892\n      }\n    }\n  },\n  \"id\": \"m2-b2a-reply\",\n  \"reply_to\": \"m1-a2b-query\",\n  \"timestamp\": 1704067215,\n  \"context\": \"diagnostics-session-001\",\n  \"metadata\": {\n    \"protocol_version\": \"1.0\"\n  }\n}\n```\n\n```json\n{\n  \"performative\": \"request\",\n  \"from\": \"agent-a\",\n  \"to\": \"agent-b\",\n  \"content\": {\n    \"action\": \"scale_resources\",\n    \"target\": \"memory_pool\",\n    \"parameters\": {\n      \"increase_percentage\": 25,\n      \"priority\": \"immediate\"\n    }\n  },\n  \"id\": \"m3-a2b-request\",\n  \"reply_to\": \"m2-b2a-reply\",\n  \"timestamp\": 1704067230,\n  \"context\": \"diagnostics-session-001\",\n  \"metadata\": {\n    \"protocol_version\": \"1.0\",\n    \"requires_confirmation\": true\n  }\n}\n```",
+      "valid": false,
+      "errors": [
+        "Invalid JSON: Extra data: line 18 column 1 (char 349)"
+      ],
+      "token_counts": {
+        "cl100k_base": 452,
+        "o200k_base": 455
+      },
+      "latency_ms": 10158,
+      "timestamp": "2026-02-12T21:03:17.273732+00:00"
+    },
+    {
+      "task_id": "L1-01",
+      "condition": "fipa_acl",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "```\n(query-ref\n  :sender agent-a\n  :receiver agent-b\n  :content \"((status web-server))\"\n  :reply-with m1\n  :language SL\n)\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 40,
+        "o200k_base": 41
+      },
+      "latency_ms": 8734,
+      "timestamp": "2026-02-12T21:03:26.009070+00:00"
+    },
+    {
+      "task_id": "L1-02",
+      "condition": "fipa_acl",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "(inform\n  :sender agent-b\n  :receiver agent-a\n  :content \"((server-status healthy) (uptime 99.7))\"\n  :language SL\n)",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 37,
+        "o200k_base": 39
+      },
+      "latency_ms": 7324,
+      "timestamp": "2026-02-12T21:03:33.334840+00:00"
+    },
+    {
+      "task_id": "L1-03",
+      "condition": "fipa_acl",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "```\n(inform\n  :sender service-agent\n  :receiver caller-agent\n  :content \"((error 404) (message not-found))\"\n  :language SL\n)\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 38,
+        "o200k_base": 39
+      },
+      "latency_ms": 6983,
+      "timestamp": "2026-02-12T21:03:40.319108+00:00"
+    },
+    {
+      "task_id": "L2-01",
+      "condition": "fipa_acl",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "```\n(request\n  :sender ci-agent\n  :receiver builder-agent\n  :content \"((build-repo :repo-url <repo-url> :branch <branch-name> :commit <commit-hash>))\"\n  :reply-with build-request-1\n  :language SL\n  :ontology build-service\n)\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 66,
+        "o200k_base": 68
+      },
+      "latency_ms": 7153,
+      "timestamp": "2026-02-12T21:03:47.473090+00:00"
+    },
+    {
+      "task_id": "L2-02",
+      "condition": "fipa_acl",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "(propose\n  :sender buyer-agent\n  :receiver supplier-agent\n  :content \"((price-negotiation (quantity 10000) (unit widget) (buyer-offer 2.20) (justification market-average-2.15) (rationale cost-competitiveness)))\"\n  :reply-with neg-001\n  :language SL\n  :ontology commercial-negotiation\n)",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 85,
+        "o200k_base": 85
+      },
+      "latency_ms": 6117,
+      "timestamp": "2026-02-12T21:03:53.590892+00:00"
+    },
+    {
+      "task_id": "L2-03",
+      "condition": "fipa_acl",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "```\n(inform\n  :sender planner\n  :receiver workers\n  :content \"((task-assignment\n    (worker worker-1 (segment 0 1000))\n    (worker worker-2 (segment 1000 2000))\n    (worker worker-3 (segment 2000 3000))))\"\n  :language SL\n  :ontology task-distribution\n)\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 83,
+        "o200k_base": 83
+      },
+      "latency_ms": 6970,
+      "timestamp": "2026-02-12T21:04:00.562576+00:00"
+    },
+    {
+      "task_id": "L3-01",
+      "condition": "fipa_acl",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "```\n(request\n  :sender orchestrator\n  :receiver pipeline\n  :content (\n    (action fetch-url\n      :url \"https://example.com/data\"\n      :protocol-version \"1.0\"\n    )\n    (action parse-json\n      :input (result fetch-url)\n      :protocol-version \"1.0\"\n    )\n    (action store-database\n      :input (result parse-json)\n      :database \"primary\"\n      :protocol-version \"1.0\"\n    )\n  )\n  :reply-with \"msg-orchestrator-pipeline-001\"\n  :language SL\n  :ontology \"pipeline-coordination\"\n)\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 135,
+        "o200k_base": 134
+      },
+      "latency_ms": 6646,
+      "timestamp": "2026-02-12T21:04:07.210129+00:00"
+    },
+    {
+      "task_id": "L3-02",
+      "condition": "fipa_acl",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "```\n(inform\n  :sender monitor-service\n  :receiver ops-team\n  :content \"\n    (incident-alert\n      (severity 2)\n      (service payments)\n      (metric latency)\n      (threshold 2000)\n      (unit ms)\n      (priority-level 4)\n      (causal-chain\n        (cause-1 traffic-spike)\n        (effect-1 database-connection-pool-exhaustion)\n        (cause-2 database-connection-pool-exhaustion)\n        (effect-2 high-latency)\n      )\n      (resolution-recommendation\n        (action-1 scale-database-connection-pool)\n        (action-2 enable-traffic-throttling)\n        (action-3 monitor-pool-utilization)\n      )\n    )\n  \"\n  :reply-with incident-001\n  :language SL\n  :ontology incident-management\n)\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 185,
+        "o200k_base": 186
+      },
+      "latency_ms": 7653,
+      "timestamp": "2026-02-12T21:04:14.865496+00:00"
+    },
+    {
+      "task_id": "L3-03",
+      "condition": "fipa_acl",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "```\n(query-ref\n  :sender agent-a\n  :receiver agent-b\n  :message-id \"msg-001\"\n  :protocol-version \"1.0\"\n  :timestamp \"2025-01-16T10:30:00Z\"\n  :content \"((diagnostics system-health performance-metrics connection-status))\"\n  :language SL\n  :ontology \"system-diagnostics\"\n)\n\n(inform\n  :sender agent-b\n  :receiver agent-a\n  :message-id \"msg-002\"\n  :protocol-version \"1.0\"\n  :timestamp \"2025-01-16T10:30:15Z\"\n  :in-reply-to \"msg-001\"\n  :reply-with \"msg-002\"\n  :content \"((bottleneck memory-allocation 87-percent) (connection-stats (latency 245ms) (throughput 1.2-gbps) (packet-loss 0.03-percent) (active-connections 1847)))\"\n  :language SL\n  :ontology \"system-diagnostics\"\n)\n\n(request\n  :sender agent-a\n  :receiver agent-b\n  :message-id \"msg-003\"\n  :protocol-version \"1.0\"\n  :timestamp \"2025-01-16T10:30:45Z\"\n  :in-reply-to \"msg-002\"\n  :reply-with \"msg-003\"\n  :content \"((action scale-resources) (target memory) (scale-factor 1.5) (timeout 300s))\"\n  :language SL\n  :ontology \"system-diagnostics\"\n)\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 330,
+        "o200k_base": 336
+      },
+      "latency_ms": 9982,
+      "timestamp": "2026-02-12T21:04:24.849475+00:00"
+    },
+    {
+      "task_id": "L1-01",
+      "condition": "axon",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "[id:\"m1\", %%:1]\nQRY(@agent-a>@agent-b): status(@web-server)",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 23,
+        "o200k_base": 23
+      },
+      "latency_ms": 6297,
+      "timestamp": "2026-02-12T21:04:31.154582+00:00"
+    },
+    {
+      "task_id": "L1-02",
+      "condition": "axon",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "[id:\"m1\", %%:1]\nINF(@agent-b>@agent-a): #status{server:@server, health:#healthy, uptime:99.7%}",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 35,
+        "o200k_base": 35
+      },
+      "latency_ms": 6807,
+      "timestamp": "2026-02-12T21:04:37.963245+00:00"
+    },
+    {
+      "task_id": "L1-03",
+      "condition": "axon",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "[id:\"m1\", %%:1]\nERR(@service>@caller): #not-found{resource:\"requested-endpoint\", status:404, message:\"Resource not found\"}",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 35,
+        "o200k_base": 35
+      },
+      "latency_ms": 5478,
+      "timestamp": "2026-02-12T21:04:43.442606+00:00"
+    },
+    {
+      "task_id": "L2-01",
+      "condition": "axon",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "[id:\"msg-1\", %%:1, ts:1704067200, ^:3]\nCMD(@ci-agent>@builder-agent): build({repo:\"<repo>\", branch:\"<branch>\", commit:\"<commit>\"})",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 47,
+        "o200k_base": 47
+      },
+      "latency_ms": 6397,
+      "timestamp": "2026-02-12T21:04:49.841188+00:00"
+    },
+    {
+      "task_id": "L2-02",
+      "condition": "axon",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "[id:\"m1\", %%:1, ts:1700000000, ^:3]\nCTR(@buyer>@supplier): {offer:10000.units, price:2.20usd/unit, rationale:\"market-average:2.15usd/unit, your-ask:2.50usd/unit\"}",
+      "valid": false,
+      "errors": [
+        "AXON parse error: Lexer error at 2:57: Unexpected character: '/'"
+      ],
+      "token_counts": {
+        "cl100k_base": 65,
+        "o200k_base": 62
+      },
+      "latency_ms": 4876,
+      "timestamp": "2026-02-12T21:04:54.718513+00:00"
+    },
+    {
+      "task_id": "L2-03",
+      "condition": "axon",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "[id:\"m1\", %%:1]\nCMD(@planner>@worker-1): process($range{start:0, end:1000})\n\n[id:\"m2\", %%:1]\nCMD(@planner>@worker-2): process($range{start:1000, end:2000})\n\n[id:\"m3\", %%:1]\nCMD(@planner>@worker-3): process($range{start:2000, end:3000})",
+      "valid": false,
+      "errors": [
+        "AXON parse error: Parse error at 2:40: Expected , (got {: '{')"
+      ],
+      "token_counts": {
+        "cl100k_base": 95,
+        "o200k_base": 92
+      },
+      "latency_ms": 6316,
+      "timestamp": "2026-02-12T21:05:01.036254+00:00"
+    },
+    {
+      "task_id": "L3-01",
+      "condition": "axon",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "[id:\"m1\", %%:1]\nCMD(@orchestrator>@pipeline): fetch($url) -> parse(\"json\") -> store($db)",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 31,
+        "o200k_base": 31
+      },
+      "latency_ms": 5675,
+      "timestamp": "2026-02-12T21:05:06.712239+00:00"
+    },
+    {
+      "task_id": "L3-02",
+      "condition": "axon",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "```\n[id:\"alert-001\", %%:1, ^:4]\nPUB(@monitor>@incident-handlers): #incident{severity:2, service:\"payments\", issue:\"latency > 2s\", cause:(\"database connection pool exhaustion\" <- \"traffic spike\"), recommendation:\"increase connection pool size and implement rate limiting\"}\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 70,
+        "o200k_base": 69
+      },
+      "latency_ms": 7775,
+      "timestamp": "2026-02-12T21:05:14.488977+00:00"
+    },
+    {
+      "task_id": "L3-03",
+      "condition": "axon",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "```\n[id:\"msg-001\", %%:1, ts:1704067200]\nQRY(@agent-a>@agent-b): diagnostics(@system, #full{scope:\"performance\"})\n\n[id:\"msg-002\", %%:1, ts:1704067215, re:\"msg-001\"]\nINF(@agent-b>@agent-a): #diagnostics{bottleneck:#cpu{utilization:94.2%, threshold:90%}, connections:#stats{active:1247, queued:89, latency:~245ms}, memory:#status{used:78.5%, available:21.5%}}\n\n[id:\"msg-003\", %%:1, ts:1704067230, re:\"msg-002\"]\nREQ(@agent-a>@agent-b): scale(@system, #params{target_utilization:75%, add_instances:2, strategy:\"load-balance\"})\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 185,
+        "o200k_base": 185
+      },
+      "latency_ms": 6787,
+      "timestamp": "2026-02-12T21:05:21.278732+00:00"
+    }
+  ]
+}
