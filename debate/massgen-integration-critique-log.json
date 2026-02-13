@@ -1,0 +1,101 @@
+[
+  {
+    "id": "massgen-C01",
+    "source": "codex-round-1",
+    "text": "Exp 5 target drift: draft argues against MassGen for 128-agent scaling, but preregistration defines Exp 5 as cross-model variance",
+    "classification": "valid",
+    "impact": "changed",
+    "severity": "critical",
+    "caught_by_self_review": false
+  },
+  {
+    "id": "massgen-C02",
+    "source": "codex-round-1",
+    "text": "~100 lines of Python estimate for 128-agent orchestration is hand-wavy; Exp 0 runner is already 410 lines for sequential execution",
+    "classification": "valid",
+    "impact": "changed",
+    "severity": "major",
+    "caught_by_self_review": true
+  },
+  {
+    "id": "massgen-C03",
+    "source": "codex-round-1",
+    "text": "Infrastructure vs condition distinction is real but draft conflates them; MassGen as controlled infrastructure is not a confound",
+    "classification": "valid",
+    "impact": "changed",
+    "severity": "major",
+    "caught_by_self_review": true
+  },
+  {
+    "id": "massgen-C04",
+    "source": "codex-round-1",
+    "text": "Status-quo bias: all-scenarios-negative from the model that designed the plan should be treated with suspicion",
+    "classification": "valid",
+    "impact": "changed",
+    "severity": "moderate",
+    "caught_by_self_review": true
+  },
+  {
+    "id": "massgen-C05",
+    "source": "codex-round-1",
+    "text": "Isolation is necessary for internal validity but insufficient for external validity; ecological validity gap is real",
+    "classification": "valid",
+    "impact": "acknowledged",
+    "severity": "major",
+    "caught_by_self_review": true
+  },
+  {
+    "id": "massgen-C06",
+    "source": "codex-round-1",
+    "text": "Practical compromise: run prereg analyses first, then exploratory MassGen replication with format x orchestration interaction analysis",
+    "classification": "valid",
+    "impact": "changed",
+    "severity": "major",
+    "caught_by_self_review": false
+  },
+  {
+    "id": "massgen-C07",
+    "source": "codex-round-1",
+    "text": "Track B: consensus review is a different mechanism from adversarial review; viable as additional arm, not substitute",
+    "classification": "valid",
+    "impact": "acknowledged",
+    "severity": "moderate",
+    "caught_by_self_review": false
+  },
+  {
+    "id": "massgen-C08",
+    "source": "codex-round-2",
+    "text": "Exploratory phase acceptance is promissory: no defined scope, experiments, runs, or success criteria",
+    "classification": "valid",
+    "impact": "acknowledged",
+    "severity": "major",
+    "caught_by_self_review": false
+  },
+  {
+    "id": "massgen-C09",
+    "source": "codex-round-2",
+    "text": "Decision-point ambiguity: 'after primary analyses complete' is undefined and enables indefinite deferral",
+    "classification": "valid",
+    "impact": "acknowledged",
+    "severity": "moderate",
+    "caught_by_self_review": false
+  },
+  {
+    "id": "massgen-C10",
+    "source": "codex-round-2",
+    "text": "Noise objection to MassGen-as-infrastructure is speculative without variance budget or sensitivity analysis",
+    "classification": "partially_valid",
+    "impact": "acknowledged",
+    "severity": "minor",
+    "caught_by_self_review": false
+  },
+  {
+    "id": "massgen-C11",
+    "source": "codex-round-2",
+    "text": "Burden-shift: Claude demands scoping from Codex without proposing a competing concrete scope",
+    "classification": "valid",
+    "impact": "acknowledged",
+    "severity": "moderate",
+    "caught_by_self_review": false
+  }
+]
