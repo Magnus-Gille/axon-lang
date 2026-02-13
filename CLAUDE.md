@@ -44,6 +44,7 @@ Parser and validator are stdlib Python only. Experiments require `tiktoken` (`pi
   - `experiments/exp0_learnability/` — Learnability gate experiment
   - `experiments/FAIRNESS.md` — Fairness protocol for 6-condition design
   - `experiments/PREREGISTRATION.md` — Pre-registered analysis plan
+  - `experiments/MASSGEN_ADDENDUM.md` — Exploratory MassGen ecosystem-validity extension
 - `RESEARCH.md` — Evidence-backed rationale (20+ sources)
 - `debate/` — Adversarial review transcripts and outcomes
 
@@ -89,6 +90,7 @@ Every debate feeds Track B. All future debates must capture: per-point metadata,
 - ~100 critique points raised, ~85% resolved
 - Core open question (Track A): does AXON beat controlled English + function calling? Exp 0 is promising but preliminary.
 - Methodology paper (Track B): publishable as registered pilot + prospective protocol paper if 6-item checklist is met
+- **MassGen addendum** (exploratory): Frozen plan to replicate Exp 3 + Exp 4 through MassGen multi-agent orchestration after prereg experiments complete. Tests ecological validity — whether format advantages survive real orchestration. Activates only if prereg shows significant AXON advantage. See `experiments/MASSGEN_ADDENDUM.md` and `debate/massgen-integration-summary.md`.
 
 ## Conventions
 
