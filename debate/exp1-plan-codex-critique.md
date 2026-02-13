@@ -1,0 +1,49 @@
+# Exp 1 Token Efficiency Plan — Adversarial Critique
+
+## Strengths
+
+- The primary endpoint is explicit and aligned with the pre-registered Exp 1 question: tokens per semantic unit (`debate/exp1-plan-claude-draft.md:11`, `experiments/PREREGISTRATION.md:40`).
+- The draft attempts operationalization rather than hand-wavy scoring by defining element categories and per-task checklists (`debate/exp1-plan-claude-draft.md:42`, `debate/exp1-plan-claude-draft.md:65`).
+- The plan explicitly flags key threats (data reuse, prompt overhead, multi-message confounds, zero-denominator pathology) instead of hiding them (`debate/exp1-plan-claude-draft.md:334`, `debate/exp1-plan-claude-draft.md:339`, `debate/exp1-plan-claude-draft.md:340`, `debate/exp1-plan-claude-draft.md:341`).
+- Including a sensitivity analysis for invalid outputs is directionally good practice (`debate/exp1-plan-claude-draft.md:247`).
+
+## Critical issues
+
+- **Post-hoc analytic flexibility is too high for a "pre-registered" claim.** Pre-registration is stated as frozen before collection (`experiments/PREREGISTRATION.md:4`), but this draft introduces core scoring machinery (taxonomy, per-task element decomposition, judge protocol) after data exist (`debate/exp1-plan-claude-draft.md:24`, `debate/exp1-plan-claude-draft.md:38`, `debate/exp1-plan-claude-draft.md:180`) and still leaves unresolved design choices (`debate/exp1-plan-claude-draft.md:332`). That is a direct researcher-degrees-of-freedom risk unless formally logged as deviation before analysis (`experiments/PREREGISTRATION.md:159`).
+- **The judging protocol conflicts with the fairness pre-commitment.** Fairness protocol commits to 3-way judging, majority rule, and a human validation subset (`experiments/FAIRNESS.md:32`, `experiments/FAIRNESS.md:46`, `experiments/FAIRNESS.md:51`), while the draft switches to 2 judges with manual resolution (`debate/exp1-plan-claude-draft.md:198`, `debate/exp1-plan-claude-draft.md:201`). Fairness also requires condition blinding where possible (`experiments/FAIRNESS.md:92`), but the proposed judge setup scores raw outputs with format signals intact (`debate/exp1-plan-claude-draft.md:187`).
+- **Task semantics are being redefined post hoc and inconsistently with canonical task specs.** L2-02 expected elements are 8 in task spec (`experiments/exp0_learnability/tasks/tasks.json:37`) but 11 in Exp 1 draft (`debate/exp1-plan-claude-draft.md:103`).
+- **Task semantics are being redefined post hoc and inconsistently with canonical task specs.** L2-03 expected elements are 5 (`experiments/exp0_learnability/tasks/tasks.json:44`) but 9 in draft (`debate/exp1-plan-claude-draft.md:118`).
+- **Task semantics are being redefined post hoc and inconsistently with canonical task specs.** L3-03 expected elements are 5 (`experiments/exp0_learnability/tasks/tasks.json:65`) but 22 in draft (`debate/exp1-plan-claude-draft.md:157`). This is not a small bookkeeping difference; it changes the denominator and can alter winners.
+- **Prompt-overhead confounding is acknowledged but not integrated into the primary estimand.** Fairness imposes prompt budget controls and max shortest:longest ratio (`experiments/FAIRNESS.md:18`), pre-registration requires reporting prompt token counts (`experiments/PREREGISTRATION.md:155`), and the draft itself flags the confound (`debate/exp1-plan-claude-draft.md:339`) yet keeps primary metric output-only (`debate/exp1-plan-claude-draft.md:11`). That can over-credit formats requiring much larger instruction priors.
+
+## Major issues
+
+- **Reusing Exp 0 is only partially defensible and currently under-justified.** Reuse is plausible under a shared 6x9xN design (`experiments/PREREGISTRATION.md:10`), but Exp 0 was a learnability gate (`experiments/PREREGISTRATION.md:22`) and reports token efficiency on valid outputs only (`experiments/exp0_learnability/RESULTS.md:51`). Exp 1 instead chooses to include invalids in primary analysis (`debate/exp1-plan-claude-draft.md:247`). That is a changed estimand requiring explicit prereg deviation handling (`experiments/PREREGISTRATION.md:159`).
+- **Statistical model is under-specified for this outcome.** The draft model is linear mixed-effects on a ratio (`debate/exp1-plan-claude-draft.md:258`) with no handling of skew/heavy tails and no pre-specified treatment for undefined ratios when elements=0 (`debate/exp1-plan-claude-draft.md:341`). A ratio outcome with structural zeros typically needs a two-part strategy or robust GLMM/log transform policy fixed in advance.
+- **Potential prereg mismatch on fixed effects.** The global prereg mixed model includes `complexity_level` (`experiments/PREREGISTRATION.md:111`), but draft primary model omits it (`debate/exp1-plan-claude-draft.md:260`). Given strong heterogeneity across L1-L3 tasks, omission risks confounding condition with complexity composition.
+- **Sample size/power claim is weak at current N.** Draft acknowledges 81 observations per condition (`debate/exp1-plan-claude-draft.md:32`), below prereg target 162 for medium effects (`experiments/PREREGISTRATION.md:120`). Being above the prereg minimum 54 (`experiments/PREREGISTRATION.md:121`) is not enough to claim planned power.
+- **Element taxonomy is not reproducible as written.** Multiple checklist checks are non-deterministic: "some repo identifier" (`debate/exp1-plan-claude-draft.md:99`), "some reasoning" (`debate/exp1-plan-claude-draft.md:116`), and "Receiver (any)" (`debate/exp1-plan-claude-draft.md:147`). Different judges can score these differently even with calibration.
+- **Density metric can be gamed by trivial element inflation.** Equal weighting (`debate/exp1-plan-claude-draft.md:56`) combined with many low-information metadata/identity elements (especially L3-03) (`debate/exp1-plan-claude-draft.md:160`) means formats that cheaply emit envelope fields may look "denser" even if substantive task content is unchanged.
+
+## Minor issues
+
+- **Internal inconsistency in outcome language.** Pre-registration Exp 1 analysis line says `tokens ~ condition ...` (`experiments/PREREGISTRATION.md:44`) while draft uses `tokens_per_unit` (`debate/exp1-plan-claude-draft.md:260`). If intentional, mark as deviation and run both.
+- **Calibration set is small and potentially optimistic.** 18 outputs for calibration (`debate/exp1-plan-claude-draft.md:232`) is thin relative to 486 outputs (`debate/exp1-plan-claude-draft.md:26`), especially with task heterogeneity.
+- **Manual disagreement review protocol is unspecified.** The draft says disagreements are manually reviewed (`debate/exp1-plan-claude-draft.md:201`) but does not define who adjudicates, whether blinded, or tie-break rules.
+- **No explicit cluster-aware bootstrap plan.** Bootstrapping is listed (`debate/exp1-plan-claude-draft.md:273`) but resampling unit is unspecified; naive row-level bootstrap would break within-task and within-model dependencies.
+
+## Per-task annotation issues
+
+- **L1-01**: Reasonably aligned with task schema (`experiments/exp0_learnability/tasks/tasks.json:9`; `debate/exp1-plan-claude-draft.md:67`). Main risk is vague matching rule "any reference" for identities (`debate/exp1-plan-claude-draft.md:70`).
+- **L1-02**: Mostly aligned (`experiments/exp0_learnability/tasks/tasks.json:16`; `debate/exp1-plan-claude-draft.md:75`). Need explicit synonym policy for status and uptime formatting to avoid judge drift.
+- **L1-03**: Mostly aligned (`experiments/exp0_learnability/tasks/tasks.json:23`; `debate/exp1-plan-claude-draft.md:84`). "not found" phrasing variants need deterministic acceptance criteria.
+- **L2-01**: Task has no canonical repo/branch/commit values (`experiments/exp0_learnability/tasks/tasks.json:29`), but scoring asks for those fields (`debate/exp1-plan-claude-draft.md:99`). Without gold values, this is presence-check, not correctness-check.
+- **L2-02**: Largest mismatch vs task schema (8 expected vs 11 scored) (`experiments/exp0_learnability/tasks/tasks.json:37`; `debate/exp1-plan-claude-draft.md:103`). Added elements (counter sender, separate market-average fact, explicit justification flag) materially change denominator and likely condition ranking.
+- **L2-03**: Over-specifies one segmentation realization (`debate/exp1-plan-claude-draft.md:127`) for a task phrased as "three equal segments" (`experiments/exp0_learnability/tasks/tasks.json:43`). Valid alternative splits may be falsely marked incorrect.
+- **L3-01**: Decomposes `sequence_of_actions` into three structural elements (`debate/exp1-plan-claude-draft.md:137`) while task schema treats sequence as one expected element (`experiments/exp0_learnability/tasks/tasks.json:51`). This inflates denominator post hoc.
+- **L3-02**: "Receiver (any)" (`debate/exp1-plan-claude-draft.md:147`) is too permissive for a "correctly expressed" metric. Also causal decomposition into two separate links should specify exact accepted lexical/logical forms.
+- **L3-03**: 22-element decomposition (`debate/exp1-plan-claude-draft.md:157`) versus 5 expected elements (`experiments/exp0_learnability/tasks/tasks.json:65`) is a fundamental redesign. Over half are envelope/threading elements (`debate/exp1-plan-claude-draft.md:160`), so metric may become metadata-compression score rather than semantic communication efficiency.
+
+## Overall verdict
+
+The plan is promising but not currently confirmatory-grade. The biggest blockers are post-hoc denominator construction, fairness-protocol deviations (judge panel/blinding), unresolved zero-denominator handling, and underpowered sample relative to target. Reusing Exp 0 can be defensible only if you explicitly label Exp 1 as exploratory under the prereg deviation protocol, lock a reproducible element rubric before scoring, and run prereg-faithful sensitivity analyses (3-judge + blinded subset + complexity-adjusted model + valid-only and all-output estimands).

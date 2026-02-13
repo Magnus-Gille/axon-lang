@@ -1,0 +1,227 @@
+[
+  {
+    "id": "exp1-C01",
+    "source": "codex-round-1",
+    "text": "Post-hoc analytic flexibility: scoring machinery defined after data exists creates researcher degrees of freedom",
+    "classification": "partially_valid",
+    "impact": "acknowledged",
+    "severity": "critical",
+    "caught_by_self_review": false
+  },
+  {
+    "id": "exp1-C02",
+    "source": "codex-round-1",
+    "text": "Judging protocol conflicts with FAIRNESS.md: 2-judge instead of 3-judge, no blinding, no human validation subset",
+    "classification": "valid",
+    "impact": "changed",
+    "severity": "critical",
+    "caught_by_self_review": true
+  },
+  {
+    "id": "exp1-C03",
+    "source": "codex-round-1",
+    "text": "Task element counts redefined post-hoc: L2-02 (8→11), L2-03 (5→9), L3-03 (5→22) change denominator and may alter winners",
+    "classification": "valid",
+    "impact": "changed",
+    "severity": "critical",
+    "caught_by_self_review": false
+  },
+  {
+    "id": "exp1-C04",
+    "source": "codex-round-1",
+    "text": "Prompt overhead acknowledged but not integrated into primary metric, can over-credit formats with larger instruction priors",
+    "classification": "partially_valid",
+    "impact": "acknowledged",
+    "severity": "critical",
+    "caught_by_self_review": true
+  },
+  {
+    "id": "exp1-C05",
+    "source": "codex-round-1",
+    "text": "Data reuse from Exp 0 changes estimand (including invalids vs valid-only) without deviation filing",
+    "classification": "partially_valid",
+    "impact": "acknowledged",
+    "severity": "major",
+    "caught_by_self_review": false
+  },
+  {
+    "id": "exp1-C06",
+    "source": "codex-round-1",
+    "text": "Statistical model under-specified: ratio outcome with skew/heavy tails, no log-transform or GLMM policy pre-specified",
+    "classification": "valid",
+    "impact": "changed",
+    "severity": "major",
+    "caught_by_self_review": false
+  },
+  {
+    "id": "exp1-C07",
+    "source": "codex-round-1",
+    "text": "Prereg model includes complexity_level fixed effect but Exp 1 draft omits it",
+    "classification": "valid",
+    "impact": "changed",
+    "severity": "major",
+    "caught_by_self_review": false
+  },
+  {
+    "id": "exp1-C08",
+    "source": "codex-round-1",
+    "text": "Sample size 81 per condition below prereg target 162, above minimum 54 but power claim is weak",
+    "classification": "partially_valid",
+    "impact": "acknowledged",
+    "severity": "major",
+    "caught_by_self_review": false
+  },
+  {
+    "id": "exp1-C09",
+    "source": "codex-round-1",
+    "text": "Element taxonomy not reproducible: 'some repo identifier', 'some reasoning', 'Receiver (any)' are non-deterministic",
+    "classification": "valid",
+    "impact": "changed",
+    "severity": "major",
+    "caught_by_self_review": false
+  },
+  {
+    "id": "exp1-C10",
+    "source": "codex-round-1",
+    "text": "Density metric gameable by trivial element inflation, equal weighting of identity vs causal chain",
+    "classification": "partially_valid",
+    "impact": "acknowledged",
+    "severity": "major",
+    "caught_by_self_review": false
+  },
+  {
+    "id": "exp1-C11",
+    "source": "codex-round-1",
+    "text": "Inconsistency between prereg (tokens ~ condition) and draft (tokens_per_unit ~ condition)",
+    "classification": "valid",
+    "impact": "acknowledged",
+    "severity": "minor",
+    "caught_by_self_review": false
+  },
+  {
+    "id": "exp1-C12",
+    "source": "codex-round-1",
+    "text": "Calibration set of 18 outputs is thin relative to 486 total",
+    "classification": "valid",
+    "impact": "acknowledged",
+    "severity": "minor",
+    "caught_by_self_review": false
+  },
+  {
+    "id": "exp1-C13",
+    "source": "codex-round-1",
+    "text": "Manual disagreement review protocol unspecified: who adjudicates, blinded or not, tie-break rules",
+    "classification": "valid",
+    "impact": "acknowledged",
+    "severity": "minor",
+    "caught_by_self_review": false
+  },
+  {
+    "id": "exp1-C14",
+    "source": "codex-round-1",
+    "text": "No cluster-aware bootstrap plan: resampling unit unspecified",
+    "classification": "valid",
+    "impact": "changed",
+    "severity": "minor",
+    "caught_by_self_review": false
+  },
+  {
+    "id": "exp1-C15",
+    "source": "codex-round-2",
+    "text": "Human validation subset (30 items) required by FAIRNESS.md but absent from plan and response",
+    "classification": "valid",
+    "impact": "acknowledged",
+    "severity": "major",
+    "caught_by_self_review": false
+  },
+  {
+    "id": "exp1-C16",
+    "source": "codex-round-2",
+    "text": "Must run prereg-faithful analysis alongside expanded analysis (dual reporting per PREREGISTRATION.md:161)",
+    "classification": "valid",
+    "impact": "acknowledged",
+    "severity": "critical",
+    "caught_by_self_review": false
+  },
+  {
+    "id": "exp1-C17",
+    "source": "codex-round-2",
+    "text": "Estimand contradiction: include invalids broadly but exclude zero-element outputs creates drift without two-part model",
+    "classification": "valid",
+    "impact": "acknowledged",
+    "severity": "major",
+    "caught_by_self_review": false
+  },
+  {
+    "id": "exp1-C18",
+    "source": "codex-round-2",
+    "text": "Blinding bias-check may be circular if ground truth comes from same judges being audited",
+    "classification": "valid",
+    "impact": "acknowledged",
+    "severity": "minor",
+    "caught_by_self_review": false
+  },
+  {
+    "id": "exp1-S01",
+    "source": "claude-self-review",
+    "text": "LLM judge may systematically bias element extraction in favor of English conditions (understands English better than AXON)",
+    "classification": "valid",
+    "impact": "acknowledged",
+    "severity": "major",
+    "caught_by_self_review": true
+  },
+  {
+    "id": "exp1-S02",
+    "source": "claude-self-review",
+    "text": "Element count granularity varies 5.5x across tasks (4 to 22)",
+    "classification": "valid",
+    "impact": "acknowledged",
+    "severity": "minor",
+    "caught_by_self_review": true
+  },
+  {
+    "id": "exp1-S03",
+    "source": "claude-self-review",
+    "text": "Prompt overhead not integrated into primary analysis",
+    "classification": "valid",
+    "impact": "acknowledged",
+    "severity": "major",
+    "caught_by_self_review": true
+  },
+  {
+    "id": "exp1-S04",
+    "source": "claude-self-review",
+    "text": "No repair cycle data collected (preregistered secondary endpoint unaddressed)",
+    "classification": "valid",
+    "impact": "acknowledged",
+    "severity": "minor",
+    "caught_by_self_review": true
+  },
+  {
+    "id": "exp1-S05",
+    "source": "claude-self-review",
+    "text": "Density metric undefined for zero-element outputs",
+    "classification": "valid",
+    "impact": "acknowledged",
+    "severity": "minor",
+    "caught_by_self_review": true
+  },
+  {
+    "id": "exp1-S06",
+    "source": "claude-self-review",
+    "text": "2-judge deviates from FAIRNESS.md 3-way protocol",
+    "classification": "valid",
+    "impact": "changed",
+    "severity": "minor",
+    "caught_by_self_review": true
+  },
+  {
+    "id": "exp1-S07",
+    "source": "claude-self-review",
+    "text": "No visualization plan specified",
+    "classification": "valid",
+    "impact": "acknowledged",
+    "severity": "minor",
+    "caught_by_self_review": true
+  }
+]

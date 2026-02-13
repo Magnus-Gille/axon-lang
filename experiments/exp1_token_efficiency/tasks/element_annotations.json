@@ -1,0 +1,293 @@
+{
+  "description": "Exp 1 semantic element definitions — dual-track (confirmatory + exploratory)",
+  "tracks": {
+    "A": "Prereg-faithful: uses Exp 0 expected_elements exactly as defined in tasks.json",
+    "B": "Expanded atomic: each countable fact is one element (exploratory)"
+  },
+  "tasks": [
+    {
+      "id": "L1-01",
+      "level": 1,
+      "description": "Simple status query",
+      "instruction": "Agent A asks Agent B for the status of a web server.",
+      "track_a": {
+        "count": 4,
+        "elements": [
+          {"id": "a1", "name": "sender", "check": "A sending agent is identified"},
+          {"id": "a2", "name": "receiver", "check": "A receiving agent is identified"},
+          {"id": "a3", "name": "query_intent", "check": "A query or question is expressed"},
+          {"id": "a4", "name": "target_server", "check": "A web server is referenced as the query target"}
+        ]
+      },
+      "track_b": {
+        "count": 4,
+        "elements": [
+          {"id": "b1", "name": "sender", "category": "identity", "check": "A sending agent is identified"},
+          {"id": "b2", "name": "receiver", "category": "identity", "check": "A receiving agent is identified"},
+          {"id": "b3", "name": "query_intent", "category": "intent", "check": "A query or question is expressed"},
+          {"id": "b4", "name": "target_server", "category": "content-fact", "check": "A web server is referenced as the query target"}
+        ],
+        "note": "Tracks A and B are identical for this task"
+      }
+    },
+    {
+      "id": "L1-02",
+      "level": 1,
+      "description": "Simple inform",
+      "instruction": "Agent B tells Agent A that the server is healthy with 99.7% uptime.",
+      "track_a": {
+        "count": 5,
+        "elements": [
+          {"id": "a1", "name": "sender", "check": "A sending agent is identified"},
+          {"id": "a2", "name": "receiver", "check": "A receiving agent is identified"},
+          {"id": "a3", "name": "inform_intent", "check": "An inform or tell action is expressed"},
+          {"id": "a4", "name": "status", "check": "Server health status is communicated (healthy/ok/up)"},
+          {"id": "a5", "name": "uptime_value", "check": "A numeric uptime value close to 99.7% is present"}
+        ]
+      },
+      "track_b": {
+        "count": 5,
+        "elements": [
+          {"id": "b1", "name": "sender", "category": "identity", "check": "A sending agent is identified"},
+          {"id": "b2", "name": "receiver", "category": "identity", "check": "A receiving agent is identified"},
+          {"id": "b3", "name": "inform_intent", "category": "intent", "check": "An inform or tell action is expressed"},
+          {"id": "b4", "name": "status_healthy", "category": "content-fact", "check": "Server health status is communicated (healthy/ok/up)"},
+          {"id": "b5", "name": "uptime_value", "category": "content-fact", "check": "A numeric uptime value close to 99.7% is present"}
+        ],
+        "note": "Tracks A and B are identical for this task"
+      }
+    },
+    {
+      "id": "L1-03",
+      "level": 1,
+      "description": "Simple error report",
+      "instruction": "A service agent reports a 404 not-found error to the caller agent.",
+      "track_a": {
+        "count": 5,
+        "elements": [
+          {"id": "a1", "name": "sender", "check": "A sending agent (service agent) is identified"},
+          {"id": "a2", "name": "receiver", "check": "A receiving agent (caller) is identified"},
+          {"id": "a3", "name": "error_intent", "check": "An error report action is expressed"},
+          {"id": "a4", "name": "error_code", "check": "The numeric code 404 is present"},
+          {"id": "a5", "name": "error_description", "check": "A 'not found' description is present"}
+        ]
+      },
+      "track_b": {
+        "count": 5,
+        "elements": [
+          {"id": "b1", "name": "sender", "category": "identity", "check": "A sending agent (service agent) is identified"},
+          {"id": "b2", "name": "receiver", "category": "identity", "check": "A receiving agent (caller) is identified"},
+          {"id": "b3", "name": "error_intent", "category": "intent", "check": "An error report action is expressed"},
+          {"id": "b4", "name": "error_code", "category": "content-fact", "check": "The numeric code 404 is present"},
+          {"id": "b5", "name": "error_description", "category": "content-fact", "check": "A 'not found' description is present"}
+        ],
+        "note": "Tracks A and B are identical for this task"
+      }
+    },
+    {
+      "id": "L2-01",
+      "level": 2,
+      "description": "Request with structured data",
+      "instruction": "A CI agent requests a builder agent to build a specific repo branch and commit.",
+      "track_a": {
+        "count": 6,
+        "elements": [
+          {"id": "a1", "name": "sender", "check": "A sending agent (CI agent) is identified"},
+          {"id": "a2", "name": "receiver", "check": "A receiving agent (builder) is identified"},
+          {"id": "a3", "name": "request_intent", "check": "A request or command action is expressed"},
+          {"id": "a4", "name": "repo", "check": "A repository identifier is present (any name/string)"},
+          {"id": "a5", "name": "branch", "check": "A branch identifier is present (any name/string)"},
+          {"id": "a6", "name": "commit", "check": "A commit reference is present (any hash/string)"}
+        ]
+      },
+      "track_b": {
+        "count": 6,
+        "elements": [
+          {"id": "b1", "name": "sender", "category": "identity", "check": "A sending agent (CI agent) is identified"},
+          {"id": "b2", "name": "receiver", "category": "identity", "check": "A receiving agent (builder) is identified"},
+          {"id": "b3", "name": "request_intent", "category": "intent", "check": "A request or command action is expressed"},
+          {"id": "b4", "name": "repo", "category": "content-fact", "check": "A repository identifier is present (any name/string)"},
+          {"id": "b5", "name": "branch", "category": "content-fact", "check": "A branch identifier is present (any name/string)"},
+          {"id": "b6", "name": "commit", "category": "content-fact", "check": "A commit reference is present (any hash/string)"}
+        ],
+        "note": "Tracks A and B are identical for this task"
+      }
+    },
+    {
+      "id": "L2-02",
+      "level": 2,
+      "description": "Proposal with counter",
+      "instruction": "A supplier proposes selling 10000 widgets at $2.50 each. The buyer counters with $2.20, citing market average of $2.15.",
+      "track_a": {
+        "count": 8,
+        "elements": [
+          {"id": "a1", "name": "sender", "check": "A supplier agent is identified"},
+          {"id": "a2", "name": "receiver", "check": "A buyer agent is identified"},
+          {"id": "a3", "name": "propose_intent", "check": "A proposal action is expressed"},
+          {"id": "a4", "name": "item", "check": "Widgets are mentioned as the product"},
+          {"id": "a5", "name": "quantity", "check": "A quantity of 10000 is present"},
+          {"id": "a6", "name": "price", "check": "A price of $2.50 per unit is present"},
+          {"id": "a7", "name": "counter_intent", "check": "A counter-proposal action is expressed"},
+          {"id": "a8", "name": "justification", "check": "Some justification for the counter is present (market average, reasoning, etc.)"}
+        ]
+      },
+      "track_b": {
+        "count": 11,
+        "elements": [
+          {"id": "b1", "name": "supplier_sender", "category": "identity", "check": "A supplier agent is identified as sender of the proposal"},
+          {"id": "b2", "name": "buyer_receiver", "category": "identity", "check": "A buyer agent is identified as receiver of the proposal"},
+          {"id": "b3", "name": "propose_intent", "category": "intent", "check": "A proposal action is expressed"},
+          {"id": "b4", "name": "item_widgets", "category": "content-fact", "check": "Widgets are mentioned as the product"},
+          {"id": "b5", "name": "quantity_10000", "category": "content-fact", "check": "A quantity of 10000 is present"},
+          {"id": "b6", "name": "price_2_50", "category": "content-fact", "check": "A price of $2.50 per unit is present"},
+          {"id": "b7", "name": "buyer_counter_sender", "category": "identity", "check": "The buyer is identified as sender of the counter"},
+          {"id": "b8", "name": "counter_intent", "category": "intent", "check": "A counter-proposal action is expressed"},
+          {"id": "b9", "name": "counter_price_2_20", "category": "content-fact", "check": "A counter price of $2.20 is present"},
+          {"id": "b10", "name": "market_average_2_15", "category": "content-fact", "check": "A market average of $2.15 is cited"},
+          {"id": "b11", "name": "justification_present", "category": "content-fact", "check": "Reasoning connecting market average to counter price is present"}
+        ],
+        "note": "Track B expands: separates counter sender identity, splits counter price from justification data, distinguishes market average as separate fact"
+      }
+    },
+    {
+      "id": "L2-03",
+      "level": 2,
+      "description": "Multi-agent task distribution",
+      "instruction": "A planner distributes a data processing task across 3 workers, splitting range 0-3000 into three equal segments.",
+      "track_a": {
+        "count": 5,
+        "elements": [
+          {"id": "a1", "name": "sender", "check": "A planner agent is identified"},
+          {"id": "a2", "name": "receivers_multiple", "check": "Multiple worker agents (3) are addressed"},
+          {"id": "a3", "name": "request_intent", "check": "A task distribution/request action is expressed"},
+          {"id": "a4", "name": "task_type", "check": "Data processing is mentioned as the task type"},
+          {"id": "a5", "name": "data_ranges", "check": "Data ranges covering 0-3000 in three segments are specified"}
+        ]
+      },
+      "track_b": {
+        "count": 9,
+        "elements": [
+          {"id": "b1", "name": "sender_planner", "category": "identity", "check": "A planner agent is identified"},
+          {"id": "b2", "name": "receiver_worker_1", "category": "identity", "check": "First worker agent is identified"},
+          {"id": "b3", "name": "receiver_worker_2", "category": "identity", "check": "Second worker agent is identified"},
+          {"id": "b4", "name": "receiver_worker_3", "category": "identity", "check": "Third worker agent is identified"},
+          {"id": "b5", "name": "request_intent", "category": "intent", "check": "A task distribution/request action is expressed"},
+          {"id": "b6", "name": "task_type", "category": "content-fact", "check": "Data processing is mentioned as the task type"},
+          {"id": "b7", "name": "range_segment_1", "category": "content-fact", "check": "First data segment is specified (approximately 0-1000)"},
+          {"id": "b8", "name": "range_segment_2", "category": "content-fact", "check": "Second data segment is specified (approximately 1001-2000)"},
+          {"id": "b9", "name": "range_segment_3", "category": "content-fact", "check": "Third data segment is specified (approximately 2001-3000)"}
+        ],
+        "note": "Track B expands: 3 individual workers instead of 'receivers_multiple', 3 individual ranges instead of 'data_ranges'. Ranges need not be exact boundaries — any valid 3-way split of 0-3000 is accepted."
+      }
+    },
+    {
+      "id": "L3-01",
+      "level": 3,
+      "description": "Chained pipeline with metadata",
+      "instruction": "An orchestrator instructs a pipeline to fetch a URL, parse it as JSON, then store the result in a database. Include message ID and protocol version.",
+      "track_a": {
+        "count": 6,
+        "elements": [
+          {"id": "a1", "name": "sender", "check": "An orchestrator agent is identified"},
+          {"id": "a2", "name": "receiver", "check": "A pipeline/receiver agent is identified"},
+          {"id": "a3", "name": "request_intent", "check": "An instruction/request action is expressed"},
+          {"id": "a4", "name": "sequence_of_actions", "check": "A sequence of fetch→parse→store actions is expressed in order"},
+          {"id": "a5", "name": "metadata_id", "check": "A message ID is present"},
+          {"id": "a6", "name": "metadata_version", "check": "A protocol version is present"}
+        ]
+      },
+      "track_b": {
+        "count": 8,
+        "elements": [
+          {"id": "b1", "name": "sender", "category": "identity", "check": "An orchestrator agent is identified"},
+          {"id": "b2", "name": "receiver", "category": "identity", "check": "A pipeline/receiver agent is identified"},
+          {"id": "b3", "name": "request_intent", "category": "intent", "check": "An instruction/request action is expressed"},
+          {"id": "b4", "name": "action_fetch", "category": "structural", "check": "A fetch/retrieve URL action is present"},
+          {"id": "b5", "name": "action_parse", "category": "structural", "check": "A parse-as-JSON action is present"},
+          {"id": "b6", "name": "action_store", "category": "structural", "check": "A store-in-database action is present"},
+          {"id": "b7", "name": "metadata_id", "category": "metadata", "check": "A message ID is present"},
+          {"id": "b8", "name": "metadata_version", "category": "metadata", "check": "A protocol version is present"}
+        ],
+        "note": "Track B expands: 3 individual pipeline steps instead of 'sequence_of_actions'"
+      }
+    },
+    {
+      "id": "L3-02",
+      "level": 3,
+      "description": "Incident response with causal chain",
+      "instruction": "A monitor publishes a severity-2 incident alert about payments service with latency > 2s. Include priority level 4, the causal chain (high latency caused by database connection pool exhaustion caused by traffic spike), and a resolution recommendation.",
+      "track_a": {
+        "count": 7,
+        "elements": [
+          {"id": "a1", "name": "sender", "check": "A monitor agent is identified"},
+          {"id": "a2", "name": "receiver", "check": "A receiving agent is identified (any agent or broadcast)"},
+          {"id": "a3", "name": "alert_intent", "check": "An alert/publish/incident action is expressed"},
+          {"id": "a4", "name": "severity", "check": "Severity level 2 is specified"},
+          {"id": "a5", "name": "priority", "check": "Priority level 4 is specified"},
+          {"id": "a6", "name": "causal_chain", "check": "A causal chain linking high latency, pool exhaustion, and traffic spike is expressed"},
+          {"id": "a7", "name": "recommendation", "check": "A resolution recommendation is present"}
+        ]
+      },
+      "track_b": {
+        "count": 10,
+        "elements": [
+          {"id": "b1", "name": "sender_monitor", "category": "identity", "check": "A monitor agent is identified"},
+          {"id": "b2", "name": "receiver", "category": "identity", "check": "A receiving agent is identified (any agent or broadcast)"},
+          {"id": "b3", "name": "alert_intent", "category": "intent", "check": "An alert/publish/incident action is expressed"},
+          {"id": "b4", "name": "severity_2", "category": "content-fact", "check": "Severity level 2 is specified"},
+          {"id": "b5", "name": "priority_4", "category": "content-fact", "check": "Priority level 4 is specified"},
+          {"id": "b6", "name": "service_payments", "category": "content-fact", "check": "Payments service is identified as affected"},
+          {"id": "b7", "name": "latency_threshold", "category": "content-fact", "check": "Latency > 2s threshold is specified"},
+          {"id": "b8", "name": "cause_pool_exhaustion", "category": "causal", "check": "Database connection pool exhaustion is identified as proximate cause"},
+          {"id": "b9", "name": "cause_traffic_spike", "category": "causal", "check": "Traffic spike is identified as root cause"},
+          {"id": "b10", "name": "recommendation", "category": "content-fact", "check": "A resolution recommendation is present"}
+        ],
+        "note": "Track B expands: separates service name, latency threshold, and individual causal links from the compound elements"
+      }
+    },
+    {
+      "id": "L3-03",
+      "level": 3,
+      "description": "Full conversation with reply threading",
+      "instruction": "Write a 3-message conversation: (1) Agent A queries Agent B for diagnostics, (2) Agent B replies with bottleneck info and connection stats, (3) Agent A requests scaling. All messages must have IDs, protocol version, timestamps, and reply-to links.",
+      "track_a": {
+        "count": 5,
+        "elements": [
+          {"id": "a1", "name": "multiple_messages", "check": "Three distinct messages are present"},
+          {"id": "a2", "name": "reply_threading", "check": "Messages are linked via reply-to references"},
+          {"id": "a3", "name": "metadata_complete", "check": "Messages include IDs, version, and timestamps"},
+          {"id": "a4", "name": "diagnostics_data", "check": "Bottleneck info and connection stats are present in message 2"},
+          {"id": "a5", "name": "scaling_request", "check": "A scaling request is present in message 3"}
+        ]
+      },
+      "track_b": {
+        "count": 22,
+        "elements": [
+          {"id": "b1", "name": "msg1_id", "category": "metadata", "check": "Message 1 has a unique ID"},
+          {"id": "b2", "name": "msg1_version", "category": "metadata", "check": "Message 1 has a protocol version"},
+          {"id": "b3", "name": "msg1_timestamp", "category": "metadata", "check": "Message 1 has a timestamp"},
+          {"id": "b4", "name": "msg2_id", "category": "metadata", "check": "Message 2 has a unique ID"},
+          {"id": "b5", "name": "msg2_version", "category": "metadata", "check": "Message 2 has a protocol version"},
+          {"id": "b6", "name": "msg2_timestamp", "category": "metadata", "check": "Message 2 has a timestamp"},
+          {"id": "b7", "name": "msg3_id", "category": "metadata", "check": "Message 3 has a unique ID"},
+          {"id": "b8", "name": "msg3_version", "category": "metadata", "check": "Message 3 has a protocol version"},
+          {"id": "b9", "name": "msg3_timestamp", "category": "metadata", "check": "Message 3 has a timestamp"},
+          {"id": "b10", "name": "msg2_reply_link", "category": "threading", "check": "Message 2 references message 1's ID"},
+          {"id": "b11", "name": "msg3_reply_link", "category": "threading", "check": "Message 3 references a prior message ID"},
+          {"id": "b12", "name": "msg1_sender_A", "category": "identity", "check": "Message 1 sender is agent A"},
+          {"id": "b13", "name": "msg1_receiver_B", "category": "identity", "check": "Message 1 receiver is agent B"},
+          {"id": "b14", "name": "msg1_query_intent", "category": "intent", "check": "Message 1 expresses a query/diagnostic request"},
+          {"id": "b15", "name": "msg2_sender_B", "category": "identity", "check": "Message 2 sender is agent B"},
+          {"id": "b16", "name": "msg2_receiver_A", "category": "identity", "check": "Message 2 receiver is agent A"},
+          {"id": "b17", "name": "msg2_reply_intent", "category": "intent", "check": "Message 2 expresses a reply/inform action"},
+          {"id": "b18", "name": "msg2_bottleneck", "category": "content-fact", "check": "Bottleneck information is present"},
+          {"id": "b19", "name": "msg2_connection_stats", "category": "content-fact", "check": "Connection statistics are present"},
+          {"id": "b20", "name": "msg3_sender_A", "category": "identity", "check": "Message 3 sender is agent A"},
+          {"id": "b21", "name": "msg3_receiver_B", "category": "identity", "check": "Message 3 receiver is agent B"},
+          {"id": "b22", "name": "msg3_scaling_request", "category": "intent", "check": "Message 3 expresses a scaling request"}
+        ],
+        "note": "Track B fully decomposes the conversation. Track A treats metadata_complete and reply_threading as compound checks. The 22-element count is dominated by metadata (9) and identity (6). Report both full (22) and content-only (~7 elements: b14, b17, b18, b19, b22 + threading b10, b11) as sub-analysis."
+      }
+    }
+  ]
+}

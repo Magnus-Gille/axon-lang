@@ -1,0 +1,27 @@
+You are scoring an agent-to-agent communication message for information completeness.
+
+A model was given this task:
+{task_instruction}
+
+The model produced the following output:
+---
+{output}
+---
+
+Score whether each required element is PRESENT, ABSENT, or INCORRECT in the output above.
+
+REQUIRED ELEMENTS:
+{element_checklist}
+
+For each element, respond with EXACTLY one line in this format:
+{element_id}. PRESENT — brief justification
+{element_id}. ABSENT — what is missing
+{element_id}. INCORRECT — what is wrong
+
+Rules:
+- Score PRESENT if the element is expressed accurately, regardless of formatting or syntax.
+- Score ABSENT if the element is not expressed at all.
+- Score INCORRECT if the element is expressed but with the wrong value (e.g., wrong number, wrong agent).
+- For identity elements: any name or identifier for the agent counts as PRESENT.
+- For content-facts without specified values: any concrete value counts as PRESENT.
+- Score every element. Do not skip any. Do not add commentary beyond the scoring lines.
