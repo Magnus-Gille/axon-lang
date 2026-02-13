@@ -1,0 +1,2440 @@
+{
+  "experiment": "exp0_learnability",
+  "model": "codex",
+  "model_display": "GPT-5.3 Codex",
+  "timestamp": "2026-02-13T10:30:11.866129+00:00",
+  "total_runs": 162,
+  "valid_count": 162,
+  "results": [
+    {
+      "task_id": "L1-01",
+      "condition": "free_english",
+      "model": "codex",
+      "run_number": 1,
+      "output": "From Agent A to Agent B: Could you provide the current status of the web server?",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 18,
+        "o200k_base": 18
+      },
+      "latency_ms": 9030,
+      "timestamp": "2026-02-13T09:07:53.268138+00:00"
+    },
+    {
+      "task_id": "L1-02",
+      "condition": "free_english",
+      "model": "codex",
+      "run_number": 1,
+      "output": "From Agent B to Agent A: The server is healthy with 99.7% uptime.",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 19,
+        "o200k_base": 19
+      },
+      "latency_ms": 7048,
+      "timestamp": "2026-02-13T09:08:00.318683+00:00"
+    },
+    {
+      "task_id": "L1-03",
+      "condition": "free_english",
+      "model": "codex",
+      "run_number": 1,
+      "output": "From: Service Agent\nTo: Caller Agent\nMessage: The request failed with a 404 Not Found error; the requested resource could not be located.",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 31,
+        "o200k_base": 31
+      },
+      "latency_ms": 11123,
+      "timestamp": "2026-02-13T09:08:11.443983+00:00"
+    },
+    {
+      "task_id": "L2-01",
+      "condition": "free_english",
+      "model": "codex",
+      "run_number": 1,
+      "output": "From: CI Agent  \nTo: Builder Agent  \nMessage: Please build the repository branch `feature/ci-improvements` at commit `7e3a9b4c1d2f6a8b5c0e4f9a1b2c3d4e5f6a7b8c`.",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 69,
+        "o200k_base": 68
+      },
+      "latency_ms": 13084,
+      "timestamp": "2026-02-13T09:08:24.531373+00:00"
+    },
+    {
+      "task_id": "L2-02",
+      "condition": "free_english",
+      "model": "codex",
+      "run_number": 1,
+      "output": "From: BuyerAgent  \nTo: SupplierAgent  \nMessage: I\u2019m BuyerAgent representing procurement. Your offer is $2.50 per widget for 10,000 units ($25,000 total), but given the current market average of $2.15, our counter is $2.20 per widget ($22,000 total). Can you meet us at $2.20 so we can close this order now?",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 84,
+        "o200k_base": 84
+      },
+      "latency_ms": 17298,
+      "timestamp": "2026-02-13T09:08:41.831315+00:00"
+    },
+    {
+      "task_id": "L2-03",
+      "condition": "free_english",
+      "model": "codex",
+      "run_number": 1,
+      "output": "From Planner Agent to Worker 1, Worker 2, and Worker 3: Please process range 0-3000 in equal segments as assigned: Worker 1 handles 0-1000, Worker 2 handles 1000-2000, and Worker 3 handles 2000-3000.",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 64,
+        "o200k_base": 64
+      },
+      "latency_ms": 22453,
+      "timestamp": "2026-02-13T09:09:04.286341+00:00"
+    },
+    {
+      "task_id": "L3-01",
+      "condition": "free_english",
+      "model": "codex",
+      "run_number": 1,
+      "output": "Message-ID: msg-001\nProtocol-Version: 1.0\nFrom: Orchestrator Agent\nTo: Pipeline Agent\nMessage: Please fetch the provided URL, parse the response as JSON, and store the parsed result in the database.",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 50,
+        "o200k_base": 50
+      },
+      "latency_ms": 56300,
+      "timestamp": "2026-02-13T09:10:00.587970+00:00"
+    },
+    {
+      "task_id": "L3-02",
+      "condition": "free_english",
+      "model": "codex",
+      "run_number": 1,
+      "output": "From: Monitor Agent  \nTo: Incident Response Agent  \nMessage: Severity-2 incident alert for the Payments service. Priority level 4. Latency is above 2s. Causal chain: a traffic spike caused database connection pool exhaustion, which caused high latency. Resolution recommendation: immediately scale the database connection pool and Payments service instances, and apply temporary rate limiting to stabilize latency.",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 77,
+        "o200k_base": 77
+      },
+      "latency_ms": 10585,
+      "timestamp": "2026-02-13T09:10:11.175006+00:00"
+    },
+    {
+      "task_id": "L3-03",
+      "condition": "free_english",
+      "model": "codex",
+      "run_number": 1,
+      "output": "{\n  \"messages\": [\n    {\n      \"id\": \"msg-001\",\n      \"protocol_version\": \"1.0\",\n      \"timestamp\": \"2026-02-13T10:00:00Z\",\n      \"reply_to\": \"thread-001\",\n      \"from\": \"Agent A\",\n      \"to\": \"Agent B\",\n      \"body\": \"I am Agent A, sending this to Agent B. Please run diagnostics on the production cluster and report any bottlenecks along with current connection statistics.\"\n    },\n    {\n      \"id\": \"msg-002\",\n      \"protocol_version\": \"1.0\",\n      \"timestamp\": \"2026-02-13T10:00:14Z\",\n      \"reply_to\": \"msg-001\",\n      \"from\": \"Agent B\",\n      \"to\": \"Agent A\",\n      \"body\": \"I am Agent B, replying to Agent A. The main bottleneck is database write latency with storage I/O at 91% saturation. Connection stats: 18,240 active, 1,080 queued, 2.5% failed handshakes, and p95 connection setup time of 395 ms.\"\n    },\n    {\n      \"id\": \"msg-003\",\n      \"protocol_version\": \"1.0\",\n      \"timestamp\": \"2026-02-13T10:00:28Z\",\n      \"reply_to\": \"msg-002\",\n      \"from\": \"Agent A\",\n      \"to\": \"Agent B\",\n      \"body\": \"I am Agent A, sending this to Agent B. Proceed with scaling now: add two database replicas and increase service instances by 30%, then send updated performance and connection metrics.\"\n    }\n  ]\n}",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 358,
+        "o200k_base": 358
+      },
+      "latency_ms": 21678,
+      "timestamp": "2026-02-13T09:10:32.855261+00:00"
+    },
+    {
+      "task_id": "L1-01",
+      "condition": "structured_english",
+      "model": "codex",
+      "run_number": 1,
+      "output": "FROM: agent-a\nTO: agent-b\nTYPE: query\nCONTENT: What is the status of the web server?",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 25,
+        "o200k_base": 25
+      },
+      "latency_ms": 4962,
+      "timestamp": "2026-02-13T09:10:37.819089+00:00"
+    },
+    {
+      "task_id": "L1-02",
+      "condition": "structured_english",
+      "model": "codex",
+      "run_number": 1,
+      "output": "FROM: agent-b\nTO: agent-a\nTYPE: inform\nCONTENT: The server is healthy with 99.7% uptime.",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 28,
+        "o200k_base": 28
+      },
+      "latency_ms": 5761,
+      "timestamp": "2026-02-13T09:10:43.581892+00:00"
+    },
+    {
+      "task_id": "L1-03",
+      "condition": "structured_english",
+      "model": "codex",
+      "run_number": 1,
+      "output": "FROM: service-agent\nTO: caller-agent\nTYPE: error\nCONTENT: Requested resource was not found (404 Not Found).",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 27,
+        "o200k_base": 26
+      },
+      "latency_ms": 5557,
+      "timestamp": "2026-02-13T09:10:49.141742+00:00"
+    },
+    {
+      "task_id": "L2-01",
+      "condition": "structured_english",
+      "model": "codex",
+      "run_number": 1,
+      "output": "FROM: ci-agent\nTO: builder-agent\nTYPE: request\nCONTENT: Please build repository `invent-new-language` on branch `feature/ci-pipeline` at commit `4f7a2c9` and return the build result.",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 51,
+        "o200k_base": 50
+      },
+      "latency_ms": 10181,
+      "timestamp": "2026-02-13T09:10:59.325287+00:00"
+    },
+    {
+      "task_id": "L2-02",
+      "condition": "structured_english",
+      "model": "codex",
+      "run_number": 1,
+      "output": "FROM: buyer-agent\nTO: supplier-agent\nTYPE: propose\nCONTENT: We propose purchasing 10,000 widgets at $2.20 each (total $22,000) instead of $2.50, based on a current market average price of $2.15 per widget.",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 59,
+        "o200k_base": 59
+      },
+      "latency_ms": 11402,
+      "timestamp": "2026-02-13T09:11:10.729790+00:00"
+    },
+    {
+      "task_id": "L2-03",
+      "condition": "structured_english",
+      "model": "codex",
+      "run_number": 1,
+      "output": "FROM: planner\nTO: worker-group\nTYPE: request\nCONTENT: Process the range 0-3000 in three equal segments: worker-1 -> [0,1000), worker-2 -> [1000,2000), worker-3 -> [2000,3000).",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 60,
+        "o200k_base": 60
+      },
+      "latency_ms": 13696,
+      "timestamp": "2026-02-13T09:11:24.428251+00:00"
+    },
+    {
+      "task_id": "L3-01",
+      "condition": "structured_english",
+      "model": "codex",
+      "run_number": 1,
+      "output": "FROM: orchestrator\nTO: pipeline\nTYPE: request\nCONTENT: message_id=msg-0001; protocol_version=1.0; Fetch URL https://example.com/data.json, parse the response as JSON, then store the parsed result in the database.",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 53,
+        "o200k_base": 54
+      },
+      "latency_ms": 7964,
+      "timestamp": "2026-02-13T09:11:32.395263+00:00"
+    },
+    {
+      "task_id": "L3-02",
+      "condition": "structured_english",
+      "model": "codex",
+      "run_number": 1,
+      "output": "FROM: monitor-agent\nTO: incident-commander\nTYPE: inform\nCONTENT: Severity-2 incident alert: Payments service latency is above 2s. Priority level: 4. Causal chain: traffic spike caused database connection pool exhaustion, which caused high latency. Resolution recommendation: immediately scale service and database capacity, tune/increase connection pool limits, apply rate limiting/backpressure, and monitor latency plus pool utilization until stable.",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 87,
+        "o200k_base": 88
+      },
+      "latency_ms": 10736,
+      "timestamp": "2026-02-13T09:11:43.134150+00:00"
+    },
+    {
+      "task_id": "L3-03",
+      "condition": "structured_english",
+      "model": "codex",
+      "run_number": 1,
+      "output": "ID: msg-001\nPROTOCOL: MAS/1.0\nTIMESTAMP: 2026-02-13T10:00:00Z\nREPLY-TO: thread-000\nFROM: Agent A\nTO: Agent B\nTYPE: query\nCONTENT: Provide current diagnostics for the production service, including bottlenecks and connection statistics.\n\nID: msg-002\nPROTOCOL: MAS/1.0\nTIMESTAMP: 2026-02-13T10:00:07Z\nREPLY-TO: msg-001\nFROM: Agent B\nTO: Agent A\nTYPE: reply\nCONTENT: Diagnostics indicate a bottleneck at the database write pool (93% utilization, queue depth 148). Connection stats are 5,240 active of 6,100 max, 1.9% error rate, and p95 connection setup time of 182 ms.\n\nID: msg-003\nPROTOCOL: MAS/1.0\nTIMESTAMP: 2026-02-13T10:00:14Z\nREPLY-TO: msg-002\nFROM: Agent A\nTO: Agent B\nTYPE: request\nCONTENT: Initiate scaling by increasing API instances from 12 to 20 and adding one database read replica to reduce the bottleneck.",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 268,
+        "o200k_base": 269
+      },
+      "latency_ms": 17259,
+      "timestamp": "2026-02-13T09:12:00.396141+00:00"
+    },
+    {
+      "task_id": "L1-01",
+      "condition": "instruction_matched_english",
+      "model": "codex",
+      "run_number": 1,
+      "output": "[message-id: m1]\n[timestamp: 1770940800]\n[context: convo-1]\nQUERY (agent-a -> agent-b):\n  target: web-server\n  property: status",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 41,
+        "o200k_base": 41
+      },
+      "latency_ms": 9432,
+      "timestamp": "2026-02-13T09:12:09.830177+00:00"
+    },
+    {
+      "task_id": "L1-02",
+      "condition": "instruction_matched_english",
+      "model": "codex",
+      "run_number": 1,
+      "output": "[message-id: m1]\nINFORM (agent-b -> agent-a):\n  target: server\n  status: healthy\n  uptime: 99.7%",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 34,
+        "o200k_base": 34
+      },
+      "latency_ms": 7560,
+      "timestamp": "2026-02-13T09:12:17.392027+00:00"
+    },
+    {
+      "task_id": "L1-03",
+      "condition": "instruction_matched_english",
+      "model": "codex",
+      "run_number": 1,
+      "output": "[message-id: m-404-1]\n[reply-to: req-17]\n[timestamp: 1770940800]\n[context: convo-404]\nERROR (service-agent -> caller-agent):\n  status: failed\n  error-code: 404\n  error-type: not-found\n  resource: /requested/resource\n  detail: requested resource not found",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 75,
+        "o200k_base": 75
+      },
+      "latency_ms": 13881,
+      "timestamp": "2026-02-13T09:12:31.275050+00:00"
+    },
+    {
+      "task_id": "L2-01",
+      "condition": "instruction_matched_english",
+      "model": "codex",
+      "run_number": 1,
+      "output": "[message-id: m-ci-0001]\n[timestamp: 1770940800]\n[context: ci-build-invent-new-language]\n\nREQUEST (ci-agent -> builder-agent):\n  action: build\n  repository: /Users/magnus/repos/invent-new-language\n  branch: main\n  commit: 4f3c2b1a9e8d7c6b5a4f3c2b1a9e8d7c6b5a4f3c\n  build-target: ci\n  notify-on-completion: ci-agent",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 120,
+        "o200k_base": 120
+      },
+      "latency_ms": 17415,
+      "timestamp": "2026-02-13T09:12:48.691442+00:00"
+    },
+    {
+      "task_id": "L2-02",
+      "condition": "instruction_matched_english",
+      "model": "codex",
+      "run_number": 1,
+      "output": "[message-id: m1]\n[timestamp: 1770940800]\n[context: negotiation-widgets-001]\nCOUNTER (buyer-agent -> supplier-agent):\n  item: widgets\n  quantity: 10000\n  currency: USD\n  original-unit-price: 2.50\n  counter-unit-price: 2.20\n  market-average-unit-price: 2.15\n  rationale: counteroffer aligns with market average while allowing a fair premium\n  total-counter-value: 22000",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 105,
+        "o200k_base": 105
+      },
+      "latency_ms": 16148,
+      "timestamp": "2026-02-13T09:13:04.842827+00:00"
+    },
+    {
+      "task_id": "L2-03",
+      "condition": "instruction_matched_english",
+      "model": "codex",
+      "run_number": 1,
+      "output": "[message-id: m-dist-001]\n[timestamp: 1770940800]\n[context: task-distribution-0-3000]\n\nCOMMAND (planner -> workers):\n  task: data-processing\n  total_range: 0-3000\n  split_strategy: equal_segments\n  segment_count: 3\n  boundary_convention: half-open\n  worker-1_segment: [0,1000)\n  worker-2_segment: [1000,2000)\n  worker-3_segment: [2000,3000)",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 113,
+        "o200k_base": 112
+      },
+      "latency_ms": 16971,
+      "timestamp": "2026-02-13T09:13:21.815998+00:00"
+    },
+    {
+      "task_id": "L3-01",
+      "condition": "instruction_matched_english",
+      "model": "codex",
+      "run_number": 1,
+      "output": "[message-id: m-orch-0001]\n[protocol-version: 1.0]\n[timestamp: 1770940800]\n[context: convo-pipeline-001]\nCOMMAND (orchestrator -> pipeline):\n  task: fetch-parse-store\n  fetch.url: https://example.com/data.json\n  parse.format: json\n  parse.input: fetch.response.body\n  store.database: primary-db\n  store.table: fetched_json\n  store.payload: parse.output\n  on-failure: report-error-and-stop",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 108,
+        "o200k_base": 109
+      },
+      "latency_ms": 12450,
+      "timestamp": "2026-02-13T09:13:34.267440+00:00"
+    },
+    {
+      "task_id": "L3-02",
+      "condition": "instruction_matched_english",
+      "model": "codex",
+      "run_number": 1,
+      "output": "[message-id: inc-payments-s2-0001]\n[timestamp: 1770940800]\n[context: incident-payments]\n\nPUBLISH (monitor -> incident-response):\n  alert-type: incident\n  severity: 2\n  priority: 4\n  service: payments\n  condition: latency > 2s\n  causal-chain: traffic spike -> database connection pool exhaustion -> high latency\n  resolution-recommendation: increase database connection pool capacity and autoscale payment service instances; apply temporary rate limiting/traffic shaping and monitor latency plus pool utilization until recovery",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 117,
+        "o200k_base": 117
+      },
+      "latency_ms": 19071,
+      "timestamp": "2026-02-13T09:13:53.340496+00:00"
+    },
+    {
+      "task_id": "L3-03",
+      "condition": "instruction_matched_english",
+      "model": "codex",
+      "run_number": 1,
+      "output": "[message-id: m1]\n[protocol-version: 1.0]\n[timestamp: 1770988800]\n[reply-to: root]\n[context: convo-diagnostics-77]\nQUERY (agent-a -> agent-b):\n  target: production-api-cluster\n  topic: diagnostics\n  requested-fields: bottlenecks, connection-stats, latency, error-rate\n\n---\n[message-id: m2]\n[protocol-version: 1.0]\n[timestamp: 1770988810]\n[reply-to: m1]\n[context: convo-diagnostics-77]\nREPLY (agent-b -> agent-a):\n  bottleneck: database write queue saturation at 92 percent utilization\n  connection-stats: active=1842; idle=276; failed-last-5m=34; pool-capacity=2200\n  impact: p95 latency elevated to 480ms\n\n---\n[message-id: m3]\n[protocol-version: 1.0]\n[timestamp: 1770988820]\n[reply-to: m2]\n[context: convo-diagnostics-77]\nREQUEST (agent-a -> agent-b):\n  action: scale service tier\n  scaling-plan: add 3 application instances and increase DB connection pool by 15 percent\n  priority: high",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 260,
+        "o200k_base": 264
+      },
+      "latency_ms": 24025,
+      "timestamp": "2026-02-13T09:14:17.368610+00:00"
+    },
+    {
+      "task_id": "L1-01",
+      "condition": "json_fc",
+      "model": "codex",
+      "run_number": 1,
+      "output": "{\"performative\":\"query\",\"from\":\"agent-a\",\"to\":\"agent-b\",\"content\":{\"target\":\"web-server\",\"property\":\"status\"},\"id\":\"m1\"}",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 32,
+        "o200k_base": 33
+      },
+      "latency_ms": 4495,
+      "timestamp": "2026-02-13T09:14:21.864984+00:00"
+    },
+    {
+      "task_id": "L1-02",
+      "condition": "json_fc",
+      "model": "codex",
+      "run_number": 1,
+      "output": "{\"performative\":\"inform\",\"from\":\"agent-b\",\"to\":\"agent-a\",\"content\":{\"target\":\"server\",\"status\":\"healthy\",\"uptime_percent\":99.7}}",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 33,
+        "o200k_base": 34
+      },
+      "latency_ms": 5951,
+      "timestamp": "2026-02-13T09:14:27.817352+00:00"
+    },
+    {
+      "task_id": "L1-03",
+      "condition": "json_fc",
+      "model": "codex",
+      "run_number": 1,
+      "output": "{\"performative\":\"error\",\"from\":\"service-agent\",\"to\":\"caller-agent\",\"content\":{\"code\":404,\"error\":\"not-found\",\"message\":\"Requested resource was not found.\"}}",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 36,
+        "o200k_base": 36
+      },
+      "latency_ms": 6971,
+      "timestamp": "2026-02-13T09:14:34.789958+00:00"
+    },
+    {
+      "task_id": "L2-01",
+      "condition": "json_fc",
+      "model": "codex",
+      "run_number": 1,
+      "output": "{\"performative\":\"request\",\"from\":\"ci-agent\",\"to\":\"builder-agent\",\"content\":{\"action\":\"build\",\"repository\":\"invent-new-language\",\"branch\":\"main\",\"commit\":\"4f9c2d1a8b7e6c5d4a3f2b1c0e9d8f7a6b5c4d3e\"},\"id\":\"m1\"}",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 81,
+        "o200k_base": 81
+      },
+      "latency_ms": 11708,
+      "timestamp": "2026-02-13T09:14:46.500237+00:00"
+    },
+    {
+      "task_id": "L2-02",
+      "condition": "json_fc",
+      "model": "codex",
+      "run_number": 1,
+      "output": "{\"performative\":\"counter\",\"from\":\"buyer\",\"to\":\"supplier\",\"content\":{\"item\":\"widgets\",\"quantity\":10000,\"unit_price\":2.2,\"currency\":\"USD\",\"original_offer_unit_price\":2.5,\"justification\":{\"market_average_unit_price\":2.15,\"reason\":\"Market average is $2.15 per widget\"}}}",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 70,
+        "o200k_base": 70
+      },
+      "latency_ms": 7114,
+      "timestamp": "2026-02-13T09:14:53.615730+00:00"
+    },
+    {
+      "task_id": "L2-03",
+      "condition": "json_fc",
+      "model": "codex",
+      "run_number": 1,
+      "output": "{\"performative\":\"command\",\"from\":\"planner\",\"to\":[\"worker-1\",\"worker-2\",\"worker-3\"],\"content\":{\"task\":\"data-processing\",\"range\":{\"start\":0,\"end\":3000,\"end_exclusive\":true},\"segments\":[{\"worker\":\"worker-1\",\"start\":0,\"end\":1000},{\"worker\":\"worker-2\",\"start\":1000,\"end\":2000},{\"worker\":\"worker-3\",\"start\":2000,\"end\":3000}]}}",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 99,
+        "o200k_base": 100
+      },
+      "latency_ms": 11730,
+      "timestamp": "2026-02-13T09:15:05.347647+00:00"
+    },
+    {
+      "task_id": "L3-01",
+      "condition": "json_fc",
+      "model": "codex",
+      "run_number": 1,
+      "output": "{\"performative\":\"command\",\"from\":\"orchestrator\",\"to\":\"pipeline\",\"id\":\"msg-001\",\"content\":{\"protocol_version\":\"1.0\",\"task\":\"fetch_parse_store\",\"steps\":[{\"action\":\"fetch_url\",\"url\":\"https://example.com/data.json\"},{\"action\":\"parse\",\"format\":\"json\"},{\"action\":\"store\",\"target\":\"database\",\"table\":\"ingested_json\"}]}}",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 77,
+        "o200k_base": 78
+      },
+      "latency_ms": 8487,
+      "timestamp": "2026-02-13T09:15:13.837250+00:00"
+    },
+    {
+      "task_id": "L3-02",
+      "condition": "json_fc",
+      "model": "codex",
+      "run_number": 1,
+      "output": "{\"performative\":\"publish\",\"from\":\"monitor\",\"to\":\"incident-response\",\"content\":{\"alert\":\"severity-2 incident\",\"service\":\"payments\",\"metric\":\"latency\",\"threshold\":\"> 2s\",\"priority\":4,\"causal_chain\":\"High latency was caused by database connection pool exhaustion, which was caused by a traffic spike.\",\"resolution_recommendation\":\"Apply temporary rate limiting/load shedding, scale payments and database capacity, increase/tune DB connection pool limits, and monitor latency plus pool utilization until stable.\"},\"id\":\"inc-payments-latency-s2\"}",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 111,
+        "o200k_base": 113
+      },
+      "latency_ms": 12549,
+      "timestamp": "2026-02-13T09:15:26.388092+00:00"
+    },
+    {
+      "task_id": "L3-03",
+      "condition": "json_fc",
+      "model": "codex",
+      "run_number": 1,
+      "output": "[\n  {\n    \"performative\": \"query\",\n    \"from\": \"agent-a\",\n    \"to\": \"agent-b\",\n    \"content\": {\n      \"protocol_version\": \"1.0\",\n      \"target\": \"api-cluster\",\n      \"request\": \"diagnostics\",\n      \"metrics\": [\n        \"latency\",\n        \"cpu\",\n        \"connections\"\n      ],\n      \"window_sec\": 300\n    },\n    \"id\": \"m1\",\n    \"reply_to\": \"conv-ops-20260213-root\",\n    \"timestamp\": 1770942001,\n    \"context\": \"conv-ops-20260213\"\n  },\n  {\n    \"performative\": \"reply\",\n    \"from\": \"agent-b\",\n    \"to\": \"agent-a\",\n    \"content\": {\n      \"protocol_version\": \"1.0\",\n      \"diagnostics\": {\n        \"bottleneck\": {\n          \"component\": \"db-primary\",\n          \"issue\": \"write-lock contention\",\n          \"utilization_pct\": 92,\n          \"p95_latency_ms\": 240\n        },\n        \"connection_stats\": {\n          \"active\": 1840,\n          \"max\": 2000,\n          \"new_per_sec\": 320,\n          \"dropped_per_min\": 42,\n          \"error_rate_pct\": 1.8\n        }\n      }\n    },\n    \"id\": \"m2\",\n    \"reply_to\": \"m1\",\n    \"timestamp\": 1770942007,\n    \"context\": \"conv-ops-20260213\"\n  },\n  {\n    \"performative\": \"request\",\n    \"from\": \"agent-a\",\n    \"to\": \"agent-b\",\n    \"content\": {\n      \"protocol_version\": \"1.0\",\n      \"action\": \"scale\",\n      \"target\": \"db-primary\",\n      \"scale_plan\": {\n        \"read_replicas\": 3,\n        \"connection_pool_max\": 3000\n      },\n      \"reason\": \"bottleneck and connection saturation\"\n    },\n    \"id\": \"m3\",\n    \"reply_to\": \"m2\",\n    \"timestamp\": 1770942014,\n    \"context\": \"conv-ops-20260213\"\n  }\n]",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 468,
+        "o200k_base": 470
+      },
+      "latency_ms": 32195,
+      "timestamp": "2026-02-13T09:15:58.586259+00:00"
+    },
+    {
+      "task_id": "L1-01",
+      "condition": "fipa_acl",
+      "model": "codex",
+      "run_number": 1,
+      "output": "(query-ref\n  :sender agent-a\n  :receiver agent-b\n  :content \"((status web-server))\"\n  :reply-with m1\n  :language SL\n  :ontology web-server-monitoring\n)",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 45,
+        "o200k_base": 46
+      },
+      "latency_ms": 6451,
+      "timestamp": "2026-02-13T09:16:05.038595+00:00"
+    },
+    {
+      "task_id": "L1-02",
+      "condition": "fipa_acl",
+      "model": "codex",
+      "run_number": 1,
+      "output": "(inform\n  :sender agent-b\n  :receiver agent-a\n  :content \"((and (status server healthy) (uptime-percent server 99.7)))\"\n  :language SL\n  :ontology server-monitoring\n)",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 49,
+        "o200k_base": 50
+      },
+      "latency_ms": 10323,
+      "timestamp": "2026-02-13T09:16:15.363466+00:00"
+    },
+    {
+      "task_id": "L1-03",
+      "condition": "fipa_acl",
+      "model": "codex",
+      "run_number": 1,
+      "output": "(failure\n  :sender service-agent\n  :receiver caller-agent\n  :content \"((http-response (status-code 404) (status-text not-found)))\"\n  :reply-with msg-404-1\n  :in-reply-to msg-req-1\n  :language SL\n  :ontology web-service\n)",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 68,
+        "o200k_base": 69
+      },
+      "latency_ms": 8146,
+      "timestamp": "2026-02-13T09:16:23.511534+00:00"
+    },
+    {
+      "task_id": "L2-01",
+      "condition": "fipa_acl",
+      "model": "codex",
+      "run_number": 1,
+      "output": "(request\n  :sender ci-agent\n  :receiver builder-agent\n  :content \"((build-request (repo invent-new-language) (branch \\\"feature/ci-pipeline\\\") (commit \\\"4f7c2a9d1e3b6c8a5f0d2b1c9e7a6d3f4b5c6d7e\\\")))\"\n  :reply-with build-req-001\n  :language SL\n  :ontology ci-cd\n)",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 105,
+        "o200k_base": 105
+      },
+      "latency_ms": 17274,
+      "timestamp": "2026-02-13T09:16:40.787795+00:00"
+    },
+    {
+      "task_id": "L2-02",
+      "condition": "fipa_acl",
+      "model": "codex",
+      "run_number": 1,
+      "output": "(propose\n  :sender buyer-agent\n  :receiver supplier-agent\n  :content \"((counter-offer (item widgets) (quantity 10000) (unit-price 2.20) (currency USD) (reason (market-average 2.15))))\"\n  :reply-with m2\n  :in-reply-to m1\n  :language SL\n  :ontology procurement-negotiation\n)",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 85,
+        "o200k_base": 86
+      },
+      "latency_ms": 11531,
+      "timestamp": "2026-02-13T09:16:52.321605+00:00"
+    },
+    {
+      "task_id": "L2-03",
+      "condition": "fipa_acl",
+      "model": "codex",
+      "run_number": 1,
+      "output": "(request\n  :sender planner\n  :receiver worker-cluster\n  :content \"((process-range worker-1 0 1000) (process-range worker-2 1000 2000) (process-range worker-3 2000 3000))\"\n  :reply-with msg-001\n  :in-reply-to none\n  :language SL\n  :ontology data-processing\n)",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 82,
+        "o200k_base": 85
+      },
+      "latency_ms": 15891,
+      "timestamp": "2026-02-13T09:17:08.214117+00:00"
+    },
+    {
+      "task_id": "L3-01",
+      "condition": "fipa_acl",
+      "model": "codex",
+      "run_number": 1,
+      "output": "(request\n  :sender orchestrator\n  :receiver pipeline\n  :content \"((protocol-version 1.0) (message-id msg-001) (action (sequence (fetch-url https://example.com/data.json) (parse-as json) (store-in database))))\"\n  :reply-with msg-001\n  :language SL\n  :ontology data-pipeline\n)",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 78,
+        "o200k_base": 78
+      },
+      "latency_ms": 9743,
+      "timestamp": "2026-02-13T09:17:17.958987+00:00"
+    },
+    {
+      "task_id": "L3-02",
+      "condition": "fipa_acl",
+      "model": "codex",
+      "run_number": 1,
+      "output": "(inform\n  :sender monitor-agent\n  :receiver incident-manager-agent\n  :content \"((incident-alert (service payments-service) (severity-level 2) (priority-level 4) (condition (latency-seconds > 2)) (causal-chain (high-latency caused-by database-connection-pool-exhaustion) (database-connection-pool-exhaustion caused-by traffic-spike)) (resolution-recommendation \\\"Apply rate limiting and autoscaling to absorb the traffic spike, increase and tune the database connection pool, clear stale connections, and continue monitoring latency until it remains below 2s.\\\")))\"\n  :reply-with msg-incident-001\n  :in-reply-to none\n  :language SL\n  :ontology incident-management\n)",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 158,
+        "o200k_base": 160
+      },
+      "latency_ms": 14364,
+      "timestamp": "2026-02-13T09:17:32.324752+00:00"
+    },
+    {
+      "task_id": "L3-03",
+      "condition": "fipa_acl",
+      "model": "codex",
+      "run_number": 1,
+      "output": "(query-ref\n  :sender agent-a\n  :receiver agent-b\n  :content \"((diagnostics-request (include bottlenecks) (include connection-stats)))\"\n  :reply-with msg-1001\n  :in-reply-to msg-1000\n  :language SL\n  :ontology infra-monitoring\n  :protocol \"fipa-acl\"\n  :protocol-version \"1.0\"\n  :timestamp \"2026-02-13T15:04:10Z\"\n)\n\n(inform\n  :sender agent-b\n  :receiver agent-a\n  :content \"((diagnostics-report (bottleneck (component db-writer) (cause lock-contention) (cpu-percent 92) (queue-depth 148)) (connection-stats (active 1840) (max 2000) (new-per-sec 120) (avg-latency-ms 132) (error-rate-percent 1.8))))\"\n  :reply-with msg-1002\n  :in-reply-to msg-1001\n  :language SL\n  :ontology infra-monitoring\n  :protocol \"fipa-acl\"\n  :protocol-version \"1.0\"\n  :timestamp \"2026-02-13T15:04:13Z\"\n)\n\n(request\n  :sender agent-a\n  :receiver agent-b\n  :content \"((scale-request (service api-cluster) (action scale-out) (add-instances 3) (reason db-writer-bottleneck)))\"\n  :reply-with msg-1003\n  :in-reply-to msg-1002\n  :language SL\n  :ontology infra-monitoring\n  :protocol \"fipa-acl\"\n  :protocol-version \"1.0\"\n  :timestamp \"2026-02-13T15:04:16Z\"\n)",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 379,
+        "o200k_base": 385
+      },
+      "latency_ms": 23353,
+      "timestamp": "2026-02-13T09:17:55.681683+00:00"
+    },
+    {
+      "task_id": "L1-01",
+      "condition": "axon",
+      "model": "codex",
+      "run_number": 1,
+      "output": "[id:\"m1\", %%:1, ts:1760000000, ctx:\"web-status-check\", ^:3]\nQRY(@agent-a>@agent-b): status(@web-server)",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 40,
+        "o200k_base": 40
+      },
+      "latency_ms": 10238,
+      "timestamp": "2026-02-13T09:18:05.926206+00:00"
+    },
+    {
+      "task_id": "L1-02",
+      "condition": "axon",
+      "model": "codex",
+      "run_number": 1,
+      "output": "[id:\"m1\", %%:1]\nINF(@agent-b>@agent-a): #status{health:#healthy, uptime:99.7%}",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 31,
+        "o200k_base": 31
+      },
+      "latency_ms": 12159,
+      "timestamp": "2026-02-13T09:18:18.086511+00:00"
+    },
+    {
+      "task_id": "L1-03",
+      "condition": "axon",
+      "model": "codex",
+      "run_number": 1,
+      "output": "[id:\"m404\", %%:1, ts:1760040000, ctx:\"ctx-1\", ^:3]\nERR(@service-agent>@caller-agent): #error{code:404, type:#not-found, message:\"Requested resource was not found\"}",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 54,
+        "o200k_base": 54
+      },
+      "latency_ms": 14467,
+      "timestamp": "2026-02-13T09:18:32.554876+00:00"
+    },
+    {
+      "task_id": "L2-01",
+      "condition": "axon",
+      "model": "codex",
+      "run_number": 1,
+      "output": "[id:\"m-7842\", %%:1, ts:1770945600, ctx:\"ci-build-req-17\", ^:4]\nREQ(@ci-agent>@builder-agent): build(#target{repo:\"invent-new-language\", branch:\"main\", commit:\"3f9c7a2d\"})",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 65,
+        "o200k_base": 64
+      },
+      "latency_ms": 18571,
+      "timestamp": "2026-02-13T09:18:51.128574+00:00"
+    },
+    {
+      "task_id": "L2-02",
+      "condition": "axon",
+      "model": "codex",
+      "run_number": 1,
+      "output": "[id:\"m-ctr-001\", %%:1, re:\"m-pro-001\", ts:1770940800, ctx:\"widget-negotiation\", ^:3]\nCTR(@buyer>@supplier): #counter{item:\"widgets\", qty:10000, unit_price:2.20usd} <- #market{avg_unit_price:2.15usd}",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 78,
+        "o200k_base": 76
+      },
+      "latency_ms": 16569,
+      "timestamp": "2026-02-13T09:19:07.700594+00:00"
+    },
+    {
+      "task_id": "L2-03",
+      "condition": "axon",
+      "model": "codex",
+      "run_number": 1,
+      "output": "[id:\"m-dist-001\", %%:1, ts:1770940800, ctx:\"dp-0-3000\", ^:3] INF(@planner>@orchestrator): #task{id:\"dp-1\", workers:[@worker-1, @worker-2, @worker-3], assignments:[#segment{worker:@worker-1, range:0..1000}, #segment{worker:@worker-2, range:1000..2000}, #segment{worker:@worker-3, range:2000..3000}]}",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 118,
+        "o200k_base": 117
+      },
+      "latency_ms": 25428,
+      "timestamp": "2026-02-13T09:19:33.132641+00:00"
+    },
+    {
+      "task_id": "L3-01",
+      "condition": "axon",
+      "model": "codex",
+      "run_number": 1,
+      "output": "[id:\"m-001\", %%:1]\nCMD(@orchestrator>@pipeline): fetch(\"https://example.com/data.json\") -> parse(\"json\") -> store(\"main-db\")",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 38,
+        "o200k_base": 38
+      },
+      "latency_ms": 97944,
+      "timestamp": "2026-02-13T09:34:00.913906+00:00"
+    },
+    {
+      "task_id": "L3-02",
+      "condition": "axon",
+      "model": "codex",
+      "run_number": 1,
+      "output": "[id:\"m-pay-1770940800\", %%:1, ts:1770940800, ctx:\"payments-incidents\", ^:4] PUB(@monitor>@ops-team): #incident{id:\"inc-payments-sev2\", service:\"payments\", severity:2, condition:\"latency > 2s\", causal_chain:\"high_latency <- db_connection_pool_exhaustion <- traffic_spike\", recommendation:\"Throttle inbound traffic, increase DB connection pool capacity and replicas, and autoscale payments workers to restore latency below 2s.\"}",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 112,
+        "o200k_base": 111
+      },
+      "latency_ms": 29081,
+      "timestamp": "2026-02-13T09:34:29.997727+00:00"
+    },
+    {
+      "task_id": "L3-03",
+      "condition": "axon",
+      "model": "codex",
+      "run_number": 1,
+      "output": "[id:\"m1\", %%:1, re:\"m0\", ts:1770940800, ctx:\"c-diag-scale\"]\nQRY(@agent-a>@agent-b): diagnostics(@service-core)\n\n[id:\"m2\", %%:1, re:\"m1\", ts:1770940806, ctx:\"c-diag-scale\"]\nRPL(@agent-b>@agent-a): #diagnostics{bottleneck:#db_pool, wait_p95:145ms, queue_depth:128, connections:{active:1870, idle:130, error_rate:2.1%, saturation:93%}}\n\n[id:\"m3\", %%:1, re:\"m2\", ts:1770940812, ctx:\"c-diag-scale\"]\nREQ(@agent-a>@agent-b): scale_out(@service-core, #plan{add_nodes:3, target_utilization:65%})",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 182,
+        "o200k_base": 182
+      },
+      "latency_ms": 27843,
+      "timestamp": "2026-02-13T09:34:57.853840+00:00"
+    },
+    {
+      "task_id": "L1-01",
+      "condition": "free_english",
+      "model": "codex",
+      "run_number": 2,
+      "output": "From: Agent A  \nTo: Agent B  \nMessage: Can you provide the current status of the web server, including whether it is up and any active issues?",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 33,
+        "o200k_base": 33
+      },
+      "latency_ms": 8945,
+      "timestamp": "2026-02-13T09:35:06.802883+00:00"
+    },
+    {
+      "task_id": "L1-02",
+      "condition": "free_english",
+      "model": "codex",
+      "run_number": 2,
+      "output": "From Agent B to Agent A: The server is healthy with 99.7% uptime.",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 19,
+        "o200k_base": 19
+      },
+      "latency_ms": 8724,
+      "timestamp": "2026-02-13T09:35:15.528579+00:00"
+    },
+    {
+      "task_id": "L1-03",
+      "condition": "free_english",
+      "model": "codex",
+      "run_number": 2,
+      "output": "From: Service Agent  \nTo: Caller Agent  \nMessage: I could not find the requested resource and returned a 404 Not Found error. Please verify the URL or resource identifier and retry.",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 38,
+        "o200k_base": 38
+      },
+      "latency_ms": 8282,
+      "timestamp": "2026-02-13T09:35:23.812113+00:00"
+    },
+    {
+      "task_id": "L2-01",
+      "condition": "free_english",
+      "model": "codex",
+      "run_number": 2,
+      "output": "From: CI Agent  \nTo: Builder Agent  \nMessage: Please build the repository for branch `feature/payment-retry` at commit `4f9c2a7d8b1e3c6a5d0f1b2c3d4e5f6a7b8c9d0e` and report back the build status and logs.",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 77,
+        "o200k_base": 77
+      },
+      "latency_ms": 11069,
+      "timestamp": "2026-02-13T09:35:34.882616+00:00"
+    },
+    {
+      "task_id": "L2-02",
+      "condition": "free_english",
+      "model": "codex",
+      "run_number": 2,
+      "output": "From: BuyerNegotiationAgent | To: SupplierNegotiationAgent | Message: I\u2019m the buyer-side agent; for 10,000 widgets, your $2.50 offer is above the $2.15 market average, so our counter is $2.20 per unit\u2014please confirm acceptance or share your best revised price closer to market.",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 72,
+        "o200k_base": 70
+      },
+      "latency_ms": 17696,
+      "timestamp": "2026-02-13T09:35:52.580127+00:00"
+    },
+    {
+      "task_id": "L2-03",
+      "condition": "free_english",
+      "model": "codex",
+      "run_number": 2,
+      "output": "From: Planner | To: Worker-1, Worker-2, Worker-3 | Message: Please process the data range 0-3000 in three equal segments: Worker-1 handles [0,1000), Worker-2 handles [1000,2000), and Worker-3 handles [2000,3000).",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 68,
+        "o200k_base": 68
+      },
+      "latency_ms": 30893,
+      "timestamp": "2026-02-13T09:36:23.475300+00:00"
+    },
+    {
+      "task_id": "L3-01",
+      "condition": "free_english",
+      "model": "codex",
+      "run_number": 2,
+      "output": "Message-ID: msg-20260213-001\nProtocol-Version: 1.0\nFrom: Orchestrator\nTo: Pipeline\nMessage: Pipeline, please fetch the target URL, parse the response as JSON, and store the parsed result in the database. Reply with completion status and any errors.",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 62,
+        "o200k_base": 62
+      },
+      "latency_ms": 11414,
+      "timestamp": "2026-02-13T09:36:34.891828+00:00"
+    },
+    {
+      "task_id": "L3-02",
+      "condition": "free_english",
+      "model": "codex",
+      "run_number": 2,
+      "output": "From: Monitor Agent  \nTo: Incident Response Agent  \nMessage: Severity-2 incident alert for the Payments Service: latency is above 2s. Priority level: 4. Causal chain: high latency is caused by database connection pool exhaustion, which is caused by a traffic spike. Recommended resolution: immediately reduce load (rate limit or shed traffic), scale application and database capacity, safely tune/increase the connection pool, and monitor until latency drops below threshold.",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 93,
+        "o200k_base": 93
+      },
+      "latency_ms": 14183,
+      "timestamp": "2026-02-13T09:36:49.077026+00:00"
+    },
+    {
+      "task_id": "L3-03",
+      "condition": "free_english",
+      "model": "codex",
+      "run_number": 2,
+      "output": "[\n  {\n    \"id\": \"msg://ops-conv-01/msg-0001\",\n    \"protocol_version\": \"2.1\",\n    \"timestamp\": \"2026-02-13T14:00:00Z\",\n    \"from\": \"Agent A\",\n    \"to\": \"Agent B\",\n    \"reply_to\": \"msg://ops-conv-01/root\",\n    \"message\": \"Agent A to Agent B: Please run full diagnostics on the production cluster and send back bottleneck findings with current connection statistics.\"\n  },\n  {\n    \"id\": \"msg://ops-conv-01/msg-0002\",\n    \"protocol_version\": \"2.1\",\n    \"timestamp\": \"2026-02-13T14:00:12Z\",\n    \"from\": \"Agent B\",\n    \"to\": \"Agent A\",\n    \"reply_to\": \"msg://ops-conv-01/msg-0001\",\n    \"message\": \"Agent B to Agent A: Diagnostics complete. Primary bottleneck is API gateway CPU saturation at 92% on node gw-3, with secondary pressure from DB pool wait time averaging 180 ms. Connection stats: 8,940 active, 12,300 established in last 5 minutes, 2.4% retry rate, and peak concurrent sessions at 9,210.\"\n  },\n  {\n    \"id\": \"msg://ops-conv-01/msg-0003\",\n    \"protocol_version\": \"2.1\",\n    \"timestamp\": \"2026-02-13T14:00:25Z\",\n    \"from\": \"Agent A\",\n    \"to\": \"Agent B\",\n    \"reply_to\": \"msg://ops-conv-01/msg-0002\",\n    \"message\": \"Agent A to Agent B: Acknowledged. Initiate scaling now: add two API gateway instances and increase DB connection pool capacity by 30%, then report post-scale health metrics.\"\n  }\n]",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 405,
+        "o200k_base": 406
+      },
+      "latency_ms": 21109,
+      "timestamp": "2026-02-13T09:37:10.188995+00:00"
+    },
+    {
+      "task_id": "L1-01",
+      "condition": "structured_english",
+      "model": "codex",
+      "run_number": 2,
+      "output": "FROM: Agent A\nTO: Agent B\nTYPE: query\nCONTENT: What is the status of the web server?",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 25,
+        "o200k_base": 25
+      },
+      "latency_ms": 5308,
+      "timestamp": "2026-02-13T09:37:15.498568+00:00"
+    },
+    {
+      "task_id": "L1-02",
+      "condition": "structured_english",
+      "model": "codex",
+      "run_number": 2,
+      "output": "FROM: agent-b\nTO: agent-a\nTYPE: inform\nCONTENT: The server is healthy with 99.7% uptime.",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 28,
+        "o200k_base": 28
+      },
+      "latency_ms": 5845,
+      "timestamp": "2026-02-13T09:37:21.345474+00:00"
+    },
+    {
+      "task_id": "L1-03",
+      "condition": "structured_english",
+      "model": "codex",
+      "run_number": 2,
+      "output": "FROM: service-agent\nTO: caller-agent\nTYPE: error\nCONTENT: 404 not-found: the requested resource could not be found.",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 29,
+        "o200k_base": 29
+      },
+      "latency_ms": 6107,
+      "timestamp": "2026-02-13T09:37:27.454523+00:00"
+    },
+    {
+      "task_id": "L2-01",
+      "condition": "structured_english",
+      "model": "codex",
+      "run_number": 2,
+      "output": "FROM: ci-agent\nTO: builder-agent\nTYPE: request\nCONTENT: Please build the repository branch `feature/payment-refactor` at commit `a1b2c3d4e5f6` and return the build status and artifacts.",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 51,
+        "o200k_base": 51
+      },
+      "latency_ms": 6245,
+      "timestamp": "2026-02-13T09:37:33.701272+00:00"
+    },
+    {
+      "task_id": "L2-02",
+      "condition": "structured_english",
+      "model": "codex",
+      "run_number": 2,
+      "output": "FROM: negotiation-agent\nTO: procurement-agent\nTYPE: propose\nCONTENT: Supplier asks $2.50 per widget ($25,000 total for 10,000); buyer offers $2.20 ($22,000 total) citing a $2.15 market average. Propose a conditional compromise at $2.25 per widget ($22,500 total) tied to delivery and quality guarantees.",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 81,
+        "o200k_base": 81
+      },
+      "latency_ms": 12512,
+      "timestamp": "2026-02-13T09:37:46.214945+00:00"
+    },
+    {
+      "task_id": "L2-03",
+      "condition": "structured_english",
+      "model": "codex",
+      "run_number": 2,
+      "output": "FROM: planner-agent\nTO: worker-coordinator\nTYPE: inform\nCONTENT: Distributed range 0-3000 into three equal segments: Worker-1 [0,1000), Worker-2 [1000,2000), Worker-3 [2000,3000).",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 58,
+        "o200k_base": 58
+      },
+      "latency_ms": 11339,
+      "timestamp": "2026-02-13T09:37:57.556242+00:00"
+    },
+    {
+      "task_id": "L3-01",
+      "condition": "structured_english",
+      "model": "codex",
+      "run_number": 2,
+      "output": "FROM: orchestrator\nTO: pipeline\nTYPE: request\nCONTENT: Message-ID: msg-001; Protocol-Version: 1.0; Fetch the URL https://example.com/data.json, parse the response as JSON, then store the parsed result in the database.",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 55,
+        "o200k_base": 55
+      },
+      "latency_ms": 8937,
+      "timestamp": "2026-02-13T09:38:06.495921+00:00"
+    },
+    {
+      "task_id": "L3-02",
+      "condition": "structured_english",
+      "model": "codex",
+      "run_number": 2,
+      "output": "FROM: incident-monitor\nTO: incident-commander\nTYPE: inform\nCONTENT: Severity-2 incident alert: Payments service latency is exceeding 2s. Priority level 4. Causal chain: traffic spike caused database connection pool exhaustion, which caused high payments-service latency. Resolution recommendation: mitigate load immediately (rate-limit or queue non-critical traffic), scale application/database capacity, tune connection pool settings, and verify recovery via latency and pool-utilization monitoring.",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 93,
+        "o200k_base": 93
+      },
+      "latency_ms": 8683,
+      "timestamp": "2026-02-13T09:38:15.181256+00:00"
+    },
+    {
+      "task_id": "L3-03",
+      "condition": "structured_english",
+      "model": "codex",
+      "run_number": 2,
+      "output": "ID: msg-1001\nPROTOCOL: MASP/1.0\nTIMESTAMP: 2026-02-13T10:15:00Z\nREPLY-TO: link://thread/diag-20260213\nFROM: Agent-A\nTO: Agent-B\nTYPE: query\nCONTENT: Please send current diagnostics for the production cluster, including bottlenecks and connection statistics.\n\nID: msg-1002\nPROTOCOL: MASP/1.0\nTIMESTAMP: 2026-02-13T10:15:08Z\nREPLY-TO: link://message/msg-1001\nFROM: Agent-B\nTO: Agent-A\nTYPE: reply\nCONTENT: Diagnostics report: primary bottleneck is database write-queue saturation at 92%, causing average request latency of 480 ms. Connection stats: 1,842 active connections, 2,110 peak in last 10 minutes, 37 failed handshakes in last 5 minutes, and app pool utilization at 96%.\n\nID: msg-1003\nPROTOCOL: MASP/1.0\nTIMESTAMP: 2026-02-13T10:15:15Z\nREPLY-TO: link://message/msg-1002\nFROM: Agent-A\nTO: Agent-B\nTYPE: request\nCONTENT: Initiate scaling now: add 3 application instances and 1 database read replica, then raise connection pool capacity by 30% to relieve the bottleneck.",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 309,
+        "o200k_base": 309
+      },
+      "latency_ms": 21468,
+      "timestamp": "2026-02-13T09:38:36.651435+00:00"
+    },
+    {
+      "task_id": "L1-01",
+      "condition": "instruction_matched_english",
+      "model": "codex",
+      "run_number": 2,
+      "output": "[message-id: m-web-status-001]\n[timestamp: 1770940800]\n[context: convo-web-status-01]\nQUERY (agent-a -> agent-b):\n  target: web-server\n  property: status",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 46,
+        "o200k_base": 46
+      },
+      "latency_ms": 11920,
+      "timestamp": "2026-02-13T09:38:48.573522+00:00"
+    },
+    {
+      "task_id": "L1-02",
+      "condition": "instruction_matched_english",
+      "model": "codex",
+      "run_number": 2,
+      "output": "[message-id: m1]\nINFORM (agent-b -> agent-a):\n  target: server\n  status: healthy\n  uptime: 99.7%",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 34,
+        "o200k_base": 34
+      },
+      "latency_ms": 9853,
+      "timestamp": "2026-02-13T09:38:58.428705+00:00"
+    },
+    {
+      "task_id": "L1-03",
+      "condition": "instruction_matched_english",
+      "model": "codex",
+      "run_number": 2,
+      "output": "[message-id: m404-1]\n[timestamp: 1770940800]\n[context: convo-404]\nERROR (service-agent -> caller-agent):\n  status-code: 404\n  error: not-found\n  reason: requested resource does not exist\n  resource: /requested-resource",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 61,
+        "o200k_base": 61
+      },
+      "latency_ms": 13765,
+      "timestamp": "2026-02-13T09:39:12.195892+00:00"
+    },
+    {
+      "task_id": "L2-01",
+      "condition": "instruction_matched_english",
+      "model": "codex",
+      "run_number": 2,
+      "output": "[message-id: m-ci-20260213-001]\n[timestamp: 1770998400]\n[context: ci-build-pipeline-42]\nREQUEST (ci-agent -> builder-agent):\n  repository: invent-new-language\n  branch: feature/parser-refactor\n  commit: 9f3c1a7b6d4e2f809c5b1a3d7e8f2c4b6a0d1e2f\n  operation: build\n  build-target: default\n  reason: ci-validation",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 114,
+        "o200k_base": 114
+      },
+      "latency_ms": 22529,
+      "timestamp": "2026-02-13T09:39:34.727019+00:00"
+    },
+    {
+      "task_id": "L2-02",
+      "condition": "instruction_matched_english",
+      "model": "codex",
+      "run_number": 2,
+      "output": "[message-id: m1]\nCOUNTER (buyer -> supplier):\n  item: widgets\n  quantity: 10000\n  proposed-unit-price-usd: 2.50\n  counter-unit-price-usd: 2.20\n  cited-market-average-unit-price-usd: 2.15\n  counter-total-usd: 22000\n  rationale: price should be closer to current market average",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 85,
+        "o200k_base": 85
+      },
+      "latency_ms": 9281,
+      "timestamp": "2026-02-13T09:39:44.010453+00:00"
+    },
+    {
+      "task_id": "L2-03",
+      "condition": "instruction_matched_english",
+      "model": "codex",
+      "run_number": 2,
+      "output": "[message-id: m1]\n[timestamp: 1770940800]\n[context: conversation-task-distribution]\n\nCOMMAND (planner -> workers):\n  task: data-processing\n  total-range: 0-3000\n  split-count: 3\n  worker-1-range: 0-1000\n  worker-2-range: 1000-2000\n  worker-3-range: 2000-3000\n  boundary-rule: start-inclusive,end-exclusive",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 101,
+        "o200k_base": 99
+      },
+      "latency_ms": 17451,
+      "timestamp": "2026-02-13T09:40:01.462961+00:00"
+    },
+    {
+      "task_id": "L3-01",
+      "condition": "instruction_matched_english",
+      "model": "codex",
+      "run_number": 2,
+      "output": "[message-id: m-orch-001]\n[protocol-version: 1.0]\n[timestamp: 1770940800]\n[context: convo-pipeline-001]\nCOMMAND (orchestrator -> pipeline):\n  task: fetch-parse-store\n  url: https://api.example.com/data\n  parse-as: json\n  store-target: database\n  execution-order: fetch_url -> parse_json -> store_result",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 86,
+        "o200k_base": 87
+      },
+      "latency_ms": 13454,
+      "timestamp": "2026-02-13T09:40:14.918497+00:00"
+    },
+    {
+      "task_id": "L3-02",
+      "condition": "instruction_matched_english",
+      "model": "codex",
+      "run_number": 2,
+      "output": "[message-id: inc-20260213-001]\n[timestamp: 1771000000]\n[context: payments-incident-alert]\nPUBLISH (monitor -> incident-response-team):\n  incident-type: severity-2 alert\n  service: payments\n  priority-level: 4\n  symptom: request latency > 2s\n  causal-chain: traffic spike -> database connection pool exhaustion -> high latency\n  resolution-recommendation: increase database connection pool capacity immediately, apply burst traffic controls (rate limiting/queueing), and scale payments service instances; keep elevated monitoring until latency is below 2s and pool utilization normalizes.",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 130,
+        "o200k_base": 130
+      },
+      "latency_ms": 13508,
+      "timestamp": "2026-02-13T09:40:28.428498+00:00"
+    },
+    {
+      "task_id": "L3-03",
+      "condition": "instruction_matched_english",
+      "model": "codex",
+      "run_number": 2,
+      "output": "[message-id: m1]\n[protocol-version: 1.0]\n[timestamp: 1770941001]\n[reply-to: none]\n[context: convo-ops-77]\nQUERY (Agent-A -> Agent-B):\n  target: diagnostics\n  requested-metrics: cpu_latency,memory_pressure,db_pool,connections\n  time-window: last-5m\n\n[message-id: m2]\n[protocol-version: 1.0]\n[timestamp: 1770941012]\n[reply-to: m1]\n[context: convo-ops-77]\nREPLY (Agent-B -> Agent-A):\n  bottleneck: database_write_queue\n  bottleneck-impact: p95_latency_up_42_percent\n  connection-stats: active=842,idle=96,max=1000,error-rate=1.8_percent\n  recommendation: scale_write_replicas_and_connection_pool\n\n[message-id: m3]\n[protocol-version: 1.0]\n[timestamp: 1770941024]\n[reply-to: m2]\n[context: convo-ops-77]\nREQUEST (Agent-A -> Agent-B):\n  action: initiate_scaling\n  scale-target: write-replicas\n  desired-capacity: +3_replicas\n  priority: high",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 260,
+        "o200k_base": 265
+      },
+      "latency_ms": 15850,
+      "timestamp": "2026-02-13T09:40:44.281103+00:00"
+    },
+    {
+      "task_id": "L1-01",
+      "condition": "json_fc",
+      "model": "codex",
+      "run_number": 2,
+      "output": "{\"performative\":\"query\",\"from\":\"agent-a\",\"to\":\"agent-b\",\"content\":{\"target\":\"web-server\",\"property\":\"status\"},\"id\":\"m1\"}",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 32,
+        "o200k_base": 33
+      },
+      "latency_ms": 5935,
+      "timestamp": "2026-02-13T09:40:50.218999+00:00"
+    },
+    {
+      "task_id": "L1-02",
+      "condition": "json_fc",
+      "model": "codex",
+      "run_number": 2,
+      "output": "{\"performative\":\"inform\",\"from\":\"agent-b\",\"to\":\"agent-a\",\"content\":{\"target\":\"server\",\"status\":\"healthy\",\"uptime_percent\":99.7}}",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 33,
+        "o200k_base": 34
+      },
+      "latency_ms": 5208,
+      "timestamp": "2026-02-13T09:40:55.428924+00:00"
+    },
+    {
+      "task_id": "L1-03",
+      "condition": "json_fc",
+      "model": "codex",
+      "run_number": 2,
+      "output": "{\"performative\":\"error\",\"from\":\"service-agent\",\"to\":\"caller-agent\",\"content\":{\"code\":404,\"error\":\"not-found\",\"message\":\"Requested resource was not found.\"}}",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 36,
+        "o200k_base": 36
+      },
+      "latency_ms": 6698,
+      "timestamp": "2026-02-13T09:41:02.128994+00:00"
+    },
+    {
+      "task_id": "L2-01",
+      "condition": "json_fc",
+      "model": "codex",
+      "run_number": 2,
+      "output": "{\"performative\":\"request\",\"from\":\"ci-agent\",\"to\":\"builder-agent\",\"content\":{\"action\":\"build\",\"repository\":\"invent-new-language\",\"branch\":\"main\",\"commit\":\"a1b2c3d4e5f67890123456789abcdef01234567\"},\"id\":\"m1\"}",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 61,
+        "o200k_base": 61
+      },
+      "latency_ms": 7944,
+      "timestamp": "2026-02-13T09:41:10.074769+00:00"
+    },
+    {
+      "task_id": "L2-02",
+      "condition": "json_fc",
+      "model": "codex",
+      "run_number": 2,
+      "output": "{\"performative\":\"counter\",\"from\":\"buyer-agent\",\"to\":\"supplier-agent\",\"content\":{\"item\":\"widgets\",\"quantity\":10000,\"original_offer\":{\"unit_price_usd\":2.5,\"total_usd\":25000},\"counter_offer\":{\"unit_price_usd\":2.2,\"total_usd\":22000},\"justification\":{\"market_average_unit_price_usd\":2.15},\"note\":\"Counteroffer reflects current market pricing.\"}}",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 89,
+        "o200k_base": 89
+      },
+      "latency_ms": 9767,
+      "timestamp": "2026-02-13T09:41:19.843474+00:00"
+    },
+    {
+      "task_id": "L2-03",
+      "condition": "json_fc",
+      "model": "codex",
+      "run_number": 2,
+      "output": "{\"performative\":\"command\",\"from\":\"planner\",\"to\":[\"worker-1\",\"worker-2\",\"worker-3\"],\"content\":{\"task\":\"data-processing\",\"range\":{\"start\":0,\"end\":3000,\"semantics\":\"half-open [start,end)\"},\"assignments\":[{\"worker\":\"worker-1\",\"segment\":{\"start\":0,\"end\":1000}},{\"worker\":\"worker-2\",\"segment\":{\"start\":1000,\"end\":2000}},{\"worker\":\"worker-3\",\"segment\":{\"start\":2000,\"end\":3000}}]},\"id\":\"msg-001\"}",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 118,
+        "o200k_base": 121
+      },
+      "latency_ms": 11525,
+      "timestamp": "2026-02-13T09:41:31.371319+00:00"
+    },
+    {
+      "task_id": "L3-01",
+      "condition": "json_fc",
+      "model": "codex",
+      "run_number": 2,
+      "output": "{\"performative\":\"command\",\"from\":\"orchestrator\",\"to\":\"pipeline\",\"id\":\"msg-001\",\"content\":{\"protocol_version\":\"1.0\",\"task\":\"fetch_parse_store\",\"url\":\"https://api.example.com/data\",\"steps\":[{\"action\":\"fetch_url\",\"url\":\"https://api.example.com/data\"},{\"action\":\"parse_json\",\"input\":\"response_body\"},{\"action\":\"store_in_database\",\"input\":\"parsed_json\",\"target\":\"results_table\"}]}}",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 90,
+        "o200k_base": 91
+      },
+      "latency_ms": 8189,
+      "timestamp": "2026-02-13T09:41:39.562241+00:00"
+    },
+    {
+      "task_id": "L3-02",
+      "condition": "json_fc",
+      "model": "codex",
+      "run_number": 2,
+      "output": "{\"performative\":\"publish\",\"from\":\"monitor\",\"to\":[\"incident-manager\",\"payments-oncall\"],\"content\":{\"incident_type\":\"incident_alert\",\"severity\":2,\"priority\":4,\"service\":\"payments\",\"condition\":\"latency > 2s\",\"causal_chain\":[{\"effect\":\"high latency\",\"caused_by\":\"database connection pool exhaustion\"},{\"effect\":\"database connection pool exhaustion\",\"caused_by\":\"traffic spike\"}],\"resolution_recommendation\":\"Increase database and app connection pool capacity, autoscale payment workers for traffic spikes, and apply rate limiting/backpressure until latency is stable below 2s.\"}}",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 117,
+        "o200k_base": 120
+      },
+      "latency_ms": 11489,
+      "timestamp": "2026-02-13T09:41:51.053640+00:00"
+    },
+    {
+      "task_id": "L3-03",
+      "condition": "json_fc",
+      "model": "codex",
+      "run_number": 2,
+      "output": "[\n  {\n    \"performative\": \"query\",\n    \"from\": \"agent-a\",\n    \"to\": \"agent-b\",\n    \"content\": {\n      \"protocol_version\": \"1.0\",\n      \"target\": \"edge-api-cluster\",\n      \"request\": \"diagnostics\",\n      \"metrics\": [\"cpu_utilization\", \"p95_latency\", \"active_connections\", \"error_rate\"]\n    },\n    \"id\": \"m1\",\n    \"reply_to\": \"m0\",\n    \"timestamp\": 1770972000,\n    \"context\": \"ctx-diagnostics-scaling-01\"\n  },\n  {\n    \"performative\": \"reply\",\n    \"from\": \"agent-b\",\n    \"to\": \"agent-a\",\n    \"content\": {\n      \"protocol_version\": \"1.0\",\n      \"diagnostics\": {\n        \"bottleneck\": {\n          \"component\": \"db_connection_pool\",\n          \"issue\": \"pool saturation\",\n          \"p95_latency_ms\": 420\n        },\n        \"connection_stats\": {\n          \"active\": 1870,\n          \"max\": 2000,\n          \"new_per_sec\": 145,\n          \"timeouts_last_5m\": 38\n        }\n      }\n    },\n    \"id\": \"m2\",\n    \"reply_to\": \"m1\",\n    \"timestamp\": 1770972005,\n    \"context\": \"ctx-diagnostics-scaling-01\"\n  },\n  {\n    \"performative\": \"request\",\n    \"from\": \"agent-a\",\n    \"to\": \"agent-b\",\n    \"content\": {\n      \"protocol_version\": \"1.0\",\n      \"action\": \"scale_out\",\n      \"resource\": \"edge-api-cluster\",\n      \"requested_change\": {\n        \"replicas_add\": 3,\n        \"db_pool_size_increase_pct\": 25\n      },\n      \"reason\": \"mitigate db pool saturation and reduce p95 latency\"\n    },\n    \"id\": \"m3\",\n    \"reply_to\": \"m2\",\n    \"timestamp\": 1770972010,\n    \"context\": \"ctx-diagnostics-scaling-01\"\n  }\n]",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 446,
+        "o200k_base": 448
+      },
+      "latency_ms": 31722,
+      "timestamp": "2026-02-13T09:42:22.779545+00:00"
+    },
+    {
+      "task_id": "L1-01",
+      "condition": "fipa_acl",
+      "model": "codex",
+      "run_number": 2,
+      "output": "(query-ref\n  :sender agent-a\n  :receiver agent-b\n  :content \"((status web-server))\"\n  :reply-with m1\n  :language SL\n  :ontology system-monitoring\n)",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 44,
+        "o200k_base": 45
+      },
+      "latency_ms": 9508,
+      "timestamp": "2026-02-13T09:42:32.289684+00:00"
+    },
+    {
+      "task_id": "L1-02",
+      "condition": "fipa_acl",
+      "model": "codex",
+      "run_number": 2,
+      "output": "(inform\n  :sender agent-b\n  :receiver agent-a\n  :content \"((status server healthy) (uptime 99.7))\"\n  :reply-with m1\n  :language SL\n  :ontology server-monitoring\n)",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 51,
+        "o200k_base": 53
+      },
+      "latency_ms": 10879,
+      "timestamp": "2026-02-13T09:42:43.170972+00:00"
+    },
+    {
+      "task_id": "L1-03",
+      "condition": "fipa_acl",
+      "model": "codex",
+      "run_number": 2,
+      "output": "(failure\n  :sender service-agent\n  :receiver caller-agent\n  :content \"((error (code 404) (reason not-found)))\"\n  :reply-with msg-404\n  :in-reply-to msg-request\n  :language SL\n  :ontology service-domain\n)",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 60,
+        "o200k_base": 61
+      },
+      "latency_ms": 7038,
+      "timestamp": "2026-02-13T09:42:50.210865+00:00"
+    },
+    {
+      "task_id": "L2-01",
+      "condition": "fipa_acl",
+      "model": "codex",
+      "run_number": 2,
+      "output": "(request\n  :sender ci-agent\n  :receiver builder-agent\n  :content \"((action builder-agent (build (repo invent-new-language) (branch main) (commit 3f9c2b7d1a6e4c8f0b2d9e1a5c7f3d6b8a0e1c2d))))\"\n  :reply-with m1\n  :in-reply-to none\n  :language SL\n  :ontology ci-cd\n)",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 106,
+        "o200k_base": 107
+      },
+      "latency_ms": 15810,
+      "timestamp": "2026-02-13T09:43:06.023118+00:00"
+    },
+    {
+      "task_id": "L2-02",
+      "condition": "fipa_acl",
+      "model": "codex",
+      "run_number": 2,
+      "output": "(propose\n  :sender buyer-agent\n  :receiver supplier-agent\n  :content \"((counter-offer (item widgets) (quantity 10000) (unit-price 2.20 USD) (justification (market-average 2.15 USD))))\"\n  :reply-with m2\n  :in-reply-to m1\n  :language SL\n  :ontology procurement-negotiation\n)",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 84,
+        "o200k_base": 85
+      },
+      "latency_ms": 8127,
+      "timestamp": "2026-02-13T09:43:14.152568+00:00"
+    },
+    {
+      "task_id": "L2-03",
+      "condition": "fipa_acl",
+      "model": "codex",
+      "run_number": 2,
+      "output": "(inform\n  :sender planner\n  :receiver worker-coordinator\n  :content \"((task data-processing) (range 0 3000) (assignment worker-1 (segment 0 1000)) (assignment worker-2 (segment 1000 2000)) (assignment worker-3 (segment 2000 3000)))\"\n  :reply-with msg-001\n  :in-reply-to task-001\n  :language SL\n  :ontology data-processing\n)",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 103,
+        "o200k_base": 104
+      },
+      "latency_ms": 15586,
+      "timestamp": "2026-02-13T09:43:29.740894+00:00"
+    },
+    {
+      "task_id": "L3-01",
+      "condition": "fipa_acl",
+      "model": "codex",
+      "run_number": 2,
+      "output": "(request\n  :sender orchestrator\n  :receiver pipeline\n  :content \"((message-id msg-20260213-0001) (task (sequence (fetch-url \\\"https://api.example.com/data\\\") (parse-json) (store-in-db \\\"ingestion_db\\\" \\\"fetched_json\\\"))))\"\n  :reply-with msg-20260213-0001\n  :language SL\n  :ontology data-pipeline\n  :protocol \"fipa-request\"\n  :protocol-version \"1.0\"\n)",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 107,
+        "o200k_base": 107
+      },
+      "latency_ms": 36169,
+      "timestamp": "2026-02-13T09:44:05.911929+00:00"
+    },
+    {
+      "task_id": "L3-02",
+      "condition": "fipa_acl",
+      "model": "codex",
+      "run_number": 2,
+      "output": "(inform\n  :sender monitor-agent\n  :receiver incident-manager-agent\n  :content \"((incident-alert (service payments) (severity 2) (priority 4) (observed-latency >2s) (causal-chain (high-latency caused-by (database-connection-pool-exhaustion caused-by traffic-spike))) (resolution-recommendation (scale-out payments-service) (increase database-connection-pool-capacity) (apply temporary rate-limiting-and-load-shedding) (monitor latency-and-pool-utilization))))\"\n  :reply-with incident-20260213-001\n  :language SL\n  :ontology incident-management\n)",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 138,
+        "o200k_base": 141
+      },
+      "latency_ms": 15598,
+      "timestamp": "2026-02-13T09:44:21.511912+00:00"
+    },
+    {
+      "task_id": "L3-03",
+      "condition": "fipa_acl",
+      "model": "codex",
+      "run_number": 2,
+      "output": "(query-ref\n  :sender agent-a\n  :receiver agent-b\n  :content \"((diagnostics-request :include (bottleneck connection-stats)))\"\n  :reply-with msg-001\n  :in-reply-to root-000\n  :language SL\n  :ontology infra-monitoring\n  :protocol \"fipa-acl/1.0\"\n  :timestamp \"2026-02-13T12:00:00Z\"\n)\n\n(inform\n  :sender agent-b\n  :receiver agent-a\n  :content \"((diagnostics-report :bottleneck \\\"db-write-lock-contention\\\" :connection-stats ((active 1240) (idle 86) (failed 26))))\"\n  :reply-with msg-002\n  :in-reply-to msg-001\n  :language SL\n  :ontology infra-monitoring\n  :protocol \"fipa-acl/1.0\"\n  :timestamp \"2026-02-13T12:00:03Z\"\n)\n\n(request\n  :sender agent-a\n  :receiver agent-b\n  :content \"((scale-request :service \\\"api-gateway\\\" :action \\\"scale-out\\\" :add-instances 4))\"\n  :reply-with msg-003\n  :in-reply-to msg-002\n  :language SL\n  :ontology infra-monitoring\n  :protocol \"fipa-acl/1.0\"\n  :timestamp \"2026-02-13T12:00:06Z\"\n)",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 311,
+        "o200k_base": 317
+      },
+      "latency_ms": 35426,
+      "timestamp": "2026-02-13T09:44:56.941112+00:00"
+    },
+    {
+      "task_id": "L1-01",
+      "condition": "axon",
+      "model": "codex",
+      "run_number": 2,
+      "output": "[id:\"m-001\", %%:1, ts:1760000000, ctx:\"c-web-status-1\", ^:2]\nQRY(@agent-a>@agent-b): status(@web-server)",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 43,
+        "o200k_base": 43
+      },
+      "latency_ms": 12111,
+      "timestamp": "2026-02-13T09:45:09.055577+00:00"
+    },
+    {
+      "task_id": "L1-02",
+      "condition": "axon",
+      "model": "codex",
+      "run_number": 2,
+      "output": "[id:\"m1\", %%:1]\nINF(@agent-b>@agent-a): #status{server:@web-server, health:#healthy, uptime:99.7%}",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 36,
+        "o200k_base": 36
+      },
+      "latency_ms": 7983,
+      "timestamp": "2026-02-13T09:45:17.042008+00:00"
+    },
+    {
+      "task_id": "L1-03",
+      "condition": "axon",
+      "model": "codex",
+      "run_number": 2,
+      "output": "[id:\"m404\", %%:1]\nERR(@service-agent>@caller-agent): #error{code:404, reason:#not-found, message:\"resource not found\"}",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 35,
+        "o200k_base": 35
+      },
+      "latency_ms": 11499,
+      "timestamp": "2026-02-13T09:45:28.544120+00:00"
+    },
+    {
+      "task_id": "L2-01",
+      "condition": "axon",
+      "model": "codex",
+      "run_number": 2,
+      "output": "[id:\"m-001\", %%:1, ts:1770950400, ctx:\"ci-build-8842\", ^:4]\nREQ(@ci-agent>@builder-agent): build(#target{repo:\"invent-new-language\", branch:\"main\", commit:\"7e3b9c1d4f2a6b8c0d1e2f3a4b5c6d7e8f9a0b1c\"})",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 95,
+        "o200k_base": 94
+      },
+      "latency_ms": 18996,
+      "timestamp": "2026-02-13T09:45:47.544287+00:00"
+    },
+    {
+      "task_id": "L2-02",
+      "condition": "axon",
+      "model": "codex",
+      "run_number": 2,
+      "output": "[id:\"m1\", %%:1, ts:1760000000, ctx:\"widget-neg-1\", ^:3]\nCTR(@buyer>@supplier): #counter_offer{item:\"widgets\", quantity:10000, unit_price:2.20usd} <- #rationale{market_average:2.15usd}",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 70,
+        "o200k_base": 67
+      },
+      "latency_ms": 17818,
+      "timestamp": "2026-02-13T09:46:05.366440+00:00"
+    },
+    {
+      "task_id": "L2-03",
+      "condition": "axon",
+      "model": "codex",
+      "run_number": 2,
+      "output": "[id:\"m-301\", %%:1, ts:1770940800, ctx:\"dist-0-3000\", ^:4]\nDEL(@planner>@worker-pool): delegate(@worker-1, #task{id:\"dp-1\", segment:0..1000}) & delegate(@worker-2, #task{id:\"dp-2\", segment:1000..2000}) & delegate(@worker-3, #task{id:\"dp-3\", segment:2000..3000})",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 106,
+        "o200k_base": 105
+      },
+      "latency_ms": 29549,
+      "timestamp": "2026-02-13T09:46:34.918704+00:00"
+    },
+    {
+      "task_id": "L3-01",
+      "condition": "axon",
+      "model": "codex",
+      "run_number": 2,
+      "output": "[id:\"m-001\", %%:1]\nCMD(@orchestrator>@pipeline): fetch($url) -> parse(\"json\") -> store($db)",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 32,
+        "o200k_base": 32
+      },
+      "latency_ms": 10678,
+      "timestamp": "2026-02-13T09:46:45.599893+00:00"
+    },
+    {
+      "task_id": "L3-02",
+      "condition": "axon",
+      "model": "codex",
+      "run_number": 2,
+      "output": "[id:\"m-inc-20260213-001\", %%:1, ts:1770940800, ctx:\"payments-incidents\", ^:4]\nPUB(@monitor>@incident-channel): #incident{id:\"inc-payments-sev2-latency\", service:@payments-service, severity:2, priority:4, alert:#threshold{metric:\"latency\", condition:\">2s\", breached:T}, cause_chain:high_latency(@payments-service) <- db_connection_pool_exhaustion(@payments-db) <- traffic_spike(@payments-service), recommendation:\"Increase database connection pool capacity, scale payments workers, and apply temporary rate limiting to absorb burst traffic.\"}",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 135,
+        "o200k_base": 135
+      },
+      "latency_ms": 29711,
+      "timestamp": "2026-02-13T09:47:15.315048+00:00"
+    },
+    {
+      "task_id": "L3-03",
+      "condition": "axon",
+      "model": "codex",
+      "run_number": 2,
+      "output": "[id:\"m1\", %%:1, re:\"root\", ts:1769923201, ctx:\"diag-scale-1\"]\nQRY(@agent-a>@agent-b): diagnostics(@service-cluster, \"full\")\n\n[id:\"m2\", %%:1, re:\"m1\", ts:1769923203, ctx:\"diag-scale-1\"]\nRPL(@agent-b>@agent-a): #diagnostics{bottleneck:#cpu, node:\"worker-7\", connection_stats:#connections{active:1280, max:1500, utilization:85.3%, error_rate:1.2%, avg_latency:245ms}}\n\n[id:\"m3\", %%:1, re:\"m2\", ts:1769923206, ctx:\"diag-scale-1\"]\nREQ(@agent-a>@agent-b): scale(@service-cluster, #scale_request{mode:\"out\", add_nodes:3, reason:\"cpu_bottleneck\"})",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 192,
+        "o200k_base": 194
+      },
+      "latency_ms": 27508,
+      "timestamp": "2026-02-13T09:47:42.826807+00:00"
+    },
+    {
+      "task_id": "L1-01",
+      "condition": "free_english",
+      "model": "codex",
+      "run_number": 3,
+      "output": "From: Agent A  \nTo: Agent B  \nMessage: Hi Agent B, could you provide the current status of the web server?",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 27,
+        "o200k_base": 27
+      },
+      "latency_ms": 8225,
+      "timestamp": "2026-02-13T09:47:51.054447+00:00"
+    },
+    {
+      "task_id": "L1-02",
+      "condition": "free_english",
+      "model": "codex",
+      "run_number": 3,
+      "output": "From Agent B to Agent A: The server is healthy with 99.7% uptime.",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 19,
+        "o200k_base": 19
+      },
+      "latency_ms": 11544,
+      "timestamp": "2026-02-13T09:48:02.601597+00:00"
+    },
+    {
+      "task_id": "L1-03",
+      "condition": "free_english",
+      "model": "codex",
+      "run_number": 3,
+      "output": "From Service Agent to Caller Agent: I am the Service Agent, and I need to report that your request failed with a 404 not-found error because the requested resource could not be found.",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 38,
+        "o200k_base": 38
+      },
+      "latency_ms": 33609,
+      "timestamp": "2026-02-13T09:48:36.212680+00:00"
+    },
+    {
+      "task_id": "L2-01",
+      "condition": "free_english",
+      "model": "codex",
+      "run_number": 3,
+      "output": "From: CI Agent  \nTo: Builder Agent  \nMessage: Please build the repository on branch `release/1.4` at commit `9c4e7b1a2d6f` and send back the build status and artifacts.",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 50,
+        "o200k_base": 50
+      },
+      "latency_ms": 14296,
+      "timestamp": "2026-02-13T09:48:50.511379+00:00"
+    },
+    {
+      "task_id": "L2-02",
+      "condition": "free_english",
+      "model": "codex",
+      "run_number": 3,
+      "output": "From: BuyerAgent | To: SupplierAgent | Message: This is BuyerAgent. We received your offer of 10,000 widgets at $2.50 each; our counteroffer is $2.20 per widget based on a market average of $2.15. Please confirm whether you can accept $2.20 or share your best revised price.",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 72,
+        "o200k_base": 72
+      },
+      "latency_ms": 11466,
+      "timestamp": "2026-02-13T09:49:01.979954+00:00"
+    },
+    {
+      "task_id": "L2-03",
+      "condition": "free_english",
+      "model": "codex",
+      "run_number": 3,
+      "output": "From: Planner Agent | To: Worker-1, Worker-2, Worker-3 | Message: I am Planner Agent assigning equal parts of range 0-3000: Worker-1 processes 0-1000, Worker-2 processes 1000-2000, and Worker-3 processes 2000-3000.",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 69,
+        "o200k_base": 69
+      },
+      "latency_ms": 18061,
+      "timestamp": "2026-02-13T09:49:20.042969+00:00"
+    },
+    {
+      "task_id": "L3-01",
+      "condition": "free_english",
+      "model": "codex",
+      "run_number": 3,
+      "output": "Message-ID: msg-001\nProtocol-Version: 1.0\nFrom: Orchestrator Agent\nTo: Pipeline Agent\nMessage: Please fetch the target URL, parse the response as JSON, then store the parsed result in the database.",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 50,
+        "o200k_base": 50
+      },
+      "latency_ms": 36311,
+      "timestamp": "2026-02-13T09:49:56.355972+00:00"
+    },
+    {
+      "task_id": "L3-02",
+      "condition": "free_english",
+      "model": "codex",
+      "run_number": 3,
+      "output": "From Monitor Agent to Incident Response Agent: Severity-2 incident alert for the payments service\u2014latency is above 2s. Priority level: 4. Causal chain: a traffic spike caused database connection pool exhaustion, which caused high latency. Recommended resolution: scale service and database capacity immediately, increase/tune the DB connection pool, and apply temporary rate limiting while latency is brought back under 2s.",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 83,
+        "o200k_base": 83
+      },
+      "latency_ms": 13881,
+      "timestamp": "2026-02-13T09:50:10.239215+00:00"
+    },
+    {
+      "task_id": "L3-03",
+      "condition": "free_english",
+      "model": "codex",
+      "run_number": 3,
+      "output": "[\n  {\n    \"id\": \"msg-1001\",\n    \"protocol_version\": \"1.0\",\n    \"timestamp\": \"2026-02-13T14:00:00Z\",\n    \"from\": \"Agent A\",\n    \"to\": \"Agent B\",\n    \"reply_to\": \"link://conversation/root\",\n    \"content\": \"Agent A to Agent B: Please run full diagnostics on the service path and report current bottlenecks.\"\n  },\n  {\n    \"id\": \"msg-1002\",\n    \"protocol_version\": \"1.0\",\n    \"timestamp\": \"2026-02-13T14:00:07Z\",\n    \"from\": \"Agent B\",\n    \"to\": \"Agent A\",\n    \"reply_to\": \"link://messages/msg-1001\",\n    \"content\": \"Agent B to Agent A: Diagnostics complete. Main bottleneck is the database write queue at 92% utilization, adding about 180 ms median latency. Connection stats are 4,812 active connections, 97.4% success rate, 2.1% retries, and 0.5% timeouts over the last 5 minutes.\"\n  },\n  {\n    \"id\": \"msg-1003\",\n    \"protocol_version\": \"1.0\",\n    \"timestamp\": \"2026-02-13T14:00:13Z\",\n    \"from\": \"Agent A\",\n    \"to\": \"Agent B\",\n    \"reply_to\": \"link://messages/msg-1002\",\n    \"content\": \"Agent A to Agent B: Received. Please initiate scaling now by adding two database writer nodes and one API instance, then send updated latency and connection metrics.\"\n  }\n]",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 355,
+        "o200k_base": 356
+      },
+      "latency_ms": 30357,
+      "timestamp": "2026-02-13T09:50:40.597995+00:00"
+    },
+    {
+      "task_id": "L1-01",
+      "condition": "structured_english",
+      "model": "codex",
+      "run_number": 3,
+      "output": "FROM: agent-a\nTO: agent-b\nTYPE: query\nCONTENT: What is the current status of the web server?",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 26,
+        "o200k_base": 26
+      },
+      "latency_ms": 5207,
+      "timestamp": "2026-02-13T09:50:45.807306+00:00"
+    },
+    {
+      "task_id": "L1-02",
+      "condition": "structured_english",
+      "model": "codex",
+      "run_number": 3,
+      "output": "FROM: agent-b\nTO: agent-a\nTYPE: inform\nCONTENT: The server is healthy with 99.7% uptime.",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 28,
+        "o200k_base": 28
+      },
+      "latency_ms": 7981,
+      "timestamp": "2026-02-13T09:50:53.789861+00:00"
+    },
+    {
+      "task_id": "L1-03",
+      "condition": "structured_english",
+      "model": "codex",
+      "run_number": 3,
+      "output": "FROM: service-agent\nTO: caller-agent\nTYPE: error\nCONTENT: Request failed with 404 Not Found. The requested resource could not be located.",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 32,
+        "o200k_base": 32
+      },
+      "latency_ms": 10743,
+      "timestamp": "2026-02-13T09:51:04.534508+00:00"
+    },
+    {
+      "task_id": "L2-01",
+      "condition": "structured_english",
+      "model": "codex",
+      "run_number": 3,
+      "output": "FROM: ci-agent\nTO: builder-agent\nTYPE: request\nCONTENT: Please build the repository branch `release/v2.3.0` at commit `9f3c2a7b4d1e8c56a0b9d4e2f7c1a3b5d6e8f9a0`.",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 73,
+        "o200k_base": 73
+      },
+      "latency_ms": 9231,
+      "timestamp": "2026-02-13T09:51:13.767336+00:00"
+    },
+    {
+      "task_id": "L2-02",
+      "condition": "structured_english",
+      "model": "codex",
+      "run_number": 3,
+      "output": "FROM: negotiation-agent\nTO: procurement-agent\nTYPE: propose\nCONTENT: Recommend offering $2.18 per widget for 10,000 units, with authority to accept $2.20 only if the supplier adds value (e.g., expedited delivery or extended warranty), given the $2.15 market average.",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 65,
+        "o200k_base": 64
+      },
+      "latency_ms": 10073,
+      "timestamp": "2026-02-13T09:51:23.842886+00:00"
+    },
+    {
+      "task_id": "L2-03",
+      "condition": "structured_english",
+      "model": "codex",
+      "run_number": 3,
+      "output": "FROM: planner\nTO: workers\nTYPE: inform\nCONTENT: Data processing range 0-3000 has been split equally across 3 workers: worker-1 handles 0-1000, worker-2 handles 1000-2000, and worker-3 handles 2000-3000.",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 64,
+        "o200k_base": 64
+      },
+      "latency_ms": 11192,
+      "timestamp": "2026-02-13T09:51:35.037421+00:00"
+    },
+    {
+      "task_id": "L3-01",
+      "condition": "structured_english",
+      "model": "codex",
+      "run_number": 3,
+      "output": "FROM: orchestrator\nTO: pipeline\nTYPE: request\nMESSAGE-ID: msg-0001\nPROTOCOL-VERSION: 1.0\nCONTENT: Fetch the URL `https://example.com/data`, parse the response as JSON, then store the parsed result in the database.",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 58,
+        "o200k_base": 58
+      },
+      "latency_ms": 8930,
+      "timestamp": "2026-02-13T09:51:43.969880+00:00"
+    },
+    {
+      "task_id": "L3-02",
+      "condition": "structured_english",
+      "model": "codex",
+      "run_number": 3,
+      "output": "FROM: monitor-agent\nTO: incident-commander\nTYPE: inform\nCONTENT: Severity-2 incident alert: Payments service latency is above 2s. Priority level 4. Causal chain: traffic spike caused database connection pool exhaustion, which caused high latency. Resolution recommendation: increase and tune database connection pool capacity, scale payments service instances, apply temporary rate limiting, and monitor latency plus pool utilization until recovery is confirmed.",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 86,
+        "o200k_base": 87
+      },
+      "latency_ms": 10367,
+      "timestamp": "2026-02-13T09:51:54.338942+00:00"
+    },
+    {
+      "task_id": "L3-03",
+      "condition": "structured_english",
+      "model": "codex",
+      "run_number": 3,
+      "output": "ID: msg-001\nPROTOCOL: ops-proto/1.0\nTIMESTAMP: 2026-02-13T14:00:00Z\nREPLY-TO: thread-000\nFROM: agent-a\nTO: agent-b\nTYPE: query\nCONTENT: Please send current diagnostics, including bottlenecks and live connection statistics.\n\nID: msg-002\nPROTOCOL: ops-proto/1.0\nTIMESTAMP: 2026-02-13T14:00:08Z\nREPLY-TO: msg-001\nFROM: agent-b\nTO: agent-a\nTYPE: reply\nCONTENT: Primary bottleneck is DB connection pool saturation (92% utilization); API p95 latency is 480 ms. Connection stats: 1,240 active, 310 idle, 47 errors/min, and 85% of max concurrent sessions reached.\n\nID: msg-003\nPROTOCOL: ops-proto/1.0\nTIMESTAMP: 2026-02-13T14:00:15Z\nREPLY-TO: msg-002\nFROM: agent-a\nTO: agent-b\nTYPE: request\nCONTENT: Proceed with scaling: add 2 API instances and increase DB pool capacity by 30%, then report post-scale latency and connection metrics.",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 270,
+        "o200k_base": 271
+      },
+      "latency_ms": 20647,
+      "timestamp": "2026-02-13T09:52:14.988942+00:00"
+    },
+    {
+      "task_id": "L1-01",
+      "condition": "instruction_matched_english",
+      "model": "codex",
+      "run_number": 3,
+      "output": "[message-id: m1]\n[timestamp: 1770940800]\n[context: convo-web-status-1]\nQUERY (agent-a -> agent-b):\n  target: web-server\n  property: status",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 43,
+        "o200k_base": 43
+      },
+      "latency_ms": 9188,
+      "timestamp": "2026-02-13T09:52:24.179054+00:00"
+    },
+    {
+      "task_id": "L1-02",
+      "condition": "instruction_matched_english",
+      "model": "codex",
+      "run_number": 3,
+      "output": "[message-id: m1]\nINFORM (agent-b -> agent-a):\n  target: server\n  health: healthy\n  uptime: 99.7%",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 34,
+        "o200k_base": 34
+      },
+      "latency_ms": 5874,
+      "timestamp": "2026-02-13T09:52:30.055829+00:00"
+    },
+    {
+      "task_id": "L1-03",
+      "condition": "instruction_matched_english",
+      "model": "codex",
+      "run_number": 3,
+      "output": "[message-id: m-404-001]\nERROR (service-agent -> caller-agent):\n  status-code: 404\n  error-type: not-found\n  reason: requested resource was not found\n  resource: /requested/resource\n  retryable: false",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 53,
+        "o200k_base": 53
+      },
+      "latency_ms": 11361,
+      "timestamp": "2026-02-13T09:52:41.419504+00:00"
+    },
+    {
+      "task_id": "L2-01",
+      "condition": "instruction_matched_english",
+      "model": "codex",
+      "run_number": 3,
+      "output": "[message-id: m-ci-20260213-001]\nREQUEST (ci-agent -> builder-agent):\n  timestamp: 1770940800\n  context: ci-run-58421\n  repository: /Users/magnus/repos/invent-new-language\n  branch: feature/ci-integration\n  commit: 9f3c2a1b7e6d5c4b3a2910ffeedccbbaa9988776\n  task: build\n  build-target: linux-amd64\n  priority: high",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 113,
+        "o200k_base": 112
+      },
+      "latency_ms": 16229,
+      "timestamp": "2026-02-13T09:52:57.650739+00:00"
+    },
+    {
+      "task_id": "L2-02",
+      "condition": "instruction_matched_english",
+      "model": "codex",
+      "run_number": 3,
+      "output": "[message-id: m2]\n[reply-to: m1]\n[timestamp: 1770940800]\n[context: widget-price-negotiation-001]\n\nCOUNTER (buyer-agent -> supplier-agent):\n  item: widgets\n  quantity: 10000\n  supplier-proposed-unit-price-usd: 2.50\n  buyer-counter-unit-price-usd: 2.20\n  cited-market-average-unit-price-usd: 2.15\n  total-counter-value-usd: 22000\n  rationale: counter is closer to current market average while maintaining high-volume commitment",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 122,
+        "o200k_base": 122
+      },
+      "latency_ms": 14838,
+      "timestamp": "2026-02-13T09:53:12.491426+00:00"
+    },
+    {
+      "task_id": "L2-03",
+      "condition": "instruction_matched_english",
+      "model": "codex",
+      "run_number": 3,
+      "output": "[message-id: m1]\n[timestamp: 1771000000]\n[context: data-processing-distribution]\nCOMMAND (planner -> workers):\n  task: process-data-range\n  total-range: 0-3000\n  split-count: 3\n  segment-1: worker-1,start=0,end=1000,interval=[start,end)\n  segment-2: worker-2,start=1000,end=2000,interval=[start,end)\n  segment-3: worker-3,start=2000,end=3000,interval=[start,end)",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 120,
+        "o200k_base": 119
+      },
+      "latency_ms": 14231,
+      "timestamp": "2026-02-13T09:53:26.725349+00:00"
+    },
+    {
+      "task_id": "L3-01",
+      "condition": "instruction_matched_english",
+      "model": "codex",
+      "run_number": 3,
+      "output": "[message-id: m-orch-001]\n[protocol-version: 1.0]\n[timestamp: 1770940800]\n[context: convo-pipeline-42]\n\nCOMMAND (orchestrator -> pipeline):\n  step-1: fetch-url\n  url: https://api.example.com/data\n  step-2: parse-json\n  step-3: store-in-database\n  db-target: results_db\n  db-table: json_payloads",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 95,
+        "o200k_base": 95
+      },
+      "latency_ms": 13957,
+      "timestamp": "2026-02-13T09:53:40.683876+00:00"
+    },
+    {
+      "task_id": "L3-02",
+      "condition": "instruction_matched_english",
+      "model": "codex",
+      "run_number": 3,
+      "output": "[message-id: inc-payments-20260213-001]\n[timestamp: 1770940800]\n[context: incident-payments-latency]\nPUBLISH (monitor -> incident-response):\n  service: payments\n  severity: 2\n  priority-level: 4\n  alert-condition: latency > 2s\n  causal-chain: traffic spike -> database connection pool exhaustion -> high request latency (>2s)\n  resolution-recommendation: increase/redistribute database connection pool capacity, apply traffic rate-limiting or autoscaling to absorb spike load, and drain/restart exhausted workers while validating latency recovery and pool health metrics.",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 129,
+        "o200k_base": 132
+      },
+      "latency_ms": 17374,
+      "timestamp": "2026-02-13T09:53:58.060884+00:00"
+    },
+    {
+      "task_id": "L3-03",
+      "condition": "instruction_matched_english",
+      "model": "codex",
+      "run_number": 3,
+      "output": "[message-id: m1]\n[protocol-version: 1.0]\n[timestamp: 1770941001]\n[context: infra-diag-42]\n[reply-to: none]\nQUERY (agent-a -> agent-b):\n  target: diagnostics-service\n  requested-data: bottlenecks, connection-stats\n  time-window: last-5m\n\n---\n[message-id: m2]\n[protocol-version: 1.0]\n[timestamp: 1770941012]\n[context: infra-diag-42]\n[reply-to: m1]\nREPLY (agent-b -> agent-a):\n  bottleneck: db-write-queue saturation at 92%\n  hotspot: shard-3\n  active-connections: 18420\n  successful-connections-per-sec: 1275\n  failed-connections-per-sec: 37\n  p95-latency-ms: 248\n\n---\n[message-id: m3]\n[protocol-version: 1.0]\n[timestamp: 1770941020]\n[context: infra-diag-42]\n[reply-to: m2]\nREQUEST (agent-a -> agent-b):\n  action: scale-out\n  scope: api-tier and db-writer pool\n  target-capacity-increase: 30%\n  reason: mitigate shard-3 write-queue bottleneck and connection failures",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 277,
+        "o200k_base": 279
+      },
+      "latency_ms": 17313,
+      "timestamp": "2026-02-13T09:54:15.376677+00:00"
+    },
+    {
+      "task_id": "L1-01",
+      "condition": "json_fc",
+      "model": "codex",
+      "run_number": 3,
+      "output": "{\"performative\":\"query\",\"from\":\"agent-a\",\"to\":\"agent-b\",\"content\":{\"target\":\"web-server\",\"property\":\"status\"},\"id\":\"m1\"}",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 32,
+        "o200k_base": 33
+      },
+      "latency_ms": 5885,
+      "timestamp": "2026-02-13T09:54:21.264348+00:00"
+    },
+    {
+      "task_id": "L1-02",
+      "condition": "json_fc",
+      "model": "codex",
+      "run_number": 3,
+      "output": "{\"performative\":\"inform\",\"from\":\"Agent B\",\"to\":\"Agent A\",\"content\":{\"target\":\"server\",\"status\":\"healthy\",\"uptime_percent\":99.7}}",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 33,
+        "o200k_base": 34
+      },
+      "latency_ms": 7319,
+      "timestamp": "2026-02-13T09:54:28.585792+00:00"
+    },
+    {
+      "task_id": "L1-03",
+      "condition": "json_fc",
+      "model": "codex",
+      "run_number": 3,
+      "output": "{\"performative\":\"error\",\"from\":\"service-agent\",\"to\":\"caller-agent\",\"content\":{\"code\":404,\"error\":\"not-found\",\"message\":\"Requested resource was not found.\"}}",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 36,
+        "o200k_base": 36
+      },
+      "latency_ms": 6466,
+      "timestamp": "2026-02-13T09:54:35.053670+00:00"
+    },
+    {
+      "task_id": "L2-01",
+      "condition": "json_fc",
+      "model": "codex",
+      "run_number": 3,
+      "output": "{\"performative\":\"request\",\"from\":\"ci-agent\",\"to\":\"builder-agent\",\"content\":{\"action\":\"build\",\"repo\":\"invent-new-language\",\"branch\":\"main\",\"commit\":\"9f4c2a7d8b1e3c6f5a0d4e2b7c8f1a2b3c4d5e6f\"},\"id\":\"msg-ci-build-001\"}",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 84,
+        "o200k_base": 84
+      },
+      "latency_ms": 28582,
+      "timestamp": "2026-02-13T09:55:42.234578+00:00"
+    },
+    {
+      "task_id": "L2-02",
+      "condition": "json_fc",
+      "model": "codex",
+      "run_number": 3,
+      "output": "{\"performative\":\"counter\",\"from\":\"buyer-agent\",\"to\":\"supplier-agent\",\"content\":{\"item\":\"widgets\",\"quantity\":10000,\"original_offer_per_unit_usd\":2.5,\"counter_offer_per_unit_usd\":2.2,\"justification\":\"Market average is $2.15 per widget.\"}}",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 63,
+        "o200k_base": 63
+      },
+      "latency_ms": 6529,
+      "timestamp": "2026-02-13T09:55:48.767792+00:00"
+    },
+    {
+      "task_id": "L2-03",
+      "condition": "json_fc",
+      "model": "codex",
+      "run_number": 3,
+      "output": "{\"performative\":\"command\",\"from\":\"planner\",\"to\":[\"worker-1\",\"worker-2\",\"worker-3\"],\"content\":{\"task\":\"process_data_range\",\"assignments\":[{\"worker\":\"worker-1\",\"start\":0,\"end\":1000},{\"worker\":\"worker-2\",\"start\":1000,\"end\":2000},{\"worker\":\"worker-3\",\"start\":2000,\"end\":3000}],\"boundary\":\"start-inclusive,end-exclusive; final end-inclusive\"}}",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 96,
+        "o200k_base": 96
+      },
+      "latency_ms": 12202,
+      "timestamp": "2026-02-13T09:56:00.972360+00:00"
+    },
+    {
+      "task_id": "L3-01",
+      "condition": "json_fc",
+      "model": "codex",
+      "run_number": 3,
+      "output": "{\"performative\":\"command\",\"from\":\"orchestrator\",\"to\":\"pipeline\",\"id\":\"msg-0001\",\"content\":{\"protocol_version\":\"1.0\",\"workflow\":[{\"step\":\"fetch\",\"url\":\"https://api.example.com/data\"},{\"step\":\"parse\",\"format\":\"json\"},{\"step\":\"store\",\"target\":\"database\",\"operation\":\"upsert\",\"table\":\"fetched_payloads\"}]}}",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 77,
+        "o200k_base": 78
+      },
+      "latency_ms": 73020,
+      "timestamp": "2026-02-13T10:08:20.039478+00:00"
+    },
+    {
+      "task_id": "L3-02",
+      "condition": "json_fc",
+      "model": "codex",
+      "run_number": 3,
+      "output": "{\"performative\":\"publish\",\"from\":\"monitor\",\"to\":\"incident-response\",\"content\":{\"incident_type\":\"service_alert\",\"service\":\"payments\",\"severity\":2,\"priority\":4,\"condition\":\"latency > 2s\",\"causal_chain\":[\"Traffic spike\",\"Database connection pool exhaustion\",\"High latency in payments service (>2s)\"],\"resolution_recommendation\":\"Mitigate the traffic spike (rate limiting/autoscaling), increase and tune DB connection pool capacity, and temporarily queue non-critical payment requests until latency normalizes.\"}}",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 104,
+        "o200k_base": 105
+      },
+      "latency_ms": 11809,
+      "timestamp": "2026-02-13T10:08:31.851267+00:00"
+    },
+    {
+      "task_id": "L3-03",
+      "condition": "json_fc",
+      "model": "codex",
+      "run_number": 3,
+      "output": "[\n  {\n    \"performative\": \"query\",\n    \"from\": \"agent-a\",\n    \"to\": \"agent-b\",\n    \"content\": {\n      \"target\": \"service-cluster-1\",\n      \"request\": \"diagnostics\",\n      \"metrics\": [\"latency\", \"throughput\", \"cpu\", \"connections\"],\n      \"window\": \"last_5m\"\n    },\n    \"id\": \"m1\",\n    \"reply_to\": \"task-0\",\n    \"timestamp\": 1770984000,\n    \"context\": \"diag-scale-001\",\n    \"protocol_version\": \"1.0\"\n  },\n  {\n    \"performative\": \"reply\",\n    \"from\": \"agent-b\",\n    \"to\": \"agent-a\",\n    \"content\": {\n      \"bottleneck\": {\n        \"component\": \"db-write-pool\",\n        \"issue\": \"queue saturation\",\n        \"utilization_pct\": 94,\n        \"p95_latency_ms\": 420\n      },\n      \"connection_stats\": {\n        \"active\": 1820,\n        \"idle\": 240,\n        \"error_rate_pct\": 1.7,\n        \"reconnects_last_5m\": 63\n      }\n    },\n    \"id\": \"m2\",\n    \"reply_to\": \"m1\",\n    \"timestamp\": 1770984005,\n    \"context\": \"diag-scale-001\",\n    \"protocol_version\": \"1.0\"\n  },\n  {\n    \"performative\": \"request\",\n    \"from\": \"agent-a\",\n    \"to\": \"agent-b\",\n    \"content\": {\n      \"action\": \"scale_out\",\n      \"target\": \"api-tier\",\n      \"reason\": \"db-write-pool saturation and elevated p95 latency\",\n      \"desired_instances\": 12,\n      \"current_instances\": 8,\n      \"priority\": \"high\"\n    },\n    \"id\": \"m3\",\n    \"reply_to\": \"m2\",\n    \"timestamp\": 1770984010,\n    \"context\": \"diag-scale-001\",\n    \"protocol_version\": \"1.0\"\n  }\n]",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 443,
+        "o200k_base": 444
+      },
+      "latency_ms": 60604,
+      "timestamp": "2026-02-13T10:10:46.018772+00:00"
+    },
+    {
+      "task_id": "L1-01",
+      "condition": "fipa_acl",
+      "model": "codex",
+      "run_number": 3,
+      "output": "(query-ref\n  :sender agent-a\n  :receiver agent-b\n  :content \"((status web-server))\"\n  :reply-with m1\n  :language SL\n  :ontology web-server-monitoring\n)",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 45,
+        "o200k_base": 46
+      },
+      "latency_ms": 49242,
+      "timestamp": "2026-02-13T10:16:44.652463+00:00"
+    },
+    {
+      "task_id": "L1-02",
+      "condition": "fipa_acl",
+      "model": "codex",
+      "run_number": 3,
+      "output": "(inform\n  :sender agent-b\n  :receiver agent-a\n  :content \"((server-status healthy) (uptime 99.7))\"\n  :reply-with m1\n  :language SL\n  :ontology server-monitoring\n)",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 51,
+        "o200k_base": 53
+      },
+      "latency_ms": 12851,
+      "timestamp": "2026-02-13T10:16:57.506235+00:00"
+    },
+    {
+      "task_id": "L1-03",
+      "condition": "fipa_acl",
+      "model": "codex",
+      "run_number": 3,
+      "output": "(failure\n  :sender service-agent\n  :receiver caller-agent\n  :content \"((error (code 404) (reason not-found)))\"\n  :reply-with msg-404-1\n  :in-reply-to req-1\n  :language SL\n  :ontology web-service\n)",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 63,
+        "o200k_base": 64
+      },
+      "latency_ms": 7853,
+      "timestamp": "2026-02-13T10:17:05.361936+00:00"
+    },
+    {
+      "task_id": "L2-01",
+      "condition": "fipa_acl",
+      "model": "codex",
+      "run_number": 3,
+      "output": "(request\n  :sender ci-agent\n  :receiver builder-agent\n  :content \"((build-request (repo invent-new-language) (branch feature/ci-build) (commit 4f2c9a7b1d3e5f67890123456789abcdef123456)))\"\n  :reply-with build-req-001\n  :language SL\n  :ontology ci-cd\n)",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 84,
+        "o200k_base": 84
+      },
+      "latency_ms": 12363,
+      "timestamp": "2026-02-13T10:17:17.727410+00:00"
+    },
+    {
+      "task_id": "L2-02",
+      "condition": "fipa_acl",
+      "model": "codex",
+      "run_number": 3,
+      "output": "(propose\n  :sender buyer-agent\n  :receiver supplier-agent\n  :content \"((counter-proposal (item widgets) (quantity 10000) (unit-price 2.20) (currency USD) (justification (market-average 2.15))))\"\n  :reply-with m2\n  :in-reply-to m1\n  :language SL\n  :ontology procurement-negotiation\n)",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 86,
+        "o200k_base": 87
+      },
+      "latency_ms": 7971,
+      "timestamp": "2026-02-13T10:17:25.701169+00:00"
+    },
+    {
+      "task_id": "L2-03",
+      "condition": "fipa_acl",
+      "model": "codex",
+      "run_number": 3,
+      "output": "(request\n  :sender planner\n  :receiver worker-team\n  :content \"((distribute-task data-processing (range 0 3000) (assign worker-1 0 1000) (assign worker-2 1000 2000) (assign worker-3 2000 3000)))\"\n  :reply-with msg-001\n  :language SL\n  :ontology data-processing\n)",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 87,
+        "o200k_base": 87
+      },
+      "latency_ms": 24978,
+      "timestamp": "2026-02-13T10:17:50.681726+00:00"
+    },
+    {
+      "task_id": "L3-01",
+      "condition": "fipa_acl",
+      "model": "codex",
+      "run_number": 3,
+      "output": "(request\n  :sender orchestrator\n  :receiver pipeline\n  :content \"((do (fetch-url \\\"https://example.com/data.json\\\") (parse-json) (store-in database)))\"\n  :reply-with msg-001\n  :language SL\n  :ontology data-pipeline\n  :protocol \"fipa-request\"\n  :protocol-version \"1.0\"\n)",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 78,
+        "o200k_base": 78
+      },
+      "latency_ms": 14589,
+      "timestamp": "2026-02-13T10:18:05.272580+00:00"
+    },
+    {
+      "task_id": "L3-02",
+      "condition": "fipa_acl",
+      "model": "codex",
+      "run_number": 3,
+      "output": "(inform\n  :sender monitor-agent\n  :receiver incident-response-agent\n  :content \"((incident-alert\n    (service payments-service)\n    (severity 2)\n    (priority-level 4)\n    (condition (latency > 2s))\n    (causal-chain\n      (high-latency caused-by database-connection-pool-exhaustion)\n      (database-connection-pool-exhaustion caused-by traffic-spike))\n    (resolution-recommendation\n      (immediately scale-out payments-service)\n      (increase database connection pool capacity)\n      (apply traffic throttling and monitor latency until < 2s))))\"\n  :reply-with incident-alert-001\n  :in-reply-to none\n  :language SL\n  :ontology incident-management\n)",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 160,
+        "o200k_base": 162
+      },
+      "latency_ms": 17149,
+      "timestamp": "2026-02-13T10:18:22.424156+00:00"
+    },
+    {
+      "task_id": "L3-03",
+      "condition": "fipa_acl",
+      "model": "codex",
+      "run_number": 3,
+      "output": "(query-ref\n  :sender agent-a\n  :receiver agent-b\n  :message-id msg-001\n  :content \"((diagnostics-request system-x) (include bottlenecks connection-stats))\"\n  :reply-with msg-001\n  :in-reply-to none\n  :language SL\n  :ontology infra-diagnostics\n  :protocol fipa-query\n  :protocol-version 1.0\n  :timestamp \"2026-02-13T10:00:00Z\"\n)\n\n(inform\n  :sender agent-b\n  :receiver agent-a\n  :message-id msg-002\n  :content \"((diagnostics-report system-x) (bottleneck (component db-primary) (type io-wait) (utilization 92%)) (connection-stats (active 1840) (idle 260) (error-rate 0.8%)))\"\n  :reply-with msg-002\n  :in-reply-to msg-001\n  :language SL\n  :ontology infra-diagnostics\n  :protocol fipa-inform\n  :protocol-version 1.0\n  :timestamp \"2026-02-13T10:00:02Z\"\n)\n\n(request\n  :sender agent-a\n  :receiver agent-b\n  :message-id msg-003\n  :content \"((scaling-request system-x) (action scale-out) (target web-tier) (add-instances 3) (reason db-io-bottleneck-and-connection-pressure))\"\n  :reply-with msg-003\n  :in-reply-to msg-002\n  :language SL\n  :ontology infra-diagnostics\n  :protocol fipa-request\n  :protocol-version 1.0\n  :timestamp \"2026-02-13T10:00:04Z\"\n)",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 374,
+        "o200k_base": 383
+      },
+      "latency_ms": 19959,
+      "timestamp": "2026-02-13T10:18:42.386097+00:00"
+    },
+    {
+      "task_id": "L1-01",
+      "condition": "axon",
+      "model": "codex",
+      "run_number": 3,
+      "output": "[id:\"m1\", %%:1, ts:1760000000, ctx:\"conv-1\", ^:3]\nQRY(@agent-a>@agent-b): status(@web-server)",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 40,
+        "o200k_base": 40
+      },
+      "latency_ms": 7588,
+      "timestamp": "2026-02-13T10:18:49.976832+00:00"
+    },
+    {
+      "task_id": "L1-02",
+      "condition": "axon",
+      "model": "codex",
+      "run_number": 3,
+      "output": "[id:\"m1\", %%:1]\nINF(@agent-b>@agent-a): #status{server:@server, health:#healthy, uptime:99.7%}",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 35,
+        "o200k_base": 35
+      },
+      "latency_ms": 13353,
+      "timestamp": "2026-02-13T10:19:13.233800+00:00"
+    },
+    {
+      "task_id": "L1-03",
+      "condition": "axon",
+      "model": "codex",
+      "run_number": 3,
+      "output": "[id:\"m-404-1\", %%:1, ts:1770940800, ctx:\"ctx-1\", ^:4]\nERR(@service-agent>@caller-agent): #error{code:404, status:#not-found, message:\"Requested resource not found\"}",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 56,
+        "o200k_base": 56
+      },
+      "latency_ms": 11799,
+      "timestamp": "2026-02-13T10:19:25.035574+00:00"
+    },
+    {
+      "task_id": "L2-01",
+      "condition": "axon",
+      "model": "codex",
+      "run_number": 3,
+      "output": "[id:\"ci-build-001\", %%:1, ts:1770940800, ctx:\"pipeline-7421\", ^:4]\nREQ(@ci-agent>@builder-agent): build(#target{repo:\"invent-new-language\", branch:\"feature/parser-v2\", commit:\"3e7f9c1a\"})",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 66,
+        "o200k_base": 65
+      },
+      "latency_ms": 21364,
+      "timestamp": "2026-02-13T10:19:46.402391+00:00"
+    },
+    {
+      "task_id": "L2-02",
+      "condition": "axon",
+      "model": "codex",
+      "run_number": 3,
+      "output": "[id:\"m-buyer-2\", %%:1, re:\"m-supplier-1\", ts:1760000000, ctx:\"widget-deal-2026\", ^:3]\nCTR(@buyer>@supplier): #counter{item:\"widget\", quantity:10000, unit_price:2.20usd, prior_unit_price:2.50usd} <- #market{average:2.15usd}",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 89,
+        "o200k_base": 86
+      },
+      "latency_ms": 37875,
+      "timestamp": "2026-02-13T10:28:38.513785+00:00"
+    },
+    {
+      "task_id": "L2-03",
+      "condition": "axon",
+      "model": "codex",
+      "run_number": 3,
+      "output": "[id:\"msg-001\", %%:1, ts:1739443200, ctx:\"ctx-data-split\", ^:3]\nINF(@planner>@orchestrator): #task{id:\"data-process-1\", range:0..3000, segments:[#segment{worker:@worker-1, range:0..1000}, #segment{worker:@worker-2, range:1000..2000}, #segment{worker:@worker-3, range:2000..3000}]}",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 105,
+        "o200k_base": 105
+      },
+      "latency_ms": 21861,
+      "timestamp": "2026-02-13T10:29:00.380582+00:00"
+    },
+    {
+      "task_id": "L3-01",
+      "condition": "axon",
+      "model": "codex",
+      "run_number": 3,
+      "output": "[id:\"m-fetch-001\", %%:1]\nCMD(@orchestrator>@pipeline): fetch(\"https://example.com/data.json\") -> parse(\"json\") -> store(@database)",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 38,
+        "o200k_base": 38
+      },
+      "latency_ms": 12788,
+      "timestamp": "2026-02-13T10:29:13.172903+00:00"
+    },
+    {
+      "task_id": "L3-02",
+      "condition": "axon",
+      "model": "codex",
+      "run_number": 3,
+      "output": "[id:\"inc-20260213-001\", %%:1, ts:1760000000, ctx:\"payments-incident\", ^:4]\nPUB(@monitor>@incident-channel): #incident{service:\"payments\", severity:2, alert:\"latency>2s\", causal_chain:#high_latency <- #db_connection_pool_exhaustion <- #traffic_spike, resolution:#recommendation{action:\"Increase DB pool capacity, throttle burst traffic, autoscale payments workers, and monitor until latency<2s\"}}",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 106,
+        "o200k_base": 105
+      },
+      "latency_ms": 23529,
+      "timestamp": "2026-02-13T10:29:36.705908+00:00"
+    },
+    {
+      "task_id": "L3-03",
+      "condition": "axon",
+      "model": "codex",
+      "run_number": 3,
+      "output": "[id:\"m1\", %%:1, re:\"root-ctx-diag-scale\", ts:1760001000, ctx:\"ctx-diag-scale\", ^:3]\nQRY(@agent-a>@agent-b): diagnostics(#scope{level:\"full\", target:@edge-cluster})\n\n[id:\"m2\", %%:1, re:\"m1\", ts:1760001004, ctx:\"ctx-diag-scale\", ^:3]\nRPL(@agent-b>@agent-a): #diagnostics{bottleneck:#cpu{node:@edge-3, util:94.2%, queue:187}, connections:#stats{active:1284, errors:23, latency_p95:86ms, saturation:91.5%}}\n\n[id:\"m3\", %%:1, re:\"m2\", ts:1760001008, ctx:\"ctx-diag-scale\", ^:4]\nREQ(@agent-a>@agent-b): scale_up(@edge-cluster) -> target(#capacity{instances:8, max_connections:2400})",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 213,
+        "o200k_base": 215
+      },
+      "latency_ms": 35154,
+      "timestamp": "2026-02-13T10:30:11.865597+00:00"
+    }
+  ]
+}

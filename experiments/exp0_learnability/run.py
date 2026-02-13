@@ -85,6 +85,8 @@ def load_prompt(condition: str) -> str:
 
 def call_claude(system_prompt: str, user_prompt: str, model: str) -> tuple[str, int]:
     """Call Claude CLI in print mode. Returns (output, latency_ms)."""
+    # Unset CLAUDECODE to allow nested claude -p calls from within Claude Code
+    env = {k: v for k, v in os.environ.items() if k != "CLAUDECODE"}
     start = time.monotonic()
     result = subprocess.run(
         [
@@ -98,6 +100,7 @@ def call_claude(system_prompt: str, user_prompt: str, model: str) -> tuple[str, 
         capture_output=True,
         text=True,
         timeout=120,
+        env=env,
     )
     latency_ms = int((time.monotonic() - start) * 1000)
 
