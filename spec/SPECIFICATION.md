@@ -91,7 +91,7 @@ AXON uses special characters as **structural operators** to eliminate verbose ke
 
 ## 3. Performatives
 
-AXON defines a fixed core set of performatives (speech acts). Each has formally defined preconditions and effects.
+AXON defines a fixed core set of performatives (speech acts). Each has explicit precondition and effect specifications (operational, not formal-logic semantics).
 
 ### 3.1 Information Performatives
 

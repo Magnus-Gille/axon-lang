@@ -187,3 +187,79 @@ All analyses run independently on cl100k_base (primary) and o200k_base (secondar
 This document is frozen at the time of creation. Any subsequent changes must be appended as amendments with rationale, not edits to existing text.
 
 Frozen: 2026-02-13
+
+---
+
+## Amendment 1: Hybrid Scoring Governance (2026-02-13)
+
+> Appended per deviation protocol. Does not modify any frozen text above.
+> Rationale: Senior research advisor feedback + Claude↔Codex adversarial debate (see `debate/advisor-feedback-summary.md`).
+
+### Problem
+
+The original scoring protocol (§ Locked Scoring Protocol above) sends all outputs to a 3-judge LLM panel regardless of condition. This creates a construct-validity vulnerability: the primary endpoint denominator (semantic element count) is condition-invariant only if LLM judges are equally reliable across formats. For structured formats (AXON, JSON FC, FIPA-ACL), automated extraction is feasible and more objective.
+
+### Amendment: Per-Condition Scoring Contract
+
+Scoring now uses a **hybrid approach**: automated extraction where feasible, LLM judges where required.
+
+#### Machine-Scored Conditions (AXON, JSON FC, FIPA-ACL)
+- **Primary method**: Automated semantic element extraction via format-specific parsers
+- Extractors defined in `scoring/extractors.py`
+- Each element scored as PRESENT/ABSENT based on parser output
+- No LLM involvement in primary scoring for these conditions
+
+#### Judge-Scored Conditions (Free English, Structured English, Instruction-matched English)
+- **Primary method**: 3-judge LLM panel (unchanged from above)
+- All elements scored by judges per the original protocol
+- Judge prompt, blinding, and agreement rules unchanged
+
+#### Scoring Contract Details
+- Full contract in `scoring/scoring_contract.json`
+- For each condition: specifies extraction method per element category (identity, intent, content-fact, structural, metadata, threading)
+- English conditions: all judge-scored
+- Structured conditions: all machine-scored (with text-search fallback for content-fact elements)
+
+### Cross-Validation Protocol
+
+To ensure machine scoring and judge scoring are comparable:
+
+1. **Machine-judge cross-validation subset**: 30 structured-format outputs (10 per format) also scored by the 3-judge panel
+   - Selection: stratified by task (1 per task × 3 formats + 1 extra per format from L3)
+   - Agreement threshold: ≥90% per-element agreement between machine and judge majority vote
+   - If below threshold: review extraction rules, fix bugs, expand subset
+
+2. **Human validation subset**: 30 items (5 per condition) scored by human rater (unchanged)
+   - Expansion trigger: if any condition drops below 80% human-machine/judge agreement, expand to 10 items for that condition (max 60 total)
+   - Trigger is pre-locked; no post-hoc flexibility
+
+### Reporting Requirements
+
+1. Report extraction method per condition in methods section
+2. Report machine-judge agreement rates on cross-validation subset
+3. Report human-judge agreement rates on human validation subset
+4. Flag any element where machine and judge disagree on >10% of cross-validation outputs
+5. Report primary metric using:
+   - Machine-extracted element counts for structured formats
+   - Judge-scored element counts for English formats
+6. Sensitivity analysis: all-judge scoring on cross-validation subset (demonstrates equivalence)
+
+### Impact on Primary Endpoint
+
+The primary endpoint formula is unchanged: `log(tokens_per_unit) ~ condition + complexity_level + (1|task) + (1|model)`.
+
+The denominator source differs by condition family:
+- Structured formats: machine-extracted element count
+- English formats: judge-scored element count
+
+This is methodologically stronger than all-judge scoring because:
+- It removes LLM-judge variability from 3/6 conditions
+- It makes the denominator objectively verifiable for structured formats
+- It reduces total judge calls by ~50%, enabling faster scoring
+- Cross-validation demonstrates that machine and judge scoring agree
+
+### Paper A Framing
+
+Per advisor feedback and debate consensus: the active publication target is **Paper A: "Benchmarking agent communication formats for LLM-to-LLM communication"**. AXON is one candidate format; the primary contribution is the controlled evaluation methodology and results. Language design claims are supporting context, not the headline.
+
+Frozen: 2026-02-13

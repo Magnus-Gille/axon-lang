@@ -1,0 +1,130 @@
+{
+  "description": "Per-condition scoring contract — defines extraction method for each element category",
+  "frozen": "2026-02-13",
+  "rationale": "Addresses advisor feedback on construct validity: automated extraction for structured formats ensures condition-invariant denominator. LLM judges used only where automated extraction is infeasible (English conditions).",
+
+  "extraction_methods": {
+    "machine": "Automated extraction via format-specific parser. No LLM involvement. Binary PRESENT/ABSENT.",
+    "judge": "3-judge LLM panel per FAIRNESS.md. Used when content is free-form and cannot be mechanically parsed.",
+    "hybrid": "Machine extracts candidate text, judge validates semantic match. Used for fuzzy content in structured formats."
+  },
+
+  "conditions": {
+    "axon": {
+      "primary_method": "machine",
+      "parser": "axon_parser.parse()",
+      "extraction_rules": {
+        "identity": "machine — extract @sender and @receiver from routing block",
+        "intent": "machine — map performative to intent (QRY→query, INF→inform, REQ→request, PRO→propose, CTR→counter, CMD→command, PUB→alert, RPL→reply, ERR→error)",
+        "content-fact": "machine — parse content expression, check for required values/keys",
+        "structural": "machine — check for -> (sequence), <- (causation), & (parallel) operators",
+        "metadata": "machine — parse metadata block [id, %%, ts, re, ctx]",
+        "causal": "machine — parse <- operator chain",
+        "threading": "machine — check re: field references valid message IDs"
+      },
+      "judge_fallback": "Only for elements where content is invented (e.g., 'recommendation' text — present if any text follows the causal chain). In practice, all AXON elements are machine-scorable."
+    },
+
+    "json_fc": {
+      "primary_method": "machine",
+      "parser": "json.loads()",
+      "extraction_rules": {
+        "identity": "machine — check 'from' and 'to' keys",
+        "intent": "machine — check 'performative' key value",
+        "content-fact": "machine — traverse 'content' dict for required keys/values",
+        "structural": "machine — check for nested arrays/sequences in content",
+        "metadata": "machine — check top-level 'id', 'reply_to', 'timestamp', 'protocol_version' keys",
+        "threading": "machine — check 'reply_to' references"
+      },
+      "judge_fallback": "For 'justification' and 'recommendation' elements: machine checks key exists with non-empty string value, counts as PRESENT."
+    },
+
+    "fipa_acl": {
+      "primary_method": "machine",
+      "parser": "fipa_parser.parse() — minimal S-expression parser for FIPA subset",
+      "extraction_rules": {
+        "identity": "machine — extract :sender and :receiver attributes",
+        "intent": "machine — extract performative from opening form",
+        "content-fact": "hybrid — parse :content S-expression, check for required atoms/values",
+        "structural": "hybrid — parse :content for nested forms representing sequences",
+        "metadata": "machine — check :reply-with, :in-reply-to, :language, :ontology attributes",
+        "threading": "machine — check :in-reply-to references"
+      },
+      "judge_fallback": "For deeply nested :content where S-expression structure varies significantly, fall back to judge. In practice, most FIPA elements are machine-scorable after parsing."
+    },
+
+    "free_english": {
+      "primary_method": "judge",
+      "parser": "none",
+      "extraction_rules": {
+        "identity": "judge — check if sender/receiver agents are mentioned",
+        "intent": "judge — check if communicative intent is expressed",
+        "content-fact": "judge — check if specific values are present",
+        "structural": "judge — check if sequences/causation are expressed",
+        "metadata": "judge — check if IDs/timestamps are present in any form",
+        "threading": "judge — check if reply references exist"
+      },
+      "judge_fallback": "All elements scored by judge panel."
+    },
+
+    "structured_english": {
+      "primary_method": "judge",
+      "parser": "none — but structural checks on FROM/TO/TYPE/CONTENT headers",
+      "extraction_rules": {
+        "identity": "hybrid — check for FROM/TO headers, judge validates content",
+        "intent": "hybrid — check for TYPE header, judge validates intent match",
+        "content-fact": "judge — free-form CONTENT field",
+        "structural": "judge — CONTENT field is free-form",
+        "metadata": "judge — check for metadata headers if present",
+        "threading": "judge — check for reply references"
+      },
+      "judge_fallback": "Most elements require judge due to free-form CONTENT."
+    },
+
+    "instruction_matched_english": {
+      "primary_method": "judge",
+      "parser": "none — but structural checks on speech-act labels and key-value pairs",
+      "extraction_rules": {
+        "identity": "hybrid — check for sender -> receiver notation, judge validates",
+        "intent": "hybrid — check for speech-act label (INFORM, QUERY, etc.), judge validates",
+        "content-fact": "hybrid — check for key-value pairs, judge validates values",
+        "structural": "judge — sequences expressed in natural language",
+        "metadata": "hybrid — check for [message-id:], [timestamp:] brackets",
+        "threading": "hybrid — check for [in-reply-to:] brackets"
+      },
+      "judge_fallback": "Hybrid elements: machine checks structural presence, judge confirms semantic correctness."
+    }
+  },
+
+  "validation_protocol": {
+    "cross_validation_subset": {
+      "description": "30 structured-format outputs (10 per format: AXON, JSON FC, FIPA-ACL) also scored by judges to validate machine extraction",
+      "selection": "Stratified: 1 per task × 3 formats, plus 1 extra per format from L3 tasks",
+      "agreement_threshold": 0.90,
+      "action_if_below": "Review extraction rules, fix bugs, re-run. If still below, expand to full judge scoring for that format."
+    },
+    "human_validation_subset": {
+      "description": "30 items (5 per condition) scored by human rater per FAIRNESS.md",
+      "agreement_threshold": 0.90,
+      "expansion_trigger": "If any condition drops below 0.80 human-machine/judge agreement, expand to 10 items for that condition",
+      "expansion_max": 60
+    }
+  },
+
+  "reporting": {
+    "primary_metric": {
+      "structured_formats": "Machine-extracted element count as denominator",
+      "english_formats": "Judge-scored element count as denominator"
+    },
+    "sensitivity_analyses": [
+      "All-judge scoring on cross-validation subset (demonstrates machine-judge agreement)",
+      "Machine-only scoring where available (upper bound on automation)"
+    ],
+    "transparency": [
+      "Report extraction method per condition in methods section",
+      "Report machine-judge agreement rates",
+      "Report human-judge agreement rates",
+      "Flag any element where machine and judge disagree on >10% of outputs"
+    ]
+  }
+}

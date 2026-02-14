@@ -85,10 +85,11 @@ Every debate feeds Track B. All future debates must capture: per-point metadata,
 - Spec frozen at `v0.1-experimental` — 4 gate-blocking parser bugs fixed
 - Conformance test corpus: 54 tests passing
 - Validator: 3-level checker (syntax, tier compliance, semantics)
-- **Exp 0 complete** (preliminary): AXON passes learnability gate on Sonnet (89%) and GPT-5.3 (100%), fails on Haiku (78% — matches JSON FC). See `experiments/exp0_learnability/RESULTS.md`.
-- Exp 0 runner uses CLI tools (`claude -p`, `codex exec`) — zero API cost
+- **Exp 0 complete**: AXON passes learnability gate on all 3 models (3x replications). See `experiments/exp0_learnability/RESULTS.md`.
+- **Exp 1 Track A scoring complete**: 486 outputs scored. AXON #1 in tok/unit (15.4 mean, ~32% better than JSON FC). Statistical analysis pending. See `experiments/exp1_token_efficiency/RESULTS.md`.
+- Exp 0/1 runner uses CLI tools (`claude -p`, `codex exec`) — zero API cost
 - ~100 critique points raised, ~85% resolved
-- Core open question (Track A): does AXON beat controlled English + function calling? Exp 0 is promising but preliminary.
+- Paper A framing: "Benchmarking agent communication formats for LLM-to-LLM communication" (advisor debate consensus)
 - Methodology paper (Track B): publishable as registered pilot + prospective protocol paper if 6-item checklist is met
 - **MassGen addendum** (exploratory): Frozen plan to replicate Exp 3 + Exp 4 through MassGen multi-agent orchestration after prereg experiments complete. Tests ecological validity — whether format advantages survive real orchestration. Activates only if prereg shows significant AXON advantage. See `experiments/MASSGEN_ADDENDUM.md` and `debate/massgen-integration-summary.md`.
 

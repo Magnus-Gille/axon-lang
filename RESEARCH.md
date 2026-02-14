@@ -163,6 +163,12 @@ Key finding: In a 100-agent simulation, the percentage of queries requiring LLM 
 
 > Source: "A Scalable Communication Protocol for Networks of Large Language Models." ([arXiv](https://arxiv.org/abs/2410.11905))
 
+### IETF Token-Efficient Data Layer Draft (2025) [Proposed]
+
+An IETF Internet-Draft (December 2025) explicitly addresses "token/context bloat" in agentic communication, referencing MCP and A2A protocols. It proposes a token-efficient data layer for agent-to-agent exchanges. This confirms that the problem AXON targets — token overhead in structured agent communication — is now recognized at the standards level.
+
+> Source: Chang, D. et al. (2025). "Token-efficient Data Layer for Agentic Communication." IETF Internet-Draft. ([Link](https://www.ietf.org/archive/id/draft-chang-agent-token-efficient-00.html))
+
 ### TOON: Token-Optimized Data Format (2025) [Supported]
 
 Token-Oriented Object Notation (TOON) achieves **~60% fewer tokens than JSON** for structured data while maintaining full semantic fidelity. This demonstrates that even simple format optimization yields significant savings for machine-to-machine data exchange.
@@ -223,7 +229,7 @@ Modern LLMs with structured output capabilities (function calling, JSON mode) ma
 
 Based on the evidence, the recommended architecture is **hybrid**:
 
-- **AXON for agent-to-agent loops**: Where information density, unambiguous parsing, and formal semantics provide the most value
+- **AXON for agent-to-agent loops**: Where information density, unambiguous parsing, and explicit intent labeling provide the most value
 - **English for human-facing interfaces**: Where readability, auditability, and familiarity matter most
 - **Translation layer**: Bidirectional AXON-to-English conversion for human inspection
 
@@ -235,7 +241,7 @@ This avoids the false binary of "replace English entirely" vs. "English is good 
 
 The evidence is convergent and suggestive: English is a brilliant language for humans communicating over noisy channels with shared cultural context. For agents communicating over reliable digital channels, it carries significant unnecessary overhead. A purpose-built language that combines:
 
-1. The **formal semantics** of FIPA-ACL [Established precedent]
+1. The **explicit intent labeling** inspired by FIPA-ACL [Established precedent]
 2. The **unambiguous grammar** of Lojban [Established formal property]
 3. The **token efficiency** of TOON [Supported by measurements]
 4. The **compositionality** of emergent agent languages [Supported by research]

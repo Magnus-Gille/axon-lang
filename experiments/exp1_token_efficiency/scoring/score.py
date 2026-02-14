@@ -25,6 +25,9 @@ from dataclasses import dataclass, asdict, field
 from datetime import datetime, timezone
 from pathlib import Path
 
+# Import automated extractors
+from extractors import extract_elements, MACHINE_SCORED_CONDITIONS, JUDGE_SCORED_CONDITIONS
+
 PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent.parent
 EXP1_DIR = Path(__file__).resolve().parent.parent
 EXP0_RESULTS_DIR = PROJECT_ROOT / "experiments" / "exp0_learnability" / "results"
@@ -239,43 +242,100 @@ def score_single_output(
     annotations: dict,
     track: str,
     judge_prompt_template: str,
-    judges_to_use: list[str],
+    judges_to_use: list[tuple[str, str]] | list[str],
+    force_judge: bool = False,
 ) -> ScoredOutput:
-    """Score a single output across all judges."""
+    """Score a single output using hybrid approach.
+
+    For structured formats (AXON, JSON FC, FIPA-ACL): automated extraction.
+    For English formats: 3-judge LLM panel.
+    force_judge=True overrides to use judges for all conditions (for cross-validation).
+
+    judges_to_use: list of (unique_id, model_key) tuples, or plain strings for backward compat.
+    """
+    # Normalize to tuple format
+    if judges_to_use and isinstance(judges_to_use[0], str):
+        judges_to_use = [(j, j) for j in judges_to_use]
     task_id = output_record["task_id"]
+    condition = output_record["condition"]
     elements = get_task_elements(annotations, task_id, track)
     instruction = get_task_instruction(annotations, task_id)
     raw_output = output_record["output"]
+    total_elements = len(elements)
 
+    # Try automated extraction for structured formats
+    if not force_judge and condition in MACHINE_SCORED_CONDITIONS:
+        extraction = extract_elements(condition, raw_output, elements, task_id)
+        if extraction is not None:
+            element_results = {}
+            for elem in elements:
+                eid = elem["id"]
+                ext = extraction.get(eid, {"verdict": "ABSENT", "evidence": "No extraction result"})
+                element_results[eid] = {
+                    "name": elem["name"],
+                    "verdicts": {"machine": ext["verdict"]},
+                    "majority": ext["verdict"],
+                    "unanimous": True,
+                    "method": "machine",
+                    "evidence": ext["evidence"],
+                }
+
+            present_count = sum(
+                1 for er in element_results.values() if er["majority"] == "PRESENT"
+            )
+            agreement_rate = 1.0  # Machine scoring is deterministic
+
+            token_counts = output_record.get("token_counts")
+            tokens_per_unit = None
+            if token_counts and present_count > 0:
+                cl100k = token_counts.get("cl100k_base", 0)
+                tokens_per_unit = cl100k / present_count
+
+            return ScoredOutput(
+                task_id=task_id,
+                condition=condition,
+                model=output_record["model"],
+                run_number=output_record["run_number"],
+                output=raw_output,
+                valid=output_record["valid"],
+                token_counts=token_counts,
+                track=track,
+                element_count_total=total_elements,
+                element_count_present=present_count,
+                element_scores=element_results,
+                judge_agreement=round(agreement_rate, 4),
+                tokens_per_unit=round(tokens_per_unit, 4) if tokens_per_unit else None,
+            )
+
+    # Fall back to LLM judge scoring (English conditions or force_judge mode)
     prompt = format_judge_prompt(judge_prompt_template, instruction, raw_output, elements)
 
     # Call each judge
     judge_results = []
-    for judge_id in judges_to_use:
+    for unique_id, model_key in judges_to_use:
         try:
-            response, latency = call_judge(judge_id, prompt)
+            response, latency = call_judge(model_key, prompt)
             element_scores = parse_judge_response(response, elements)
             judge_results.append(JudgeResult(
-                judge_id=judge_id, element_scores=element_scores,
+                judge_id=unique_id, element_scores=element_scores,
                 raw_response=response, latency_ms=latency
             ))
         except Exception as e:
-            print(f"    Judge {judge_id} failed: {e}")
+            print(f"    Judge {unique_id} failed: {e}")
             # Create all-ABSENT fallback
             fallback_scores = [
-                ElementScore(eid=elem["id"], element_name=elem["name"],
+                ElementScore(element_id=elem["id"], element_name=elem["name"],
                              verdict="ABSENT", justification=f"Judge error: {e}")
                 for elem in elements
             ]
             judge_results.append(JudgeResult(
-                judge_id=judge_id, element_scores=fallback_scores,
+                judge_id=unique_id, element_scores=fallback_scores,
                 raw_response=str(e), latency_ms=0
             ))
 
     # Compute majority vote per element
     element_results = {}
     agreements = 0
-    total_elements = len(elements)
 
     for i, elem in enumerate(elements):
         verdicts = [jr.element_scores[i].verdict for jr in judge_results]
@@ -289,6 +349,7 @@ def score_single_output(
             "verdicts": {jr.judge_id: jr.element_scores[i].verdict for jr in judge_results},
             "majority": majority,
             "unanimous": all_agree,
+            "method": "judge",
         }
 
     present_count = sum(
@@ -305,7 +366,7 @@ def score_single_output(
 
     return ScoredOutput(
         task_id=task_id,
-        condition=output_record["condition"],
+        condition=condition,
         model=output_record["model"],
         run_number=output_record["run_number"],
         output=raw_output,
@@ -387,10 +448,15 @@ def run_dry(annotations: dict, track: str):
         else:
             print(f"\n  {model_key}: FILE NOT FOUND ({filename})")
 
-    total_judge_calls = total_outputs * 3  # 3 judges per output
+    # With hybrid scoring, structured formats use machine extraction
+    machine_outputs = total_outputs // 2  # 3 of 6 conditions are machine-scored
+    judge_outputs = total_outputs - machine_outputs
+    total_judge_calls = judge_outputs * 3  # 3 judges per judge-scored output
     total_element_scores = total_outputs * total_elements / len(tasks)
     print(f"\n  Total outputs to score: {total_outputs}")
-    print(f"  Judge calls needed: {total_judge_calls} (3 per output)")
+    print(f"    Machine-scored (AXON/JSON/FIPA): {machine_outputs}")
+    print(f"    Judge-scored (English ×3):       {judge_outputs}")
+    print(f"  Judge calls needed: {total_judge_calls} (3 per judge-scored output)")
     print(f"  Estimated element scores: {int(total_element_scores)}")
 
     # Check CLI tools
@@ -506,8 +572,13 @@ def run_scoring(annotations: dict, track: str, models: list[str] | None = None,
                 break
 
             # Determine judges: A=claude, B=codex, C=random(A,B)
-            judge_c = random.choice(["claude", "codex"])
-            judges_to_use = ["claude", "codex", judge_c]
+            judge_c_model = random.choice(["claude", "codex"])
+            # Use unique IDs so dict keys don't collide
+            judges_to_use = [
+                ("claude", "claude"),
+                ("codex", "codex"),
+                (f"{judge_c_model}_c", judge_c_model),
+            ]
 
             remaining = total - cell
             elapsed = time.monotonic() - start_time
@@ -515,8 +586,10 @@ def run_scoring(annotations: dict, track: str, models: list[str] | None = None,
             eta = avg * (min(limit, remaining) if limit else remaining)
             eta_str = f" ETA {int(eta)}s" if new_scored > 0 else ""
             progress = f"{len(scored)+1}/{total}"
+            method = "machine" if condition in MACHINE_SCORED_CONDITIONS else "judge"
+            judge_info = f"(judges: A,B,{judge_c_model[0].upper()})" if method == "judge" else "(auto)"
             print(f"  [{progress}]{eta_str} {condition}/{task_id} run#{run_num} "
-                  f"(judges: A,B,{judge_c[0].upper()}) ... ", end="", flush=True)
+                  f"{judge_info} ... ", end="", flush=True)
 
             result = score_single_output(
                 record, annotations, track, judge_prompt_template, judges_to_use
@@ -567,6 +640,7 @@ def run_scoring(annotations: dict, track: str, models: list[str] | None = None,
 
 def print_scoring_summary(scored: list[ScoredOutput], track: str):
     """Print summary statistics for scored outputs."""
+    sys.path.insert(0, str(PROJECT_ROOT / "experiments"))
     from lib.condition_adapter import CONDITIONS
 
     print(f"\n{'=' * 70}")
