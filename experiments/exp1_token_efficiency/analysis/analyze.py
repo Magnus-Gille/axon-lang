@@ -341,11 +341,12 @@ def bootstrap_ci(records: list[AnalysisRecord], n_boot: int = 10000, seed: int =
     for cond in other_conditions:
         boot_diffs = []
         for _ in range(n_boot):
-            # Resample blocks with replacement
-            sampled_keys = rng.choice(block_keys, size=n_blocks, replace=True)
+            # Resample blocks with replacement (sample indices to avoid unhashable numpy arrays)
+            sampled_indices = rng.choice(n_blocks, size=n_blocks, replace=True)
             axon_boot = []
             cond_boot = []
-            for key in sampled_keys:
+            for idx in sampled_indices:
+                key = block_keys[idx]
                 for r in blocks[key]:
                     if r.condition == "axon" and r.tokens_per_unit is not None:
                         axon_boot.append(r.tokens_per_unit)
