@@ -80,7 +80,9 @@ AXON uses special characters as **structural operators** to eliminate verbose ke
 | `~` | approximate/fuzzy | "approximately", "about", "roughly" |
 | `^` | priority/escalation | "important", "priority level" |
 | `*` | wildcard endpoint | "any agent", "broadcast" |
-| `=` | equality/assignment | "is equal to", "defined as" |
+| `=` / `==` | equality/assignment | "is equal to", "defined as" |
+| `+` `-` | addition, subtraction | "plus", "minus" |
+| `*` `/` | multiplication, division | "times", "divided by" |
 | `_` | null value | "nothing", "empty", "no value" |
 | `:` | has-property/contains | "has", "contains", "with property" |
 | `.` | path separator | "of the", "'s", "belonging to" |
@@ -196,14 +198,22 @@ parallel_expr  = disjunct_expr { "&" disjunct_expr } ;
 disjunct_expr  = comparison { "|" comparison } ;
 
 (* Precedence 5: comparison *)
-comparison     = assign_expr [ comp_op assign_expr ] ;
-comp_op        = "<" | ">" | "<=" | ">=" | "!=" | "=" ;
+comparison     = additive_expr [ comp_op additive_expr ] ;
+comp_op        = "<" | ">" | "<=" | ">=" | "!=" | "=" | "==" ;
 
-(* Precedence 6: range *)
-assign_expr    = primary [ ".." primary ] ;
+(* Precedence 6: additive *)
+additive_expr  = mult_expr { ( "+" | "-" ) mult_expr } ;
 
-(* Precedence 7 — highest: primary expressions *)
+(* Precedence 7: multiplicative *)
+mult_expr      = range_expr { ( "*" | "/" ) range_expr } ;
+
+(* Precedence 8: range *)
+range_expr     = primary [ ".." primary ] ;
+
+(* Precedence 9 — highest: primary expressions *)
 primary        = "~" primary
+               | "!" primary
+               | "-" primary
                | atom
                | tag_expr
                | call_expr
@@ -221,7 +231,7 @@ atom           = string | number | boolean | null | ref | var | path ;
 string         = '"' { char | escape } '"' ;
 escape         = "\\" ( '"' | "\\" | "n" | "t" ) ;
 (* Reserved, not yet implemented: | "u{" hex_digit "}" *)
-number         = [ "-" ] digit { digit } [ "." digit { digit } ] [ unit ] ;
+number         = digit { digit } [ "." digit { digit } ] [ unit ] ;
 boolean        = "T" | "F" ;
 null           = "_" ;
 ref            = "@" qualified_id ;
@@ -278,8 +288,10 @@ Messages are separated by whitespace. Whitespace within a message is insignifica
 | 3 | `&` | Left | Parallel / and |
 | 4 | `\|` | Left | Disjunction / or |
 | 5 | `< > <= >= != =` | None | Comparison |
-| 6 | `..` | None | Range |
-| 7 (highest) | `~` (prefix) | Right | Approximate |
+| 6 | `+` `-` | Left | Addition / subtraction |
+| 7 | `*` `/` | Left | Multiplication / division |
+| 8 | `..` | None | Range |
+| 9 (highest) | `~` `!` `-` (prefix) | Right | Approximate / negation / unary minus |
 
 Parentheses `()` override precedence.
 
@@ -290,8 +302,8 @@ Parentheses `()` override precedence.
 | Type | Syntax | Examples |
 |------|--------|---------|
 | String | `"..."` | `"hello"`, `"error: timeout"` |
-| Integer | digits | `42`, `-7`, `0` |
-| Float | digits.digits | `3.14`, `-0.5` |
+| Integer | digits | `42`, `0`, `-7` (via unary minus) |
+| Float | digits.digits | `3.14`, `-0.5` (via unary minus) |
 | Boolean | `T` / `F` | `T`, `F` |
 | Null | `_` | `_` |
 | Reference | `@name` | `@agent-1`, `@db-service` |

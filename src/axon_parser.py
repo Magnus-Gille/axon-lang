@@ -38,6 +38,9 @@ class TokenType(Enum):
     QUESTION = "?"
     TILDE = "~"
     CARET = "^"
+    PLUS = "+"
+    MINUS = "-"
+    SLASH = "/"
     STAR = "*"
     UNDERSCORE = "_"
     DOTDOT = ".."
@@ -144,8 +147,6 @@ class Lexer:
 
     def _read_number(self) -> str:
         start = self.pos
-        if self._peek() == "-":
-            self._advance()
         while self.pos < len(self.source) and self.source[self.pos].isdigit():
             self._advance()
         if self.pos < len(self.source) and self.source[self.pos] == ".":
@@ -292,18 +293,28 @@ class Lexer:
                 self._emit(TokenType.DOUBLE_PERCENT, "%%", line, col)
                 continue
 
-            # Numbers (including negative)
-            if ch.isdigit() or (ch == "-" and self._peek_at(1) is not None and self._peek_at(1).isdigit()):
+            if ch == "=" and self._peek_at(1) == "=":
+                self._advance()
+                self._advance()
+                self._emit(TokenType.EQ, "==", line, col)
+                continue
+
+            # Numbers (non-negative only; unary minus handled in parser)
+            if ch.isdigit():
                 num = self._read_number()
                 self._emit(TokenType.NUMBER, num, line, col)
                 self._try_read_unit()
                 continue
 
-            # References @qualified.id
+            # References @qualified.id or @* (wildcard)
             if ch == "@":
                 self._advance()
-                ident = self._read_qualified_id()
-                self._emit(TokenType.REF, "@" + ident, line, col)
+                if self.pos < len(self.source) and self.source[self.pos] == "*":
+                    self._advance()
+                    self._emit(TokenType.REF, "@*", line, col)
+                else:
+                    ident = self._read_qualified_id()
+                    self._emit(TokenType.REF, "@" + ident, line, col)
                 continue
 
             # Tags #qualified.id
@@ -348,7 +359,8 @@ class Lexer:
                 "!": TokenType.BANG, "?": TokenType.QUESTION,
                 "~": TokenType.TILDE, "^": TokenType.CARET,
                 "=": TokenType.EQ, ".": TokenType.DOT,
-                "*": TokenType.STAR,
+                "*": TokenType.STAR, "+": TokenType.PLUS,
+                "-": TokenType.MINUS, "/": TokenType.SLASH,
             }
             if ch in simple:
                 self._advance()
@@ -499,6 +511,28 @@ class Parser:
 
     def _is_performative_start(self) -> bool:
         if self._peek().type == TokenType.PERFORMATIVE:
+            # Distinguish nested message from function call using performative name.
+            # Nested message: PERF ( @ref > @ref ) : expr
+            # Function call:  PERF ( args )
+            # Key check: after PERF (, a nested message has REF/STAR/LBRACKET (endpoint)
+            # followed eventually by GT (the > in routing).
+            if self._peek_at(1).type == TokenType.LPAREN:
+                tok2 = self._peek_at(2)
+                if tok2.type == TokenType.REF:
+                    # @ref > ... means routing (nested message)
+                    # @ref , ... or @ref ) means function args
+                    tok3 = self._peek_at(3)
+                    return tok3.type == TokenType.GT
+                elif tok2.type == TokenType.STAR:
+                    # * > ... means wildcard routing
+                    return self._peek_at(3).type == TokenType.GT
+                elif tok2.type == TokenType.LBRACKET:
+                    # [ @ref, ... ] > ... means agent list routing
+                    return True
+                else:
+                    # PERF(expr) — not routing, treat as function call
+                    return False
+            # PERF without ( — still a performative (top-level message start)
             return True
         # Extension: X.domain.act(
         if (self._peek().type == TokenType.IDENT
@@ -590,8 +624,10 @@ class Parser:
     #   3: &   (left-associative, parallel)
     #   4: |   (left-associative, disjunction)
     #   5: < > <= >= != =  (non-associative, comparison)
-    #   6: ..  (non-associative, range)
-    #   7: ~ (prefix), primaries
+    #   6: + -  (left-associative, additive)
+    #   7: * /  (left-associative, multiplicative)
+    #   8: ..  (non-associative, range)
+    #   9: ~ ! - (prefix), primaries
 
     def _parse_expression(self) -> ASTNode:
         return self._parse_causal()
@@ -632,13 +668,29 @@ class Parser:
         return left
 
     def _parse_comparison(self) -> ASTNode:
-        left = self._parse_range()
+        left = self._parse_additive()
         comp_ops = {TokenType.LT, TokenType.GT, TokenType.LTE,
                     TokenType.GTE, TokenType.NEQ, TokenType.EQ}
         if self._peek().type in comp_ops:
             op = self._advance()
-            right = self._parse_range()
+            right = self._parse_additive()
             return BinaryExpr(op=op.value, left=left, right=right)
+        return left
+
+    def _parse_additive(self) -> ASTNode:
+        left = self._parse_multiplicative()
+        while self._peek().type in (TokenType.PLUS, TokenType.MINUS):
+            op = self._advance()
+            right = self._parse_multiplicative()
+            left = BinaryExpr(op=op.value, left=left, right=right)
+        return left
+
+    def _parse_multiplicative(self) -> ASTNode:
+        left = self._parse_range()
+        while self._peek().type in (TokenType.STAR, TokenType.SLASH):
+            op = self._advance()
+            right = self._parse_range()
+            left = BinaryExpr(op=op.value, left=left, right=right)
         return left
 
     def _parse_range(self) -> ASTNode:
@@ -660,9 +712,25 @@ class Parser:
             inner = self._parse_primary()
             return CallExpr(func="~", args=[inner])
 
+        # Prefix ! (negation)
+        if tok.type == TokenType.BANG:
+            self._advance()
+            inner = self._parse_primary()
+            return CallExpr(func="!", args=[inner])
+
+        # Prefix - (unary minus)
+        if tok.type == TokenType.MINUS:
+            self._advance()
+            inner = self._parse_primary()
+            return CallExpr(func="neg", args=[inner])
+
         # Nested message
         if self._is_performative_start():
             return self._parse_nested_message()
+
+        # Performative keyword used as function name in content (e.g., ACC("ok"))
+        if tok.type == TokenType.PERFORMATIVE:
+            return self._parse_ident_or_call()
 
         # Grouped expression
         if tok.type == TokenType.LPAREN:

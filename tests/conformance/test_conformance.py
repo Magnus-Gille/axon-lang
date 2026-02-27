@@ -106,6 +106,64 @@ class TestMissingRequiredStructure:
         assert len(msgs) == 0
 
 
+class TestArithmeticOperators:
+    def test_addition(self):
+        msgs = parse('INF(@a>@b): x + y')
+        assert len(msgs) == 1
+
+    def test_subtraction(self):
+        msgs = parse('INF(@a>@b): x - y')
+        assert len(msgs) == 1
+
+    def test_multiplication(self):
+        msgs = parse('INF(@a>@b): x * y')
+        assert len(msgs) == 1
+
+    def test_division(self):
+        msgs = parse('INF(@a>@b): x / y')
+        assert len(msgs) == 1
+
+    def test_compound_arithmetic(self):
+        msgs = parse('INF(@a>@b): a + b * c - d / e')
+        assert len(msgs) == 1
+
+    def test_unary_minus_number(self):
+        msgs = parse('INF(@a>@b): -5')
+        assert len(msgs) == 1
+
+    def test_unary_minus_ident(self):
+        msgs = parse('INF(@a>@b): -x')
+        assert len(msgs) == 1
+
+    def test_negation_prefix(self):
+        msgs = parse('INF(@a>@b): !ready')
+        assert len(msgs) == 1
+
+    def test_double_negation(self):
+        msgs = parse('INF(@a>@b): !!x')
+        assert len(msgs) == 1
+
+    def test_double_equals(self):
+        msgs = parse('INF(@a>@b): x == y')
+        assert len(msgs) == 1
+
+    def test_arithmetic_in_record(self):
+        msgs = parse('INF(@a>@b): {total: price * qty + tax}')
+        assert len(msgs) == 1
+
+    def test_trailing_operator_fails(self):
+        with pytest.raises(ParseError):
+            parse('INF(@a>@b): x +')
+
+    def test_leading_infix_operator_fails(self):
+        with pytest.raises(ParseError):
+            parse('INF(@a>@b): * x')
+
+    def test_double_infix_operator_fails(self):
+        with pytest.raises(ParseError):
+            parse('INF(@a>@b): x + + y')
+
+
 class TestMiscInvalid:
     def test_unterminated_string(self):
         with pytest.raises(LexerError, match="Unterminated string"):

@@ -51,3 +51,60 @@ PRO(@a>@b): {action:#debit}
 
 (* Mixed named and positional args *)
 INF(@a>@b): func(1, name:"val", 3)
+
+(* Arithmetic: addition *)
+INF(@a>@b): {total: price + tax}
+
+(* Arithmetic: subtraction *)
+INF(@a>@b): {remaining: balance - amount}
+
+(* Arithmetic: multiplication *)
+INF(@a>@b): {cost: price * qty}
+
+(* Arithmetic: division *)
+INF(@a>@b): {avg: total / count}
+
+(* Arithmetic: compound expression *)
+INF(@a>@b): {total: price * qty + tax}
+
+(* Arithmetic: precedence — mul binds tighter than add *)
+INF(@a>@b): a + b * c
+
+(* Arithmetic: parenthesized override *)
+INF(@a>@b): (a + b) * c
+
+(* Arithmetic: chained operations *)
+INF(@a>@b): a + b - c + d
+
+(* Arithmetic in comparison *)
+INF(@a>@b): x + y > threshold
+
+(* Arithmetic in function args *)
+INF(@a>@b): scale(base * factor, offset + 1)
+
+(* Negation prefix ! *)
+INF(@a>@b): !ready
+
+(* Negation in boolean expression *)
+INF(@a>@b): !ready & !done
+
+(* Unary minus *)
+INF(@a>@b): {delta: -5}
+
+(* Unary minus on identifier *)
+INF(@a>@b): {neg: -x}
+
+(* Unary minus in function call *)
+INF(@a>@b): adjust(-5, -offset)
+
+(* Double-equals alias *)
+INF(@a>@b): status == #active
+
+(* Double-equals in comparison *)
+INF(@a>@b): count == 0
+
+(* Arithmetic in sequence *)
+INF(@a>@b): compute(x + y) -> store($result)
+
+(* Arithmetic in causal chain *)
+INF(@a>@b): {over: T} <- usage > limit * 1.5
