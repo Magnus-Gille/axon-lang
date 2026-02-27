@@ -1,0 +1,128 @@
+[
+  {
+    "id": "ecosystem-pivot-C01",
+    "source": "codex-round-1",
+    "text": "Layer 3 framing overstated — Tier 2-3 metadata (re, ts, ctx, sig, authz, tenant) overlaps A2A/NLIP envelope semantics",
+    "classification": "valid",
+    "impact": "changed",
+    "severity": "major",
+    "caught_by_self_review": true
+  },
+  {
+    "id": "ecosystem-pivot-C02",
+    "source": "codex-round-1",
+    "text": "'Wide open' claim contradicts JSON lock-in evidence in the same document",
+    "classification": "valid",
+    "impact": "changed",
+    "severity": "major",
+    "caught_by_self_review": false
+  },
+  {
+    "id": "ecosystem-pivot-C03",
+    "source": "codex-round-1",
+    "text": "TOON is secondary threat; JSON/NL inertia is the primary battlefield, not TOON",
+    "classification": "valid",
+    "impact": "changed",
+    "severity": "minor",
+    "caught_by_self_review": false
+  },
+  {
+    "id": "ecosystem-pivot-C04",
+    "source": "codex-round-1",
+    "text": "Option C alone is academic cul-de-sac without integration proof; recommend C+B hybrid",
+    "classification": "valid",
+    "impact": "changed",
+    "severity": "critical",
+    "caught_by_self_review": true
+  },
+  {
+    "id": "ecosystem-pivot-C05",
+    "source": "codex-round-1",
+    "text": "Token-cost thesis empirically under-supported on non-cost legs (reliability, ambiguity)",
+    "classification": "valid",
+    "impact": "changed",
+    "severity": "major",
+    "caught_by_self_review": true
+  },
+  {
+    "id": "ecosystem-pivot-C06",
+    "source": "codex-round-1",
+    "text": "AISP omission from ecosystem positioning is a credibility gap given it's a 7th experimental condition",
+    "classification": "valid",
+    "impact": "acknowledged",
+    "severity": "major",
+    "caught_by_self_review": false
+  },
+  {
+    "id": "ecosystem-pivot-C07",
+    "source": "codex-round-1",
+    "text": "NLIP under-analyzed — ratified Ecma standard needs explicit coexistence mapping",
+    "classification": "valid",
+    "impact": "acknowledged",
+    "severity": "minor",
+    "caught_by_self_review": true
+  },
+  {
+    "id": "ecosystem-pivot-C08",
+    "source": "codex-round-1",
+    "text": "Objective confusion: documents alternate between publishable research and adoption strategy without resolving hierarchy",
+    "classification": "valid",
+    "impact": "changed",
+    "severity": "critical",
+    "caught_by_self_review": false
+  },
+  {
+    "id": "ecosystem-pivot-C09",
+    "source": "codex-round-1",
+    "text": "Option E ranking too absolute — neutrality/utility tradeoff not engaged",
+    "classification": "partially_valid",
+    "impact": "acknowledged",
+    "severity": "minor",
+    "caught_by_self_review": false
+  },
+  {
+    "id": "ecosystem-pivot-C10",
+    "source": "codex-round-1",
+    "text": "Adoption economics under-modeled — no SDK, zero adoption, but implementation burden not quantified",
+    "classification": "valid",
+    "impact": "acknowledged",
+    "severity": "minor",
+    "caught_by_self_review": false
+  },
+  {
+    "id": "ecosystem-pivot-C11",
+    "source": "codex-round-2",
+    "text": "Tier 1 routing semantics (@sender>@receiver) may still collide with A2A/NLIP addressing even after Tier 2-3 concession",
+    "classification": "valid",
+    "impact": "acknowledged",
+    "severity": "major",
+    "caught_by_self_review": false
+  },
+  {
+    "id": "ecosystem-pivot-C12",
+    "source": "codex-round-2",
+    "text": "Evidence category slippage: parseability ≠ reliability. Format conformance is prerequisite, not outcome evidence",
+    "classification": "valid",
+    "impact": "acknowledged",
+    "severity": "major",
+    "caught_by_self_review": false
+  },
+  {
+    "id": "ecosystem-pivot-C13",
+    "source": "codex-round-2",
+    "text": "C+B defense shrinks B to Future Work paragraph, which no longer de-risks irrelevance",
+    "classification": "valid",
+    "impact": "acknowledged",
+    "severity": "major",
+    "caught_by_self_review": false
+  },
+  {
+    "id": "ecosystem-pivot-C14",
+    "source": "codex-round-2",
+    "text": "Action items lack decision gates, deadlines, acceptance criteria — invites reframing without execution",
+    "classification": "valid",
+    "impact": "acknowledged",
+    "severity": "minor",
+    "caught_by_self_review": false
+  }
+]
