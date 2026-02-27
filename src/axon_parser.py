@@ -839,8 +839,8 @@ class Parser:
         return CallExpr(func=func_name, args=args)
 
     def _parse_argument(self) -> ASTNode:
-        """Parse a function argument: named (ident:expr) or positional."""
-        if (self._peek().type == TokenType.IDENT
+        """Parse a function argument: named (ident:expr / $var:expr) or positional."""
+        if (self._peek().type in (TokenType.IDENT, TokenType.VAR)
             and self._peek_at(1).type == TokenType.COLON):
             name = self._advance()
             self._advance()  # consume colon

@@ -247,7 +247,7 @@ tag_expr       = "#" qualified_id [ record ] ;
 
 call_expr      = qualified_id "(" [ arg_list ] ")" ;
 arg_list       = argument { "," argument } ;
-argument       = expression | identifier ":" expression ;
+argument       = expression | ( identifier | var ) ":" expression ;
 
 list           = "[" [ expression { "," expression } ] "]" ;
 record         = "{" [ field { "," field } ] "}" ;

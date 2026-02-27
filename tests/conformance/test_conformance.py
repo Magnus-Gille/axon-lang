@@ -151,6 +151,10 @@ class TestArithmeticOperators:
         msgs = parse('INF(@a>@b): {total: price * qty + tax}')
         assert len(msgs) == 1
 
+    def test_var_named_arg(self):
+        msgs = parse('INF(@a>@b): bind($x: #Task, $y: Worker)')
+        assert len(msgs) == 1
+
     def test_trailing_operator_fails(self):
         with pytest.raises(ParseError):
             parse('INF(@a>@b): x +')
