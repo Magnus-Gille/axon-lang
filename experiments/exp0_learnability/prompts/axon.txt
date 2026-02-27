@@ -27,10 +27,16 @@ Data types:
 - Tagged records: #task{id:"t-1", status:#done}
 
 Operators:
+- +   addition
+- -   subtraction (also unary: -x)
+- *   multiplication
+- /   division
+- >  <  >=  <=  !=  =  ==  comparison
 - ->  sequence (then)
 - <-  cause (because)
 - &   parallel (and)
 - |   disjunction (or)
+- !   negation (!ready)
 - ..  range (1..10)
 - ~   approximate (~42)
 
