@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AXON — Ett nytt språk för AI</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #0a0a0f;
+    --surface: #13131a;
+    --surface2: #1a1a24;
+    --accent: #6c5ce7;
+    --accent-light: #a29bfe;
+    --green: #00cec9;
+    --pink: #fd79a8;
+    --orange: #fdcb6e;
+    --text: #e8e8ef;
+    --text-dim: #8888a0;
+    --radius: 16px;
+  }
+
+  html { scroll-behavior: smooth; scroll-snap-type: y mandatory; }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    overflow-x: hidden;
+    line-height: 1.6;
+  }
+
+  /* ── Slide container ── */
+  .slide {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 60px 40px;
+    scroll-snap-align: start;
+    position: relative;
+  }
+
+  .slide-inner {
+    max-width: 900px;
+    width: 100%;
+  }
+
+  /* ── Navigation dots ── */
+  .nav-dots {
+    position: fixed;
+    right: 28px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    z-index: 100;
+  }
+  .nav-dots a {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--text-dim);
+    opacity: 0.3;
+    transition: all 0.3s;
+    display: block;
+  }
+  .nav-dots a:hover, .nav-dots a.active {
+    opacity: 1;
+    background: var(--accent-light);
+    transform: scale(1.3);
+  }
+
+  /* ── Typography ── */
+  h1 {
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    margin-bottom: 20px;
+  }
+  h2 {
+    font-size: clamp(1.8rem, 4vw, 3rem);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    margin-bottom: 24px;
+  }
+  h3 {
+    font-size: 1.1rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--accent-light);
+    margin-bottom: 12px;
+  }
+  p {
+    font-size: 1.2rem;
+    color: var(--text-dim);
+    max-width: 640px;
+    font-weight: 300;
+  }
+  .big-number {
+    font-size: clamp(4rem, 10vw, 8rem);
+    font-weight: 700;
+    line-height: 1;
+    background: linear-gradient(135deg, var(--accent-light), var(--green));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* ── Accent spans ── */
+  .highlight { color: var(--accent-light); }
+  .highlight-green { color: var(--green); }
+  .highlight-pink { color: var(--pink); }
+  .highlight-orange { color: var(--orange); }
+
+  /* ── Code blocks ── */
+  .code-block {
+    background: var(--surface);
+    border: 1px solid rgba(108,92,231,0.15);
+    border-radius: var(--radius);
+    padding: 28px 32px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1rem;
+    line-height: 1.7;
+    margin: 20px 0;
+    position: relative;
+    overflow: hidden;
+  }
+  .code-block::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent), var(--green));
+  }
+  .code-label {
+    position: absolute;
+    top: 12px; right: 16px;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-dim);
+    font-family: 'Inter', sans-serif;
+  }
+
+  /* ── Comparison cards ── */
+  .compare {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin: 24px 0;
+  }
+  @media (max-width: 700px) {
+    .compare { grid-template-columns: 1fr; }
+  }
+  .compare-card {
+    background: var(--surface);
+    border-radius: var(--radius);
+    padding: 28px;
+    border: 1px solid rgba(255,255,255,0.05);
+    position: relative;
+    overflow: hidden;
+  }
+  .compare-card.english {
+    border-color: rgba(253,121,168,0.2);
+  }
+  .compare-card.english::before {
+    content: 'ENGELSKA';
+    position: absolute; top: 12px; right: 16px;
+    font-size: 0.65rem; letter-spacing: 0.15em;
+    color: var(--pink); font-weight: 600;
+  }
+  .compare-card.axon {
+    border-color: rgba(0,206,201,0.2);
+  }
+  .compare-card.axon::before {
+    content: 'AXON';
+    position: absolute; top: 12px; right: 16px;
+    font-size: 0.65rem; letter-spacing: 0.15em;
+    color: var(--green); font-weight: 600;
+  }
+  .compare-card pre {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    white-space: pre-wrap;
+    color: var(--text);
+  }
+  .compare-card .stat {
+    margin-top: 16px;
+    font-size: 0.85rem;
+    color: var(--text-dim);
+    font-family: 'Inter', sans-serif;
+  }
+
+  /* ── Savings bar ── */
+  .savings-bar {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 12px 0;
+  }
+  .savings-track {
+    flex: 1;
+    height: 8px;
+    background: var(--surface2);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .savings-fill {
+    height: 100%;
+    border-radius: 4px;
+    background: linear-gradient(90deg, var(--accent), var(--green));
+    transition: width 1.5s ease;
+  }
+  .savings-label {
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: var(--green);
+    min-width: 52px;
+    text-align: right;
+  }
+  .savings-title {
+    font-size: 0.95rem;
+    color: var(--text);
+    min-width: 170px;
+  }
+
+  /* ── Feature cards ── */
+  .features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 20px;
+    margin-top: 32px;
+  }
+  .feature-card {
+    background: var(--surface);
+    border-radius: var(--radius);
+    padding: 28px;
+    border: 1px solid rgba(255,255,255,0.04);
+    transition: transform 0.3s, border-color 0.3s;
+  }
+  .feature-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(108,92,231,0.3);
+  }
+  .feature-icon {
+    font-size: 2rem;
+    margin-bottom: 16px;
+    display: block;
+  }
+  .feature-card h4 {
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+  .feature-card p {
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+
+  /* ── Ambiguity slide ── */
+  .ambiguity-example {
+    background: var(--surface);
+    border-radius: var(--radius);
+    padding: 28px 32px;
+    margin: 16px 0;
+    border-left: 3px solid var(--pink);
+  }
+  .ambiguity-example .sentence {
+    font-size: 1.2rem;
+    font-style: italic;
+    margin-bottom: 16px;
+    color: var(--text);
+  }
+  .meaning {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin: 8px 0;
+    font-size: 0.95rem;
+    color: var(--text-dim);
+  }
+  .meaning-icon {
+    color: var(--orange);
+    font-weight: 600;
+    min-width: 20px;
+  }
+
+  /* ── Process / how it works ── */
+  .process-step {
+    display: flex;
+    align-items: flex-start;
+    gap: 24px;
+    margin: 24px 0;
+  }
+  .step-number {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent), var(--green));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+  }
+  .step-content h4 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+  .step-content p {
+    font-size: 1rem;
+  }
+
+  /* ── Glow effects ── */
+  .glow-accent {
+    position: absolute;
+    width: 400px; height: 400px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(108,92,231,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .glow-green {
+    position: absolute;
+    width: 300px; height: 300px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(0,206,201,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  /* ── Slide-specific ── */
+  .title-slide h1 span {
+    display: block;
+  }
+  .subtitle {
+    font-size: 1.3rem;
+    color: var(--text-dim);
+    font-weight: 300;
+    margin-top: 8px;
+  }
+
+  .tag {
+    display: inline-block;
+    padding: 4px 14px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    margin-right: 8px;
+    margin-bottom: 8px;
+  }
+  .tag-purple { background: rgba(108,92,231,0.15); color: var(--accent-light); }
+  .tag-green { background: rgba(0,206,201,0.15); color: var(--green); }
+  .tag-orange { background: rgba(253,203,110,0.15); color: var(--orange); }
+
+  /* ── Footer ── */
+  .slide-footer {
+    position: absolute;
+    bottom: 24px;
+    left: 40px;
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    opacity: 0.4;
+  }
+
+  /* ── Animations ── */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ── Keyboard hint ── */
+  .key-hint {
+    position: fixed;
+    bottom: 28px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    opacity: 0.4;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    z-index: 100;
+    transition: opacity 0.5s;
+  }
+  .key-hint kbd {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    background: var(--surface2);
+    border: 1px solid rgba(255,255,255,0.1);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.7rem;
+  }
+</style>
+</head>
+<body>
+
+<!-- Navigation dots -->
+<nav class="nav-dots" id="navDots"></nav>
+
+<!-- Keyboard hint -->
+<div class="key-hint" id="keyHint">
+  <kbd>&darr;</kbd> scrolla &middot; <kbd>&uarr;</kbd> tillbaka
+</div>
+
+<!-- ════════════════════════════════════════════════ -->
+<!-- SLIDE 1: Titel -->
+<!-- ════════════════════════════════════════════════ -->
+<section class="slide title-slide" id="slide-0">
+  <div class="glow-accent" style="top: -100px; left: -100px;"></div>
+  <div class="glow-green" style="bottom: -50px; right: -50px;"></div>
+  <div class="slide-inner fade-in">
+    <h3>Ett sidoprojekt av Magnus</h3>
+    <h1>
+      <span>Jag uppfann</span>
+      <span>ett <span class="highlight">nytt språk</span></span>
+      <span>för AI-agenter</span>
+    </h1>
+    <p class="subtitle">
+      Inte för människor. För när AI-program pratar <em>med varandra</em>.
+    </p>
+    <div style="margin-top: 32px;">
+      <span class="tag tag-purple">Forskningsprojekt</span>
+      <span class="tag tag-green">Python-parser</span>
+      <span class="tag tag-orange">Utkast v0.1</span>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════ -->
+<!-- SLIDE 2: Problemet -->
+<!-- ════════════════════════════════════════════════ -->
+<section class="slide" id="slide-1">
+  <div class="slide-inner fade-in">
+    <h3>Problemet</h3>
+    <h2>Just nu pratar AI-agenter<br>med varandra på <span class="highlight-pink">engelska</span></h2>
+    <p style="margin-bottom: 24px;">
+      Engelska är fantastiskt för människor. Men när två AI-program
+      behöver kommunicera har engelska massor av onödiga ord, artighetsfraser
+      och tvetydigheter som bara står i vägen.
+    </p>
+    <p>
+      Det är som om två miniräknare skrev brev till varandra
+      istället för att bara skicka siffror.
+    </p>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════ -->
+<!-- SLIDE 3: Engelska är slösaktigt -->
+<!-- ════════════════════════════════════════════════ -->
+<section class="slide" id="slide-2">
+  <div class="slide-inner fade-in">
+    <h3>Varför engelska är slösaktigt</h3>
+    <h2>50&ndash;75% av engelska är <span class="highlight-pink">utfyllnad</span></h2>
+    <p style="margin-bottom: 32px;">
+      Forskning av Claude Shannon (informationsteorins grundare) visade
+      att det mesta vi skriver på engelska är förutsägbar utfyllnad &mdash;
+      "snälla", "den", "skulle du kunna" &mdash; ord som hjälper <em>människor</em>
+      men slösar tid för maskiner.
+    </p>
+    <div class="features" style="grid-template-columns: 1fr 1fr 1fr;">
+      <div class="feature-card">
+        <span class="feature-icon" style="color: var(--pink);">&#x2716;</span>
+        <h4>Överflödiga ord</h4>
+        <p>"Hej, skulle du kunna vara snäll och berätta vad den nuvarande statusen är?"</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon" style="color: var(--orange);">&#x2753;</span>
+        <h4>Tvetydig betydelse</h4>
+        <p>"Agenten rapporterade servern med felet" &mdash; 3 möjliga tolkningar!</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon" style="color: var(--green);">&#x1F4B0;</span>
+        <h4>Kostar riktiga pengar</h4>
+        <p>AI-företag tar betalt per ord (token). Fler ord = högre räkning.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════ -->
+<!-- SLIDE 4: Lösningen -->
+<!-- ════════════════════════════════════════════════ -->
+<section class="slide" id="slide-3">
+  <div class="glow-accent" style="top: 50%; right: -200px;"></div>
+  <div class="slide-inner fade-in">
+    <h3>Lösningen</h3>
+    <h2>Här är <span class="highlight">AXON</span></h2>
+    <p style="margin-bottom: 8px;">
+      <strong style="color: var(--text);">Agent eXchange Optimized Notation</strong>
+    </p>
+    <p style="margin-bottom: 32px;">
+      Ett kompakt, exakt språk designat specifikt för att AI-agenter ska
+      kunna prata med varandra. Inget fluff, inga tvetydigheter, inga bortkastade ord.
+    </p>
+    <div class="code-block">
+      <span class="code-label">Så här ser ett meddelande ut</span>
+      <span style="color: var(--accent-light);">QRY</span>(<span style="color: var(--green);">@agent-a</span>&gt;<span style="color: var(--green);">@agent-b</span>): <span style="color: var(--orange);">status(@web-server)</span><br><br>
+      <span style="color: var(--text-dim);">&#8593;&nbsp;&nbsp;&nbsp;&nbsp;&#8593;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#8593;</span><br>
+      <span style="color: var(--text-dim);">Vad&nbsp;&nbsp;Vem pratar med vem&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Om vad</span>
+    </div>
+    <p>Varje meddelande besvarar tre frågor: <strong style="color:var(--text);">vad</strong> för typ av meddelande, <strong style="color:var(--text);">vem</strong> som pratar, och <strong style="color:var(--text);">om vad</strong>.</p>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════ -->
+<!-- SLIDE 5: Sida vid sida -->
+<!-- ════════════════════════════════════════════════ -->
+<section class="slide" id="slide-4">
+  <div class="slide-inner fade-in">
+    <h3>Se skillnaden</h3>
+    <h2>Engelska vs AXON</h2>
+
+    <div class="compare">
+      <div class="compare-card english">
+        <pre>Hello Agent-B, I am Agent-A.
+Could you please tell me what
+the current status of the
+web-server service is? I need
+to know if it's running properly.
+Thank you.</pre>
+        <div class="stat">229 tecken &middot; ~57 ord</div>
+      </div>
+      <div class="compare-card axon">
+        <pre>QRY(@a>@b): status(@web-server)</pre>
+        <div class="stat" style="color: var(--green);">32 tecken &middot; ~9 ord</div>
+      </div>
+    </div>
+
+    <p style="margin-top: 16px;">Samma betydelse. <strong style="color: var(--green);">86% kortare.</strong></p>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════ -->
+<!-- SLIDE 6: Fler exempel -->
+<!-- ════════════════════════════════════════════════ -->
+<section class="slide" id="slide-5">
+  <div class="slide-inner fade-in">
+    <h3>Fler exempel</h3>
+    <h2>Det fungerar för alla typer av meddelanden</h2>
+
+    <div class="compare" style="margin-bottom: 20px;">
+      <div class="compare-card english">
+        <pre>Hi Team-A. We appreciate the
+proposal but our monitoring data
+shows a peak load between 2-3 AM.
+Could we do 4-6 AM instead?</pre>
+        <div class="stat">Motförslag &middot; ~40 ord</div>
+      </div>
+      <div class="compare-card axon">
+        <pre>CTR(@b>@a): {
+  action: #migrate,
+  target: @server-2,
+  window: "04:00-06:00"
+} <- load.peak("02:00-03:00")</pre>
+        <div class="stat" style="color: var(--green);">Motförslag &middot; ~15 ord</div>
+      </div>
+    </div>
+
+    <div class="compare">
+      <div class="compare-card english">
+        <pre>I'm sorry but I was unable to
+complete your request. The resource
+could not be found - a 404 error.
+Retrying won't help. Try querying
+the registry service instead.</pre>
+        <div class="stat">Felrapport &middot; ~40 ord</div>
+      </div>
+      <div class="compare-card axon">
+        <pre>ERR(@service>@caller): {
+  code: 404,
+  what: "not found",
+  retry: F,
+  suggest: QRY(>@registry)
+}</pre>
+        <div class="stat" style="color: var(--green);">Felrapport &middot; ~12 ord</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════ -->
+<!-- SLIDE 7: Besparingar -->
+<!-- ════════════════════════════════════════════════ -->
+<section class="slide" id="slide-6">
+  <div class="slide-inner fade-in">
+    <h3>Siffrorna</h3>
+    <h2>I snitt <span class="highlight-green">66% mindre</span> storlek</h2>
+    <p style="margin-bottom: 32px;">
+      I 8 olika verkliga scenarion använde AXON ungefär
+      en tredjedel av orden som engelska behöver för att säga samma sak.
+    </p>
+
+    <div style="display: flex; flex-direction: column; gap: 14px;">
+      <div class="savings-bar">
+        <span class="savings-title">Statusförfrågan</span>
+        <div class="savings-track"><div class="savings-fill" data-width="84" style="width:0%"></div></div>
+        <span class="savings-label">84%</span>
+      </div>
+      <div class="savings-bar">
+        <span class="savings-title">Statussvar</span>
+        <div class="savings-track"><div class="savings-fill" data-width="74" style="width:0%"></div></div>
+        <span class="savings-label">74%</span>
+      </div>
+      <div class="savings-bar">
+        <span class="savings-title">Uppgiftsdelegering</span>
+        <div class="savings-track"><div class="savings-fill" data-width="63" style="width:0%"></div></div>
+        <span class="savings-label">63%</span>
+      </div>
+      <div class="savings-bar">
+        <span class="savings-title">Felrapport</span>
+        <div class="savings-track"><div class="savings-fill" data-width="60" style="width:0%"></div></div>
+        <span class="savings-label">60%</span>
+      </div>
+      <div class="savings-bar">
+        <span class="savings-title">Förhandling</span>
+        <div class="savings-track"><div class="savings-fill" data-width="59" style="width:0%"></div></div>
+        <span class="savings-label">59%</span>
+      </div>
+      <div class="savings-bar">
+        <span class="savings-title">Fleragent-uppgift</span>
+        <div class="savings-track"><div class="savings-fill" data-width="68" style="width:0%"></div></div>
+        <span class="savings-label">68%</span>
+      </div>
+      <div class="savings-bar">
+        <span class="savings-title">Prenumeration</span>
+        <div class="savings-track"><div class="savings-fill" data-width="59" style="width:0%"></div></div>
+        <span class="savings-label">59%</span>
+      </div>
+      <div class="savings-bar">
+        <span class="savings-title">Resonemangskedja</span>
+        <div class="savings-track"><div class="savings-fill" data-width="61" style="width:0%"></div></div>
+        <span class="savings-label">61%</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════ -->
+<!-- SLIDE 8: Tvetydighet -->
+<!-- ════════════════════════════════════════════════ -->
+<section class="slide" id="slide-7">
+  <div class="slide-inner fade-in">
+    <h3>Ingen mer förvirring</h3>
+    <h2>Engelska är <span class="highlight-pink">tvetydigt</span>.<br>AXON är det inte.</h2>
+
+    <div class="ambiguity-example">
+      <div class="sentence">"Berätta för agenterna som misslyckades att starta om"</div>
+      <div class="meaning">
+        <span class="meaning-icon">A</span>
+        <span>Berätta för <em>agenterna som misslyckades</em> &rarr; att de ska starta om</span>
+      </div>
+      <div class="meaning">
+        <span class="meaning-icon">B</span>
+        <span>Berätta för agenterna &rarr; <em>att omstarten misslyckades</em></span>
+      </div>
+    </div>
+
+    <p style="margin: 20px 0;">I AXON skrivs varje betydelse på olika sätt, så det blir <strong style="color: var(--text);">noll förvirring</strong>:</p>
+
+    <div class="compare">
+      <div class="compare-card axon" style="border-color: rgba(253,203,110,0.2);">
+        <pre style="color: var(--orange);">CMD(>@failed-agents): restart()</pre>
+        <div class="stat">Betydelse A: beordra misslyckade agenter att starta om</div>
+      </div>
+      <div class="compare-card axon" style="border-color: rgba(253,203,110,0.2);">
+        <pre style="color: var(--orange);">INF(>@agents): restart.status = #failed</pre>
+        <div class="stat">Betydelse B: informera agenter att omstarten misslyckades</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════ -->
+<!-- SLIDE 9: Hur det fungerar -->
+<!-- ════════════════════════════════════════════════ -->
+<section class="slide" id="slide-8">
+  <div class="glow-green" style="top: -100px; left: 50%;"></div>
+  <div class="slide-inner fade-in">
+    <h3>Hur det fungerar</h3>
+    <h2>Tre enkla delar</h2>
+
+    <div class="process-step">
+      <div class="step-number">1</div>
+      <div class="step-content">
+        <h4>Handlingsordet</h4>
+        <p>
+          <span class="highlight">QRY</span> = fråga &middot;
+          <span class="highlight">REQ</span> = begäran &middot;
+          <span class="highlight">INF</span> = informera &middot;
+          <span class="highlight">ERR</span> = fel &middot;
+          <span class="highlight">PRO</span> = förslag &middot;
+          <span class="highlight">ACC</span> = acceptera
+        </p>
+      </div>
+    </div>
+
+    <div class="process-step">
+      <div class="step-number">2</div>
+      <div class="step-content">
+        <h4>Vem pratar</h4>
+        <p>
+          <span class="highlight-green">@alice</span> &gt; <span class="highlight-green">@bob</span> &mdash;
+          Symbolen <strong style="color:var(--text);">@</strong> markerar en agent, och pilen visar riktning. Enkelt som "från &rarr; till".
+        </p>
+      </div>
+    </div>
+
+    <div class="process-step">
+      <div class="step-number">3</div>
+      <div class="step-content">
+        <h4>Själva innehållet</h4>
+        <p>
+          Strukturerad data som <span class="highlight-orange">{status: #healthy, uptime: 99.7%}</span>.
+          Inget fluff. Bara informationen.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════ -->
+<!-- SLIDE 10: Liknelse -->
+<!-- ════════════════════════════════════════════════ -->
+<section class="slide" id="slide-9">
+  <div class="slide-inner fade-in">
+    <h3>Tänk dig det så här</h3>
+    <h2>En liknelse från verkligheten</h2>
+    <div class="features" style="grid-template-columns: 1fr 1fr;">
+      <div class="feature-card" style="border-color: rgba(253,121,168,0.15);">
+        <span class="feature-icon">&#x1F4AC;</span>
+        <h4>Engelska är som&hellip;</h4>
+        <p>
+          Att skriva ett helt brev varje gång du beställer kaffe.
+          <br><br>
+          <em style="color: var(--text-dim);">"Kära barista, mitt namn är Magnus.
+          Jag hoppas att du har en underbar dag. Jag undrade om det
+          vore möjligt att få en mellanstor latte med havremjölk?
+          Tack så jättemycket, varma hälsningar."</em>
+        </p>
+      </div>
+      <div class="feature-card" style="border-color: rgba(0,206,201,0.15);">
+        <span class="feature-icon">&#x26A1;</span>
+        <h4>AXON är som&hellip;</h4>
+        <p>
+          Att trycka på en knapp på skärmen.
+          <br><br>
+          <span style="font-family: 'JetBrains Mono', monospace; color: var(--green); font-size: 0.9rem; display: block; margin-top: 12px; text-align: center;">
+            REQ(@jag>@café): latte(havre, M)
+          </span>
+        </p>
+      </div>
+    </div>
+    <p style="margin-top: 24px;">
+      Båda ger dig samma kaffe. Det ena slösar bara inte någons tid.
+    </p>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════ -->
+<!-- SLIDE 11: Forskningsmetod -->
+<!-- ════════════════════════════════════════════════ -->
+<section class="slide" id="slide-10">
+  <div class="slide-inner fade-in">
+    <h3>Hur jag byggde det</h3>
+    <h2>Byggt med <span class="highlight">AI-debatt</span></h2>
+    <p style="margin-bottom: 32px;">
+      Jag använde två olika AI-modeller (Claude och Codex) som
+      argumenterade med varandra om varje designbeslut. Den ena
+      föreslår, den andra letar svagheter. Som att ha två
+      väldigt noggranna redaktörer som granskar ditt arbete.
+    </p>
+    <div class="features">
+      <div class="feature-card">
+        <span class="feature-icon" style="color: var(--accent-light);">&#x1F4DD;</span>
+        <h4>20+ forskningskällor</h4>
+        <p>Informationsteori, lingvistik och AI-forskning ligger bakom designvalen.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon" style="color: var(--green);">&#x1F50D;</span>
+        <h4>100+ kritikpunkter</h4>
+        <p>Varje aspekt ifrågasattes och stresstestades genom strukturerad debatt.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon" style="color: var(--orange);">&#x1F9EA;</span>
+        <h4>6 planerade experiment</h4>
+        <p>En rigorös testplan designad för att bevisa (eller motbevisa!) om AXON faktiskt fungerar bättre.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════ -->
+<!-- SLIDE 12: Status -->
+<!-- ════════════════════════════════════════════════ -->
+<section class="slide" id="slide-11">
+  <div class="glow-accent" style="bottom: -100px; left: -100px;"></div>
+  <div class="slide-inner fade-in">
+    <h3>Nuvarande status</h3>
+    <h2>Var det står</h2>
+    <div class="features" style="grid-template-columns: 1fr 1fr;">
+      <div class="feature-card">
+        <h4 style="color: var(--green);">Klart</h4>
+        <p>
+          Formell språkspecifikation skriven.
+          <br>Fungerande parser i Python (inga beroenden).
+          <br>Forskningsdokument med 20+ källhänvisningar.
+          <br>Process för motståndardebatt etablerad.
+          <br>Exempelfiler som demonstrerar språket.
+        </p>
+      </div>
+      <div class="feature-card">
+        <h4 style="color: var(--orange);">Nästa steg</h4>
+        <p>
+          Köra de 6 benchmark-experimenten.
+          <br>Fixa 12 kända parser-buggar.
+          <br>Besvara den stora frågan: är AXON verkligen
+          bättre än engelska för AI-agenter?
+          <br>Eventuellt publicera som forskningsartikel.
+        </p>
+      </div>
+    </div>
+    <p style="margin-top: 28px;">
+      Det ärliga svaret på "fungerar det?" är: <strong style="color: var(--text);">vi vet inte än</strong>.
+      Experimenten kommer ge svaret. Så fungerar riktig forskning.
+    </p>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════ -->
+<!-- SLIDE 13: Avslutning -->
+<!-- ════════════════════════════════════════════════ -->
+<section class="slide" id="slide-12">
+  <div class="glow-accent" style="top: 30%; left: 50%; transform: translateX(-50%);"></div>
+  <div class="glow-green" style="bottom: 20%; right: 20%;"></div>
+  <div class="slide-inner fade-in" style="text-align: center;">
+    <h3>Sammanfattning</h3>
+    <h1>
+      <span>Färre ord.</span>
+      <span>Noll förvirring.</span>
+      <span><span class="highlight-green">Snabbare AI.</span></span>
+    </h1>
+    <p style="margin: 24px auto 0; text-align: center;">
+      Det är AXON.
+    </p>
+    <div style="margin-top: 48px;">
+      <div class="code-block" style="display: inline-block; text-align: left;">
+        <span style="color: var(--accent-light);">INF</span>(<span style="color: var(--green);">@magnus</span>&gt;<span style="color: var(--pink);">@frun</span>): <span style="color: var(--orange);">presentation.status = #klar</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<script>
+// ── Build nav dots ──
+const slides = document.querySelectorAll('.slide');
+const navDots = document.getElementById('navDots');
+slides.forEach((_, i) => {
+  const a = document.createElement('a');
+  a.href = '#slide-' + i;
+  navDots.appendChild(a);
+});
+
+// ── Scroll-based fade in + active dot ──
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.querySelector('.fade-in')?.classList.add('visible');
+      // Update dots
+      const idx = [...slides].indexOf(entry.target);
+      navDots.querySelectorAll('a').forEach((d, i) => {
+        d.classList.toggle('active', i === idx);
+      });
+      // Animate savings bars if on that slide
+      if (idx === 6) {
+        setTimeout(() => {
+          document.querySelectorAll('.savings-fill').forEach(bar => {
+            bar.style.width = bar.dataset.width + '%';
+          });
+        }, 400);
+      }
+    }
+  });
+}, { threshold: 0.4 });
+
+slides.forEach(s => observer.observe(s));
+
+// ── Keyboard navigation ──
+document.addEventListener('keydown', (e) => {
+  const current = [...slides].findIndex(s => {
+    const r = s.getBoundingClientRect();
+    return r.top >= -100 && r.top < window.innerHeight / 2;
+  });
+  if (e.key === 'ArrowDown' || e.key === ' ' || e.key === 'PageDown') {
+    e.preventDefault();
+    const next = Math.min(current + 1, slides.length - 1);
+    slides[next].scrollIntoView({ behavior: 'smooth' });
+  }
+  if (e.key === 'ArrowUp' || e.key === 'PageUp') {
+    e.preventDefault();
+    const prev = Math.max(current - 1, 0);
+    slides[prev].scrollIntoView({ behavior: 'smooth' });
+  }
+});
+
+// Hide key hint after first scroll
+let hintHidden = false;
+window.addEventListener('scroll', () => {
+  if (!hintHidden && window.scrollY > 100) {
+    document.getElementById('keyHint').style.opacity = '0';
+    hintHidden = true;
+  }
+}, { passive: true });
+</script>
+
+</body>
+</html>
