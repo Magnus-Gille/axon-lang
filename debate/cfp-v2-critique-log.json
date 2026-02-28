@@ -1,0 +1,119 @@
+[
+  {
+    "id": "cfp-v2-C01",
+    "source": "codex-round-1",
+    "text": "Talk 1 lists five of six formats in parenthetical (missing Instruction-Matched English)",
+    "classification": "valid",
+    "impact": "changed",
+    "severity": "major",
+    "caught_by_self_review": false
+  },
+  {
+    "id": "cfp-v2-C02",
+    "source": "codex-round-1",
+    "text": "'Every multi-agent framework routes tasks through English or JSON' is an unsupported universal claim",
+    "classification": "valid",
+    "impact": "changed",
+    "severity": "major",
+    "caught_by_self_review": false
+  },
+  {
+    "id": "cfp-v2-C03",
+    "source": "codex-round-1",
+    "text": "'Natural language and JSON break as agent protocols' overstates findings — data shows tradeoffs not blanket failure",
+    "classification": "valid",
+    "impact": "changed",
+    "severity": "major",
+    "caught_by_self_review": false
+  },
+  {
+    "id": "cfp-v2-C04",
+    "source": "codex-round-1",
+    "text": "p < 0.001 cited without noting Holm-corrected pairwise is only marginal (p=0.063) — selective reporting risk",
+    "classification": "valid",
+    "impact": "changed",
+    "severity": "critical",
+    "caught_by_self_review": false
+  },
+  {
+    "id": "cfp-v2-C05",
+    "source": "codex-round-1",
+    "text": "'115+ critique points' is unanchored — not demonstrated in experimental results, only asserted in debate context",
+    "classification": "valid",
+    "impact": "changed",
+    "severity": "major",
+    "caught_by_self_review": true
+  },
+  {
+    "id": "cfp-v2-C06",
+    "source": "codex-round-1",
+    "text": "'Neither model found through self-review alone' is asserted not demonstrated — no computed self-review catch rate",
+    "classification": "valid",
+    "impact": "changed",
+    "severity": "major",
+    "caught_by_self_review": false
+  },
+  {
+    "id": "cfp-v2-C07",
+    "source": "codex-round-1",
+    "text": "Both talks rooted in one project — double-dipping perception risk with CFP committee",
+    "classification": "partially_valid",
+    "impact": "acknowledged",
+    "severity": "minor",
+    "caught_by_self_review": false
+  },
+  {
+    "id": "cfp-v2-C08",
+    "source": "codex-round-1",
+    "text": "'Matched English on compactness' needs caveat — free English significantly better on log(tok/unit) in mixed model",
+    "classification": "partially_valid",
+    "impact": "changed",
+    "severity": "major",
+    "caught_by_self_review": true
+  },
+  {
+    "id": "cfp-v2-C09",
+    "source": "codex-round-1",
+    "text": "32% vs ~42% figures can confuse reviewers unless metric (tok/unit vs raw tokens) is labeled",
+    "classification": "valid",
+    "impact": "changed",
+    "severity": "minor",
+    "caught_by_self_review": false
+  },
+  {
+    "id": "cfp-v2-C10",
+    "source": "codex-round-1",
+    "text": "11% failure rate needs denominator and context (9/81, one model) or it looks overstated",
+    "classification": "valid",
+    "impact": "changed",
+    "severity": "minor",
+    "caught_by_self_review": false
+  },
+  {
+    "id": "cfp-v2-C11",
+    "source": "codex-round-1",
+    "text": "12 bugs weakly informative without severity classes",
+    "classification": "partially_valid",
+    "impact": "acknowledged",
+    "severity": "minor",
+    "caught_by_self_review": true
+  },
+  {
+    "id": "cfp-v2-C12",
+    "source": "codex-round-2",
+    "text": "'Confirmed across three independent statistical approaches' is a new overclaim — Holm-corrected pairwise is marginal",
+    "classification": "valid",
+    "impact": "changed",
+    "severity": "major",
+    "caught_by_self_review": false
+  },
+  {
+    "id": "cfp-v2-C13",
+    "source": "codex-round-2",
+    "text": "Removing stats without acknowledging hybrid scoring and pending cross-validation leaves credibility gap",
+    "classification": "partially_valid",
+    "impact": "acknowledged",
+    "severity": "minor",
+    "caught_by_self_review": false
+  }
+]
