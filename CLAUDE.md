@@ -85,7 +85,7 @@ Every debate feeds Track B. All future debates must capture: per-point metadata,
 ## Current State
 
 - Spec frozen at `v0.1-experimental` — 4 gate-blocking parser bugs fixed
-- Conformance test corpus: 54 tests passing
+- Conformance test corpus: 69 tests passing
 - Validator: 3-level checker (syntax, tier compliance, semantics)
 - **Exp 0 complete**: AXON passes learnability gate on all 3 models (3x replications). See `experiments/exp0_learnability/RESULTS.md`.
 - **Exp 1 Track A scoring complete**: 486 outputs scored. AXON #1 in tok/unit (15.4 mean, ~32% better than JSON FC). Statistical analysis pending. See `experiments/exp1_token_efficiency/RESULTS.md`.
@@ -95,6 +95,7 @@ Every debate feeds Track B. All future debates must capture: per-point metadata,
 - Methodology paper (Track B): publishable as registered pilot + prospective protocol paper if 6-item checklist is met
 - **MassGen addendum** (exploratory): Frozen plan to replicate Exp 3 + Exp 4 through MassGen multi-agent orchestration after prereg experiments complete. Tests ecological validity — whether format advantages survive real orchestration. Activates only if prereg shows significant AXON advantage. See `experiments/MASSGEN_ADDENDUM.md` and `debate/massgen-integration-summary.md`.
 - **AISP comparison** (exploratory): AISP (github.com/bar181/aisp-open-core) added as 7th condition. Benchmarks B (validation rigor: AXON 65% vs AISP 30% detection) and C (methodology: AXON 20/20 vs AISP 0/20) complete. Benchmark A (token efficiency, 81 cells) pending. See `experiments/exp_aisp_comparison/` and `debate/aisp-analysis.md`.
+- **Ecosystem landscape** (Feb 2026): 15+ protocols mapped across 5 layers. AXON = Layer 3 (content format), complementary to A2A/MCP. Pivot consensus: C+B hybrid (methodology paper + minimal A2A adapter). See `debate/ecosystem-landscape-2026.md` and `debate/ecosystem-pivot-summary.md`.
 
 ## Conventions
 
