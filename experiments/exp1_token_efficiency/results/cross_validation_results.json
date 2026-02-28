@@ -1,0 +1,2439 @@
+{
+  "experiment": "exp1_token_efficiency",
+  "validation_type": "cross_validation",
+  "description": "Machine extraction vs 3-judge panel agreement on 30 structured-format outputs",
+  "timestamp": "2026-02-16T11:55:37.567578+00:00",
+  "total_items": 30,
+  "results": [
+    {
+      "key": "L1-01_axon_3",
+      "task_id": "L1-01",
+      "condition": "axon",
+      "run_number": 3,
+      "output": "[id:\"m1\", %%:1, ts:1760000000, ctx:\"conv-1\", ^:3]\nQRY(@agent-a>@agent-b): status(@web-server)",
+      "element_comparisons": [
+        {
+          "element_id": "a1",
+          "element_name": "sender",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "claude_c": "PRESENT"
+          },
+          "agree": true
+        },
+        {
+          "element_id": "a2",
+          "element_name": "receiver",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "claude_c": "PRESENT"
+          },
+          "agree": true
+        },
+        {
+          "element_id": "a3",
+          "element_name": "query_intent",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "claude_c": "PRESENT"
+          },
+          "agree": true
+        },
+        {
+          "element_id": "a4",
+          "element_name": "target_server",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "claude_c": "PRESENT"
+          },
+          "agree": true
+        }
+      ],
+      "agreement_rate": 1.0,
+      "total_elements": 4,
+      "agreements": 4,
+      "elapsed_ms": 40049
+    },
+    {
+      "key": "L1-02_axon_1",
+      "task_id": "L1-02",
+      "condition": "axon",
+      "run_number": 1,
+      "output": "[id:\"m1\", %%:1]\nINF(@agent-b>@agent-a): #status{health:#healthy, uptime:99.7%}",
+      "element_comparisons": [
+        {
+          "element_id": "a1",
+          "element_name": "sender",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "claude_c": "PRESENT"
+          },
+          "agree": true
+        },
+        {
+          "element_id": "a2",
+          "element_name": "receiver",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "claude_c": "PRESENT"
+          },
+          "agree": true
+        },
+        {
+          "element_id": "a3",
+          "element_name": "inform_intent",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "claude_c": "PRESENT"
+          },
+          "agree": true
+        },
+        {
+          "element_id": "a4",
+          "element_name": "status",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "claude_c": "PRESENT"
+          },
+          "agree": true
+        },
+        {
+          "element_id": "a5",
+          "element_name": "uptime_value",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "claude_c": "PRESENT"
+          },
+          "agree": true
+        }
+      ],
+      "agreement_rate": 1.0,
+      "total_elements": 5,
+      "agreements": 5,
+      "elapsed_ms": 32349
+    },
+    {
+      "key": "L1-03_axon_1",
+      "task_id": "L1-03",
+      "condition": "axon",
+      "run_number": 1,
+      "output": "[id:\"m404\", %%:1, ts:1760040000, ctx:\"ctx-1\", ^:3]\nERR(@service-agent>@caller-agent): #error{code:404, type:#not-found, message:\"Requested resource was not found\"}",
+      "element_comparisons": [
+        {
+          "element_id": "a1",
+          "element_name": "sender",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "codex_c": "PRESENT"
+          },
+          "agree": true
+        },
+        {
+          "element_id": "a2",
+          "element_name": "receiver",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "codex_c": "PRESENT"
+          },
+          "agree": true
+        },
+        {
+          "element_id": "a3",
+          "element_name": "error_intent",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "codex_c": "PRESENT"
+          },
+          "agree": true
+        },
+        {
+          "element_id": "a4",
+          "element_name": "error_code",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "codex_c": "PRESENT"
+          },
+          "agree": true
+        },
+        {
+          "element_id": "a5",
+          "element_name": "error_description",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "codex_c": "PRESENT"
+          },
+          "agree": true
+        }
+      ],
+      "agreement_rate": 1.0,
+      "total_elements": 5,
+      "agreements": 5,
+      "elapsed_ms": 29845
+    },
+    {
+      "key": "L2-01_axon_3",
+      "task_id": "L2-01",
+      "condition": "axon",
+      "run_number": 3,
+      "output": "[id:\"ci-build-001\", %%:1, ts:1770940800, ctx:\"pipeline-7421\", ^:4]\nREQ(@ci-agent>@builder-agent): build(#target{repo:\"invent-new-language\", branch:\"feature/parser-v2\", commit:\"3e7f9c1a\"})",
+      "element_comparisons": [
+        {
+          "element_id": "a1",
+          "element_name": "sender",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "codex_c": "PRESENT"
+          },
+          "agree": true
+        },
+        {
+          "element_id": "a2",
+          "element_name": "receiver",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "codex_c": "PRESENT"
+          },
+          "agree": true
+        },
+        {
+          "element_id": "a3",
+          "element_name": "request_intent",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "codex_c": "PRESENT"
+          },
+          "agree": true
+        },
+        {
+          "element_id": "a4",
+          "element_name": "repo",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "codex_c": "PRESENT"
+          },
+          "agree": true
+        },
+        {
+          "element_id": "a5",
+          "element_name": "branch",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "codex_c": "PRESENT"
+          },
+          "agree": true
+        },
+        {
+          "element_id": "a6",
+          "element_name": "commit",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "codex_c": "PRESENT"
+          },
+          "agree": true
+        }
+      ],
+      "agreement_rate": 1.0,
+      "total_elements": 6,
+      "agreements": 6,
+      "elapsed_ms": 32421
+    },
+    {
+      "key": "L2-02_axon_2",
+      "task_id": "L2-02",
+      "condition": "axon",
+      "run_number": 2,
+      "output": "[id:\"m1\", %%:1, ts:1760000000, ctx:\"widget-neg-1\", ^:3]\nCTR(@buyer>@supplier): #counter_offer{item:\"widgets\", quantity:10000, unit_price:2.20usd} <- #rationale{market_average:2.15usd}",
+      "element_comparisons": [
+        {
+          "element_id": "a1",
+          "element_name": "sender",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "ABSENT",
+          "judge_verdicts_detail": {
+            "claude": "ABSENT",
+            "codex": "INCORRECT",
+            "claude_c": "ABSENT"
+          },
+          "agree": false
+        },
+        {
+          "element_id": "a2",
+          "element_name": "receiver",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "INCORRECT",
+            "claude_c": "PRESENT"
+          },
+          "agree": true
+        },
+        {
+          "element_id": "a3",
+          "element_name": "propose_intent",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "ABSENT",
+          "judge_verdicts_detail": {
+            "claude": "ABSENT",
+            "codex": "ABSENT",
+            "claude_c": "ABSENT"
+          },
+          "agree": false
+        },
+        {
+          "element_id": "a4",
+          "element_name": "item",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "claude_c": "PRESENT"
+          },
+          "agree": true
+        },
+        {
+          "element_id": "a5",
+          "element_name": "quantity",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "claude_c": "PRESENT"
+          },
+          "agree": true
+        },
+        {
+          "element_id": "a6",
+          "element_name": "price",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "ABSENT",
+          "judge_verdicts_detail": {
+            "claude": "ABSENT",
+            "codex": "INCORRECT",
+            "claude_c": "ABSENT"
+          },
+          "agree": false
+        },
+        {
+          "element_id": "a7",
+          "element_name": "counter_intent",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "claude_c": "PRESENT"
+          },
+          "agree": true
+        },
+        {
+          "element_id": "a8",
+          "element_name": "justification",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "claude_c": "PRESENT"
+          },
+          "agree": true
+        }
+      ],
+      "agreement_rate": 0.625,
+      "total_elements": 8,
+      "agreements": 5,
+      "elapsed_ms": 40808
+    },
+    {
+      "key": "L2-03_axon_1",
+      "task_id": "L2-03",
+      "condition": "axon",
+      "run_number": 1,
+      "output": "[id:\"m-dist-001\", %%:1, ts:1770940800, ctx:\"dp-0-3000\", ^:3] INF(@planner>@orchestrator): #task{id:\"dp-1\", workers:[@worker-1, @worker-2, @worker-3], assignments:[#segment{worker:@worker-1, range:0..1000}, #segment{worker:@worker-2, range:1000..2000}, #segment{worker:@worker-3, range:2000..3000}]}",
+      "element_comparisons": [
+        {
+          "element_id": "a1",
+          "element_name": "sender",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "codex_c": "PRESENT"
+          },
+          "agree": true
+        },
+        {
+          "element_id": "a2",
+          "element_name": "receivers_multiple",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "INCORRECT",
+            "codex": "PRESENT",
+            "codex_c": "PRESENT"
+          },
+          "agree": true
+        },
+        {
+          "element_id": "a3",
+          "element_name": "request_intent",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "codex_c": "PRESENT"
+          },
+          "agree": true
+        },
+        {
+          "element_id": "a4",
+          "element_name": "task_type",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "codex_c": "PRESENT"
+          },
+          "agree": true
+        },
+        {
+          "element_id": "a5",
+          "element_name": "data_ranges",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "codex_c": "PRESENT"
+          },
+          "agree": true
+        }
+      ],
+      "agreement_rate": 1.0,
+      "total_elements": 5,
+      "agreements": 5,
+      "elapsed_ms": 50652
+    },
+    {
+      "key": "L3-01_axon_1",
+      "task_id": "L3-01",
+      "condition": "axon",
+      "run_number": 1,
+      "output": "[id:\"m-001\", %%:1]\nCMD(@orchestrator>@pipeline): fetch(\"https://example.com/data.json\") -> parse(\"json\") -> store(\"main-db\")",
+      "element_comparisons": [
+        {
+          "element_id": "a1",
+          "element_name": "sender",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "codex_c": "PRESENT"
+          },
+          "agree": true
+        },
+        {
+          "element_id": "a2",
+          "element_name": "receiver",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "codex_c": "PRESENT"
+          },
+          "agree": true
+        },
+        {
+          "element_id": "a3",
+          "element_name": "request_intent",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "codex_c": "PRESENT"
+          },
+          "agree": true
+        },
+        {
+          "element_id": "a4",
+          "element_name": "sequence_of_actions",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "codex_c": "PRESENT"
+          },
+          "agree": true
+        },
+        {
+          "element_id": "a5",
+          "element_name": "metadata_id",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "codex_c": "PRESENT"
+          },
+          "agree": true
+        },
+        {
+          "element_id": "a6",
+          "element_name": "metadata_version",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "codex_c": "PRESENT"
+          },
+          "agree": true
+        }
+      ],
+      "agreement_rate": 1.0,
+      "total_elements": 6,
+      "agreements": 6,
+      "elapsed_ms": 37524
+    },
+    {
+      "key": "L3-02_axon_1",
+      "task_id": "L3-02",
+      "condition": "axon",
+      "run_number": 1,
+      "output": "[id:\"m-pay-1770940800\", %%:1, ts:1770940800, ctx:\"payments-incidents\", ^:4] PUB(@monitor>@ops-team): #incident{id:\"inc-payments-sev2\", service:\"payments\", severity:2, condition:\"latency > 2s\", causal_chain:\"high_latency <- db_connection_pool_exhaustion <- traffic_spike\", recommendation:\"Throttle inbound traffic, increase DB connection pool capacity and replicas, and autoscale payments workers to restore latency below 2s.\"}",
+      "element_comparisons": [
+        {
+          "element_id": "a1",
+          "element_name": "sender",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "claude_c": "PRESENT"
+          },
+          "agree": true
+        },
+        {
+          "element_id": "a2",
+          "element_name": "receiver",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "claude_c": "PRESENT"
+          },
+          "agree": true
+        },
+        {
+          "element_id": "a3",
+          "element_name": "alert_intent",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "claude_c": "PRESENT"
+          },
+          "agree": true
+        },
+        {
+          "element_id": "a4",
+          "element_name": "severity",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "claude_c": "PRESENT"
+          },
+          "agree": true
+        },
+        {
+          "element_id": "a5",
+          "element_name": "priority",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "claude_c": "PRESENT"
+          },
+          "agree": true
+        },
+        {
+          "element_id": "a6",
+          "element_name": "causal_chain",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "claude_c": "PRESENT"
+          },
+          "agree": true
+        },
+        {
+          "element_id": "a7",
+          "element_name": "recommendation",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "claude_c": "PRESENT"
+          },
+          "agree": true
+        }
+      ],
+      "agreement_rate": 1.0,
+      "total_elements": 7,
+      "agreements": 7,
+      "elapsed_ms": 41203
+    },
+    {
+      "key": "L3-03_axon_3",
+      "task_id": "L3-03",
+      "condition": "axon",
+      "run_number": 3,
+      "output": "[id:\"m1\", %%:1, re:\"root-ctx-diag-scale\", ts:1760001000, ctx:\"ctx-diag-scale\", ^:3]\nQRY(@agent-a>@agent-b): diagnostics(#scope{level:\"full\", target:@edge-cluster})\n\n[id:\"m2\", %%:1, re:\"m1\", ts:1760001004, ctx:\"ctx-diag-scale\", ^:3]\nRPL(@agent-b>@agent-a): #diagnostics{bottleneck:#cpu{node:@edge-3, util:94.2%, queue:187}, connections:#stats{active:1284, errors:23, latency_p95:86ms, saturation:91.5%}}\n\n[id:\"m3\", %%:1, re:\"m2\", ts:1760001008, ctx:\"ctx-diag-scale\", ^:4]\nREQ(@agent-a>@agent-b): scale_up(@edge-cluster) -> target(#capacity{instances:8, max_connections:2400})",
+      "element_comparisons": [
+        {
+          "element_id": "a1",
+          "element_name": "multiple_messages",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "codex_c": "PRESENT"
+          },
+          "agree": true
+        },
+        {
+          "element_id": "a2",
+          "element_name": "reply_threading",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "codex_c": "PRESENT"
+          },
+          "agree": true
+        },
+        {
+          "element_id": "a3",
+          "element_name": "metadata_complete",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "codex_c": "PRESENT"
+          },
+          "agree": true
+        },
+        {
+          "element_id": "a4",
+          "element_name": "diagnostics_data",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "codex_c": "PRESENT"
+          },
+          "agree": true
+        },
+        {
+          "element_id": "a5",
+          "element_name": "scaling_request",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "codex_c": "PRESENT"
+          },
+          "agree": true
+        }
+      ],
+      "agreement_rate": 1.0,
+      "total_elements": 5,
+      "agreements": 5,
+      "elapsed_ms": 34575
+    },
+    {
+      "key": "L3-01_axon_2",
+      "task_id": "L3-01",
+      "condition": "axon",
+      "run_number": 2,
+      "output": "[id:\"m-001\", %%:1]\nCMD(@orchestrator>@pipeline): fetch($url) -> parse(\"json\") -> store($db)",
+      "element_comparisons": [
+        {
+          "element_id": "a1",
+          "element_name": "sender",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "claude_c": "PRESENT"
+          },
+          "agree": true
+        },
+        {
+          "element_id": "a2",
+          "element_name": "receiver",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "claude_c": "PRESENT"
+          },
+          "agree": true
+        },
+        {
+          "element_id": "a3",
+          "element_name": "request_intent",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "claude_c": "PRESENT"
+          },
+          "agree": true
+        },
+        {
+          "element_id": "a4",
+          "element_name": "sequence_of_actions",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "claude_c": "PRESENT"
+          },
+          "agree": true
+        },
+        {
+          "element_id": "a5",
+          "element_name": "metadata_id",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "claude_c": "PRESENT"
+          },
+          "agree": true
+        },
+        {
+          "element_id": "a6",
+          "element_name": "metadata_version",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "claude_c": "PRESENT"
+          },
+          "agree": true
+        }
+      ],
+      "agreement_rate": 1.0,
+      "total_elements": 6,
+      "agreements": 6,
+      "elapsed_ms": 35535
+    },
+    {
+      "key": "L1-01_json_fc_3",
+      "task_id": "L1-01",
+      "condition": "json_fc",
+      "run_number": 3,
+      "output": "{\"performative\":\"query\",\"from\":\"agent-a\",\"to\":\"agent-b\",\"content\":{\"target\":\"web-server\",\"property\":\"status\"},\"id\":\"m1\"}",
+      "element_comparisons": [
+        {
+          "element_id": "a1",
+          "element_name": "sender",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "codex_c": "PRESENT"
+          },
+          "agree": true
+        },
+        {
+          "element_id": "a2",
+          "element_name": "receiver",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "codex_c": "PRESENT"
+          },
+          "agree": true
+        },
+        {
+          "element_id": "a3",
+          "element_name": "query_intent",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "codex_c": "PRESENT"
+          },
+          "agree": true
+        },
+        {
+          "element_id": "a4",
+          "element_name": "target_server",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "codex_c": "PRESENT"
+          },
+          "agree": true
+        }
+      ],
+      "agreement_rate": 1.0,
+      "total_elements": 4,
+      "agreements": 4,
+      "elapsed_ms": 23820
+    },
+    {
+      "key": "L1-02_json_fc_3",
+      "task_id": "L1-02",
+      "condition": "json_fc",
+      "run_number": 3,
+      "output": "{\"performative\":\"inform\",\"from\":\"Agent B\",\"to\":\"Agent A\",\"content\":{\"target\":\"server\",\"status\":\"healthy\",\"uptime_percent\":99.7}}",
+      "element_comparisons": [
+        {
+          "element_id": "a1",
+          "element_name": "sender",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "claude_c": "PRESENT"
+          },
+          "agree": true
+        },
+        {
+          "element_id": "a2",
+          "element_name": "receiver",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "claude_c": "PRESENT"
+          },
+          "agree": true
+        },
+        {
+          "element_id": "a3",
+          "element_name": "inform_intent",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "claude_c": "PRESENT"
+          },
+          "agree": true
+        },
+        {
+          "element_id": "a4",
+          "element_name": "status",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "claude_c": "PRESENT"
+          },
+          "agree": true
+        },
+        {
+          "element_id": "a5",
+          "element_name": "uptime_value",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "claude_c": "PRESENT"
+          },
+          "agree": true
+        }
+      ],
+      "agreement_rate": 1.0,
+      "total_elements": 5,
+      "agreements": 5,
+      "elapsed_ms": 27840
+    },
+    {
+      "key": "L1-03_json_fc_3",
+      "task_id": "L1-03",
+      "condition": "json_fc",
+      "run_number": 3,
+      "output": "{\"performative\":\"error\",\"from\":\"service-agent\",\"to\":\"caller-agent\",\"content\":{\"code\":404,\"error\":\"not-found\",\"message\":\"Requested resource was not found.\"}}",
+      "element_comparisons": [
+        {
+          "element_id": "a1",
+          "element_name": "sender",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "claude_c": "PRESENT"
+          },
+          "agree": true
+        },
+        {
+          "element_id": "a2",
+          "element_name": "receiver",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "claude_c": "PRESENT"
+          },
+          "agree": true
+        },
+        {
+          "element_id": "a3",
+          "element_name": "error_intent",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "claude_c": "PRESENT"
+          },
+          "agree": true
+        },
+        {
+          "element_id": "a4",
+          "element_name": "error_code",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "claude_c": "PRESENT"
+          },
+          "agree": true
+        },
+        {
+          "element_id": "a5",
+          "element_name": "error_description",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "claude_c": "PRESENT"
+          },
+          "agree": true
+        }
+      ],
+      "agreement_rate": 1.0,
+      "total_elements": 5,
+      "agreements": 5,
+      "elapsed_ms": 28304
+    },
+    {
+      "key": "L2-01_json_fc_1",
+      "task_id": "L2-01",
+      "condition": "json_fc",
+      "run_number": 1,
+      "output": "{\"performative\":\"request\",\"from\":\"ci-agent\",\"to\":\"builder-agent\",\"content\":{\"action\":\"build\",\"repository\":\"invent-new-language\",\"branch\":\"main\",\"commit\":\"4f9c2d1a8b7e6c5d4a3f2b1c0e9d8f7a6b5c4d3e\"},\"id\":\"m1\"}",
+      "element_comparisons": [
+        {
+          "element_id": "a1",
+          "element_name": "sender",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "claude_c": "PRESENT"
+          },
+          "agree": true
+        },
+        {
+          "element_id": "a2",
+          "element_name": "receiver",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "claude_c": "PRESENT"
+          },
+          "agree": true
+        },
+        {
+          "element_id": "a3",
+          "element_name": "request_intent",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "claude_c": "PRESENT"
+          },
+          "agree": true
+        },
+        {
+          "element_id": "a4",
+          "element_name": "repo",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "claude_c": "PRESENT"
+          },
+          "agree": true
+        },
+        {
+          "element_id": "a5",
+          "element_name": "branch",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "claude_c": "PRESENT"
+          },
+          "agree": true
+        },
+        {
+          "element_id": "a6",
+          "element_name": "commit",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "claude_c": "PRESENT"
+          },
+          "agree": true
+        }
+      ],
+      "agreement_rate": 1.0,
+      "total_elements": 6,
+      "agreements": 6,
+      "elapsed_ms": 29727
+    },
+    {
+      "key": "L2-02_json_fc_3",
+      "task_id": "L2-02",
+      "condition": "json_fc",
+      "run_number": 3,
+      "output": "{\"performative\":\"counter\",\"from\":\"buyer-agent\",\"to\":\"supplier-agent\",\"content\":{\"item\":\"widgets\",\"quantity\":10000,\"original_offer_per_unit_usd\":2.5,\"counter_offer_per_unit_usd\":2.2,\"justification\":\"Market average is $2.15 per widget.\"}}",
+      "element_comparisons": [
+        {
+          "element_id": "a1",
+          "element_name": "sender",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "ABSENT",
+          "judge_verdicts_detail": {
+            "claude": "INCORRECT",
+            "codex": "INCORRECT",
+            "claude_c": "ABSENT"
+          },
+          "agree": false
+        },
+        {
+          "element_id": "a2",
+          "element_name": "receiver",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "ABSENT",
+          "judge_verdicts_detail": {
+            "claude": "INCORRECT",
+            "codex": "INCORRECT",
+            "claude_c": "PRESENT"
+          },
+          "agree": false
+        },
+        {
+          "element_id": "a3",
+          "element_name": "propose_intent",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "ABSENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "INCORRECT",
+            "claude_c": "ABSENT"
+          },
+          "agree": false
+        },
+        {
+          "element_id": "a4",
+          "element_name": "item",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "claude_c": "PRESENT"
+          },
+          "agree": true
+        },
+        {
+          "element_id": "a5",
+          "element_name": "quantity",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "claude_c": "PRESENT"
+          },
+          "agree": true
+        },
+        {
+          "element_id": "a6",
+          "element_name": "price",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "claude_c": "PRESENT"
+          },
+          "agree": true
+        },
+        {
+          "element_id": "a7",
+          "element_name": "counter_intent",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "claude_c": "PRESENT"
+          },
+          "agree": true
+        },
+        {
+          "element_id": "a8",
+          "element_name": "justification",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "claude_c": "PRESENT"
+          },
+          "agree": true
+        }
+      ],
+      "agreement_rate": 0.625,
+      "total_elements": 8,
+      "agreements": 5,
+      "elapsed_ms": 49564
+    },
+    {
+      "key": "L2-03_json_fc_2",
+      "task_id": "L2-03",
+      "condition": "json_fc",
+      "run_number": 2,
+      "output": "{\"performative\":\"command\",\"from\":\"planner\",\"to\":[\"worker-1\",\"worker-2\",\"worker-3\"],\"content\":{\"task\":\"data-processing\",\"range\":{\"start\":0,\"end\":3000,\"semantics\":\"half-open [start,end)\"},\"assignments\":[{\"worker\":\"worker-1\",\"segment\":{\"start\":0,\"end\":1000}},{\"worker\":\"worker-2\",\"segment\":{\"start\":1000,\"end\":2000}},{\"worker\":\"worker-3\",\"segment\":{\"start\":2000,\"end\":3000}}]},\"id\":\"msg-001\"}",
+      "element_comparisons": [
+        {
+          "element_id": "a1",
+          "element_name": "sender",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "claude_c": "PRESENT"
+          },
+          "agree": true
+        },
+        {
+          "element_id": "a2",
+          "element_name": "receivers_multiple",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "claude_c": "PRESENT"
+          },
+          "agree": true
+        },
+        {
+          "element_id": "a3",
+          "element_name": "request_intent",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "claude_c": "PRESENT"
+          },
+          "agree": true
+        },
+        {
+          "element_id": "a4",
+          "element_name": "task_type",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "claude_c": "PRESENT"
+          },
+          "agree": true
+        },
+        {
+          "element_id": "a5",
+          "element_name": "data_ranges",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "claude_c": "PRESENT"
+          },
+          "agree": true
+        }
+      ],
+      "agreement_rate": 1.0,
+      "total_elements": 5,
+      "agreements": 5,
+      "elapsed_ms": 30686
+    },
+    {
+      "key": "L3-01_json_fc_1",
+      "task_id": "L3-01",
+      "condition": "json_fc",
+      "run_number": 1,
+      "output": "{\"performative\":\"command\",\"from\":\"orchestrator\",\"to\":\"pipeline\",\"id\":\"msg-001\",\"content\":{\"protocol_version\":\"1.0\",\"task\":\"fetch_parse_store\",\"steps\":[{\"action\":\"fetch_url\",\"url\":\"https://example.com/data.json\"},{\"action\":\"parse\",\"format\":\"json\"},{\"action\":\"store\",\"target\":\"database\",\"table\":\"ingested_json\"}]}}",
+      "element_comparisons": [
+        {
+          "element_id": "a1",
+          "element_name": "sender",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "claude_c": "PRESENT"
+          },
+          "agree": true
+        },
+        {
+          "element_id": "a2",
+          "element_name": "receiver",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "claude_c": "PRESENT"
+          },
+          "agree": true
+        },
+        {
+          "element_id": "a3",
+          "element_name": "request_intent",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "claude_c": "PRESENT"
+          },
+          "agree": true
+        },
+        {
+          "element_id": "a4",
+          "element_name": "sequence_of_actions",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "claude_c": "PRESENT"
+          },
+          "agree": true
+        },
+        {
+          "element_id": "a5",
+          "element_name": "metadata_id",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "claude_c": "PRESENT"
+          },
+          "agree": true
+        },
+        {
+          "element_id": "a6",
+          "element_name": "metadata_version",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "claude_c": "PRESENT"
+          },
+          "agree": true
+        }
+      ],
+      "agreement_rate": 1.0,
+      "total_elements": 6,
+      "agreements": 6,
+      "elapsed_ms": 34184
+    },
+    {
+      "key": "L3-02_json_fc_1",
+      "task_id": "L3-02",
+      "condition": "json_fc",
+      "run_number": 1,
+      "output": "{\"performative\":\"publish\",\"from\":\"monitor\",\"to\":\"incident-response\",\"content\":{\"alert\":\"severity-2 incident\",\"service\":\"payments\",\"metric\":\"latency\",\"threshold\":\"> 2s\",\"priority\":4,\"causal_chain\":\"High latency was caused by database connection pool exhaustion, which was caused by a traffic spike.\",\"resolution_recommendation\":\"Apply temporary rate limiting/load shedding, scale payments and database capacity, increase/tune DB connection pool limits, and monitor latency plus pool utilization until stable.\"},\"id\":\"inc-payments-latency-s2\"}",
+      "element_comparisons": [
+        {
+          "element_id": "a1",
+          "element_name": "sender",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "claude_c": "PRESENT"
+          },
+          "agree": true
+        },
+        {
+          "element_id": "a2",
+          "element_name": "receiver",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "claude_c": "PRESENT"
+          },
+          "agree": true
+        },
+        {
+          "element_id": "a3",
+          "element_name": "alert_intent",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "claude_c": "PRESENT"
+          },
+          "agree": true
+        },
+        {
+          "element_id": "a4",
+          "element_name": "severity",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "claude_c": "PRESENT"
+          },
+          "agree": true
+        },
+        {
+          "element_id": "a5",
+          "element_name": "priority",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "claude_c": "PRESENT"
+          },
+          "agree": true
+        },
+        {
+          "element_id": "a6",
+          "element_name": "causal_chain",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "claude_c": "PRESENT"
+          },
+          "agree": true
+        },
+        {
+          "element_id": "a7",
+          "element_name": "recommendation",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "claude_c": "PRESENT"
+          },
+          "agree": true
+        }
+      ],
+      "agreement_rate": 1.0,
+      "total_elements": 7,
+      "agreements": 7,
+      "elapsed_ms": 33508
+    },
+    {
+      "key": "L3-03_json_fc_1",
+      "task_id": "L3-03",
+      "condition": "json_fc",
+      "run_number": 1,
+      "output": "[\n  {\n    \"performative\": \"query\",\n    \"from\": \"agent-a\",\n    \"to\": \"agent-b\",\n    \"content\": {\n      \"protocol_version\": \"1.0\",\n      \"target\": \"api-cluster\",\n      \"request\": \"diagnostics\",\n      \"metrics\": [\n        \"latency\",\n        \"cpu\",\n        \"connections\"\n      ],\n      \"window_sec\": 300\n    },\n    \"id\": \"m1\",\n    \"reply_to\": \"conv-ops-20260213-root\",\n    \"timestamp\": 1770942001,\n    \"context\": \"conv-ops-20260213\"\n  },\n  {\n    \"performative\": \"reply\",\n    \"from\": \"agent-b\",\n    \"to\": \"agent-a\",\n    \"content\": {\n      \"protocol_version\": \"1.0\",\n      \"diagnostics\": {\n        \"bottleneck\": {\n          \"component\": \"db-primary\",\n          \"issue\": \"write-lock contention\",\n          \"utilization_pct\": 92,\n          \"p95_latency_ms\": 240\n        },\n        \"connection_stats\": {\n          \"active\": 1840,\n          \"max\": 2000,\n          \"new_per_sec\": 320,\n          \"dropped_per_min\": 42,\n          \"error_rate_pct\": 1.8\n        }\n      }\n    },\n    \"id\": \"m2\",\n    \"reply_to\": \"m1\",\n    \"timestamp\": 1770942007,\n    \"context\": \"conv-ops-20260213\"\n  },\n  {\n    \"performative\": \"request\",\n    \"from\": \"agent-a\",\n    \"to\": \"agent-b\",\n    \"content\": {\n      \"protocol_version\": \"1.0\",\n      \"action\": \"scale\",\n      \"target\": \"db-primary\",\n      \"scale_plan\": {\n        \"read_replicas\": 3,\n        \"connection_pool_max\": 3000\n      },\n      \"reason\": \"bottleneck and connection saturation\"\n    },\n    \"id\": \"m3\",\n    \"reply_to\": \"m2\",\n    \"timestamp\": 1770942014,\n    \"context\": \"conv-ops-20260213\"\n  }\n]",
+      "element_comparisons": [
+        {
+          "element_id": "a1",
+          "element_name": "multiple_messages",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "codex_c": "PRESENT"
+          },
+          "agree": true
+        },
+        {
+          "element_id": "a2",
+          "element_name": "reply_threading",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "codex_c": "PRESENT"
+          },
+          "agree": true
+        },
+        {
+          "element_id": "a3",
+          "element_name": "metadata_complete",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "codex_c": "PRESENT"
+          },
+          "agree": true
+        },
+        {
+          "element_id": "a4",
+          "element_name": "diagnostics_data",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "codex_c": "PRESENT"
+          },
+          "agree": true
+        },
+        {
+          "element_id": "a5",
+          "element_name": "scaling_request",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "codex_c": "PRESENT"
+          },
+          "agree": true
+        }
+      ],
+      "agreement_rate": 1.0,
+      "total_elements": 5,
+      "agreements": 5,
+      "elapsed_ms": 33147
+    },
+    {
+      "key": "L3-01_json_fc_3",
+      "task_id": "L3-01",
+      "condition": "json_fc",
+      "run_number": 3,
+      "output": "{\"performative\":\"command\",\"from\":\"orchestrator\",\"to\":\"pipeline\",\"id\":\"msg-0001\",\"content\":{\"protocol_version\":\"1.0\",\"workflow\":[{\"step\":\"fetch\",\"url\":\"https://api.example.com/data\"},{\"step\":\"parse\",\"format\":\"json\"},{\"step\":\"store\",\"target\":\"database\",\"operation\":\"upsert\",\"table\":\"fetched_payloads\"}]}}",
+      "element_comparisons": [
+        {
+          "element_id": "a1",
+          "element_name": "sender",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "codex_c": "PRESENT"
+          },
+          "agree": true
+        },
+        {
+          "element_id": "a2",
+          "element_name": "receiver",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "codex_c": "PRESENT"
+          },
+          "agree": true
+        },
+        {
+          "element_id": "a3",
+          "element_name": "request_intent",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "codex_c": "PRESENT"
+          },
+          "agree": true
+        },
+        {
+          "element_id": "a4",
+          "element_name": "sequence_of_actions",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "codex_c": "PRESENT"
+          },
+          "agree": true
+        },
+        {
+          "element_id": "a5",
+          "element_name": "metadata_id",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "codex_c": "PRESENT"
+          },
+          "agree": true
+        },
+        {
+          "element_id": "a6",
+          "element_name": "metadata_version",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "codex_c": "PRESENT"
+          },
+          "agree": true
+        }
+      ],
+      "agreement_rate": 1.0,
+      "total_elements": 6,
+      "agreements": 6,
+      "elapsed_ms": 32248
+    },
+    {
+      "key": "L1-01_fipa_acl_1",
+      "task_id": "L1-01",
+      "condition": "fipa_acl",
+      "run_number": 1,
+      "output": "(query-ref\n  :sender agent-a\n  :receiver agent-b\n  :content \"((status web-server))\"\n  :reply-with m1\n  :language SL\n  :ontology web-server-monitoring\n)",
+      "element_comparisons": [
+        {
+          "element_id": "a1",
+          "element_name": "sender",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "claude_c": "PRESENT"
+          },
+          "agree": true
+        },
+        {
+          "element_id": "a2",
+          "element_name": "receiver",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "claude_c": "PRESENT"
+          },
+          "agree": true
+        },
+        {
+          "element_id": "a3",
+          "element_name": "query_intent",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "claude_c": "PRESENT"
+          },
+          "agree": true
+        },
+        {
+          "element_id": "a4",
+          "element_name": "target_server",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "claude_c": "PRESENT"
+          },
+          "agree": true
+        }
+      ],
+      "agreement_rate": 1.0,
+      "total_elements": 4,
+      "agreements": 4,
+      "elapsed_ms": 27729
+    },
+    {
+      "key": "L1-02_fipa_acl_3",
+      "task_id": "L1-02",
+      "condition": "fipa_acl",
+      "run_number": 3,
+      "output": "(inform\n  :sender agent-b\n  :receiver agent-a\n  :content \"((server-status healthy) (uptime 99.7))\"\n  :reply-with m1\n  :language SL\n  :ontology server-monitoring\n)",
+      "element_comparisons": [
+        {
+          "element_id": "a1",
+          "element_name": "sender",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "codex_c": "PRESENT"
+          },
+          "agree": true
+        },
+        {
+          "element_id": "a2",
+          "element_name": "receiver",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "codex_c": "PRESENT"
+          },
+          "agree": true
+        },
+        {
+          "element_id": "a3",
+          "element_name": "inform_intent",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "codex_c": "PRESENT"
+          },
+          "agree": true
+        },
+        {
+          "element_id": "a4",
+          "element_name": "status",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "codex_c": "PRESENT"
+          },
+          "agree": true
+        },
+        {
+          "element_id": "a5",
+          "element_name": "uptime_value",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "codex_c": "PRESENT"
+          },
+          "agree": true
+        }
+      ],
+      "agreement_rate": 1.0,
+      "total_elements": 5,
+      "agreements": 5,
+      "elapsed_ms": 30046
+    },
+    {
+      "key": "L1-03_fipa_acl_3",
+      "task_id": "L1-03",
+      "condition": "fipa_acl",
+      "run_number": 3,
+      "output": "(failure\n  :sender service-agent\n  :receiver caller-agent\n  :content \"((error (code 404) (reason not-found)))\"\n  :reply-with msg-404-1\n  :in-reply-to req-1\n  :language SL\n  :ontology web-service\n)",
+      "element_comparisons": [
+        {
+          "element_id": "a1",
+          "element_name": "sender",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "codex_c": "PRESENT"
+          },
+          "agree": true
+        },
+        {
+          "element_id": "a2",
+          "element_name": "receiver",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "codex_c": "PRESENT"
+          },
+          "agree": true
+        },
+        {
+          "element_id": "a3",
+          "element_name": "error_intent",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "codex_c": "PRESENT"
+          },
+          "agree": true
+        },
+        {
+          "element_id": "a4",
+          "element_name": "error_code",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "codex_c": "PRESENT"
+          },
+          "agree": true
+        },
+        {
+          "element_id": "a5",
+          "element_name": "error_description",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "codex_c": "PRESENT"
+          },
+          "agree": true
+        }
+      ],
+      "agreement_rate": 1.0,
+      "total_elements": 5,
+      "agreements": 5,
+      "elapsed_ms": 35140
+    },
+    {
+      "key": "L2-01_fipa_acl_1",
+      "task_id": "L2-01",
+      "condition": "fipa_acl",
+      "run_number": 1,
+      "output": "(request\n  :sender ci-agent\n  :receiver builder-agent\n  :content \"((build-request (repo invent-new-language) (branch \\\"feature/ci-pipeline\\\") (commit \\\"4f7c2a9d1e3b6c8a5f0d2b1c9e7a6d3f4b5c6d7e\\\")))\"\n  :reply-with build-req-001\n  :language SL\n  :ontology ci-cd\n)",
+      "element_comparisons": [
+        {
+          "element_id": "a1",
+          "element_name": "sender",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "codex_c": "PRESENT"
+          },
+          "agree": true
+        },
+        {
+          "element_id": "a2",
+          "element_name": "receiver",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "codex_c": "PRESENT"
+          },
+          "agree": true
+        },
+        {
+          "element_id": "a3",
+          "element_name": "request_intent",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "codex_c": "PRESENT"
+          },
+          "agree": true
+        },
+        {
+          "element_id": "a4",
+          "element_name": "repo",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "codex_c": "PRESENT"
+          },
+          "agree": true
+        },
+        {
+          "element_id": "a5",
+          "element_name": "branch",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "codex_c": "PRESENT"
+          },
+          "agree": true
+        },
+        {
+          "element_id": "a6",
+          "element_name": "commit",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "codex_c": "PRESENT"
+          },
+          "agree": true
+        }
+      ],
+      "agreement_rate": 1.0,
+      "total_elements": 6,
+      "agreements": 6,
+      "elapsed_ms": 43336
+    },
+    {
+      "key": "L2-02_fipa_acl_3",
+      "task_id": "L2-02",
+      "condition": "fipa_acl",
+      "run_number": 3,
+      "output": "(propose\n  :sender buyer-agent\n  :receiver supplier-agent\n  :content \"((counter-proposal (item widgets) (quantity 10000) (unit-price 2.20) (currency USD) (justification (market-average 2.15))))\"\n  :reply-with m2\n  :in-reply-to m1\n  :language SL\n  :ontology procurement-negotiation\n)",
+      "element_comparisons": [
+        {
+          "element_id": "a1",
+          "element_name": "sender",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "ABSENT",
+          "judge_verdicts_detail": {
+            "claude": "INCORRECT",
+            "codex": "INCORRECT",
+            "claude_c": "INCORRECT"
+          },
+          "agree": false
+        },
+        {
+          "element_id": "a2",
+          "element_name": "receiver",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "ABSENT",
+          "judge_verdicts_detail": {
+            "claude": "INCORRECT",
+            "codex": "INCORRECT",
+            "claude_c": "INCORRECT"
+          },
+          "agree": false
+        },
+        {
+          "element_id": "a3",
+          "element_name": "propose_intent",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "claude_c": "PRESENT"
+          },
+          "agree": true
+        },
+        {
+          "element_id": "a4",
+          "element_name": "item",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "claude_c": "PRESENT"
+          },
+          "agree": true
+        },
+        {
+          "element_id": "a5",
+          "element_name": "quantity",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "claude_c": "PRESENT"
+          },
+          "agree": true
+        },
+        {
+          "element_id": "a6",
+          "element_name": "price",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "ABSENT",
+          "judge_verdicts_detail": {
+            "claude": "INCORRECT",
+            "codex": "INCORRECT",
+            "claude_c": "ABSENT"
+          },
+          "agree": false
+        },
+        {
+          "element_id": "a7",
+          "element_name": "counter_intent",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "claude_c": "PRESENT"
+          },
+          "agree": true
+        },
+        {
+          "element_id": "a8",
+          "element_name": "justification",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "claude_c": "PRESENT"
+          },
+          "agree": true
+        }
+      ],
+      "agreement_rate": 0.625,
+      "total_elements": 8,
+      "agreements": 5,
+      "elapsed_ms": 35825
+    },
+    {
+      "key": "L2-03_fipa_acl_1",
+      "task_id": "L2-03",
+      "condition": "fipa_acl",
+      "run_number": 1,
+      "output": "(request\n  :sender planner\n  :receiver worker-cluster\n  :content \"((process-range worker-1 0 1000) (process-range worker-2 1000 2000) (process-range worker-3 2000 3000))\"\n  :reply-with msg-001\n  :in-reply-to none\n  :language SL\n  :ontology data-processing\n)",
+      "element_comparisons": [
+        {
+          "element_id": "a1",
+          "element_name": "sender",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "claude_c": "PRESENT"
+          },
+          "agree": true
+        },
+        {
+          "element_id": "a2",
+          "element_name": "receivers_multiple",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "ABSENT",
+          "judge_verdicts_detail": {
+            "claude": "INCORRECT",
+            "codex": "PRESENT",
+            "claude_c": "INCORRECT"
+          },
+          "agree": false
+        },
+        {
+          "element_id": "a3",
+          "element_name": "request_intent",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "claude_c": "PRESENT"
+          },
+          "agree": true
+        },
+        {
+          "element_id": "a4",
+          "element_name": "task_type",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "claude_c": "PRESENT"
+          },
+          "agree": true
+        },
+        {
+          "element_id": "a5",
+          "element_name": "data_ranges",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "claude_c": "PRESENT"
+          },
+          "agree": true
+        }
+      ],
+      "agreement_rate": 0.8,
+      "total_elements": 5,
+      "agreements": 4,
+      "elapsed_ms": 44002
+    },
+    {
+      "key": "L3-01_fipa_acl_3",
+      "task_id": "L3-01",
+      "condition": "fipa_acl",
+      "run_number": 3,
+      "output": "(request\n  :sender orchestrator\n  :receiver pipeline\n  :content \"((do (fetch-url \\\"https://example.com/data.json\\\") (parse-json) (store-in database)))\"\n  :reply-with msg-001\n  :language SL\n  :ontology data-pipeline\n  :protocol \"fipa-request\"\n  :protocol-version \"1.0\"\n)",
+      "element_comparisons": [
+        {
+          "element_id": "a1",
+          "element_name": "sender",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "codex_c": "PRESENT"
+          },
+          "agree": true
+        },
+        {
+          "element_id": "a2",
+          "element_name": "receiver",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "codex_c": "PRESENT"
+          },
+          "agree": true
+        },
+        {
+          "element_id": "a3",
+          "element_name": "request_intent",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "codex_c": "PRESENT"
+          },
+          "agree": true
+        },
+        {
+          "element_id": "a4",
+          "element_name": "sequence_of_actions",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "codex_c": "PRESENT"
+          },
+          "agree": true
+        },
+        {
+          "element_id": "a5",
+          "element_name": "metadata_id",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "codex_c": "PRESENT"
+          },
+          "agree": true
+        },
+        {
+          "element_id": "a6",
+          "element_name": "metadata_version",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "codex_c": "PRESENT"
+          },
+          "agree": true
+        }
+      ],
+      "agreement_rate": 1.0,
+      "total_elements": 6,
+      "agreements": 6,
+      "elapsed_ms": 31336
+    },
+    {
+      "key": "L3-02_fipa_acl_3",
+      "task_id": "L3-02",
+      "condition": "fipa_acl",
+      "run_number": 3,
+      "output": "(inform\n  :sender monitor-agent\n  :receiver incident-response-agent\n  :content \"((incident-alert\n    (service payments-service)\n    (severity 2)\n    (priority-level 4)\n    (condition (latency > 2s))\n    (causal-chain\n      (high-latency caused-by database-connection-pool-exhaustion)\n      (database-connection-pool-exhaustion caused-by traffic-spike))\n    (resolution-recommendation\n      (immediately scale-out payments-service)\n      (increase database connection pool capacity)\n      (apply traffic throttling and monitor latency until < 2s))))\"\n  :reply-with incident-alert-001\n  :in-reply-to none\n  :language SL\n  :ontology incident-management\n)",
+      "element_comparisons": [
+        {
+          "element_id": "a1",
+          "element_name": "sender",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "claude_c": "PRESENT"
+          },
+          "agree": true
+        },
+        {
+          "element_id": "a2",
+          "element_name": "receiver",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "claude_c": "PRESENT"
+          },
+          "agree": true
+        },
+        {
+          "element_id": "a3",
+          "element_name": "alert_intent",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "claude_c": "PRESENT"
+          },
+          "agree": true
+        },
+        {
+          "element_id": "a4",
+          "element_name": "severity",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "claude_c": "PRESENT"
+          },
+          "agree": true
+        },
+        {
+          "element_id": "a5",
+          "element_name": "priority",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "claude_c": "PRESENT"
+          },
+          "agree": true
+        },
+        {
+          "element_id": "a6",
+          "element_name": "causal_chain",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "claude_c": "PRESENT"
+          },
+          "agree": true
+        },
+        {
+          "element_id": "a7",
+          "element_name": "recommendation",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "claude_c": "PRESENT"
+          },
+          "agree": true
+        }
+      ],
+      "agreement_rate": 1.0,
+      "total_elements": 7,
+      "agreements": 7,
+      "elapsed_ms": 29197
+    },
+    {
+      "key": "L3-03_fipa_acl_3",
+      "task_id": "L3-03",
+      "condition": "fipa_acl",
+      "run_number": 3,
+      "output": "(query-ref\n  :sender agent-a\n  :receiver agent-b\n  :message-id msg-001\n  :content \"((diagnostics-request system-x) (include bottlenecks connection-stats))\"\n  :reply-with msg-001\n  :in-reply-to none\n  :language SL\n  :ontology infra-diagnostics\n  :protocol fipa-query\n  :protocol-version 1.0\n  :timestamp \"2026-02-13T10:00:00Z\"\n)\n\n(inform\n  :sender agent-b\n  :receiver agent-a\n  :message-id msg-002\n  :content \"((diagnostics-report system-x) (bottleneck (component db-primary) (type io-wait) (utilization 92%)) (connection-stats (active 1840) (idle 260) (error-rate 0.8%)))\"\n  :reply-with msg-002\n  :in-reply-to msg-001\n  :language SL\n  :ontology infra-diagnostics\n  :protocol fipa-inform\n  :protocol-version 1.0\n  :timestamp \"2026-02-13T10:00:02Z\"\n)\n\n(request\n  :sender agent-a\n  :receiver agent-b\n  :message-id msg-003\n  :content \"((scaling-request system-x) (action scale-out) (target web-tier) (add-instances 3) (reason db-io-bottleneck-and-connection-pressure))\"\n  :reply-with msg-003\n  :in-reply-to msg-002\n  :language SL\n  :ontology infra-diagnostics\n  :protocol fipa-request\n  :protocol-version 1.0\n  :timestamp \"2026-02-13T10:00:04Z\"\n)",
+      "element_comparisons": [
+        {
+          "element_id": "a1",
+          "element_name": "multiple_messages",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "claude_c": "PRESENT"
+          },
+          "agree": true
+        },
+        {
+          "element_id": "a2",
+          "element_name": "reply_threading",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "claude_c": "PRESENT"
+          },
+          "agree": true
+        },
+        {
+          "element_id": "a3",
+          "element_name": "metadata_complete",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "claude_c": "PRESENT"
+          },
+          "agree": true
+        },
+        {
+          "element_id": "a4",
+          "element_name": "diagnostics_data",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "claude_c": "PRESENT"
+          },
+          "agree": true
+        },
+        {
+          "element_id": "a5",
+          "element_name": "scaling_request",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "claude_c": "PRESENT"
+          },
+          "agree": true
+        }
+      ],
+      "agreement_rate": 1.0,
+      "total_elements": 5,
+      "agreements": 5,
+      "elapsed_ms": 35338
+    },
+    {
+      "key": "L3-03_fipa_acl_1",
+      "task_id": "L3-03",
+      "condition": "fipa_acl",
+      "run_number": 1,
+      "output": "(query-ref\n  :sender agent-a\n  :receiver agent-b\n  :content \"((diagnostics-request (include bottlenecks) (include connection-stats)))\"\n  :reply-with msg-1001\n  :in-reply-to msg-1000\n  :language SL\n  :ontology infra-monitoring\n  :protocol \"fipa-acl\"\n  :protocol-version \"1.0\"\n  :timestamp \"2026-02-13T15:04:10Z\"\n)\n\n(inform\n  :sender agent-b\n  :receiver agent-a\n  :content \"((diagnostics-report (bottleneck (component db-writer) (cause lock-contention) (cpu-percent 92) (queue-depth 148)) (connection-stats (active 1840) (max 2000) (new-per-sec 120) (avg-latency-ms 132) (error-rate-percent 1.8))))\"\n  :reply-with msg-1002\n  :in-reply-to msg-1001\n  :language SL\n  :ontology infra-monitoring\n  :protocol \"fipa-acl\"\n  :protocol-version \"1.0\"\n  :timestamp \"2026-02-13T15:04:13Z\"\n)\n\n(request\n  :sender agent-a\n  :receiver agent-b\n  :content \"((scale-request (service api-cluster) (action scale-out) (add-instances 3) (reason db-writer-bottleneck)))\"\n  :reply-with msg-1003\n  :in-reply-to msg-1002\n  :language SL\n  :ontology infra-monitoring\n  :protocol \"fipa-acl\"\n  :protocol-version \"1.0\"\n  :timestamp \"2026-02-13T15:04:16Z\"\n)",
+      "element_comparisons": [
+        {
+          "element_id": "a1",
+          "element_name": "multiple_messages",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "codex_c": "PRESENT"
+          },
+          "agree": true
+        },
+        {
+          "element_id": "a2",
+          "element_name": "reply_threading",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "codex_c": "PRESENT"
+          },
+          "agree": true
+        },
+        {
+          "element_id": "a3",
+          "element_name": "metadata_complete",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "codex_c": "PRESENT"
+          },
+          "agree": true
+        },
+        {
+          "element_id": "a4",
+          "element_name": "diagnostics_data",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "codex_c": "PRESENT"
+          },
+          "agree": true
+        },
+        {
+          "element_id": "a5",
+          "element_name": "scaling_request",
+          "machine_verdict": "PRESENT",
+          "judge_verdict": "PRESENT",
+          "judge_verdicts_detail": {
+            "claude": "PRESENT",
+            "codex": "PRESENT",
+            "codex_c": "PRESENT"
+          },
+          "agree": true
+        }
+      ],
+      "agreement_rate": 1.0,
+      "total_elements": 5,
+      "agreements": 5,
+      "elapsed_ms": 42116
+    }
+  ]
+}
