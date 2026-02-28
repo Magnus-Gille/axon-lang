@@ -93,6 +93,21 @@
         "threading": "hybrid — check for [in-reply-to:] brackets"
       },
       "judge_fallback": "Hybrid elements: machine checks structural presence, judge confirms semantic correctness."
+    },
+
+    "aisp": {
+      "primary_method": "judge",
+      "parser": "none — AISP has no parser that produces an AST; its validator does substring matching only",
+      "extraction_rules": {
+        "identity": "judge — check if sender/receiver agents are identified in ⟦Ω:Meta⟧ block",
+        "intent": "judge — check if communicative intent is expressed (inform, query, request, etc.)",
+        "content-fact": "judge — check if specific values are present in ⟦Σ:Types⟧ or ⟦Γ:Rules⟧ blocks",
+        "structural": "judge — check if sequences/causation are expressed using AISP operators (→, ⇒, etc.)",
+        "metadata": "judge — check if IDs/timestamps are present in ⟦Ω:Meta⟧ block",
+        "threading": "judge — check if reply references exist in metadata"
+      },
+      "judge_fallback": "All elements scored by judge panel. AISP has no machine-extractable structure beyond block marker presence.",
+      "note": "AISP added as exploratory 7th condition (post-pre-registration). See experiments/exp_aisp_comparison/DEVIATION.md."
     }
   },
 

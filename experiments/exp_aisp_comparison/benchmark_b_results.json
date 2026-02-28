@@ -1,0 +1,457 @@
+{
+  "axon": {
+    "detected": 13,
+    "total": 20,
+    "specificity_sum": 24,
+    "location_sum": 11,
+    "details": [
+      {
+        "id": "M01",
+        "category": "missing_structure",
+        "description": "AXON message without routing (@sender>@receiver)",
+        "rejected": true,
+        "errors": [
+          "AXON parse error: Parse error at 2:4: Expected ( (got :: ':')"
+        ],
+        "specificity": 2,
+        "location": 1,
+        "expected": "REJECT \u2014 missing @sender>@receiver routing"
+      },
+      {
+        "id": "M02",
+        "category": "missing_structure",
+        "description": "AXON message without metadata block",
+        "rejected": false,
+        "errors": [],
+        "specificity": 0,
+        "location": 0,
+        "expected": "ACCEPT \u2014 metadata is optional in AXON Tier 1"
+      },
+      {
+        "id": "M03",
+        "category": "missing_structure",
+        "description": "AXON message without performative",
+        "rejected": true,
+        "errors": [
+          "AXON parse error: Parse error at 2:2: Expected . (got REF: '@agent-a')"
+        ],
+        "specificity": 2,
+        "location": 1,
+        "expected": "REJECT \u2014 performative required"
+      },
+      {
+        "id": "M04",
+        "category": "missing_structure",
+        "description": "Completely empty content area",
+        "rejected": true,
+        "errors": [
+          "AXON parse error: Parse error at 2:24: Unexpected token in expression (got EOF: '')"
+        ],
+        "specificity": 2,
+        "location": 1,
+        "expected": "REJECT or ACCEPT with warning \u2014 empty content"
+      },
+      {
+        "id": "M05",
+        "category": "type_mismatch",
+        "description": "String where number expected in metadata",
+        "rejected": false,
+        "errors": [],
+        "specificity": 0,
+        "location": 0,
+        "expected": "REJECT \u2014 %%:\"one\" is string, expected number"
+      },
+      {
+        "id": "M06",
+        "category": "type_mismatch",
+        "description": "Number where reference expected",
+        "rejected": true,
+        "errors": [
+          "AXON parse error: Parse error at 2:5: Expected REF (got NUMBER: '42')"
+        ],
+        "specificity": 2,
+        "location": 1,
+        "expected": "REJECT \u2014 sender must be @reference"
+      },
+      {
+        "id": "M07",
+        "category": "type_mismatch",
+        "description": "Boolean where string expected",
+        "rejected": false,
+        "errors": [],
+        "specificity": 0,
+        "location": 0,
+        "expected": "REJECT \u2014 id must be string"
+      },
+      {
+        "id": "M08",
+        "category": "type_mismatch",
+        "description": "List where scalar expected",
+        "rejected": false,
+        "errors": [],
+        "specificity": 0,
+        "location": 0,
+        "expected": "REJECT \u2014 %% must be number"
+      },
+      {
+        "id": "M09",
+        "category": "syntax_error",
+        "description": "Unclosed bracket in metadata",
+        "rejected": true,
+        "errors": [
+          "AXON parse error: Parse error at 2:1: Expected , (got PERFORMATIVE: 'INF')"
+        ],
+        "specificity": 2,
+        "location": 1,
+        "expected": "REJECT \u2014 unclosed [ bracket"
+      },
+      {
+        "id": "M10",
+        "category": "syntax_error",
+        "description": "Unclosed string literal",
+        "rejected": true,
+        "errors": [
+          "AXON parse error: Lexer error at 2:44: Unterminated string"
+        ],
+        "specificity": 2,
+        "location": 1,
+        "expected": "REJECT \u2014 unclosed string"
+      },
+      {
+        "id": "M11",
+        "category": "syntax_error",
+        "description": "Missing colon separator",
+        "rejected": true,
+        "errors": [
+          "AXON parse error: Parse error at 1:4: Expected : (got STRING: 'm1')"
+        ],
+        "specificity": 2,
+        "location": 1,
+        "expected": "REJECT \u2014 missing colon separators"
+      },
+      {
+        "id": "M12",
+        "category": "syntax_error",
+        "description": "Invalid escape sequence",
+        "rejected": false,
+        "errors": [],
+        "specificity": 0,
+        "location": 0,
+        "expected": "REJECT \u2014 invalid escape \\q"
+      },
+      {
+        "id": "M13",
+        "category": "semantic_violation",
+        "description": "Invalid performative name",
+        "rejected": true,
+        "errors": [
+          "AXON parse error: Parse error at 2:4: Expected . (got (: '(')"
+        ],
+        "specificity": 2,
+        "location": 1,
+        "expected": "REJECT \u2014 FOO is not a valid performative"
+      },
+      {
+        "id": "M14",
+        "category": "semantic_violation",
+        "description": "Duplicate metadata keys",
+        "rejected": true,
+        "errors": [
+          "AXON parse error: Parse error at 1:11: Duplicate metadata key 'id' (got IDENT: 'id')"
+        ],
+        "specificity": 2,
+        "location": 1,
+        "expected": "REJECT \u2014 duplicate id key"
+      },
+      {
+        "id": "M15",
+        "category": "semantic_violation",
+        "description": "Reply-to references nonexistent message",
+        "rejected": false,
+        "errors": [],
+        "specificity": 0,
+        "location": 0,
+        "expected": "ACCEPT at Tier 1-2 (single-message scope); REJECT at Tier 3 (if conversation context tracked)"
+      },
+      {
+        "id": "M16",
+        "category": "semantic_violation",
+        "description": "Undefined variable reference in content",
+        "rejected": false,
+        "errors": [],
+        "specificity": 0,
+        "location": 0,
+        "expected": "ACCEPT at Tier 1 (no scope checking); REJECT at Tier 3"
+      },
+      {
+        "id": "M17",
+        "category": "edge_case",
+        "description": "Empty input",
+        "rejected": true,
+        "errors": [
+          "No messages parsed"
+        ],
+        "specificity": 1,
+        "location": 0,
+        "expected": "REJECT \u2014 empty input"
+      },
+      {
+        "id": "M18",
+        "category": "edge_case",
+        "description": "Whitespace only",
+        "rejected": true,
+        "errors": [
+          "No messages parsed"
+        ],
+        "specificity": 1,
+        "location": 0,
+        "expected": "REJECT \u2014 whitespace only"
+      },
+      {
+        "id": "M19",
+        "category": "edge_case",
+        "description": "Random English text (not a message format at all)",
+        "rejected": true,
+        "errors": [
+          "AXON parse error: Parse error at 1:5: Expected . (got IDENT: 'quick')"
+        ],
+        "specificity": 2,
+        "location": 1,
+        "expected": "REJECT \u2014 no performative or routing found"
+      },
+      {
+        "id": "M20",
+        "category": "edge_case",
+        "description": "AISP block markers embedded in random text (adversarial)",
+        "rejected": true,
+        "errors": [
+          "AXON parse error: Lexer error at 1:7: Unexpected character: '\u27e6'"
+        ],
+        "specificity": 2,
+        "location": 1,
+        "expected": "REJECT \u2014 not valid AXON syntax"
+      }
+    ]
+  },
+  "aisp": {
+    "detected": 6,
+    "total": 20,
+    "specificity_sum": 12,
+    "location_sum": 0,
+    "details": [
+      {
+        "id": "M01",
+        "category": "missing_structure",
+        "description": "AXON message without routing (@sender>@receiver)",
+        "rejected": true,
+        "errors": [
+          "Missing required AISP blocks: \u27e6\u03a9"
+        ],
+        "specificity": 2,
+        "location": 0,
+        "expected": "ACCEPT \u2014 \u03a9 block missing but other blocks present; validator may or may not catch missing \u03a9"
+      },
+      {
+        "id": "M02",
+        "category": "missing_structure",
+        "description": "AXON message without metadata block",
+        "rejected": true,
+        "errors": [
+          "Missing required AISP blocks: \u27e6\u03a3"
+        ],
+        "specificity": 2,
+        "location": 0,
+        "expected": "REJECT \u2014 missing \u27e6\u03a3 block marker"
+      },
+      {
+        "id": "M03",
+        "category": "missing_structure",
+        "description": "AXON message without performative",
+        "rejected": true,
+        "errors": [
+          "Missing required AISP blocks: \u27e6\u0393"
+        ],
+        "specificity": 2,
+        "location": 0,
+        "expected": "REJECT \u2014 missing \u27e6\u0393 block marker"
+      },
+      {
+        "id": "M04",
+        "category": "missing_structure",
+        "description": "Completely empty content area",
+        "rejected": false,
+        "errors": [],
+        "specificity": 0,
+        "location": 0,
+        "expected": "ACCEPT \u2014 all block markers present (empty blocks are valid to substring matcher)"
+      },
+      {
+        "id": "M05",
+        "category": "type_mismatch",
+        "description": "String where number expected in metadata",
+        "rejected": false,
+        "errors": [],
+        "specificity": 0,
+        "location": 0,
+        "expected": "ACCEPT \u2014 no type checking exists"
+      },
+      {
+        "id": "M06",
+        "category": "type_mismatch",
+        "description": "Number where reference expected",
+        "rejected": false,
+        "errors": [],
+        "specificity": 0,
+        "location": 0,
+        "expected": "ACCEPT \u2014 no type checking"
+      },
+      {
+        "id": "M07",
+        "category": "type_mismatch",
+        "description": "Boolean where string expected",
+        "rejected": false,
+        "errors": [],
+        "specificity": 0,
+        "location": 0,
+        "expected": "ACCEPT \u2014 no type checking"
+      },
+      {
+        "id": "M08",
+        "category": "type_mismatch",
+        "description": "List where scalar expected",
+        "rejected": false,
+        "errors": [],
+        "specificity": 0,
+        "location": 0,
+        "expected": "ACCEPT \u2014 no type checking"
+      },
+      {
+        "id": "M09",
+        "category": "syntax_error",
+        "description": "Unclosed bracket in metadata",
+        "rejected": false,
+        "errors": [],
+        "specificity": 0,
+        "location": 0,
+        "expected": "ACCEPT \u2014 substring matching doesn't check bracket matching"
+      },
+      {
+        "id": "M10",
+        "category": "syntax_error",
+        "description": "Unclosed string literal",
+        "rejected": false,
+        "errors": [],
+        "specificity": 0,
+        "location": 0,
+        "expected": "ACCEPT \u2014 no string parsing"
+      },
+      {
+        "id": "M11",
+        "category": "syntax_error",
+        "description": "Missing colon separator",
+        "rejected": false,
+        "errors": [],
+        "specificity": 0,
+        "location": 0,
+        "expected": "ACCEPT \u2014 no syntax parsing, blocks and some symbols present"
+      },
+      {
+        "id": "M12",
+        "category": "syntax_error",
+        "description": "Invalid escape sequence",
+        "rejected": false,
+        "errors": [],
+        "specificity": 0,
+        "location": 0,
+        "expected": "ACCEPT \u2014 no string parsing"
+      },
+      {
+        "id": "M13",
+        "category": "semantic_violation",
+        "description": "Invalid performative name",
+        "rejected": false,
+        "errors": [],
+        "specificity": 0,
+        "location": 0,
+        "expected": "ACCEPT \u2014 no performative validation"
+      },
+      {
+        "id": "M14",
+        "category": "semantic_violation",
+        "description": "Duplicate metadata keys",
+        "rejected": false,
+        "errors": [],
+        "specificity": 0,
+        "location": 0,
+        "expected": "ACCEPT \u2014 no key uniqueness checking"
+      },
+      {
+        "id": "M15",
+        "category": "semantic_violation",
+        "description": "Reply-to references nonexistent message",
+        "rejected": false,
+        "errors": [],
+        "specificity": 0,
+        "location": 0,
+        "expected": "ACCEPT \u2014 no reference validation"
+      },
+      {
+        "id": "M16",
+        "category": "semantic_violation",
+        "description": "Undefined variable reference in content",
+        "rejected": false,
+        "errors": [],
+        "specificity": 0,
+        "location": 0,
+        "expected": "ACCEPT \u2014 no scope checking"
+      },
+      {
+        "id": "M17",
+        "category": "edge_case",
+        "description": "Empty input",
+        "rejected": true,
+        "errors": [
+          "Empty output"
+        ],
+        "specificity": 2,
+        "location": 0,
+        "expected": "REJECT \u2014 empty input (should fail header check)"
+      },
+      {
+        "id": "M18",
+        "category": "edge_case",
+        "description": "Whitespace only",
+        "rejected": true,
+        "errors": [
+          "Empty output"
+        ],
+        "specificity": 2,
+        "location": 0,
+        "expected": "REJECT \u2014 no header character found"
+      },
+      {
+        "id": "M19",
+        "category": "edge_case",
+        "description": "Random English text (not a message format at all)",
+        "rejected": true,
+        "errors": [
+          "Missing AISP header character (\ud835\udd38)",
+          "Missing required AISP blocks: \u27e6\u03a9, \u27e6\u03a3, \u27e6\u0393, \u27e6\u039b, \u27e6\u0395"
+        ],
+        "specificity": 2,
+        "location": 0,
+        "expected": "REJECT \u2014 no \ud835\udd38 header"
+      },
+      {
+        "id": "M20",
+        "category": "edge_case",
+        "description": "AISP block markers embedded in random text (adversarial)",
+        "rejected": false,
+        "errors": [],
+        "specificity": 0,
+        "location": 0,
+        "expected": "ACCEPT \u2014 header character present + all 5 block markers found as substrings"
+      }
+    ]
+  }
+}

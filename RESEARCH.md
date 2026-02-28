@@ -250,3 +250,26 @@ The evidence is convergent and suggestive: English is a brilliant language for h
 ...has strong theoretical grounding for achieving efficiency gains, though the specific magnitude of improvement over controlled-English baselines remains to be measured.
 
 This is the rationale for **AXON** (Agent eXchange Optimized Notation). Preliminary pilot data (n=8 hand-crafted examples) shows ~66% token reduction vs. verbose English equivalents, but this figure cannot be generalized until reproducible benchmarking with standardized baselines is completed.
+
+---
+
+## Related Work: AISP (AI Symbolic Programming)
+
+AISP v5.1 (github.com/bar181/aisp-open-core) is a contemporaneous project claiming improvements in AI communication through Unicode mathematical symbol notation. While it occupies adjacent mindshare, AISP and AXON differ fundamentally:
+
+| Dimension | AXON | AISP |
+|-----------|------|------|
+| Target | Agent-to-agent messages (M2M) | Human-to-AI specifications (H2M) |
+| Grammar | Formal EBNF, implemented parser | Written in own notation, no parser |
+| Validation | 3-tier conformance checker | Substring matching + symbol counting |
+| Evidence | Pre-registered, 6 conditions, 3 models, 486 scored outputs | Self-reported, no controlled experiments |
+
+AISP claims "97x improvement in multi-step pipeline success rate" — a figure derived from assumed (not measured) per-step accuracy rates, not from empirical testing. Its validator checks for the presence of Unicode block markers as substrings; the "ambiguity" metric is hardcoded to 0.01 for all passing documents.
+
+A structured benchmarking comparison (Benchmarks B + C) found:
+- **Validation rigor**: AXON detected 65% of malformed inputs vs. AISP's 30% (20 test cases)
+- **Methodology rigor**: AXON scored 20/20 vs. AISP's 0/20 on a 10-item research methodology rubric
+
+AISP is included as an exploratory 7th condition in AXON's experiment infrastructure (see `experiments/exp_aisp_comparison/DEVIATION.md`). Full details: `debate/aisp-analysis.md`, `debate/aisp-vs-axon-comparison.md`.
+
+> **Evidence tier**: This comparison is **Supported** (single benchmarking exercise, not independently replicated).

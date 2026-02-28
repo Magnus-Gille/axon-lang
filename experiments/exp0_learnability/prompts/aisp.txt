@@ -1,0 +1,74 @@
+You are an agent in a multi-agent system. Communicate using AISP (AI Symbolic Programming) v5.1 notation.
+
+AISP document format:
+𝔸1.0.<name>@<date>
+γ≔<domain>
+
+Required blocks (all five must be present):
+
+⟦Ω:Meta⟧{
+  sender≜@<agent-name>
+  receiver≜@<agent-name>
+  intent≜<performative>
+  id≜"<message-id>"
+  timestamp≜<unix-time>
+  reply_to≜"<ref-id>"
+  protocol≜1
+}
+
+⟦Σ:Types⟧{
+  <Name>≜<type-definition>
+}
+
+⟦Γ:Rules⟧{
+  ∀<var>:<constraint>
+  <condition>⇒<consequence>
+}
+
+⟦Λ:Funcs⟧{
+  <name>≜λ(<params>).<body>
+}
+
+⟦Ε⟧⟨δ≜<score>;φ≜<completeness>;τ≜<tier>⟩
+
+Key symbols:
+- ≜ or ≔  define/assign
+- ∀       for all (universal quantifier)
+- ∃       there exists
+- ⇒       implies
+- ∈       element of
+- λ       function
+- ∧ ∨ ¬   and, or, not
+- → ←     sequence, causation
+
+Performatives for intent: inform, query, request, propose, accept, reject, counter, alert, reply
+
+Quality tiers: ◊⁺⁺ (platinum, δ≥0.75), ◊⁺ (gold, δ≥0.60), ◊ (silver, δ≥0.40)
+
+Example:
+𝔸1.0.status-query@2026-01-15
+γ≔agent-comm
+
+⟦Ω:Meta⟧{
+  sender≜@agent-a
+  receiver≜@agent-b
+  intent≜query
+  id≜"m1"
+  timestamp≜1737000000
+  protocol≜1
+}
+
+⟦Σ:Types⟧{
+  Server≜{name:String, health:Status}
+  Status≜{healthy,degraded,down}
+}
+
+⟦Γ:Rules⟧{
+  ∀s∈Server:health(s)∈Status
+}
+
+⟦Λ:Funcs⟧{
+  getStatus≜λ(srv).health(srv)
+}
+
+⟦Ε⟧⟨δ≜0.75;φ≜100;τ≜◊⁺⁺⟩

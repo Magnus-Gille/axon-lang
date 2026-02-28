@@ -25,6 +25,7 @@ CONDITIONS = [
     "json_fc",
     "fipa_acl",
     "axon",
+    "aisp",
 ]
 
 
@@ -47,6 +48,7 @@ def validate_output(condition: str, output: str) -> dict:
         "json_fc": _validate_json_fc,
         "fipa_acl": _validate_fipa_acl,
         "axon": _validate_axon,
+        "aisp": _validate_aisp,
     }
 
     if condition not in validators:
@@ -121,3 +123,34 @@ def _validate_axon(output: str) -> dict:
     except Exception as e:
         errors.append(f"AXON parse error: {e}")
     return {"valid": len(errors) == 0, "errors": errors, "condition": "axon", "stripped_fences": stripped}
+
+
+# AISP required block markers
+_AISP_HEADER = "\U0001d538"  # 𝔸
+_AISP_REQUIRED_BLOCKS = ["⟦Ω", "⟦Σ", "⟦Γ", "⟦Λ", "⟦Ε"]
+
+
+def _validate_aisp(output: str) -> dict:
+    """AISP: basic structural check matching AISP validator behavior.
+
+    Checks for the 𝔸 header and presence of required block markers.
+    This mirrors what the actual aisp-validator npm package does
+    (substring matching for block markers + symbol counting).
+    """
+    errors = []
+    cleaned, stripped = _strip_code_fences(output)
+    cleaned = cleaned.strip()
+
+    if not cleaned:
+        errors.append("Empty output")
+    else:
+        # Check for AISP header character (𝔸)
+        if not cleaned.startswith(_AISP_HEADER):
+            errors.append(f"Missing AISP header character ({_AISP_HEADER})")
+
+        # Check for required block markers (substring presence)
+        missing = [b for b in _AISP_REQUIRED_BLOCKS if b not in cleaned]
+        if missing:
+            errors.append(f"Missing required AISP blocks: {', '.join(missing)}")
+
+    return {"valid": len(errors) == 0, "errors": errors, "condition": "aisp", "stripped_fences": stripped}

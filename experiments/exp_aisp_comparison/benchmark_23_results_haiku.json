@@ -1,0 +1,384 @@
+{
+  "timestamp": "2026-02-27T09:12:47.737718+00:00",
+  "models": [
+    "claude-haiku"
+  ],
+  "results": [
+    {
+      "task_id": "AM-01",
+      "category": "agent-message",
+      "condition": "axon",
+      "model": "claude-haiku",
+      "output": "[id:\"m1\", %%:1]\nQRY(@agent-a>@agent-b): status(@prod-web-3)",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 25,
+        "o200k_base": 25
+      },
+      "latency_ms": 7422,
+      "timestamp": "2026-02-27T09:07:13.081685+00:00",
+      "elements": [
+        "sender",
+        "receiver",
+        "intent_query",
+        "server_name",
+        "message_id",
+        "protocol_version"
+      ]
+    },
+    {
+      "task_id": "AM-01",
+      "category": "agent-message",
+      "condition": "aisp",
+      "model": "claude-haiku",
+      "output": "\ud835\udd381.0.server-status-query@2026-02-27\n\u03b3\u2254infrastructure\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@agent-a\n  receiver\u225c@agent-b\n  intent\u225cquery\n  id\u225c\"msg-001\"\n  timestamp\u225c1740614400\n  reply_to\u225cnull\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  HealthStatus\u225c{healthy,degraded,down}\n}\n\n\u27e6\u0393:Rules\u27e7{\n  \u2200name:String:query(name=\"prod-web-3\")\u21d2HealthStatus\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  getStatus\u225c\u03bb(srv).status(srv)\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.75;\u03c6\u225c100;\u03c4\u225c\u25ca\u207a\u207a\u27e9",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 191,
+        "o200k_base": 197
+      },
+      "latency_ms": 31666,
+      "timestamp": "2026-02-27T09:07:44.749739+00:00",
+      "elements": [
+        "sender",
+        "receiver",
+        "intent_query",
+        "server_name",
+        "message_id",
+        "protocol_version"
+      ]
+    },
+    {
+      "task_id": "AM-02",
+      "category": "agent-message",
+      "condition": "axon",
+      "model": "claude-haiku",
+      "output": "```\n[id:\"m2\", %%:1, re:\"m1\"]\nRPL(@agent-b>@agent-a): #status{health:#healthy, uptime:99.7%, response_time:45ms}\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 45,
+        "o200k_base": 45
+      },
+      "latency_ms": 13792,
+      "timestamp": "2026-02-27T09:07:58.543400+00:00",
+      "elements": [
+        "sender",
+        "receiver",
+        "intent_inform",
+        "health_status",
+        "uptime_value",
+        "response_time",
+        "reply_reference"
+      ]
+    },
+    {
+      "task_id": "AM-02",
+      "category": "agent-message",
+      "condition": "aisp",
+      "model": "claude-haiku",
+      "output": "\ud835\udd381.0.status-reply@2026-02-27\n\u03b3\u2254agent-comm\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@agent-b\n  receiver\u225c@agent-a\n  intent\u225creply\n  id\u225c\"m2\"\n  timestamp\u225c1772428800\n  reply_to\u225c\"m1\"\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  ServerStatus\u225c{health:Health, uptime:Percentage, response_time:Milliseconds}\n  Health\u225c{healthy,degraded,down}\n  Percentage\u225c\u211d[0,100]\n  Milliseconds\u225c\u211d\u22650\n}\n\n\u27e6\u0393:Rules\u27e7{\n  \u2200s:ServerStatus \u21d2 health(s)\u2208Health \u2227 uptime(s)\u2208[0,100] \u2227 response_time(s)\u22650\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  statusReply\u225c\u03bb(h,u,r).{health:h, uptime:u, response_time:r}\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.95;\u03c6\u225c100;\u03c4\u225c\u25ca\u207a\u207a\u27e9",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 255,
+        "o200k_base": 263
+      },
+      "latency_ms": 12725,
+      "timestamp": "2026-02-27T09:08:11.270508+00:00",
+      "elements": [
+        "sender",
+        "receiver",
+        "intent_inform",
+        "health_status",
+        "uptime_value",
+        "response_time",
+        "reply_reference"
+      ]
+    },
+    {
+      "task_id": "AM-03",
+      "category": "agent-message",
+      "condition": "axon",
+      "model": "claude-haiku",
+      "output": "```\n[id:\"m1\", %%:1]\nPRO(@agent-a>@agent-b): #load-test{environment:\"staging\", estimated_cost:2.50usd, estimated_duration:45min}\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 44,
+        "o200k_base": 43
+      },
+      "latency_ms": 9584,
+      "timestamp": "2026-02-27T09:08:20.855748+00:00",
+      "elements": [
+        "sender",
+        "receiver",
+        "intent_propose",
+        "task_description",
+        "cost_value",
+        "duration_value"
+      ]
+    },
+    {
+      "task_id": "AM-03",
+      "category": "agent-message",
+      "condition": "aisp",
+      "model": "claude-haiku",
+      "output": "\ud835\udd381.0.load-test-proposal@2026-02-27\n\u03b3\u2254load-test-staging\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@agent-a\n  receiver\u225c@agent-b\n  intent\u225cpropose\n  id\u225c\"prop-load-test-001\"\n  timestamp\u225c1772150400\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  LoadTest\u225c{environment:String, estimated_cost:Cost, estimated_duration:Duration}\n  Environment\u225c{staging,production}\n  Cost\u225c{amount:Float, currency:String}\n  Duration\u225c{value:Int, unit:String}\n}\n\n\u27e6\u0393:Rules\u27e7{\n  \u2200lt\u2208LoadTest:\n    lt.estimated_cost.amount\u22650\n    \u2227 lt.estimated_cost.currency=\"USD\"\n    \u2227 lt.estimated_duration.value>0\n    \u2227 lt.estimated_duration.unit=\"minutes\"\n  proposed(lt)\u21d2(lt.environment=staging)\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  propose\u225c\u03bb(env,cost,dur).(\n    {environment:env, estimated_cost:cost, estimated_duration:dur}\n  )\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.85;\u03c6\u225c100;\u03c4\u225c\u25ca\u207a\u207a\u27e9",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 291,
+        "o200k_base": 299
+      },
+      "latency_ms": 38430,
+      "timestamp": "2026-02-27T09:08:59.286894+00:00",
+      "elements": [
+        "sender",
+        "receiver",
+        "intent_propose",
+        "task_description",
+        "cost_value",
+        "duration_value"
+      ]
+    },
+    {
+      "task_id": "AM-04",
+      "category": "agent-message",
+      "condition": "axon",
+      "model": "claude-haiku",
+      "output": "```\n[id:\"alert-001\", %%:1, ^:5] PUB(@monitoring-agent>@*): #alert{resource:\"storage-1\", metric:\"disk_usage\", value:94%, severity:#critical, affected_services:[@backup-service, @log-service]}\n```",
+      "valid": false,
+      "errors": [
+        "AXON parse error: Lexer error at 1:52: Identifier must start with a letter, got '*'"
+      ],
+      "token_counts": {
+        "cl100k_base": 58,
+        "o200k_base": 58
+      },
+      "latency_ms": 17360,
+      "timestamp": "2026-02-27T09:09:16.647726+00:00",
+      "elements": [
+        "sender",
+        "receiver_broadcast",
+        "intent_alert",
+        "disk_usage_value",
+        "severity_critical",
+        "affected_services"
+      ]
+    },
+    {
+      "task_id": "AM-04",
+      "category": "agent-message",
+      "condition": "aisp",
+      "model": "claude-haiku",
+      "output": "```\n\ud835\udd381.0.critical-disk-alert@2026-02-27\n\u03b3\u2254monitoring-broadcast\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@monitoring-agent\n  receiver\u225c*\n  intent\u225calert\n  id\u225c\"alert-disk-storage1-001\"\n  timestamp\u225c1768869120\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  DiskAlert\u225c{device:String, usage_pct:Number, severity:AlertSeverity, affected_svcs:[String]}\n  AlertSeverity\u225c{critical,high,medium,low,info}\n}\n\n\u27e6\u0393:Rules\u27e7{\n  \u2200a:DiskAlert:a.usage_pct\u2208[0,100]\n  \u2200a:DiskAlert:a.severity\u2208AlertSeverity\n  a.usage_pct=94\u2227a.device=\"storage-1\"\u21d2a.severity=critical\n  a.severity=critical\u2227\"backup-service\"\u2208a.affected_svcs\u21d2backup_service_must_acknowledge\n  a.severity=critical\u2227\"log-service\"\u2208a.affected_svcs\u21d2log_service_must_acknowledge\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  alert_threshold_exceeded\u225c\u03bb(usage,threshold).(usage\u2265threshold)\n  requires_immediate_action\u225c\u03bb(sev).(sev=critical)\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.82;\u03c6\u225c100;\u03c4\u225c\u25ca\u207a\u207a\u27e9\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 336,
+        "o200k_base": 343
+      },
+      "latency_ms": 33877,
+      "timestamp": "2026-02-27T09:09:50.526143+00:00",
+      "elements": [
+        "sender",
+        "receiver_broadcast",
+        "intent_alert",
+        "disk_usage_value",
+        "severity_critical",
+        "affected_services"
+      ]
+    },
+    {
+      "task_id": "AM-05",
+      "category": "agent-message",
+      "condition": "axon",
+      "model": "claude-haiku",
+      "output": "[id:\"m1\", %%:1]\nERR(@B>@A): timeout(@api-gateway) <- dns_failure(@dns-1) <- partition(@zone-b)",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 35,
+        "o200k_base": 35
+      },
+      "latency_ms": 22840,
+      "timestamp": "2026-02-27T09:10:13.368553+00:00",
+      "elements": [
+        "sender",
+        "receiver",
+        "intent_error",
+        "timeout_error",
+        "dns_cause",
+        "partition_root_cause"
+      ]
+    },
+    {
+      "task_id": "AM-05",
+      "category": "agent-message",
+      "condition": "aisp",
+      "model": "claude-haiku",
+      "output": "\ud835\udd381.0.fault-report@2026-02-27\n\u03b3\u2254agent-error-notification\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@agent-b\n  receiver\u225c@agent-a\n  intent\u225calert\n  id\u225c\"fault-001\"\n  timestamp\u225c1740768000\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  Service\u225c{name:String}\n  Resolver\u225c{name:String}\n  Zone\u225c{name:String}\n  FaultChain\u225c{immediate:String, intermediate:String, root:String}\n}\n\n\u27e6\u0393:Rules\u27e7{\n  partition(Zone(\"zone-b\")) \u21d2 failure(Resolver(\"dns-1\"))\n  failure(Resolver(\"dns-1\")) \u21d2 dns_failure(Service(\"api-gateway\"))\n  dns_failure(Service(\"api-gateway\")) \u21d2 timeout(Service(\"api-gateway\"))\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  fault\u225c\u03bb(imm,inter,root).FaultChain(imm,inter,root)\n  chain\u225cfault(\"timeout@api-gateway\",\"dns_failure@dns-1\",\"partition@zone-b\")\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.80;\u03c6\u225c100;\u03c4\u225c\u25ca\u207a\u27e9",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 275,
+        "o200k_base": 284
+      },
+      "latency_ms": 24566,
+      "timestamp": "2026-02-27T09:10:37.936700+00:00",
+      "elements": [
+        "sender",
+        "receiver",
+        "intent_error",
+        "timeout_error",
+        "dns_cause",
+        "partition_root_cause"
+      ]
+    },
+    {
+      "task_id": "SP-01",
+      "category": "specification",
+      "condition": "axon",
+      "model": "claude-haiku",
+      "output": "```axon\n[id:\"tictactoe-spec\", %%:1]\nINF(@system>@spec): #tictactoe_game{\n  types: {\n    player: #Player{value: [#x, #o]},\n    cell: #Cell{value: [#empty, #x, #o]},\n    board: #Board{rows: 3, cols: 3, grid: [Cell]},\n    move: #Move{row: 0..2, col: 0..2},\n    game_state: #GameState{board: Board, current_player: Player, status: [#active, #x_wins, #o_wins, #draw]}\n  },\n  rules: {\n    valid_move: \"move($row, $col) permitted <- cell($row, $col) = #empty\",\n    win_x: \"three #x in row | column | diagonal -> status = #x_wins\",\n    win_o: \"three #o in row | column | diagonal -> status = #o_wins\",\n    draw: \"all_cells_filled & status != #x_wins & status != #o_wins -> status = #draw\",\n    game_over: \"status = #x_wins | status = #o_wins | status = #draw\"\n  },\n  functions: [\n    #isGameOver{\n      input: GameState,\n      output: #result{is_over: T|F, winner: Player|_, condition: [#x_wins, #o_wins, #draw, #active]},\n      logic: \"checkRows(board, #x) -> #x_wins | checkRows(board, #o) -> #o_wins | checkCols(board, #x) -> #x_wins | checkCols(board, #o) -> #o_wins | checkDiags(board, #x) -> #x_wins | checkDiags(board, #o) -> #o_wins | isFull(board) & !winner -> #draw | else -> #active\"\n    }\n  ]\n}\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 422,
+        "o200k_base": 430
+      },
+      "latency_ms": 27789,
+      "timestamp": "2026-02-27T09:11:05.728873+00:00",
+      "elements": [
+        "player_type",
+        "cell_type",
+        "board_type",
+        "valid_move_rule",
+        "win_condition",
+        "game_over_function"
+      ]
+    },
+    {
+      "task_id": "SP-01",
+      "category": "specification",
+      "condition": "aisp",
+      "model": "claude-haiku",
+      "output": "\ud835\udd381.0.tictactoe-spec@2026-02-27\n\u03b3\u2254game-specification\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@spec-author\n  receiver\u225c@all\n  intent\u225cinform\n  id\u225c\"tictactoe-spec-v1\"\n  timestamp\u225c1740624000\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  Player\u225c{X, O}\n  CellState\u225c{empty, X, O}\n  Position\u225c{row:\u2124, col:\u2124}\n  Board\u225c{grid:CellState[3][3], currentPlayer:Player}\n  GameState\u225c{inProgress, xWins, oWins, draw}\n  Move\u225c{player:Player, position:Position}\n}\n\n\u27e6\u0393:Rules\u27e7{\n  \u2200b:Board,p:Position: isValidMove(b,p)\u21d4grid[p.row][p.col]=empty \u2227 0\u2264p.row\u22642 \u2227 0\u2264p.col\u22642\n  \n  winCondition(b,player)\u2261\u2203line\u2208{rows,cols,diagonals}:allEqual(line,player)\n  \n  \u2200b:Board: b.currentPlayer=X \u21d2 lastPlayer=O\n  \n  \u2200b:Board: \u00ac(xWins(b) \u2227 oWins(b))\n  \n  boardFull(b)\u2261\u2200(r,c)\u2208[0,2]\u00d7[0,2]:b.grid[r][c]\u2260empty\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  isGameOver\u225c\u03bb(b).gameState(b)\u2260inProgress\n  \n  gameState\u225c\u03bb(b).{\n    xWins(b)\u21d2xWins |\n    oWins(b)\u21d2oWins |\n    boardFull(b)\u21d2draw |\n    else\u21d2inProgress\n  }\n  \n  xWins\u225c\u03bb(b).winCondition(b,X)\n  \n  oWins\u225c\u03bb(b).winCondition(b,O)\n  \n  winCondition\u225c\u03bb(b,p).\u2203r\u2208[0,2]:(\u2200c\u2208[0,2]:b.grid[r][c]=p) \u2228 \u2203c\u2208[0,2]:(\u2200r\u2208[0,2]:b.grid[r][c]=p) \u2228 (\u2200i\u2208[0,2]:b.grid[i][i]=p) \u2228 (\u2200i\u2208[0,2]:b.grid[i][2\u2212i]=p)\n  \n  boardFull\u225c\u03bb(b).\u2200r,c\u2208[0,2]:b.grid[r][c]\u2260empty\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.85;\u03c6\u225c100;\u03c4\u225c\u25ca\u207a\u27e9",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 610,
+        "o200k_base": 612
+      },
+      "latency_ms": 13941,
+      "timestamp": "2026-02-27T09:11:19.671480+00:00",
+      "elements": [
+        "player_type",
+        "cell_type",
+        "board_type",
+        "valid_move_rule",
+        "win_condition",
+        "game_over_function"
+      ]
+    },
+    {
+      "task_id": "SP-02",
+      "category": "specification",
+      "condition": "axon",
+      "model": "claude-haiku",
+      "output": "```axon\n[id:\"banking-spec-001\", %%:1]\nINF: #BankingSystem{\n  types: [\n    #Account{\n      id: string,\n      owner: string,\n      balance: number\n    },\n    #Transaction{\n      id: string,\n      account_id: string,\n      type: string,\n      amount: number,\n      timestamp: number\n    }\n  ],\n  rules: [\n    #rule{\n      name: \"minimum_balance\",\n      constraint: \"balance >= 0usd\"\n    },\n    #rule{\n      name: \"maximum_withdrawal\",\n      constraint: \"amount <= 10000usd\"\n    }\n  ],\n  functions: [\n    #function{\n      name: \"deposit\",\n      params: {account_id: string, amount: number},\n      returns: #Account,\n      precondition: \"amount > 0usd\",\n      postcondition: \"balance' = balance + amount\"\n    },\n    #function{\n      name: \"withdraw\",\n      params: {account_id: string, amount: number},\n      returns: #Account | #error{msg: string},\n      precondition: \"amount > 0usd & amount <= 10000usd\",\n      postcondition: \"(balance' = balance - amount) | error(insufficient_funds)\"\n    }\n  ]\n}\n```",
+      "valid": false,
+      "errors": [
+        "AXON parse error: Parse error at 2:4: Expected ( (got :: ':')"
+      ],
+      "token_counts": {
+        "cl100k_base": 276,
+        "o200k_base": 273
+      },
+      "latency_ms": 12861,
+      "timestamp": "2026-02-27T09:11:32.534863+00:00",
+      "elements": [
+        "account_type",
+        "transaction_type",
+        "min_balance_rule",
+        "max_withdrawal_rule",
+        "deposit_function",
+        "withdraw_function"
+      ]
+    },
+    {
+      "task_id": "SP-02",
+      "category": "specification",
+      "condition": "aisp",
+      "model": "claude-haiku",
+      "output": "\ud835\udd381.0.banking-system@2026-02-27\n\u03b3\u2254banking\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@system\n  receiver\u225c@client\n  intent\u225cinform\n  id\u225c\"spec-bs-001\"\n  timestamp\u225c1740624000\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  Account\u225c{accountId:String, holder:String, balance:Float}\n  Transaction\u225c{txId:String, accountId:String, type:TransactionType, amount:Float, timestamp:Integer}\n  TransactionType\u225c{deposit, withdraw}\n  Result\u225c{success:Boolean, newBalance:Float, message:String}\n}\n\n\u27e6\u0393:Rules\u27e7{\n  \u2200a:Account: balance(a) \u2265 0.0\n  \u2200t:Transaction: type(t)=withdraw \u21d2 amount(t) \u2264 10000.0\n  \u2200a:Account \u2200t:Transaction: type(t)=withdraw \u21d2 (amount(t) \u2264 balance(a) \u2227 balance(a) - amount(t) \u2265 0.0)\n  \u2200a:Account \u2200t:Transaction: type(t)=deposit \u21d2 amount(t) > 0.0\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  deposit\u225c\u03bb(account:Account, amount:Float).\n    (amount > 0.0) \u21d2 {\n      account.balance \u2190 account.balance + amount;\n      return Result{success:True, newBalance:account.balance, message:\"Deposit successful\"}\n    } \u2228 return Result{success:False, newBalance:account.balance, message:\"Invalid amount\"}\n  \n  withdraw\u225c\u03bb(account:Account, amount:Float).\n    (amount > 0.0 \u2227 amount \u2264 10000.0 \u2227 amount \u2264 account.balance) \u21d2 {\n      account.balance \u2190 account.balance - amount;\n      return Result{success:True, newBalance:account.balance, message:\"Withdrawal successful\"}\n    } \u2228 (amount > 10000.0) \u21d2 return Result{success:False, newBalance:account.balance, message:\"Exceeds maximum withdrawal limit\"}\n    \u2228 (amount > account.balance) \u21d2 return Result{success:False, newBalance:account.balance, message:\"Insufficient balance\"}\n    \u2228 return Result{success:False, newBalance:account.balance, message:\"Invalid amount\"}\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.85;\u03c6\u225c100;\u03c4\u225c\u25ca\u207a\u27e9",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 527,
+        "o200k_base": 543
+      },
+      "latency_ms": 13391,
+      "timestamp": "2026-02-27T09:11:45.927770+00:00",
+      "elements": [
+        "account_type",
+        "transaction_type",
+        "min_balance_rule",
+        "max_withdrawal_rule",
+        "deposit_function",
+        "withdraw_function"
+      ]
+    },
+    {
+      "task_id": "SP-03",
+      "category": "specification",
+      "condition": "axon",
+      "model": "claude-haiku",
+      "output": "```\n[id:\"task-scheduler-spec\", %%:1, ^:5]\nINF(@specification>@system): #TaskScheduler{\n  types: [\n    #Task{id:string, priority:1..5, deadline:number, assigned:boolean},\n    #Worker{id:string, current_task:string|_, available:boolean}\n  ],\n  assignment_rules: [\n    one_task_per_worker: assigned($w, $t) -> available($w) = F,\n    respect_priority: priority($t1) > priority($t2) & assigned($t1) = F & assigned($t2) = F -> assign($t1) <- assign($t2),\n    valid_deadline: assigned($t) = T -> deadline($t) >= now()\n  ],\n  find_next_unassigned: ($tasks) -> filter($tasks, assigned=F) -> sort(priority DESC, deadline ASC) -> head(1) -> Task | _\n}\n```",
+      "valid": false,
+      "errors": [
+        "AXON parse error: Parse error at 8:24: Expected , (got :: ':')"
+      ],
+      "token_counts": {
+        "cl100k_base": 192,
+        "o200k_base": 193
+      },
+      "latency_ms": 33773,
+      "timestamp": "2026-02-27T09:12:19.703097+00:00",
+      "elements": [
+        "task_type",
+        "worker_type",
+        "one_task_rule",
+        "priority_ordering",
+        "assignment_function",
+        "next_task_function"
+      ]
+    },
+    {
+      "task_id": "SP-03",
+      "category": "specification",
+      "condition": "aisp",
+      "model": "claude-haiku",
+      "output": "\ud835\udd381.0.task-scheduler@2026-02-27\n\u03b3\u2254task-management\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@system\n  receiver\u225c@scheduler\n  intent\u225cinform\n  id\u225c\"ts-spec-001\"\n  timestamp\u225c1740681600\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  Task\u225c{id:String, priority:\u2124\u2208[1,5], deadline:Timestamp, status:TaskStatus}\n  TaskStatus\u225c{unassigned,assigned,completed,failed}\n  Worker\u225c{id:String, assigned_task:Task\u2228nil, capacity:\u2115}\n  Timestamp\u225c\u2115\n  TaskQueue\u225c{t|\u2200t:Task}\n  WorkerPool\u225c{w|\u2200w:Worker}\n}\n\n\u27e6\u0393:Rules\u27e7{\n  \u2200t\u2208TaskQueue: priority(t)\u2208{1,2,3,4,5}\n  \u2200t\u2208TaskQueue: deadline(t)>0\n  \n  \u2200w\u2208WorkerPool: assigned_task(w)\u2208Task \u2228 assigned_task(w)=nil\n  \u2200t\u2208TaskQueue: (status(t)=assigned) \u21d2 (\u2203!w\u2208WorkerPool: assigned_task(w)=t)\n  \n  \u2200w\u2081,w\u2082\u2208WorkerPool: w\u2081\u2260w\u2082 \u21d2 assigned_task(w\u2081)\u2260assigned_task(w\u2082)\n  \n  \u2200t\u2081,t\u2082\u2208TaskQueue: (status(t\u2081)=unassigned \u2227 status(t\u2082)=unassigned \u2227 priority(t\u2081)>priority(t\u2082)) \n    \u21d2 (assign(t\u2081) before assign(t\u2082))\n  \n  \u2200w\u2208WorkerPool: (assigned_task(w)\u2260nil) \u21d2 (capacity(w)>0)\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  nextHighestPriority\u225c\u03bb(tasks,workers).\n    let U\u225c{t\u2208tasks | status(t)=unassigned}\n    let A\u225c{w\u2208workers | assigned_task(w)=nil}\n    if U=\u2205 \u2228 A=\u2205 then nil\n    else argmax_{t\u2208U}(priority(t))\n  \n  assignTask\u225c\u03bb(t,w,tasks,workers).\n    (status(t)\u2260unassigned \u2228 assigned_task(w)\u2260nil) \u21d2 ERROR\n    \u2227 tasks'\u225ctasks[status(t):=assigned]\n    \u2227 workers'\u225cworkers[assigned_task(w):=t]\n  \n  isFeasible\u225c\u03bb(tasks,workers).\n    |{t\u2208tasks | status(t)=unassigned}| \u2264 |{w\u2208workers | assigned_task(w)=nil}|\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.80;\u03c6\u225c100;\u03c4\u225c\u25ca\u207a\u27e9",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 610,
+        "o200k_base": 632
+      },
+      "latency_ms": 28033,
+      "timestamp": "2026-02-27T09:12:47.737432+00:00",
+      "elements": [
+        "task_type",
+        "worker_type",
+        "one_task_rule",
+        "priority_ordering",
+        "assignment_function",
+        "next_task_function"
+      ]
+    }
+  ]
+}

@@ -31,6 +31,10 @@ CONDITIONS = [
     "json_fc", "fipa_acl", "axon",
 ]
 
+# Extended conditions including exploratory additions (post-pre-registration).
+# See experiments/exp_aisp_comparison/DEVIATION.md.
+CONDITIONS_EXPLORATORY = CONDITIONS + ["aisp"]
+
 COMPLEXITY_MAP = {"L1": 1, "L2": 2, "L3": 3}
 
 
@@ -398,6 +402,7 @@ def prompt_overhead_analysis():
         "json_fc": "json_fc.txt",
         "fipa_acl": "fipa_acl.txt",
         "axon": "axon.txt",
+        "aisp": "aisp.txt",
     }
 
     prompt_tokens = {}
@@ -432,6 +437,14 @@ def prompt_overhead_analysis():
 # ── Main ─────────────────────────────────────────────────────────────
 
 
+def _detect_conditions(records: list[AnalysisRecord]) -> list[str]:
+    """Detect which condition list to use based on data present."""
+    present = set(r.condition for r in records)
+    if "aisp" in present:
+        return CONDITIONS_EXPLORATORY
+    return CONDITIONS
+
+
 def run_analysis(results_paths: list[Path]):
     """Run full analysis pipeline on scored results."""
     all_records = []
@@ -445,21 +458,77 @@ def run_analysis(results_paths: list[Path]):
         print("No records to analyze.")
         return
 
-    track = all_records[0].task_id  # Just for labeling
+    active_conditions = _detect_conditions(all_records)
+    has_aisp = "aisp" in active_conditions
+
     print(f"\nTotal records: {len(all_records)}")
     print(f"Models: {sorted(set(r.model for r in all_records))}")
     print(f"Conditions: {sorted(set(r.condition for r in all_records))}")
+    if has_aisp:
+        print("\n  NOTE: AISP detected — exploratory 7th condition (post-pre-registration).")
+        print("  Confirmatory analysis uses original 6 conditions; AISP reported separately.")
 
-    # Run all analyses
+    # Run all analyses (pass active_conditions so they use the right list)
     descriptive_stats(all_records)
     two_part_analysis(all_records)
+
+    # Confirmatory analysis: original 6 conditions
     pairwise_comparisons(all_records)
     bootstrap_ci(all_records)
+
+    # If AISP present, run exploratory analysis separately
+    if has_aisp:
+        print("\n" + "=" * 80)
+        print("EXPLORATORY ANALYSIS — AISP (7th condition, post-pre-registration)")
+        print("=" * 80)
+        print("  See experiments/exp_aisp_comparison/DEVIATION.md for deviation notice.")
+        _aisp_exploratory_analysis(all_records)
+
     prompt_overhead_analysis()
 
     # Mixed-effects models
     mixed_effects_analysis(all_records, outcome="log_tpu")
     mixed_effects_analysis(all_records, outcome="raw_tokens")
+
+
+def _aisp_exploratory_analysis(records: list[AnalysisRecord]):
+    """Exploratory pairwise comparison: AXON vs AISP."""
+    from scipy import stats
+
+    valid = [r for r in records if r.tokens_per_unit is not None]
+    axon_vals = [r.tokens_per_unit for r in valid if r.condition == "axon"]
+    aisp_vals = [r.tokens_per_unit for r in valid if r.condition == "aisp"]
+
+    if not axon_vals or not aisp_vals:
+        print("\n  Insufficient data for AXON vs AISP comparison.")
+        return
+
+    # Descriptive
+    print(f"\n  AXON:  N={len(axon_vals)}, mean={np.mean(axon_vals):.2f}, "
+          f"sd={np.std(axon_vals, ddof=1):.2f}, median={np.median(axon_vals):.2f}")
+    print(f"  AISP:  N={len(aisp_vals)}, mean={np.mean(aisp_vals):.2f}, "
+          f"sd={np.std(aisp_vals, ddof=1):.2f}, median={np.median(aisp_vals):.2f}")
+
+    # Welch's t-test
+    t_stat, p_value = stats.ttest_ind(axon_vals, aisp_vals, equal_var=False)
+
+    # Cohen's d
+    pooled_std = math.sqrt(
+        (np.std(axon_vals, ddof=1)**2 + np.std(aisp_vals, ddof=1)**2) / 2
+    )
+    cohens_d = (np.mean(axon_vals) - np.mean(aisp_vals)) / pooled_std if pooled_std > 0 else 0
+
+    diff = np.mean(axon_vals) - np.mean(aisp_vals)
+    print(f"\n  AXON vs AISP:")
+    print(f"    Difference: {diff:+.2f} tok/unit")
+    print(f"    Cohen's d:  {cohens_d:.2f}")
+    print(f"    t-stat:     {t_stat:.3f}")
+    print(f"    p-value:    {p_value:.4f} (uncorrected, exploratory)")
+    print(f"    Significant (p<0.05): {'*' if p_value < 0.05 else 'no'}")
+
+    # Updated Holm-Bonferroni with 6 comparisons (all conditions)
+    print(f"\n  Note: For full 7-condition analysis with Holm-Bonferroni (6 comparisons),")
+    print(f"  re-run with --all and both confirmatory + AISP result files.")
 
 
 def main():

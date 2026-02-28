@@ -42,25 +42,27 @@ Parser and validator are stdlib Python only. Experiments require `tiktoken` (`pi
 - `experiments/` — Experiment infrastructure (Exp 0–5)
   - `experiments/lib/` — Shared utilities (token counter, condition adapters)
   - `experiments/exp0_learnability/` — Learnability gate experiment
-  - `experiments/FAIRNESS.md` — Fairness protocol for 6-condition design
+  - `experiments/exp_aisp_comparison/` — AISP competitive analysis benchmarks (B, C complete; A pending)
+  - `experiments/FAIRNESS.md` — Fairness protocol for 7-condition design
   - `experiments/PREREGISTRATION.md` — Pre-registered analysis plan
   - `experiments/MASSGEN_ADDENDUM.md` — Exploratory MassGen ecosystem-validity extension
 - `RESEARCH.md` — Evidence-backed rationale (20+ sources)
 - `debate/` — Adversarial review transcripts and outcomes
 
-### 6 Experimental Conditions
+### 7 Experimental Conditions
 1. Free-form English (baseline)
 2. Structured English
 3. Instruction-matched English
 4. JSON Function Calling
 5. FIPA-ACL
 6. AXON
+7. AISP (exploratory, post-pre-registration — see `experiments/exp_aisp_comparison/DEVIATION.md`)
 
 ## Adversarial Debate Workflow
 
 This project uses a **Claude Code + Codex adversarial review** process. The goal is to stress-test every significant decision through structured critique.
 
-**Always use the `/debate-codex` skill** (defined in `.claude/skills/debate-codex/SKILL.md`) to run debates. It handles the full lifecycle: Codex CLI invocation, multi-round structure, and outcome recording.
+**Always use the `/debate-codex` skill** (global, in `~/.claude/skills/`) to run debates. It handles the full lifecycle: Codex CLI invocation, multi-round structure, and outcome recording. Note: debate files in this project are tracked in git (they are research data for Track B).
 
 ### When to trigger a debate
 
@@ -92,6 +94,7 @@ Every debate feeds Track B. All future debates must capture: per-point metadata,
 - Paper A framing: "Benchmarking agent communication formats for LLM-to-LLM communication" (advisor debate consensus)
 - Methodology paper (Track B): publishable as registered pilot + prospective protocol paper if 6-item checklist is met
 - **MassGen addendum** (exploratory): Frozen plan to replicate Exp 3 + Exp 4 through MassGen multi-agent orchestration after prereg experiments complete. Tests ecological validity — whether format advantages survive real orchestration. Activates only if prereg shows significant AXON advantage. See `experiments/MASSGEN_ADDENDUM.md` and `debate/massgen-integration-summary.md`.
+- **AISP comparison** (exploratory): AISP (github.com/bar181/aisp-open-core) added as 7th condition. Benchmarks B (validation rigor: AXON 65% vs AISP 30% detection) and C (methodology: AXON 20/20 vs AISP 0/20) complete. Benchmark A (token efficiency, 81 cells) pending. See `experiments/exp_aisp_comparison/` and `debate/aisp-analysis.md`.
 
 ## Conventions
 

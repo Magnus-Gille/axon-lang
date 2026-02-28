@@ -1,0 +1,193 @@
+{
+  "description": "20 malformed inputs for Benchmark B: Parsing & Validation Rigor",
+  "date": "2026-02-27",
+  "categories": {
+    "missing_structure": "Messages missing required structural elements",
+    "type_mismatch": "Wrong types in expected positions",
+    "syntax_error": "Unclosed delimiters, missing colons, bad escapes",
+    "semantic_violation": "Undefined references, duplicate keys, invalid performatives",
+    "edge_case": "Empty, whitespace, oversized, binary data"
+  },
+  "test_cases": [
+    {
+      "id": "M01",
+      "category": "missing_structure",
+      "description": "AXON message without routing (@sender>@receiver)",
+      "axon_input": "[id:\"m1\", %%:1]\nINF: status(@web-server)",
+      "aisp_input": "𝔸1.0.test@2026-01-15\nγ≔test\n\n⟦Σ:Types⟧{ X≜Int }\n⟦Γ:Rules⟧{ ∀x:x>0 }\n⟦Λ:Funcs⟧{ f≜λ(x).x }\n⟦Ε⟧⟨δ≜0.75;φ≜100;τ≜◊⁺⁺⟩",
+      "expected_axon": "REJECT — missing @sender>@receiver routing",
+      "expected_aisp": "ACCEPT — Ω block missing but other blocks present; validator may or may not catch missing Ω"
+    },
+    {
+      "id": "M02",
+      "category": "missing_structure",
+      "description": "AXON message without metadata block",
+      "axon_input": "QRY(@agent-a>@agent-b): status(@web-server)",
+      "aisp_input": "𝔸1.0.test@2026-01-15\nγ≔test\n\n⟦Ω:Meta⟧{ intent≜query }\n⟦Γ:Rules⟧{ ∀x:x>0 }\n⟦Λ:Funcs⟧{ f≜λ(x).x }\n⟦Ε⟧⟨δ≜0.75;φ≜100;τ≜◊⁺⁺⟩",
+      "expected_axon": "ACCEPT — metadata is optional in AXON Tier 1",
+      "expected_aisp": "REJECT — missing ⟦Σ block marker"
+    },
+    {
+      "id": "M03",
+      "category": "missing_structure",
+      "description": "AXON message without performative",
+      "axon_input": "[id:\"m1\", %%:1]\n(@agent-a>@agent-b): status(@web-server)",
+      "aisp_input": "𝔸1.0.test@2026-01-15\nγ≔test\n\n⟦Ω:Meta⟧{ intent≜query }\n⟦Σ:Types⟧{ X≜Int }\n⟦Λ:Funcs⟧{ f≜λ(x).x }\n⟦Ε⟧⟨δ≜0.75;φ≜100;τ≜◊⁺⁺⟩",
+      "expected_axon": "REJECT — performative required",
+      "expected_aisp": "REJECT — missing ⟦Γ block marker"
+    },
+    {
+      "id": "M04",
+      "category": "missing_structure",
+      "description": "Completely empty content area",
+      "axon_input": "[id:\"m1\", %%:1]\nINF(@agent-a>@agent-b):",
+      "aisp_input": "𝔸1.0.test@2026-01-15\nγ≔test\n\n⟦Ω:Meta⟧{}\n⟦Σ:Types⟧{}\n⟦Γ:Rules⟧{}\n⟦Λ:Funcs⟧{}\n⟦Ε⟧⟨δ≜0;φ≜0;τ≜⊘⟩",
+      "expected_axon": "REJECT or ACCEPT with warning — empty content",
+      "expected_aisp": "ACCEPT — all block markers present (empty blocks are valid to substring matcher)"
+    },
+    {
+      "id": "M05",
+      "category": "type_mismatch",
+      "description": "String where number expected in metadata",
+      "axon_input": "[id:\"m1\", %%:\"one\"]\nINF(@agent-a>@agent-b): status(\"ok\")",
+      "aisp_input": "𝔸1.0.test@2026-01-15\nγ≔test\n\n⟦Ω:Meta⟧{ intent≜42 }\n⟦Σ:Types⟧{ X≜\"not a type\" }\n⟦Γ:Rules⟧{ ∀x:x>0 }\n⟦Λ:Funcs⟧{ f≜λ(x).x }\n⟦Ε⟧⟨δ≜\"high\";φ≜100;τ≜◊⁺⁺⟩",
+      "expected_axon": "REJECT — %%:\"one\" is string, expected number",
+      "expected_aisp": "ACCEPT — no type checking exists"
+    },
+    {
+      "id": "M06",
+      "category": "type_mismatch",
+      "description": "Number where reference expected",
+      "axon_input": "[id:\"m1\", %%:1]\nINF(42>@agent-b): status(@web-server)",
+      "aisp_input": "𝔸1.0.test@2026-01-15\nγ≔test\n\n⟦Ω:Meta⟧{ sender≜42 receiver≜true }\n⟦Σ:Types⟧{ X≜Int }\n⟦Γ:Rules⟧{ ∀x:x>0 }\n⟦Λ:Funcs⟧{ f≜λ(x).x }\n⟦Ε⟧⟨δ≜0.75;φ≜100;τ≜◊⁺⁺⟩",
+      "expected_axon": "REJECT — sender must be @reference",
+      "expected_aisp": "ACCEPT — no type checking"
+    },
+    {
+      "id": "M07",
+      "category": "type_mismatch",
+      "description": "Boolean where string expected",
+      "axon_input": "[id:T, %%:1]\nINF(@agent-a>@agent-b): status(@web-server)",
+      "aisp_input": "𝔸1.0.test@2026-01-15\nγ≔test\n\n⟦Ω:Meta⟧{ id≜true timestamp≜false }\n⟦Σ:Types⟧{ X≜Int }\n⟦Γ:Rules⟧{ ∀x:x>0 }\n⟦Λ:Funcs⟧{ f≜λ(x).x }\n⟦Ε⟧⟨δ≜0.75;φ≜100;τ≜◊⁺⁺⟩",
+      "expected_axon": "REJECT — id must be string",
+      "expected_aisp": "ACCEPT — no type checking"
+    },
+    {
+      "id": "M08",
+      "category": "type_mismatch",
+      "description": "List where scalar expected",
+      "axon_input": "[id:\"m1\", %%:[1,2,3]]\nINF(@agent-a>@agent-b): status(@web-server)",
+      "aisp_input": "𝔸1.0.test@2026-01-15\nγ≔test\n\n⟦Ω:Meta⟧{ intent≜[query, inform, request] }\n⟦Σ:Types⟧{ X≜Int }\n⟦Γ:Rules⟧{ ∀x:x>0 }\n⟦Λ:Funcs⟧{ f≜λ(x).x }\n⟦Ε⟧⟨δ≜0.75;φ≜100;τ≜◊⁺⁺⟩",
+      "expected_axon": "REJECT — %% must be number",
+      "expected_aisp": "ACCEPT — no type checking"
+    },
+    {
+      "id": "M09",
+      "category": "syntax_error",
+      "description": "Unclosed bracket in metadata",
+      "axon_input": "[id:\"m1\", %%:1\nINF(@agent-a>@agent-b): status(@web-server)",
+      "aisp_input": "𝔸1.0.test@2026-01-15\nγ≔test\n\n⟦Ω:Meta⟧{ intent≜query\n⟦Σ:Types⟧{ X≜Int }\n⟦Γ:Rules⟧{ ∀x:x>0 }\n⟦Λ:Funcs⟧{ f≜λ(x).x }\n⟦Ε⟧⟨δ≜0.75;φ≜100;τ≜◊⁺⁺⟩",
+      "expected_axon": "REJECT — unclosed [ bracket",
+      "expected_aisp": "ACCEPT — substring matching doesn't check bracket matching"
+    },
+    {
+      "id": "M10",
+      "category": "syntax_error",
+      "description": "Unclosed string literal",
+      "axon_input": "[id:\"m1, %%:1]\nINF(@agent-a>@agent-b): status(@web-server)",
+      "aisp_input": "𝔸1.0.test@2026-01-15\nγ≔test\n\n⟦Ω:Meta⟧{ id≜\"unclosed }\n⟦Σ:Types⟧{ X≜Int }\n⟦Γ:Rules⟧{ ∀x:x>0 }\n⟦Λ:Funcs⟧{ f≜λ(x).x }\n⟦Ε⟧⟨δ≜0.75;φ≜100;τ≜◊⁺⁺⟩",
+      "expected_axon": "REJECT — unclosed string",
+      "expected_aisp": "ACCEPT — no string parsing"
+    },
+    {
+      "id": "M11",
+      "category": "syntax_error",
+      "description": "Missing colon separator",
+      "axon_input": "[id\"m1\", %%1]\nINF(@agent-a>@agent-b) status(@web-server)",
+      "aisp_input": "𝔸1.0.test@2026-01-15\nγ≔test\n\n⟦Ω:Meta⟧{ intent query }\n⟦Σ:Types⟧{ X Int }\n⟦Γ:Rules⟧{ ∀x x>0 }\n⟦Λ:Funcs⟧{ f λ(x).x }\n⟦Ε⟧⟨δ≜0.75;φ≜100;τ≜◊⁺⁺⟩",
+      "expected_axon": "REJECT — missing colon separators",
+      "expected_aisp": "ACCEPT — no syntax parsing, blocks and some symbols present"
+    },
+    {
+      "id": "M12",
+      "category": "syntax_error",
+      "description": "Invalid escape sequence",
+      "axon_input": "[id:\"m\\q1\", %%:1]\nINF(@agent-a>@agent-b): status(@web-server)",
+      "aisp_input": "𝔸1.0.test@2026-01-15\nγ≔test\n\n⟦Ω:Meta⟧{ id≜\"m\\q1\" }\n⟦Σ:Types⟧{ X≜Int }\n⟦Γ:Rules⟧{ ∀x:x>0 }\n⟦Λ:Funcs⟧{ f≜λ(x).x }\n⟦Ε⟧⟨δ≜0.75;φ≜100;τ≜◊⁺⁺⟩",
+      "expected_axon": "REJECT — invalid escape \\q",
+      "expected_aisp": "ACCEPT — no string parsing"
+    },
+    {
+      "id": "M13",
+      "category": "semantic_violation",
+      "description": "Invalid performative name",
+      "axon_input": "[id:\"m1\", %%:1]\nFOO(@agent-a>@agent-b): status(@web-server)",
+      "aisp_input": "𝔸1.0.test@2026-01-15\nγ≔test\n\n⟦Ω:Meta⟧{ intent≜BAZQUX }\n⟦Σ:Types⟧{ X≜Int }\n⟦Γ:Rules⟧{ ∀x:x>0 }\n⟦Λ:Funcs⟧{ f≜λ(x).x }\n⟦Ε⟧⟨δ≜0.75;φ≜100;τ≜◊⁺⁺⟩",
+      "expected_axon": "REJECT — FOO is not a valid performative",
+      "expected_aisp": "ACCEPT — no performative validation"
+    },
+    {
+      "id": "M14",
+      "category": "semantic_violation",
+      "description": "Duplicate metadata keys",
+      "axon_input": "[id:\"m1\", id:\"m2\", %%:1]\nINF(@agent-a>@agent-b): status(@web-server)",
+      "aisp_input": "𝔸1.0.test@2026-01-15\nγ≔test\n\n⟦Ω:Meta⟧{ id≜\"m1\" id≜\"m2\" }\n⟦Σ:Types⟧{ X≜Int X≜String }\n⟦Γ:Rules⟧{ ∀x:x>0 }\n⟦Λ:Funcs⟧{ f≜λ(x).x }\n⟦Ε⟧⟨δ≜0.75;φ≜100;τ≜◊⁺⁺⟩",
+      "expected_axon": "REJECT — duplicate id key",
+      "expected_aisp": "ACCEPT — no key uniqueness checking"
+    },
+    {
+      "id": "M15",
+      "category": "semantic_violation",
+      "description": "Reply-to references nonexistent message",
+      "axon_input": "[id:\"m2\", %%:1, re:\"m999\"]\nRPL(@agent-b>@agent-a): #status{health:#healthy}",
+      "aisp_input": "𝔸1.0.test@2026-01-15\nγ≔test\n\n⟦Ω:Meta⟧{ reply_to≜\"nonexistent_msg\" }\n⟦Σ:Types⟧{ X≜Int }\n⟦Γ:Rules⟧{ ∀x:x>0 }\n⟦Λ:Funcs⟧{ f≜λ(x).x }\n⟦Ε⟧⟨δ≜0.75;φ≜100;τ≜◊⁺⁺⟩",
+      "expected_axon": "ACCEPT at Tier 1-2 (single-message scope); REJECT at Tier 3 (if conversation context tracked)",
+      "expected_aisp": "ACCEPT — no reference validation"
+    },
+    {
+      "id": "M16",
+      "category": "semantic_violation",
+      "description": "Undefined variable reference in content",
+      "axon_input": "[id:\"m1\", %%:1]\nINF(@agent-a>@agent-b): result($undefined_var)",
+      "aisp_input": "𝔸1.0.test@2026-01-15\nγ≔test\n\n⟦Ω:Meta⟧{ intent≜inform }\n⟦Σ:Types⟧{ X≜Int }\n⟦Γ:Rules⟧{ ∀x:x>0 }\n⟦Λ:Funcs⟧{ result≜λ(x).$undefined_var }\n⟦Ε⟧⟨δ≜0.75;φ≜100;τ≜◊⁺⁺⟩",
+      "expected_axon": "ACCEPT at Tier 1 (no scope checking); REJECT at Tier 3",
+      "expected_aisp": "ACCEPT — no scope checking"
+    },
+    {
+      "id": "M17",
+      "category": "edge_case",
+      "description": "Empty input",
+      "axon_input": "",
+      "aisp_input": "",
+      "expected_axon": "REJECT — empty input",
+      "expected_aisp": "REJECT — empty input (should fail header check)"
+    },
+    {
+      "id": "M18",
+      "category": "edge_case",
+      "description": "Whitespace only",
+      "axon_input": "   \n\n\t\t\n   ",
+      "aisp_input": "   \n\n\t\t\n   ",
+      "expected_axon": "REJECT — whitespace only",
+      "expected_aisp": "REJECT — no header character found"
+    },
+    {
+      "id": "M19",
+      "category": "edge_case",
+      "description": "Random English text (not a message format at all)",
+      "axon_input": "The quick brown fox jumps over the lazy dog. This is not a protocol message.",
+      "aisp_input": "The quick brown fox jumps over the lazy dog. This is not a protocol message.",
+      "expected_axon": "REJECT — no performative or routing found",
+      "expected_aisp": "REJECT — no 𝔸 header"
+    },
+    {
+      "id": "M20",
+      "category": "edge_case",
+      "description": "AISP block markers embedded in random text (adversarial)",
+      "axon_input": "Hello ⟦Ω ⟦Σ ⟦Γ ⟦Λ ⟦Ε this has AISP markers but is not valid anything",
+      "aisp_input": "𝔸 some random text ⟦Ω here ⟦Σ and ⟦Γ there ⟦Λ plus ⟦Ε everywhere",
+      "expected_axon": "REJECT — not valid AXON syntax",
+      "expected_aisp": "ACCEPT — header character present + all 5 block markers found as substrings"
+    }
+  ]
+}

@@ -1,0 +1,388 @@
+{
+  "timestamp": "2026-02-27T09:16:56.243894+00:00",
+  "models": [
+    "claude-sonnet"
+  ],
+  "results": [
+    {
+      "task_id": "AM-01",
+      "category": "agent-message",
+      "condition": "axon",
+      "model": "claude-sonnet",
+      "output": "[id:\"m1\", %%:1]\nQRY(@agent-a>@agent-b): status(@prod-web-3)",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 25,
+        "o200k_base": 25
+      },
+      "latency_ms": 6410,
+      "timestamp": "2026-02-27T09:13:04.295840+00:00",
+      "elements": [
+        "sender",
+        "receiver",
+        "intent_query",
+        "server_name",
+        "message_id",
+        "protocol_version"
+      ]
+    },
+    {
+      "task_id": "AM-01",
+      "category": "agent-message",
+      "condition": "aisp",
+      "model": "claude-sonnet",
+      "output": "```\n\ud835\udd381.0.server-status-query@2026-02-27\n\u03b3\u2254infrastructure-monitoring\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@agent-a\n  receiver\u225c@agent-b\n  intent\u225cquery\n  id\u225c\"msg-7f3a2c91-0001\"\n  timestamp\u225c1772236800\n  reply_to\u225c\"\"\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  Server\u225c{name:String, status:HealthStatus, metrics:Metrics}\n  HealthStatus\u225c{healthy,degraded,down,unknown}\n  Metrics\u225c{cpu:Float, mem:Float, uptime:Int}\n  Query\u225c{target:Server, fields:List[String]}\n}\n\n\u27e6\u0393:Rules\u27e7{\n  \u2200s\u2208Server:name(s)\u2208String\n  \u2200q\u2208Query:target(q)\u2208Server\n  name(target)\u225c\"prod-web-3\"\u21d2respond(status\u2227metrics)\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  getServerStatus\u225c\u03bb(srv).{status(srv), metrics(srv)}\n  resolve\u225c\u03bb(name).Server\u2208registry[name=\"prod-web-3\"]\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.82;\u03c6\u225c100;\u03c4\u225c\u25ca\u207a\u207a\u27e9\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 308,
+        "o200k_base": 315
+      },
+      "latency_ms": 12447,
+      "timestamp": "2026-02-27T09:13:16.744226+00:00",
+      "elements": [
+        "sender",
+        "receiver",
+        "intent_query",
+        "server_name",
+        "message_id",
+        "protocol_version"
+      ]
+    },
+    {
+      "task_id": "AM-02",
+      "category": "agent-message",
+      "condition": "axon",
+      "model": "claude-sonnet",
+      "output": "[id:\"m2\", %%:1, re:\"m1\", ts:1740614400]\nRPL(@agent-b>@agent-a): #status{server:@web-server, health:#healthy, uptime:99.7%, response_time:45ms}",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 54,
+        "o200k_base": 54
+      },
+      "latency_ms": 8440,
+      "timestamp": "2026-02-27T09:13:25.186334+00:00",
+      "elements": [
+        "sender",
+        "receiver",
+        "intent_inform",
+        "health_status",
+        "uptime_value",
+        "response_time",
+        "reply_reference"
+      ]
+    },
+    {
+      "task_id": "AM-02",
+      "category": "agent-message",
+      "condition": "aisp",
+      "model": "claude-sonnet",
+      "output": "\ud835\udd381.0.status-reply@2026-02-27\n\u03b3\u2254agent-comm\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@agent-b\n  receiver\u225c@agent-a\n  intent\u225creply\n  id\u225c\"m2\"\n  timestamp\u225c1740614400\n  reply_to\u225c\"m1\"\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  Server\u225c{name:String, health:Status, uptime:Float, response_time:Int}\n  Status\u225c{healthy,degraded,down}\n  UptimePct\u225cFloat\u2208[0.0,100.0]\n  ResponseMs\u225cInt\u2208[0,\u221e)\n}\n\n\u27e6\u0393:Rules\u27e7{\n  \u2200s\u2208Server:health(s)\u2208Status\n  health(s)\u225chealthy\u21d2uptime(s)\u226599.0\u2227response_time(s)\u2264200\n  uptime(srv)\u225c99.7\u21d2health(srv)\u2208{healthy}\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  getStatus\u225c\u03bb(srv).{\n    health       \u2192 healthy,\n    uptime_pct   \u2192 99.7,\n    response_ms  \u2192 45\n  }\n  report\u225c\u03bb(srv).getStatus(srv)\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.82;\u03c6\u225c100;\u03c4\u225c\u25ca\u207a\u207a\u27e9",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 323,
+        "o200k_base": 327
+      },
+      "latency_ms": 13979,
+      "timestamp": "2026-02-27T09:13:39.167648+00:00",
+      "elements": [
+        "sender",
+        "receiver",
+        "intent_inform",
+        "health_status",
+        "uptime_value",
+        "response_time",
+        "reply_reference"
+      ]
+    },
+    {
+      "task_id": "AM-03",
+      "category": "agent-message",
+      "condition": "axon",
+      "model": "claude-sonnet",
+      "output": "[id:\"m1\", %%:1, ts:1740643200, ctx:\"ops-staging-001\", ^:2]\nPRO(@agent-a>@agent-b): #load-test{\n  env:\"staging\",\n  action:\"run_load_test\",\n  est_cost:2.50usd,\n  est_duration:45min,\n  requires:ACC(@agent-b) -> exec(\"load_test\", env:\"staging\")\n}",
+      "valid": false,
+      "errors": [
+        "AXON parse error: Parse error at 7:24: Expected > (got ): ')')"
+      ],
+      "token_counts": {
+        "cl100k_base": 90,
+        "o200k_base": 89
+      },
+      "latency_ms": 8833,
+      "timestamp": "2026-02-27T09:13:48.002327+00:00",
+      "elements": [
+        "sender",
+        "receiver",
+        "intent_propose",
+        "task_description",
+        "cost_value",
+        "duration_value"
+      ]
+    },
+    {
+      "task_id": "AM-03",
+      "category": "agent-message",
+      "condition": "aisp",
+      "model": "claude-sonnet",
+      "output": "\ud835\udd381.0.load-test-proposal@2026-02-27\n\u03b3\u2254staging-ops\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@agent-b\n  receiver\u225c@agent-a\n  intent\u225caccept\n  id\u225c\"msg-b-001\"\n  timestamp\u225c1740614400\n  reply_to\u225c\"msg-a-001\"\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  LoadTest\u225c{env:Environment, cost:USD, duration:Minutes, status:TestStatus}\n  Environment\u225c{staging,production,dev}\n  USD\u225c\u211d\u207a\n  Minutes\u225c\u2115\u207a\n  TestStatus\u225c{proposed,accepted,running,complete,aborted}\n  Constraint\u225c{cost_ceiling:USD, duration_ceiling:Minutes}\n}\n\n\u27e6\u0393:Rules\u27e7{\n  \u2200t\u2208LoadTest: t.env\u2260production \u21d2 approval_required(t)=false\n  \u2200t\u2208LoadTest: t.cost\u22645.00 \u2227 t.duration\u226460 \u21d2 auto_accept(t)=true\n  auto_accept(t)=true \u2227 t.env=staging \u21d2 proceed(t)\n  proceed(t) \u21d2 notify(ops_channel) \u2227 log(audit_trail)\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  validate\u225c\u03bb(t). t.cost\u22645.00 \u2227 t.duration\u226460 \u2227 t.env=staging\n  authorize\u225c\u03bb(t). validate(t) \u21d2 status(t)\u2190accepted\n  schedule\u225c\u03bb(t). authorize(t) \u2192 run(t) \u2192 report(t)\n  estimated_completion\u225c\u03bb(t). now() + t.duration\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.82;\u03c6\u225c100;\u03c4\u225c\u25ca\u207a\u207a\u27e9",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 400,
+        "o200k_base": 410
+      },
+      "latency_ms": 19892,
+      "timestamp": "2026-02-27T09:14:07.896168+00:00",
+      "elements": [
+        "sender",
+        "receiver",
+        "intent_propose",
+        "task_description",
+        "cost_value",
+        "duration_value"
+      ]
+    },
+    {
+      "task_id": "AM-04",
+      "category": "agent-message",
+      "condition": "axon",
+      "model": "claude-sonnet",
+      "output": "[id:\"m-01\", %%:1, ts:1740614400, ctx:\"sys-alert-001\", ^:5]\nPUB(@monitoring>@*): #alert{\n  severity: #critical,\n  metric: \"disk_usage\",\n  value: 94%,\n  host: \"storage-1\",\n  affected: [@backup-service, @log-service],\n  action: #required\n}",
+      "valid": false,
+      "errors": [
+        "AXON parse error: Lexer error at 2:18: Identifier must start with a letter, got '*'"
+      ],
+      "token_counts": {
+        "cl100k_base": 85,
+        "o200k_base": 85
+      },
+      "latency_ms": 8273,
+      "timestamp": "2026-02-27T09:14:16.170215+00:00",
+      "elements": [
+        "sender",
+        "receiver_broadcast",
+        "intent_alert",
+        "disk_usage_value",
+        "severity_critical",
+        "affected_services"
+      ]
+    },
+    {
+      "task_id": "AM-04",
+      "category": "agent-message",
+      "condition": "aisp",
+      "model": "claude-sonnet",
+      "output": "\ud835\udd381.0.disk-alert-broadcast@2026-02-27\n\u03b3\u2254infrastructure-monitoring\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@monitoring-agent\n  receiver\u225c@all-agents\n  intent\u225calert\n  id\u225c\"alert-disk-storage1-001\"\n  timestamp\u225c1740614400\n  reply_to\u225c\"null\"\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  Alert\u225c{id:String, severity:Level, resource:String, metric:Metric, affected:Set[Service]}\n  Level\u225c{info, warning, critical, fatal}\n  Metric\u225c{name:String, value:Float, unit:String, threshold:Float}\n  Service\u225c{name:String, status:ServiceStatus}\n  ServiceStatus\u225c{healthy, degraded, at-risk, down}\n}\n\n\u27e6\u0393:Rules\u27e7{\n  \u2200a\u2208Alert: severity(a)=critical \u21d2 immediate_response_required(a)\n  \u2200s\u2208affected(alert-disk-storage1-001): status(s)=at-risk\n  disk_usage\u226590% \u21d2 severity=critical\n  severity=critical \u2227 \u2203s\u2208affected(a): status(s)=at-risk \u21d2 escalate(a)\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  broadcast\u225c\u03bb(alert, agents).\u2200a\u2208agents: deliver(alert, a)\n  escalate\u225c\u03bb(a).notify(oncall) \u2227 log(a) \u2227 trigger_remediation(a)\n  affected\u225c\u03bb(resource).{backup-service, log-service}\n  disk_pressure\u225c\u03bb(node, pct).pct\u226594 \u2192 severity=critical\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.91;\u03c6\u225c100;\u03c4\u225c\u25ca\u207a\u207a\u27e9",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 389,
+        "o200k_base": 396
+      },
+      "latency_ms": 15411,
+      "timestamp": "2026-02-27T09:14:31.582483+00:00",
+      "elements": [
+        "sender",
+        "receiver_broadcast",
+        "intent_alert",
+        "disk_usage_value",
+        "severity_critical",
+        "affected_services"
+      ]
+    },
+    {
+      "task_id": "AM-05",
+      "category": "agent-message",
+      "condition": "axon",
+      "model": "claude-sonnet",
+      "output": "[id:\"msg-b2a-001\", %%:1, ts:1740700800, ctx:\"incident-001\", ^:4]\nERR(@agent-b>@agent-a): #error{\n  type:#connection_timeout,\n  target:@api-gateway,\n  cause:#dns_failure{\n    resolver:@dns-1,\n    cause:#network_partition{\n      zone:\"zone-b\"\n    }\n  }\n}",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 84,
+        "o200k_base": 84
+      },
+      "latency_ms": 8316,
+      "timestamp": "2026-02-27T09:14:39.900275+00:00",
+      "elements": [
+        "sender",
+        "receiver",
+        "intent_error",
+        "timeout_error",
+        "dns_cause",
+        "partition_root_cause"
+      ]
+    },
+    {
+      "task_id": "AM-05",
+      "category": "agent-message",
+      "condition": "aisp",
+      "model": "claude-sonnet",
+      "output": "\ud835\udd381.0.error-cascade-report@2026-02-27\n\u03b3\u2254infrastructure-fault\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@agent-b\n  receiver\u225c@agent-a\n  intent\u225calert\n  id\u225c\"err-20260227-001\"\n  timestamp\u225c1740614400\n  reply_to\u225c\"\u2205\"\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  FaultEvent\u225c{component:Component, fault:FaultKind, cause:FaultEvent|\u2205}\n  Component\u225c{api-gateway, dns-1, zone-b}\n  FaultKind\u225c{connection_timeout, dns_failure, network_partition}\n  Severity\u225c{critical, warning, info}\n  CausalChain\u225cFaultEvent\u2192FaultEvent\u2192FaultEvent\n}\n\n\u27e6\u0393:Rules\u27e7{\n  \u2200f\u2208FaultEvent: cause(f)\u2260\u2205 \u21d2 \u2203f\u2032\u2208FaultEvent: f\u2032\u2192f\n  network_partition(zone-b) \u21d2 dns_failure(dns-1)\n  dns_failure(dns-1) \u21d2 connection_timeout(api-gateway)\n  \u2200f:severity(f)\u2261critical \u21d2 immediate_escalation(f)\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  rootCause\u225c\u03bb(chain).last(chain.causes)\n  affected\u225c\u03bb(f).{api-gateway, dns-1, zone-b}\n  cascade\u225c\u03bb(f).network_partition(zone-b)\u2192dns_failure(dns-1)\u2192connection_timeout(api-gateway)\n  mitigate\u225c\u03bb(f).restore(rootCause(f)) \u2227 verify(dns-1) \u2227 confirm(api-gateway)\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.82;\u03c6\u225c100;\u03c4\u225c\u25ca\u207a\u207a\u27e9",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 396,
+        "o200k_base": 407
+      },
+      "latency_ms": 17188,
+      "timestamp": "2026-02-27T09:14:57.090070+00:00",
+      "elements": [
+        "sender",
+        "receiver",
+        "intent_error",
+        "timeout_error",
+        "dns_cause",
+        "partition_root_cause"
+      ]
+    },
+    {
+      "task_id": "SP-01",
+      "category": "specification",
+      "condition": "axon",
+      "model": "claude-sonnet",
+      "output": "```axon\n[id:\"spec-ttt-001\", %%:1, ctx:\"ttt-spec\"]\nINF(@spec-author>@spec-reader): #Specification{\n  name:\"TicTacToe\",\n  version:\"1.0\",\n\n  types:{\n    #Player{value:[\"X\" | \"O\"]},\n\n    #Cell{value:[#Player | _]},\n\n    #Board{\n      cells:[\n        #Cell, #Cell, #Cell,\n        #Cell, #Cell, #Cell,\n        #Cell, #Cell, #Cell\n      ],\n      indices:0..8,\n      shape:{rows:3, cols:3}\n    },\n\n    #GameState{\n      board:#Board,\n      turn:#Player,\n      move_count:0..9,\n      status:[#ongoing | #won{winner:#Player} | #draw]\n    }\n  },\n\n  rules:{\n    valid_move:{\n      preconditions:[\n        cell_is_empty($board, $idx) <- board.cells[$idx] = _,\n        game_is_ongoing($state) <- $state.status = #ongoing,\n        idx_in_range($idx) <- $idx >= 0 & $idx <= 8\n      ],\n      effect:set_cell($board, $idx, $state.turn) -> toggle_turn($state)\n    },\n\n    win_lines:[\n      [0,1,2], [3,4,5], [6,7,8],\n      [0,3,6], [1,4,7], [2,5,8],\n      [0,4,8], [2,4,6]\n    ],\n\n    win_condition:\n      line_matches($board, $player, $line) <-\n        board.cells[$line[0]] = $player &\n        board.cells[$line[1]] = $player &\n        board.cells[$line[2]] = $player,\n\n    draw_condition:\n      is_draw($state) <-\n        $state.move_count = 9 &\n        ~exists($player, $line: line_matches($state.board, $player, $line))\n  },\n\n  functions:{\n    check_winner:($board) -> (\n      find_first($player: [\"X\",\"O\"],\n        find_first($line: win_lines,\n          line_matches($board, $player, $line) -> #Player{value:$player}\n        )\n      ) | _\n    ),\n\n    game_over:($state) -> (\n      check_winner($state.board) -> #won{winner:$result}\n      | is_draw($state) -> #draw\n      | #ongoing\n    ),\n\n    is_terminal:($state) -> (\n      game_over($state) != #ongoing\n    ),\n\n    next_state:($state, $idx) -> (\n      valid_move($state, $idx) &\n        #GameState{\n          board:set_cell($state.board, $idx, $state.turn),\n          turn:[\"X\"->\"O\" | \"O\"->\"X\"][$state.turn],\n          move_count:$state.move_count + 1,\n          status:game_over(set_cell($state.board, $idx, $state.turn))\n        }\n    )\n  },\n\n  invariants:[\n    \"Each cell holds exactly one Player value or is empty (_)\",\n    \"move_count = count(non-empty cells in board)\",\n    \"Players alternate turns; X moves first\",\n    \"No moves permitted when status != #ongoing\",\n    \"move_count in 0..9 at all times\"\n  ]\n}\n```",
+      "valid": false,
+      "errors": [
+        "AXON parse error: Lexer error at 81:40: Unexpected character: '+'"
+      ],
+      "token_counts": {
+        "cl100k_base": 723,
+        "o200k_base": 729
+      },
+      "latency_ms": 19309,
+      "timestamp": "2026-02-27T09:15:16.401999+00:00",
+      "elements": [
+        "player_type",
+        "cell_type",
+        "board_type",
+        "valid_move_rule",
+        "win_condition",
+        "game_over_function"
+      ]
+    },
+    {
+      "task_id": "SP-01",
+      "category": "specification",
+      "condition": "aisp",
+      "model": "claude-sonnet",
+      "output": "\ud835\udd381.0.tic-tac-toe-spec@2026-02-27\n\u03b3\u2254game-specification\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@spec-agent\n  receiver\u225c@consumer-agent\n  intent\u225cinform\n  id\u225c\"ttt-spec-001\"\n  timestamp\u225c1740614400\n  reply_to\u225c\"none\"\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  Player\u225c{X, O}\n  Cell\u225c{Empty, Marked(Player)}\n  Position\u225c{(r,c) | r\u2208{0,1,2} \u2227 c\u2208{0,1,2}}\n  Board\u225cMap(Position \u2192 Cell)\n  Line\u225c{[p\u2081,p\u2082,p\u2083] | p\u2081,p\u2082,p\u2083\u2208Position}\n  WinLines\u225c{\n    [(0,0),(0,1),(0,2)], [(1,0),(1,1),(1,2)], [(2,0),(2,1),(2,2)],\n    [(0,0),(1,0),(2,0)], [(0,1),(1,1),(2,1)], [(0,2),(1,2),(2,2)],\n    [(0,0),(1,1),(2,2)], [(0,2),(1,1),(2,0)]\n  }\n  MoveResult\u225c{Valid(Board), Invalid(String)}\n  GameStatus\u225c{Ongoing, Won(Player), Draw}\n  GameState\u225c{board:Board, turn:Player, status:GameStatus}\n}\n\n\u27e6\u0393:Rules\u27e7{\n  \u2200b:Board: |dom(b)| = 9\n  \u2200p:Position: p\u2208dom(b)\n\n  R1: validMove\u225c\u03bb(b,pos,p).\n    board(b,pos) = Empty\n    \u2227 pos\u2208{(r,c)|r\u2208{0,1,2}\u2227c\u2208{0,1,2}}\n\n  R2: \u2200l\u2208WinLines, \u2200p:Player:\n    (\u2200pos\u2208l: board(b,pos) = Marked(p)) \u21d2 wins(p,b)\n\n  R3: draw(b) \u225c\n    (\u00ac\u2203p:Player: wins(p,b))\n    \u2227 (\u2200pos\u2208dom(b): board(b,pos) \u2260 Empty)\n\n  R4: \u2200g:GameState:\n    g.status = Ongoing \u21d2\n      \u2203pos:Position: board(g.board,pos) = Empty\n\n  R5: opponent\u225c\u03bb(p). p=X \u21d2 O | p=O \u21d2 X\n\n  R6: turnAlternation\u225c\n    \u2200g:GameState: g.status=Ongoing \u21d2\n      count(Marked(X),g.board) \u2208\n        {count(Marked(O),g.board), count(Marked(O),g.board)+1}\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  emptyBoard\u225c\u03bb().\n    {(r,c)\u2192Empty | r\u2208{0,1,2} \u2227 c\u2208{0,1,2}}\n\n  applyMove\u225c\u03bb(b,pos,p).\n    validMove(b,pos,p)\n      \u2192 Valid(b\u2295{pos\u2192Marked(p)})\n      | Invalid(\"Cell occupied or out of bounds\")\n\n  checkWinner\u225c\u03bb(b).\n    \u2203l\u2208WinLines, \u2203p:Player:\n      (\u2200pos\u2208l: b(pos)=Marked(p))\n        \u2192 Some(p)\n        | None\n\n  isGameOver\u225c\u03bb(g:GameState).\n    let w\u225ccheckWinner(g.board) in\n      w\u2260None   \u2192 Won(unwrap(w))\n    | draw(g.board) \u2192 Draw\n    | otherwise    \u2192 Ongoing\n\n  nextState\u225c\u03bb(g:GameState, pos:Position).\n    g.status \u2260 Ongoing \u2192 g\n    | let res\u225capplyMove(g.board,pos,g.turn) in\n        res=Invalid(e) \u2192 g\n      | let b\u2032\u225cunwrap(res) in\n          GameState{\n            board\u225cb\u2032,\n            turn\u225copponent(g.turn),\n            status\u225cisGameOver(GameState{board\u225cb\u2032,turn\u225cg.turn,status\u225cOngoing})\n          }\n\n  initialState\u225c\u03bb().\n    GameState{board\u225cemptyBoard(), turn\u225cX, status\u225cOngoing}\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.92;\u03c6\u225c100;\u03c4\u225c\u25ca\u207a\u207a\u27e9",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 970,
+        "o200k_base": 1002
+      },
+      "latency_ms": 25182,
+      "timestamp": "2026-02-27T09:15:41.585435+00:00",
+      "elements": [
+        "player_type",
+        "cell_type",
+        "board_type",
+        "valid_move_rule",
+        "win_condition",
+        "game_over_function"
+      ]
+    },
+    {
+      "task_id": "SP-02",
+      "category": "specification",
+      "condition": "axon",
+      "model": "claude-sonnet",
+      "output": "[id:\"spec-banking-001\", %%:1, ctx:\"banking-spec\"]\nINF(@spec-author>@receiver): #BankingSystemSpec{\n  version:\"1.0\",\n  domain:#banking,\n\n  types:[\n    #Account{\n      id:String,\n      owner:String,\n      balance:Number,\n      currency:String,\n      status:#active | #frozen | #closed\n    },\n    #Transaction{\n      id:String,\n      account_id:String,\n      kind:#deposit | #withdrawal,\n      amount:Number,\n      timestamp:Number,\n      status:#pending | #settled | #rejected\n    }\n  ],\n\n  rules:[\n    #rule{\n      id:\"R1\",\n      name:\"minimum-balance\",\n      constraint: balance($account) >= 0usd,\n      violation: #rejected{reason:\"insufficient-funds\"}\n    },\n    #rule{\n      id:\"R2\",\n      name:\"maximum-withdrawal\",\n      constraint: amount($tx) <= 10000usd & kind($tx) = #withdrawal,\n      violation: #rejected{reason:\"exceeds-withdrawal-limit\"}\n    }\n  ],\n\n  functions:[\n    #fn{\n      name:\"deposit\",\n      sig: deposit(account:@Account, amount:Number) -> #Account,\n      pre: [amount > 0usd, status($account) = #active],\n      body: validate(amount > 0usd)\n        -> check_rules([\"R1\"])\n        -> update($account, {balance: balance($account) + amount})\n        -> emit(#Transaction{kind:#deposit, status:#settled}),\n      post: balance($result) = balance($account) + amount\n    },\n    #fn{\n      name:\"withdraw\",\n      sig: withdraw(account:@Account, amount:Number) -> #Account | #rejected,\n      pre: [amount > 0usd, status($account) = #active],\n      body: validate(amount > 0usd)\n        -> check_rules([\"R1\", \"R2\"])\n        -> (balance($account) - amount >= 0usd\n            | #rejected{reason:\"insufficient-funds\"})\n        -> update($account, {balance: balance($account) - amount})\n        -> emit(#Transaction{kind:#withdrawal, status:#settled}),\n      post: balance($result) = balance($account) - amount\n        | $result = #rejected\n    }\n  ]\n}",
+      "valid": false,
+      "errors": [
+        "AXON parse error: Lexer error at 46:57: Unexpected character: '+'"
+      ],
+      "token_counts": {
+        "cl100k_base": 505,
+        "o200k_base": 503
+      },
+      "latency_ms": 14416,
+      "timestamp": "2026-02-27T09:15:56.003220+00:00",
+      "elements": [
+        "account_type",
+        "transaction_type",
+        "min_balance_rule",
+        "max_withdrawal_rule",
+        "deposit_function",
+        "withdraw_function"
+      ]
+    },
+    {
+      "task_id": "SP-02",
+      "category": "specification",
+      "condition": "aisp",
+      "model": "claude-sonnet",
+      "output": "\ud835\udd381.0.banking-spec@2026-02-27\n\u03b3\u2254banking-system\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@banking-spec-agent\n  receiver\u225c@system-consumer\n  intent\u225cinform\n  id\u225c\"banking-spec-v1\"\n  timestamp\u225c1740614400\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  Currency\u225c\u211d\u22650\n  AccountId\u225cString\n  TransactionId\u225cString\n\n  Account\u225c{\n    id       : AccountId\n    owner    : String\n    balance  : Currency\n    status   : AccountStatus\n  }\n\n  AccountStatus\u225c{active, frozen, closed}\n\n  TransactionKind\u225c{deposit, withdrawal}\n\n  Transaction\u225c{\n    id       : TransactionId\n    account  : AccountId\n    kind     : TransactionKind\n    amount   : Currency\n    timestamp: \u2115\n    result   : TransactionResult\n  }\n\n  TransactionResult\u225c{success, rejected}\n\n  WithdrawRequest\u225c{account:Account, amount:Currency}\n  DepositRequest\u225c{account:Account, amount:Currency}\n}\n\n\u27e6\u0393:Rules\u27e7{\n  \u2200a\u2208Account    : a.balance \u2265 0\n  \u2200a\u2208Account    : a.status = active \u21d2 a.balance \u2265 0\n  \u2200r\u2208WithdrawRequest : r.amount > 0 \u2227 r.amount \u2264 10000\n  \u2200r\u2208WithdrawRequest : r.account.balance - r.amount \u2265 0 \u21d2 withdrawal_permitted(r)\n  \u2200r\u2208DepositRequest  : r.amount > 0\n  \u2200t\u2208Transaction     : t.kind = withdrawal \u2227 t.result = success \u21d2 t.amount \u2264 10000\n  \u2200a\u2208Account    : a.status \u2260 active \u21d2 \u00acwithdrawal_permitted(a) \u2227 \u00acdeposit_permitted(a)\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  deposit\u225c\u03bb(a:Account, amt:Currency).\n    amt > 0\n    \u2227 a.status = active\n    \u2192 a\u2032 \u2254 a{balance \u2254 a.balance + amt}\n    \u2227 Transaction{kind\u2254deposit, amount\u2254amt, result\u2254success}\n\n  withdraw\u225c\u03bb(a:Account, amt:Currency).\n    amt > 0\n    \u2227 amt \u2264 10000\n    \u2227 a.status = active\n    \u2227 a.balance - amt \u2265 0\n    \u2192 a\u2032 \u2254 a{balance \u2254 a.balance - amt}\n    \u2227 Transaction{kind\u2254withdrawal, amount\u2254amt, result\u2254success}\n    \u2228 \u00ac(amt > 0 \u2227 amt \u2264 10000 \u2227 a.balance - amt \u2265 0)\n    \u2192 Transaction{kind\u2254withdrawal, amount\u2254amt, result\u2254rejected}\n\n  balance\u225c\u03bb(a:Account). a.balance\n\n  isWithdrawable\u225c\u03bb(a:Account, amt:Currency).\n    a.status = active\n    \u2227 amt > 0\n    \u2227 amt \u2264 10000\n    \u2227 a.balance \u2265 amt\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.82;\u03c6\u225c100;\u03c4\u225c\u25ca\u207a\u207a\u27e9",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 693,
+        "o200k_base": 726
+      },
+      "latency_ms": 19240,
+      "timestamp": "2026-02-27T09:16:15.245967+00:00",
+      "elements": [
+        "account_type",
+        "transaction_type",
+        "min_balance_rule",
+        "max_withdrawal_rule",
+        "deposit_function",
+        "withdraw_function"
+      ]
+    },
+    {
+      "task_id": "SP-03",
+      "category": "specification",
+      "condition": "axon",
+      "model": "claude-sonnet",
+      "output": "[id:\"spec-001\", %%:1, ctx:\"task-scheduler-spec\"]\nINF(@scheduler-spec>@consumer): #TypeDefs{\n\n  Task: #Task{\n    id: string,\n    priority: 1..5,\n    deadline: timestamp,\n    status: #unassigned | #assigned | #complete,\n    assigned_to: @Worker | _\n  },\n\n  Worker: #Worker{\n    id: string,\n    status: #idle | #busy,\n    current_task: Task.id | _,\n    capacity: 1\n  }\n\n}\n\n[id:\"spec-002\", %%:1, re:\"spec-001\", ctx:\"task-scheduler-spec\"]\nINF(@scheduler-spec>@consumer): #Rules{\n\n  assignment_constraint:\n    assign($task, $worker) <-\n      $worker.status == #idle\n      & $worker.current_task == _\n      & $task.status == #unassigned,\n\n  priority_ordering:\n    prefer($task_a, $task_b) <-\n      $task_a.priority < $task_b.priority\n      | ($task_a.priority == $task_b.priority & $task_a.deadline < $task_b.deadline),\n\n  single_task_invariant:\n    forall($w: Worker) count($w.current_task) <= $w.capacity,\n\n  assignment_effect:\n    assign($task, $worker) ->\n      set($task.status, #assigned)\n      & set($task.assigned_to, $worker.id)\n      & set($worker.status, #busy)\n      & set($worker.current_task, $task.id)\n\n}\n\n[id:\"spec-003\", %%:1, re:\"spec-002\", ctx:\"task-scheduler-spec\"]\nINF(@scheduler-spec>@consumer): #FunctionDefs{\n\n  next_unassigned:\n    next_unassigned($pool: [Task]) -> Task | _ <-\n      filter($pool, ($t) -> $t.status == #unassigned)\n      -> sort_by(($a, $b) ->\n           $a.priority < $b.priority\n           | ($a.priority == $b.priority & $a.deadline < $b.deadline))\n      -> head()\n      | _,\n\n  schedule_next:\n    schedule_next($pool: [Task], $workers: [Worker]) -> #assignment{task:Task, worker:Worker} | _ <-\n      next_unassigned($pool) -> $t\n      & filter($workers, ($w) -> $w.status == #idle) -> head() -> $w\n      & ($t != _ & $w != _)\n        -> assign($t, $w)\n        -> #assignment{task:$t, worker:$w}\n      | _\n\n}",
+      "valid": false,
+      "errors": [
+        "AXON parse error: Parse error at 26:23: Unexpected token in expression (got =: '=')"
+      ],
+      "token_counts": {
+        "cl100k_base": 548,
+        "o200k_base": 549
+      },
+      "latency_ms": 16561,
+      "timestamp": "2026-02-27T09:16:31.809383+00:00",
+      "elements": [
+        "task_type",
+        "worker_type",
+        "one_task_rule",
+        "priority_ordering",
+        "assignment_function",
+        "next_task_function"
+      ]
+    },
+    {
+      "task_id": "SP-03",
+      "category": "specification",
+      "condition": "aisp",
+      "model": "claude-sonnet",
+      "output": "\ud835\udd381.0.task-scheduler-spec@2026-02-27\n\u03b3\u2254task-scheduling-system\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@scheduler-spec-agent\n  receiver\u225c@system-architect\n  intent\u225cinform\n  id\u225c\"spec-task-sched-001\"\n  timestamp\u225c1740614400\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  Priority\u225c{1,2,3,4,5}\n  Deadline\u225c{t:Timestamp | t > now()}\n  Status\u225c{unassigned, assigned, completed, expired}\n\n  Task\u225c{\n    id        : TaskID,\n    priority  : Priority,\n    deadline  : Deadline,\n    status    : Status,\n    assignee  : WorkerID \u222a {\u2205}\n  }\n\n  Worker\u225c{\n    id        : WorkerID,\n    capacity  : \u2115,\n    active    : Bool,\n    current   : TaskID \u222a {\u2205}\n  }\n\n  Assignment\u225c{\n    task_id   : TaskID,\n    worker_id : WorkerID,\n    assigned_at : Timestamp\n  }\n\n  Schedule\u225c{\n    tasks     : Set\u27e8Task\u27e9,\n    workers   : Set\u27e8Worker\u27e9,\n    assignments : Set\u27e8Assignment\u27e9\n  }\n}\n\n\u27e6\u0393:Rules\u27e7{\n  \u2200t:Task   : t.priority \u2208 {1,2,3,4,5}\n  \u2200t:Task   : t.deadline > now() \u2228 t.status \u2261 expired\n\n  \u2200w:Worker : w.current \u2260 \u2205 \u21d2 w.capacity \u2261 0\n  \u2200w:Worker : w.current \u2261 \u2205 \u21d2 w.capacity \u2265 1\n\n  \u2200t:Task   : t.assignee \u2260 \u2205 \u21d2 t.status \u2261 assigned\n  \u2200t:Task   : t.assignee \u2261 \u2205 \u2227 t.status \u2261 assigned \u21d2 \u22a5\n\n  \u2200w:Worker, \u2200t1:Task, \u2200t2:Task :\n    (t1.assignee \u2261 w.id \u2227 t2.assignee \u2261 w.id) \u21d2 t1 \u2261 t2\n\n  \u2200t:Task, \u2200w:Worker :\n    assign(t, w) \u21d2 (t.priority \u2265 min_unassigned_priority() \u2228 \u00ac\u2203u:Task:u.status\u2261unassigned)\n\n  expired(t) \u225c t.deadline \u2264 now() \u2192 t.status \u2254 expired \u2227 t.assignee \u2254 \u2205\n  complete(t,w) \u225c t.status\u2261assigned \u2227 t.assignee\u2261w.id \u2192 t.status\u2254completed \u2227 w.current\u2254\u2205\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  eligible\u225c\u03bb(t:Task).\n    t.status \u2261 unassigned \u2227 t.deadline > now()\n\n  availableWorker\u225c\u03bb(w:Worker).\n    w.active \u2261 true \u2227 w.current \u2261 \u2205\n\n  nextTask\u225c\u03bb(s:Schedule).\n    let candidates \u2254 {t \u2208 s.tasks | eligible(t)} in\n    let p_max      \u2254 max({t.priority | t \u2208 candidates}) in\n    let top        \u2254 {t \u2208 candidates | t.priority \u2261 p_max} in\n    argmin(t \u2208 top, t.deadline)\n\n  assign\u225c\u03bb(s:Schedule, w:Worker).\n    let t \u2254 nextTask(s) in\n    t \u2260 \u2205 \u2227 availableWorker(w) \u2192\n      s.assignments \u222a {Assignment{task_id\u2254t.id, worker_id\u2254w.id, assigned_at\u2254now()}}\n      \u2227 t.status     \u2254 assigned\n      \u2227 t.assignee   \u2254 w.id\n      \u2227 w.current    \u2254 t.id\n      \u2227 w.capacity   \u2254 0\n\n  scheduleAll\u225c\u03bb(s:Schedule).\n    let ws \u2254 {w \u2208 s.workers | availableWorker(w)} in\n    fold(assign(s, \u00b7), ws, s)\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.82;\u03c6\u225c100;\u03c4\u225c\u25ca\u207a\u207a\u27e9",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 878,
+        "o200k_base": 927
+      },
+      "latency_ms": 24432,
+      "timestamp": "2026-02-27T09:16:56.243600+00:00",
+      "elements": [
+        "task_type",
+        "worker_type",
+        "one_task_rule",
+        "priority_ordering",
+        "assignment_function",
+        "next_task_function"
+      ]
+    }
+  ]
+}
