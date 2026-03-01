@@ -1,8 +1,40 @@
 # Exp 1: Token Efficiency — Results
 
-> **Status**: Track A complete (scoring + statistical analysis). Track B pending.
-> **Date**: 2026-02-16
+> **Status**: Track A complete (scoring + statistical analysis). Cross-validation PASS (94.1%). Track B pending.
+> **Date**: 2026-03-01 (statistical analysis); scoring completed 2026-02-14
 > **Scoring method**: Hybrid (machine extraction for structured formats, 3-judge LLM panel for English)
+
+## Version Provenance
+
+All Exp 1 data was collected using a specific grammar and prompt version. The AXON language
+was subsequently extended. This section documents exactly what was tested.
+
+| Aspect | At data collection (Feb 12–14) | Current (Mar 2026) |
+|---|---|---|
+| **Grammar version** | v0.1a — 7-level precedence | v0.1b — 9-level precedence |
+| **Operators** | `<- -> & \| = != < > <= >= .. ~` | + `+ - * / ! ==` (alias), unary `-` |
+| **Precedence levels** | 7 | 9 (additive + multiplicative added) |
+| **Prompt tokens (cl100k)** | 529 | 580 |
+| **Prompt commit** | `f98d9ee` (Feb 12) | `05ddf70` (Feb 27) |
+| **Spec commit** | `3783de9` (Feb 12, spec freeze) | `58a4e5a` (Feb 27) |
+| **Conformance tests** | 54 passing | 69 passing |
+
+**What changed (Feb 27, 13 days after data collection):**
+- Arithmetic operators (`+`, `-`, `*`, `/`) added at two new precedence levels
+- Prefix negation (`!`) added alongside existing `~`
+- Unary minus (`-x`) parsed as `neg(x)` — removed negative number lexer special case
+- `==` accepted as alias for `=`
+- `$var` tokens accepted as named argument keys
+- Prompt updated to document new operators with concrete examples
+
+**Impact on results:** The grammar extensions were motivated by AISP Benchmark 2 findings
+(LLMs naturally write arithmetic in agent messages). The extensions would likely *improve*
+AXON's token efficiency on arithmetic-heavy tasks, since models would no longer need to
+work around the absence of `+`, `-`, etc. The Exp 1 results therefore represent a
+**conservative estimate** of current AXON v0.1b performance.
+
+**Reproducibility:** To reproduce the exact data collection conditions, check out commit
+`f98d9ee` for prompts and `3783de9` for the parser/spec.
 
 ## Summary
 
@@ -146,19 +178,23 @@ but fails 11.1% of the time (all on Haiku). AXON combines comparable efficiency 
 
 ### Prompt Overhead
 
-AXON's grammar specification costs significantly more prompt tokens than other conditions:
+AXON's grammar specification costs significantly more prompt tokens than other conditions.
+Values below are for the prompt versions used during data collection (Feb 12–14).
 
-| Condition | Prompt tokens (cl100k) |
-|---|---|
-| Free English | 44 |
-| Structured English | 92 |
-| Inst-Matched English | 160 |
-| FIPA-ACL | 165 |
-| JSON FC | 205 |
-| AXON | 529 |
+| Condition | Prompt tokens (cl100k) | Prompt version |
+|---|---|---|
+| Free English | 44 | stable |
+| Structured English | 92 | stable |
+| Inst-Matched English | 160 | stable |
+| FIPA-ACL | 165 | stable |
+| JSON FC | 205 | stable |
+| AXON | 529 | v0.1a (current v0.1b: 580) |
 
 Breakeven vs JSON FC: AXON saves ~56 tokens/message but costs +324 prompt tokens → **~6 messages** to amortize.
 Breakeven vs Free English: AXON saves ~5 tokens/message but costs +485 prompt tokens → **~93 messages** to amortize. For short conversations, English is cheaper on total tokens.
+
+Note: The current v0.1b prompt (580 tokens) adds 51 tokens for arithmetic operator documentation.
+This increases the breakeven to ~7 messages vs JSON FC.
 
 ## Key Findings
 
@@ -213,11 +249,19 @@ interactions, the overhead may not pay off.
   successfully. See scoring notes below.
 - **Cross-validation**: Pending (30 structured outputs to be judge-scored for comparison).
 
+## Validation Status
+
+- **Cross-validation**: PASS — 94.1% agreement (target: 90%). 30 items, 3-judge panel, codex model.
+  AXON 94.7%, JSON FC 94.7%, FIPA-ACL 92.9%. 10 disagreements all on L2-02 (proposal/counter task).
+  See `results/cross_validation_results.json`.
+- **Human validation**: In progress — Items 1-7 complete (100% human-auto agreement), items 8-30 remaining.
+  See `results/human_validation_sheet.md`.
+
 ## Remaining Work
 
-1. **Track B scoring**: Expanded atomic element decomposition (exploratory)
-2. **Cross-validation**: Machine vs judge agreement on structured formats (30 items)
-3. **Human validation subset**: 30 items scored by human rater
+1. **Human validation**: Complete items 8-30 (resume at item 8, element a3)
+2. **Track B scoring**: Expanded atomic element decomposition (exploratory)
+3. **AISP Benchmark A**: Generate 81 AISP cells for token efficiency comparison (7th condition)
 
 ## Data Files
 
