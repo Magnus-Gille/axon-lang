@@ -1,30 +1,33 @@
 # AXON Project Status
 
-**Last session:** 2026-03-01
+**Last session:** 2026-03-02
 **Branch:** main
-**Latest commit:** 2d39926
+**Latest commit:** 57c2e5e
 
 ## Completed This Session
-- Ran Exp 1 full statistical analysis (analyze.py --all)
-- Added version provenance to RESULTS.md — data collected on v0.1a (7-level grammar), grammar extended to v0.1b (9-level) 13 days later
-- Results support the reliability pivot: AXON wins on zero failures + structured-format efficiency, not raw token savings over English
+- Designed and implemented Exp 3 (compositionality) — full infrastructure
+  - 9 tasks × 3 complexity levels, 7 conditions, 30 composition-structure elements
+  - AST-based composition extractor for AXON, text-based for others, judge prompt for English
+  - GLMM analysis pipeline matching pre-registration
+- Generated all 567 cells (3 models × 7 conditions × 9 tasks × 3 runs)
+- Updated CLAUDE.md with Exp 3 in project structure and current state
 
-## Key Statistical Results (v0.1a grammar)
-- **Mixed-effects model**: AXON significantly better than JSON FC (+0.407, p<0.001), FIPA-ACL (+0.269, p<0.001), Inst-matched (+0.216, p<0.001). Free English significantly better than AXON (-0.208, p<0.001) but has 11.1% failure rate.
-- **Pairwise (Holm-Bonferroni)**: No comparisons survive correction (AXON vs JSON FC marginal at p=0.063)
-- **Bootstrap CIs**: AXON vs JSON FC d=-0.43 [-0.67, -0.21], AXON vs FIPA-ACL d=-0.33 [-0.52, -0.12] — both exclude zero
-- **Convergence warnings**: Group variance ~0 (only 3 model groups), Hessian not positive definite
-- **Prompt overhead**: AXON 529 tok (v0.1a) / 580 tok (v0.1b) vs JSON FC 205 tok → breakeven ~6-7 messages
+## Key Early Signal (validity only — scoring not yet run)
+- **AXON: 99% valid** (80/81, 1 Sonnet parse error on `^` in content)
+- **JSON FC: 73% valid** — collapsed to 22% on Haiku (composition too complex for flat JSON)
+- **FIPA-ACL: 90% valid** — 70% on Haiku
+- All English conditions + AISP: 100% valid
+- Composition tasks expose structural limits of JSON FC that simple tasks (Exp 0/1) did not
 
 ## In Progress
 - Human validation: Items 1-7 complete (100% agreement), items 8-30 remaining
 
 ## Next Steps (prioritized)
-1. Finish human validation (items 8-30)
-2. Run `--human-score` after sheet complete
-3. Design Exp 3 (compositionality/repair dynamics) — biggest evidence gap per debate
-4. Build AXON↔A2A field mapping table — resolve Tier 1 routing overlap
-5. Generate AISP Benchmark A cells (81 cells across 3 models)
+1. **Score Exp 3 outputs** — `python3 experiments/exp3_compositionality/scoring/score.py` on all 3 result files
+2. **Run Exp 3 statistical analysis** — `python3 experiments/exp3_compositionality/analysis/analyze.py --all`
+3. Finish human validation (items 8-30)
+4. Build AXON↔A2A field mapping table
+5. Generate AISP Benchmark A cells (81 cells)
 6. Reframe paper: reliability/correctness primary, token efficiency secondary
 
 ## Blockers
