@@ -1,0 +1,415 @@
+{
+  "experiment": "exp0_learnability",
+  "model": "claude-sonnet",
+  "model_display": "Claude Sonnet 4.5",
+  "timestamp": "2026-03-02T07:12:36.304822+00:00",
+  "total_runs": 27,
+  "valid_count": 27,
+  "results": [
+    {
+      "task_id": "L1-01",
+      "condition": "aisp",
+      "model": "claude-sonnet",
+      "run_number": 1,
+      "output": "\ud835\udd381.0.server-status-query@2026-03-02\n\u03b3\u2254infrastructure-monitoring\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@agent-a\n  receiver\u225c@agent-b\n  intent\u225cquery\n  id\u225c\"msg-001\"\n  timestamp\u225c1740873600\n  reply_to\u225c\"\"\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  WebServer\u225c{id:String, host:String, port:Integer, status:ServerStatus}\n  ServerStatus\u225c{online, degraded, offline, unknown}\n  StatusResponse\u225c{server:WebServer, uptime:Integer, latency:Float, checked_at:Integer}\n}\n\n\u27e6\u0393:Rules\u27e7{\n  \u2200s\u2208WebServer:status(s)\u2208ServerStatus\n  status(s)=online \u21d2 latency(s)>0\n  status(s)=offline \u21d2 latency(s)=0\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  getStatus\u225c\u03bb(srv:WebServer).StatusResponse\n  isHealthy\u225c\u03bb(srv:WebServer).(status(srv)=online \u2227 latency(srv)<500)\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.82;\u03c6\u225c100;\u03c4\u225c\u25ca\u207a\u207a\u27e9",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 283,
+        "o200k_base": 295
+      },
+      "latency_ms": 14199,
+      "timestamp": "2026-03-02T07:04:54.814399+00:00"
+    },
+    {
+      "task_id": "L1-02",
+      "condition": "aisp",
+      "model": "claude-sonnet",
+      "run_number": 1,
+      "output": "\ud835\udd381.0.server-status-report@2026-03-02\n\u03b3\u2254server-monitoring\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@agent-b\n  receiver\u225c@agent-a\n  intent\u225cinform\n  id\u225c\"msg-b2a-001\"\n  timestamp\u225c1740873600\n  reply_to\u225c\"null\"\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  Server\u225c{id:String, health:HealthStatus, uptime:Percentage}\n  HealthStatus\u225c{healthy, degraded, down}\n  Percentage\u225c{v:Float | 0.0 \u2264 v \u2264 100.0}\n  StatusReport\u225c{server:Server, timestamp:Int}\n}\n\n\u27e6\u0393:Rules\u27e7{\n  \u2200s\u2208Server: health(s)=healthy \u21d2 uptime(s) \u2265 99.0\n  uptime(server)=99.7 \u21d2 health(server)=healthy\n  health(server)=healthy \u2227 uptime(server)=99.7 \u21d2 report(StatusReport)\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  getHealth\u225c\u03bb(s:Server).health(s)\n  getUptime\u225c\u03bb(s:Server).uptime(s)\n  buildReport\u225c\u03bb(s:Server).StatusReport{\n    server\u2190s,\n    timestamp\u21901740873600\n  }\n  report\u225c\u03bb().{\n    health\u2190healthy,\n    uptime\u219099.7,\n    message\u2190\"Server is healthy with 99.7% uptime.\"\n  }\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.82;\u03c6\u225c100;\u03c4\u225c\u25ca\u207a\u207a\u27e9",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 357,
+        "o200k_base": 367
+      },
+      "latency_ms": 15799,
+      "timestamp": "2026-03-02T07:05:10.614499+00:00"
+    },
+    {
+      "task_id": "L1-03",
+      "condition": "aisp",
+      "model": "claude-sonnet",
+      "run_number": 1,
+      "output": "\ud835\udd381.0.error-report@2026-03-02\n\u03b3\u2254agent-comm\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@service-agent\n  receiver\u225c@caller-agent\n  intent\u225cinform\n  id\u225c\"err-404-001\"\n  timestamp\u225c1740873600\n  reply_to\u225c\"req-001\"\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  Error\u225c{code:Int, label:String, resource:URI}\n  Response\u225c{status:ErrorStatus, error:Error}\n  ErrorStatus\u225c{success,client_error,server_error}\n  URI\u225cString\n}\n\n\u27e6\u0393:Rules\u27e7{\n  \u2200e\u2208Error:e.code=404\u21d2e.label=\"not_found\"\n  \u2200r\u2208Response:r.status=client_error\u21d2\u2203e\u2208Error:r.error=e\n  r.error.code=404\u21d2resource(r.error.resource)\u2209registry\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  report\u225c\u03bb(res:URI).Response{\n    status\u2254client_error,\n    error\u2254Error{\n      code\u2254404,\n      label\u2254\"not_found\",\n      resource\u2254res\n    }\n  }\n  result\u225creport(\"/api/requested-resource\")\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.82;\u03c6\u225c100;\u03c4\u225c\u25ca\u207a\u207a\u27e9",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 320,
+        "o200k_base": 324
+      },
+      "latency_ms": 15378,
+      "timestamp": "2026-03-02T07:05:25.994637+00:00"
+    },
+    {
+      "task_id": "L2-01",
+      "condition": "aisp",
+      "model": "claude-sonnet",
+      "run_number": 1,
+      "output": "\ud835\udd381.0.build-request@2026-03-02\n\u03b3\u2254ci-pipeline\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@ci-agent\n  receiver\u225c@builder-agent\n  intent\u225crequest\n  id\u225c\"ci-build-001\"\n  timestamp\u225c1740873600\n  reply_to\u225c\"null\"\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  BuildRequest\u225c{repo:URI, branch:String, commit:SHA, priority:Level}\n  URI\u225cString\n  SHA\u225cString\n  Level\u225c{low, normal, high, critical}\n  BuildStatus\u225c{queued, running, success, failure}\n}\n\n\u27e6\u0393:Rules\u27e7{\n  \u2200r\u2208BuildRequest:commit(r)\u2208SHA\n  \u2200r\u2208BuildRequest:branch(r)\u2208String\n  SHA\u2192length(40)\u2227charset(hex)\n  build(r)\u21d2notify(@ci-agent, BuildStatus)\n  failure(build)\u21d2report(logs, @ci-agent)\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  build\u225c\u03bb(repo, branch, commit).trigger_pipeline(repo, branch, commit)\n  notify\u225c\u03bb(agent, status).send_status_update(agent, status)\n  report\u225c\u03bb(logs, agent).forward_build_logs(agent, logs)\n  validate\u225c\u03bb(commit).verify_sha_exists(commit, branch)\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.82;\u03c6\u225c100;\u03c4\u225c\u25ca\u207a\u207a\u27e9\n\n**Payload:**\n```\nrepo   \u225c \"https://github.com/org/my-service\"\nbranch \u225c \"feature/oauth-refresh\"\ncommit \u225c \"a3f9c21d84e07b5612f3c89d0e14a6b27f580041\"\npriority \u225c high\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 414,
+        "o200k_base": 419
+      },
+      "latency_ms": 16943,
+      "timestamp": "2026-03-02T07:05:42.938737+00:00"
+    },
+    {
+      "task_id": "L2-02",
+      "condition": "aisp",
+      "model": "claude-sonnet",
+      "run_number": 1,
+      "output": "\ud835\udd381.0.widget-negotiation@2026-03-02\n\u03b3\u2254procurement-negotiation\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@buyer-agent\n  receiver\u225c@supplier-agent\n  intent\u225ccounter\n  id\u225c\"msg-002\"\n  timestamp\u225c1740873600\n  reply_to\u225c\"msg-001\"\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  Widget\u225c{sku:String, quantity:Integer, unit_price:Currency}\n  Offer\u225c{item:Widget, total:Currency, justification:String}\n  Currency\u225c{amount:Decimal, unit:String}\n  MarketData\u225c{metric:String, value:Currency, source:String}\n}\n\n\u27e6\u0393:Rules\u27e7{\n  \u2200o\u2208Offer: o.total = o.item.quantity \u00d7 o.item.unit_price\n  \u2200p\u2208Currency: p.amount > 0 \u2227 p.unit = \"USD\"\n  market_avg\u225c{amount:2.15, unit:\"USD\"} \u21d2 counter_price \u2264 market_avg.amount + 0.05\n  supplier_ask={amount:2.50, unit:\"USD\"} \u2227 market_avg={amount:2.15, unit:\"USD\"} \u21d2 delta=0.35 \u2192 counter_justified\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  counter\u225c\u03bb(original_offer, market_ref).{\n    item: Widget{\n      sku: original_offer.item.sku,\n      quantity: 10000,\n      unit_price: {amount:2.20, unit:\"USD\"}\n    },\n    total: {amount:22000.00, unit:\"USD\"},\n    justification: \"Market average for comparable widgets = $2.15 (industry benchmark Q1-2026). Counter of $2.20 preserves 2.3% supplier margin above market. Original ask of $2.50 exceeds market by 16.3%.\"\n  }\n  savings\u225c\u03bb(ask, counter, qty).(ask - counter) \u00d7 qty\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.82;\u03c6\u225c100;\u03c4\u225c\u25ca\u207a\u207a\u27e9",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 464,
+        "o200k_base": 477
+      },
+      "latency_ms": 19099,
+      "timestamp": "2026-03-02T07:06:02.039204+00:00"
+    },
+    {
+      "task_id": "L2-03",
+      "condition": "aisp",
+      "model": "claude-sonnet",
+      "run_number": 1,
+      "output": "\ud835\udd381.0.task-distribution@2026-03-02\n\u03b3\u2254data-processing\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@planner\n  receiver\u225c@workers\n  intent\u225crequest\n  id\u225c\"msg-dist-001\"\n  timestamp\u225c1740873600\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  Worker\u225c{id:String, range:Segment, status:State}\n  Segment\u225c{start:Int, end:Int}\n  State\u225c{idle,assigned,running,done}\n  Assignment\u225c{worker:Worker, segment:Segment, task:String}\n}\n\n\u27e6\u0393:Rules\u27e7{\n  \u2200w\u2208{w1,w2,w3}:status(w)\u225cassigned\n  segments\u225c[{0,1000},{1000,2000},{2000,3000}]\n  \u2200s\u2208segments:(s.end\u2212s.start)=1000\n  w1\u2192segment({start\u225c0,end\u225c1000})\n  w2\u2192segment({start\u225c1000,end\u225c2000})\n  w3\u2192segment({start\u225c2000,end\u225c3000})\n  \u2200w\u2208{w1,w2,w3}:done(w)\u21d2notify(@planner)\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  assign\u225c\u03bb(w,start,end).{worker\u225cw,segment\u225c{start\u225cstart,end\u225cend},task\u225c\"process\"}\n  distribute\u225c\u03bb(total,n).(total/n)\n  dispatch\u225c\u03bb().{\n    assign(w1,0,1000)\n    \u2192 assign(w2,1000,2000)\n    \u2192 assign(w3,2000,3000)\n  }\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.82;\u03c6\u225c100;\u03c4\u225c\u25ca\u207a\u207a\u27e9",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 416,
+        "o200k_base": 423
+      },
+      "latency_ms": 16490,
+      "timestamp": "2026-03-02T07:06:18.530073+00:00"
+    },
+    {
+      "task_id": "L3-01",
+      "condition": "aisp",
+      "model": "claude-sonnet",
+      "run_number": 1,
+      "output": "\ud835\udd381.0.pipeline-instruction@2026-03-02\n\u03b3\u2254data-pipeline\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@orchestrator\n  receiver\u225c@pipeline\n  intent\u225crequest\n  id\u225c\"msg-7f3a9c2e-0041\"\n  timestamp\u225c1740873600\n  reply_to\u225c\"null\"\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  URL\u225cString\n  JSONPayload\u225c{data:Any, schema:String}\n  DBRecord\u225c{table:String, payload:JSONPayload, status:WriteStatus}\n  WriteStatus\u225c{pending, success, failure}\n  Step\u225c{fetch, parse, store}\n  Pipeline\u225c{steps:List(Step), url:URL, target_table:String}\n}\n\n\u27e6\u0393:Rules\u27e7{\n  \u2200s\u2208Step: s\u2208{fetch,parse,store}\n  fetch(url)\u21d2raw_response\n  raw_response\u2227valid_json\u21d2parse(raw_response)\u2192JSONPayload\n  \u00acvalid_json\u21d2abort\u2227alert(@orchestrator)\n  parse_success\u21d2store(JSONPayload,target_table)\u2192DBRecord\n  store_success\u21d2status(DBRecord)\u225csuccess\n  store_failure\u21d2retry(3)\u2227alert(@orchestrator)\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  fetch\u225c\u03bb(url:URL).http_get(url)\u2192raw_response\n  parse\u225c\u03bb(raw:String).json_decode(raw)\u2192JSONPayload\n  store\u225c\u03bb(p:JSONPayload, t:String).db_insert(table\u225ct, record\u225cp)\u2192DBRecord\n  execute_pipeline\u225c\u03bb(cfg:Pipeline).\n    fetch(cfg.url)\u2192parse\u2192store(target_table\u225ccfg.target_table)\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.82;\u03c6\u225c100;\u03c4\u225c\u25ca\u207a\u207a\u27e9",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 436,
+        "o200k_base": 434
+      },
+      "latency_ms": 18182,
+      "timestamp": "2026-03-02T07:06:36.713410+00:00"
+    },
+    {
+      "task_id": "L3-02",
+      "condition": "aisp",
+      "model": "claude-sonnet",
+      "run_number": 1,
+      "output": "```\n\ud835\udd381.0.incident-alert@2026-03-02\n\u03b3\u2254incident-management\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@monitor\n  receiver\u225c@ops-team\n  intent\u225calert\n  id\u225c\"inc-sev2-pay-001\"\n  timestamp\u225c1740873600\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  Incident\u225c{service:String, severity:Nat, priority:Nat, metric:Metric, causal_chain:Chain, resolution:Action}\n  Metric\u225c{name:String, threshold:Duration, observed:Duration}\n  Chain\u225c{root:Event, causes:List[Event]}\n  Event\u225c{kind:String, description:String}\n  Action\u225c{type:String, steps:List[String]}\n  Severity\u225c{1,2,3,4,5}\n  Priority\u225c{1,2,3,4,5}\n}\n\n\u27e6\u0393:Rules\u27e7{\n  \u2200i\u2208Incident: i.severity=2 \u21d2 i.priority\u22644\n  \u2200m\u2208Metric: m.observed>m.threshold \u21d2 alert(i)\n  root_cause(traffic_spike) \u2192 exhaustion(db_connection_pool) \u2192 latency(payments_service)\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  incident\u225c\u03bb(svc,sev,pri,metric,chain,res).{\n    service\u225csvc,\n    severity\u225csev,\n    priority\u225cpri,\n    metric\u225cmetric,\n    causal_chain\u225cchain,\n    resolution\u225cres\n  }\n\n  alert_payload\u225cincident(\n    \"payments-service\",\n    2,\n    4,\n    {name\u225c\"latency\", threshold\u225c\"2000ms\", observed\u225c\"2000ms+\"},\n    {\n      root\u225c{kind\u225c\"traffic_spike\", description\u225c\"Abnormal traffic volume exceeded baseline\"},\n      causes\u225c[\n        {kind\u225c\"db_connection_pool_exhaustion\", description\u225c\"Connection pool saturated; new requests queued or rejected\"},\n        {kind\u225c\"high_latency\", description\u225c\"Payments service response time exceeded 2s SLA threshold\"}\n      ]\n    },\n    {\n      type\u225c\"mitigation\",\n      steps\u225c[\n        \"Scale db connection pool size (increase max_connections)\",\n        \"Enable rate limiting on payments ingress to shed excess load\",\n        \"Horizontally scale payments service replicas\",\n        \"Activate circuit breaker to prevent cascade to downstream services\",\n        \"Monitor pool utilization and latency p95/p99 post-remediation\"\n      ]\n    }\n  )\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.82;\u03c6\u225c100;\u03c4\u225c\u25ca\u207a\u207a\u27e9\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 594,
+        "o200k_base": 598
+      },
+      "latency_ms": 18129,
+      "timestamp": "2026-03-02T07:06:54.844399+00:00"
+    },
+    {
+      "task_id": "L3-03",
+      "condition": "aisp",
+      "model": "claude-sonnet",
+      "run_number": 1,
+      "output": "```\n\ud835\udd381.0.diagnostics-query@2026-03-02\n\u03b3\u2254system-diagnostics\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@agent-a\n  receiver\u225c@agent-b\n  intent\u225cquery\n  id\u225c\"msg-001\"\n  timestamp\u225c1740873600\n  reply_to\u225c\"\"\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  DiagRequest\u225c{scope:ScopeType, depth:DepthLevel}\n  ScopeType\u225c{network,memory,cpu,connections,all}\n  DepthLevel\u225c{shallow,standard,deep}\n}\n\n\u27e6\u0393:Rules\u27e7{\n  \u2200r\u2208DiagRequest:scope(r)\u2208ScopeType\n  \u2200r\u2208DiagRequest:depth(r)\u2208DepthLevel\n  depth(r)=deep\u21d2scope(r)=all\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  requestDiag\u225c\u03bb(scope,depth).DiagRequest{scope:scope,depth:depth}\n  buildQuery\u225c\u03bb(r).{target:@agent-b,payload:requestDiag(r.scope,r.depth)}\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.82;\u03c6\u225c100;\u03c4\u225c\u25ca\u207a\u207a\u27e9\n```\n\n---\n\n```\n\ud835\udd381.0.diagnostics-reply@2026-03-02\n\u03b3\u2254system-diagnostics\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@agent-b\n  receiver\u225c@agent-a\n  intent\u225creply\n  id\u225c\"msg-002\"\n  timestamp\u225c1740873720\n  reply_to\u225c\"msg-001\"\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  DiagReport\u225c{bottleneck:Bottleneck, connStats:ConnectionStats, health:HealthStatus}\n  Bottleneck\u225c{component:String, utilization:Float, threshold:Float, severity:SeverityLevel}\n  ConnectionStats\u225c{active:Int, queued:Int, dropped:Int, latency_ms:Float}\n  HealthStatus\u225c{nominal,degraded,critical}\n  SeverityLevel\u225c{low,medium,high,critical}\n}\n\n\u27e6\u0393:Rules\u27e7{\n  \u2200b\u2208Bottleneck:utilization(b)\u2208[0.0,1.0]\n  \u2200b\u2208Bottleneck:utilization(b)>threshold(b)\u21d2severity(b)\u2208{high,critical}\n  \u2200s\u2208ConnectionStats:dropped(s)>0\u21d2health(report)=degraded\n  connStats.queued>50\u21d2bottleneck.severity=critical\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  evalHealth\u225c\u03bb(stats).{nominal:stats.dropped=0\u2227stats.queued<10,\n                        degraded:stats.dropped>0\u2228stats.queued\u226510,\n                        critical:stats.queued>50}\n  reportBottleneck\u225c\u03bb().Bottleneck{\n    component:\"api-gateway\",\n    utilization:0.94,\n    threshold:0.80,\n    severity:critical\n  }\n  reportConnStats\u225c\u03bb().ConnectionStats{\n    active:1240,\n    queued:87,\n    dropped:34,\n    latency_ms:612.4\n  }\n  buildReport\u225c\u03bb().DiagReport{\n    bottleneck:reportBottleneck(),\n    connStats:reportConnStats(),\n    health:evalHealth(reportConnStats())\n  }\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.88;\u03c6\u225c100;\u03c4\u225c\u25ca\u207a\u207a\u27e9\n```\n\n---\n\n```\n\ud835\udd381.0.scale-request@2026-03-02\n\u03b3\u2254system-diagnostics\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@agent-a\n  receiver\u225c@agent-b\n  intent\u225crequest\n  id\u225c\"msg-003\"\n  timestamp\u225c1740873840\n  reply_to\u225c\"msg-002\"\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  ScaleDirective\u225c{target:String, action:ScaleAction, factor:Float, priority:Priority}\n  ScaleAction\u225c{scale_up,scale_down,scale_out,scale_in}\n  Priority\u225c{low,normal,high,urgent}\n  Constraint\u225c{max_replicas:Int, cooldown_sec:Int}\n}\n\n\u27e6\u0393:Rules\u27e7{\n  \u2200d\u2208ScaleDirective:factor(d)>1.0\u21d2action(d)\u2208{scale_up,scale_out}\n  \u2200d\u2208ScaleDirective:factor(d)<1.0\u21d2action(d)\u2208{scale_down,scale_in}\n  bottleneck.severity=critical\u21d2priority=urgent\n  \u2200d\u2208ScaleDirective:priority(d)=urgent\u21d2constraint.cooldown_sec=0\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  deriveScaleFactor\u225c\u03bb(utilization,threshold).(utilization/threshold)\n  buildDirective\u225c\u03bb(report).ScaleDirective{\n    target:\"api-gateway\",\n    action:scale_out,\n    factor:deriveScaleFactor(0.94,0.80),\n    priority:urgent\n  }\n  buildConstraint\u225c\u03bb().Constraint{\n    max_replicas:20,\n    cooldown_sec:0\n  }\n  issueScale\u225c\u03bb(report).{\n    directive:buildDirective(report),\n    constraint:buildConstraint(),\n    justification:\"utilization=0.94>threshold=0.80; queued=87; dropped=34\"\n  }\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.85;\u03c6\u225c100;\u03c4\u225c\u25ca\u207a\u207a\u27e9\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 1253,
+        "o200k_base": 1264
+      },
+      "latency_ms": 28311,
+      "timestamp": "2026-03-02T07:07:23.157490+00:00"
+    },
+    {
+      "task_id": "L1-01",
+      "condition": "aisp",
+      "model": "claude-sonnet",
+      "run_number": 2,
+      "output": "\ud835\udd381.0.server-status-query@2026-03-02\n\u03b3\u2254web-ops\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@agent-a\n  receiver\u225c@agent-b\n  intent\u225cquery\n  id\u225c\"msg-001\"\n  timestamp\u225c1740873600\n  reply_to\u225c\"\"\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  WebServer\u225c{host:String, port:Int, status:ServerStatus}\n  ServerStatus\u225c{online, offline, degraded, unknown}\n  StatusResponse\u225c{server:WebServer, uptime:Int, latency:Float}\n}\n\n\u27e6\u0393:Rules\u27e7{\n  \u2200s\u2208WebServer:status(s)\u2208ServerStatus\n  status(s)=online \u21d2 uptime(s)>0\n  status(s)=offline \u21d2 latency(s)=null\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  getServerStatus\u225c\u03bb(srv:WebServer).StatusResponse\n  isHealthy\u225c\u03bb(srv:WebServer).(status(srv)=online \u2227 latency(srv)<500)\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.82;\u03c6\u225c100;\u03c4\u225c\u25ca\u207a\u207a\u27e9",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 274,
+        "o200k_base": 285
+      },
+      "latency_ms": 14430,
+      "timestamp": "2026-03-02T07:07:37.588350+00:00"
+    },
+    {
+      "task_id": "L1-02",
+      "condition": "aisp",
+      "model": "claude-sonnet",
+      "run_number": 2,
+      "output": "\ud835\udd381.0.server-status-report@2026-03-02\n\u03b3\u2254server-monitoring\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@agent-b\n  receiver\u225c@agent-a\n  intent\u225cinform\n  id\u225c\"msg-001\"\n  timestamp\u225c1740873600\n  reply_to\u225c\"\"\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  Server\u225c{id:String, health:Status, uptime:Float}\n  Status\u225c{healthy,degraded,down}\n  UptimeReport\u225c{server:Server, uptime_pct:Float}\n}\n\n\u27e6\u0393:Rules\u27e7{\n  \u2200s\u2208Server:health(s)\u2208Status\n  uptime(s)\u226599.0\u21d2health(s)=healthy\n  health(s)=healthy\u2227uptime(s)=99.7\u21d2operational(s)=true\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  reportHealth\u225c\u03bb(s).{status:health(s), uptime:uptime(s)}\n  isHealthy\u225c\u03bb(s).health(s)=healthy\n  formatReport\u225c\u03bb(s).UptimeReport{server:s, uptime_pct:99.7}\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.82;\u03c6\u225c100;\u03c4\u225c\u25ca\u207a\u207a\u27e9",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 298,
+        "o200k_base": 303
+      },
+      "latency_ms": 13715,
+      "timestamp": "2026-03-02T07:07:51.304382+00:00"
+    },
+    {
+      "task_id": "L1-03",
+      "condition": "aisp",
+      "model": "claude-sonnet",
+      "run_number": 2,
+      "output": "\ud835\udd381.0.error-report@2026-03-02\n\u03b3\u2254agent-comm\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@service-agent\n  receiver\u225c@caller-agent\n  intent\u225cinform\n  id\u225c\"m-404-001\"\n  timestamp\u225c1740873600\n  reply_to\u225c\"req-001\"\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  ErrorResponse\u225c{code:Integer, status:ErrorStatus, message:String, resource:URI}\n  ErrorStatus\u225c{not_found, unauthorized, forbidden, internal_error}\n  URI\u225cString\n}\n\n\u27e6\u0393:Rules\u27e7{\n  \u2200e\u2208ErrorResponse:code(e)=404\u21d2status(e)=not_found\n  status(e)=not_found\u21d2\u00ac\u2203resource(e)\u2208registry\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  reportError\u225c\u03bb(code,resource).ErrorResponse{\n    code\u225c404,\n    status\u225cnot_found,\n    message\u225c\"The requested resource was not found on this server\",\n    resource\u225cresource\n  }\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.82;\u03c6\u225c100;\u03c4\u225c\u25ca\u207a\u207a\u27e9",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 281,
+        "o200k_base": 289
+      },
+      "latency_ms": 13042,
+      "timestamp": "2026-03-02T07:08:04.347060+00:00"
+    },
+    {
+      "task_id": "L2-01",
+      "condition": "aisp",
+      "model": "claude-sonnet",
+      "run_number": 2,
+      "output": "\ud835\udd381.0.build-request@2026-03-02\n\u03b3\u2254ci-cd\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@ci-agent\n  receiver\u225c@builder-agent\n  intent\u225crequest\n  id\u225c\"msg-ci-4f9a2b\"\n  timestamp\u225c1740873600\n  reply_to\u225c\"null\"\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  BuildRequest\u225c{repo:String, branch:String, commit:SHA, priority:Level}\n  SHA\u225cString[40]\n  Level\u225c{low, normal, high, critical}\n  BuildResult\u225c{status:Outcome, artifact_url:String, duration_ms:Int}\n  Outcome\u225c{success, failure, cancelled}\n}\n\n\u27e6\u0393:Rules\u27e7{\n  \u2200r\u2208BuildRequest:r.commit\u2208SHA\n  \u2200r\u2208BuildRequest:r.branch\u2260\"\"\n  r.priority=critical\u21d2preempt_queue(r)\n  build_started(r)\u21d2ack(@ci-agent, r.id)\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  build\u225c\u03bb(repo, branch, commit, priority).\n    checkout(repo, branch, commit)\n    \u2192 compile()\n    \u2192 test()\n    \u2192 package()\n    \u2192 emit(BuildResult)\n  preempt_queue\u225c\u03bb(r).insert_front(queue, r)\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.82;\u03c6\u225c100;\u03c4\u225c\u25ca\u207a\u207a\u27e9",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 331,
+        "o200k_base": 338
+      },
+      "latency_ms": 18318,
+      "timestamp": "2026-03-02T07:08:22.667429+00:00"
+    },
+    {
+      "task_id": "L2-02",
+      "condition": "aisp",
+      "model": "claude-sonnet",
+      "run_number": 2,
+      "output": "\ud835\udd381.0.widget-negotiation@2026-03-02\n\u03b3\u2254procurement\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@buyer-agent\n  receiver\u225c@supplier-agent\n  intent\u225ccounter\n  id\u225c\"msg-wgt-002\"\n  timestamp\u225c1740873600\n  reply_to\u225c\"msg-wgt-001\"\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  Offer\u225c{item:String, quantity:Integer, unit_price:Decimal, currency:String}\n  MarketData\u225c{benchmark:String, avg_price:Decimal, source:String}\n  CounterProposal\u225c{original:Offer, counter:Offer, justification:MarketData}\n}\n\n\u27e6\u0393:Rules\u27e7{\n  \u2200o\u2208Offer: o.unit_price > 0 \u2227 o.quantity > 0\n  \u2200m\u2208MarketData: m.avg_price < counter.unit_price \u21d2 counter_is_reasonable\n  supplier_ask(2.50) > market_avg(2.15) \u21d2 counter_justified\n  counter_price(2.20) > market_avg(2.15) \u21d2 margin_preserved_for_supplier\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  total_value\u225c\u03bb(qty, price). qty * price\n  premium_over_market\u225c\u03bb(offer, avg). offer - avg\n  original_offer\u225c{item:\"widget\", quantity:10000, unit_price:2.50, currency:\"USD\"}\n  counter_offer\u225c{item:\"widget\", quantity:10000, unit_price:2.20, currency:\"USD\"}\n  market_ref\u225c{benchmark:\"industry_avg\", avg_price:2.15, source:\"market_survey_Q1_2026\"}\n  savings\u225ctotal_value(10000, premium_over_market(2.50, 2.20))\n  counter_premium\u225cpremium_over_market(2.20, 2.15)\n  original_total\u225ctotal_value(10000, 2.50)\n  counter_total\u225ctotal_value(10000, 2.20)\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.82;\u03c6\u225c100;\u03c4\u225c\u25ca\u207a\u207a\u27e9",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 482,
+        "o200k_base": 494
+      },
+      "latency_ms": 16519,
+      "timestamp": "2026-03-02T07:08:39.188429+00:00"
+    },
+    {
+      "task_id": "L2-03",
+      "condition": "aisp",
+      "model": "claude-sonnet",
+      "run_number": 2,
+      "output": "\ud835\udd381.0.task-distribute@2026-03-02\n\u03b3\u2254data-processing\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@planner\n  receiver\u225c@workers\n  intent\u225crequest\n  id\u225c\"m-dist-001\"\n  timestamp\u225c1740873600\n  reply_to\u225c\"null\"\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  Range\u225c{start:Int, end:Int}\n  Worker\u225c{id:String, assigned:Range}\n  Task\u225c{total_range:Range, segments:List(Worker)}\n  Status\u225c{pending, active, complete}\n}\n\n\u27e6\u0393:Rules\u27e7{\n  \u2200w\u2208Workers: assigned(w)\u2208Range\n  total_range\u225cRange(0,3000)\n  segment_size\u225c1000\n  w1\u225cWorker(\"worker-1\", Range(0,1000))\n  w2\u225cWorker(\"worker-2\", Range(1000,2000))\n  w3\u225cWorker(\"worker-3\", Range(2000,3000))\n  \u2200w\u2208{w1,w2,w3}: status(w)\u2190pending\n  segment_size*3=3000 \u21d2 partition_valid\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  distribute\u225c\u03bb(total,n).(total/n)\n  assign\u225c\u03bb(w,start,end).Worker(w, Range(start,end))\n  validate\u225c\u03bb(segs).\u2200s\u2208segs: (s.end - s.start = segment_size)\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.82;\u03c6\u225c100;\u03c4\u225c\u25ca\u207a\u207a\u27e9",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 372,
+        "o200k_base": 380
+      },
+      "latency_ms": 16642,
+      "timestamp": "2026-03-02T07:08:55.831955+00:00"
+    },
+    {
+      "task_id": "L3-01",
+      "condition": "aisp",
+      "model": "claude-sonnet",
+      "run_number": 2,
+      "output": "\ud835\udd381.0.pipeline-orchestration@2026-03-02\n\u03b3\u2254data-pipeline\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@orchestrator\n  receiver\u225c@pipeline\n  intent\u225crequest\n  id\u225c\"msg-7f3a9c12-orchestrator-pipeline-001\"\n  timestamp\u225c1740873600\n  reply_to\u225c\"null\"\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  URL\u225cString\n  JSONPayload\u225c{raw:String, parsed:Object}\n  DBRecord\u225c{table:String, payload:JSONPayload, status:WriteStatus}\n  WriteStatus\u225c{pending, success, failure}\n  Step\u225c{fetch, parse, store}\n  Pipeline\u225c{steps:List\u27e8Step\u27e9, input:URL, output:DBRecord}\n}\n\n\u27e6\u0393:Rules\u27e7{\n  \u2200p\u2208Pipeline: steps(p) = [fetch \u2192 parse \u2192 store]\n  fetch_ok(url) \u21d2 parse(raw_response)\n  parse_ok(json) \u21d2 store(db_record)\n  \u00acfetch_ok(url) \u21d2 abort(pipeline) \u2227 alert(@orchestrator, failure)\n  \u00acparse_ok(raw) \u21d2 abort(pipeline) \u2227 alert(@orchestrator, parse_error)\n  store(db_record) \u2227 status=success \u21d2 reply(@orchestrator, db_record)\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  fetch\u225c\u03bb(url:URL).http_get(url) \u2192 raw:String\n  parse\u225c\u03bb(raw:String).json_decode(raw) \u2192 obj:Object\n  store\u225c\u03bb(obj:Object, table:String).db_insert(table, obj) \u2192 status:WriteStatus\n  run_pipeline\u225c\u03bb(url:URL, table:String).store(parse(fetch(url)), table)\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.82;\u03c6\u225c100;\u03c4\u225c\u25ca\u207a\u207a\u27e9",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 421,
+        "o200k_base": 435
+      },
+      "latency_ms": 17387,
+      "timestamp": "2026-03-02T07:09:13.220651+00:00"
+    },
+    {
+      "task_id": "L3-02",
+      "condition": "aisp",
+      "model": "claude-sonnet",
+      "run_number": 2,
+      "output": "\ud835\udd381.0.incident-alert@2026-03-02\n\u03b3\u2254ops-monitoring\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@monitor-agent\n  receiver\u225c@ops-team\n  intent\u225calert\n  id\u225c\"inc-20260302-pay-001\"\n  timestamp\u225c1740873600\n  reply_to\u225c\"null\"\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  Incident\u225c{service:String, severity:Nat, priority:Nat, latency_ms:Nat, status:IncidentStatus}\n  IncidentStatus\u225c{active, mitigating, resolved}\n  CausalLink\u225c{effect:Event, cause:Event}\n  Resolution\u225c{action:String, owner:Role, urgency:UrgencyLevel}\n  UrgencyLevel\u225c{immediate, high, normal, low}\n  Role\u225c{oncall-engineer, dba-team, platform-team}\n}\n\n\u27e6\u0393:Rules\u27e7{\n  \u2200i\u2208Incident: i.severity=2 \u2227 i.priority=4 \u21d2 escalate(i, oncall-engineer)\n  \u2200i\u2208Incident: i.latency_ms > 2000 \u21d2 breach(SLA, i.service)\n  traffic_spike \u2192 db_connection_pool_exhaustion \u2192 high_latency \u2192 payments_degraded\n  \u2203r\u2208Resolution: r.urgency=immediate \u21d2 execute(r) \u2227 notify(ops-team, r)\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  causalChain\u225c\u03bb(effect).trace_root_cause(effect)\n  escalate\u225c\u03bb(incident, role).page(role, incident.priority)\n  resolve\u225c\u03bb(rec).apply(rec.action, rec.owner)\n  mitigate\u225c\u03bb(svc).scale_connection_pool(svc) \u2227 enable_rate_limiting(svc) \u2227 drain_excess_traffic(svc)\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.82;\u03c6\u225c100;\u03c4\u225c\u25ca\u207a\u207a\u27e9\n\n---\n\n**Incident Payload:**\n\n```\nservice         : payments\nseverity        : 2\npriority        : 4\nstatus          : active\nlatency_obs_ms  : 2340\nthreshold_ms    : 2000\nbreach          : SLA violated\n\ncausal_chain:\n  [1] traffic_spike          \u2192 trigger\n  [2] db_conn_pool_exhausted \u2190 caused_by(traffic_spike)\n  [3] high_latency           \u2190 caused_by(db_conn_pool_exhausted)\n\nresolution_recommendation:\n  action  : scale_connection_pool \u2227 enable_rate_limiting \u2227 shed_non_critical_traffic\n  owner   : dba-team \u2227 oncall-engineer\n  urgency : immediate\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 579,
+        "o200k_base": 594
+      },
+      "latency_ms": 21386,
+      "timestamp": "2026-03-02T07:09:34.608220+00:00"
+    },
+    {
+      "task_id": "L3-03",
+      "condition": "aisp",
+      "model": "claude-sonnet",
+      "run_number": 2,
+      "output": "\ud835\udd381.0.diag-query@2026-03-02\n\u03b3\u2254system-diagnostics\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@agent-a\n  receiver\u225c@agent-b\n  intent\u225cquery\n  id\u225c\"msg-001\"\n  timestamp\u225c1772668800\n  reply_to\u225c\"\"\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  DiagRequest\u225c{scope:Scope, depth:Level}\n  Scope\u225c{full, partial, targeted}\n  Level\u225c{surface, deep, exhaustive}\n}\n\n\u27e6\u0393:Rules\u27e7{\n  \u2200r\u2208DiagRequest:scope(r)\u2208Scope\n  \u2200r\u2208DiagRequest:depth(r)\u2208Level\n  scope(r)=full \u2227 depth(r)=deep \u21d2 include_connections=true\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  requestDiag\u225c\u03bb(scope, depth).DiagRequest{scope\u225cscope, depth\u225cdepth}\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.80;\u03c6\u225c100;\u03c4\u225c\u25ca\u207a\u207a\u27e9\n\n---\n\n\ud835\udd381.0.diag-reply@2026-03-02\n\u03b3\u2254system-diagnostics\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@agent-b\n  receiver\u225c@agent-a\n  intent\u225creply\n  id\u225c\"msg-002\"\n  timestamp\u225c1772668815\n  reply_to\u225c\"msg-001\"\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  DiagReport\u225c{bottleneck:Bottleneck, connections:ConnStats}\n  Bottleneck\u225c{component:String, load_pct:Float, latency_ms:Int}\n  ConnStats\u225c{active:Int, queued:Int, failed:Int, throughput_rps:Float}\n}\n\n\u27e6\u0393:Rules\u27e7{\n  \u2200b\u2208Bottleneck:load_pct(b)>85.0 \u21d2 severity=critical\n  \u2200c\u2208ConnStats:failed(c)>0 \u21d2 alert_triggered=true\n  load_pct=91.4 \u2227 queued=312 \u21d2 scaling_recommended=true\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  report\u225c\u03bb().DiagReport{\n    bottleneck\u225cBottleneck{\n      component\u225c\"db-primary\",\n      load_pct\u225c91.4,\n      latency_ms\u225c847\n    },\n    connections\u225cConnStats{\n      active\u225c2048,\n      queued\u225c312,\n      failed\u225c17,\n      throughput_rps\u225c4312.7\n    }\n  }\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.85;\u03c6\u225c100;\u03c4\u225c\u25ca\u207a\u207a\u27e9\n\n---\n\n\ud835\udd381.0.scale-request@2026-03-02\n\u03b3\u2254system-diagnostics\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@agent-a\n  receiver\u225c@agent-b\n  intent\u225crequest\n  id\u225c\"msg-003\"\n  timestamp\u225c1772668830\n  reply_to\u225c\"msg-002\"\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  ScaleDirective\u225c{target:String, strategy:Strategy, replicas:Int, priority:Priority}\n  Strategy\u225c{horizontal, vertical, hybrid}\n  Priority\u225c{low, normal, high, critical}\n}\n\n\u27e6\u0393:Rules\u27e7{\n  \u2200d\u2208ScaleDirective:replicas(d)\u22651\n  severity=critical \u2227 queued>300 \u21d2 priority=critical\n  strategy=horizontal \u21d2 replicas\u22653\n  replicas=5 \u2227 priority=critical \u21d2 execute_immediately=true\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  issueScale\u225c\u03bb(target, strategy, replicas, priority).ScaleDirective{\n    target\u225ctarget,\n    strategy\u225cstrategy,\n    replicas\u225creplicas,\n    priority\u225cpriority\n  }\n  executeScaling\u225c\u03bb().issueScale(\n    \"db-primary\",\n    horizontal,\n    5,\n    critical\n  )\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.82;\u03c6\u225c100;\u03c4\u225c\u25ca\u207a\u207a\u27e9",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 925,
+        "o200k_base": 954
+      },
+      "latency_ms": 23137,
+      "timestamp": "2026-03-02T07:09:57.747796+00:00"
+    },
+    {
+      "task_id": "L1-01",
+      "condition": "aisp",
+      "model": "claude-sonnet",
+      "run_number": 3,
+      "output": "\ud835\udd381.0.server-status-query@2026-03-02\n\u03b3\u2254infrastructure-monitoring\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@agent-a\n  receiver\u225c@agent-b\n  intent\u225cquery\n  id\u225c\"msg-001\"\n  timestamp\u225c1740873600\n  reply_to\u225c\"\"\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  WebServer\u225c{id:String, host:String, port:Integer, status:ServerStatus}\n  ServerStatus\u225c{online, degraded, offline, unknown}\n  StatusResponse\u225c{server:WebServer, uptime:Integer, latency_ms:Integer}\n}\n\n\u27e6\u0393:Rules\u27e7{\n  \u2200s\u2208WebServer:status(s)\u2208ServerStatus\n  status(s)=online\u21d2latency_ms(s)>0\n  status(s)=offline\u21d2uptime(s)=0\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  getServerStatus\u225c\u03bb(srv:WebServer).StatusResponse(srv)\n  isHealthy\u225c\u03bb(srv:WebServer).(status(srv)=online \u2227 latency_ms(srv)<500)\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.80;\u03c6\u225c100;\u03c4\u225c\u25ca\u207a\u207a\u27e9",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 290,
+        "o200k_base": 298
+      },
+      "latency_ms": 14142,
+      "timestamp": "2026-03-02T07:10:11.891567+00:00"
+    },
+    {
+      "task_id": "L1-02",
+      "condition": "aisp",
+      "model": "claude-sonnet",
+      "run_number": 3,
+      "output": "\ud835\udd381.0.server-status-report@2026-03-02\n\u03b3\u2254system-monitoring\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@agent-b\n  receiver\u225c@agent-a\n  intent\u225cinform\n  id\u225c\"msg-sb-001\"\n  timestamp\u225c1740873600\n  reply_to\u225c\"\"\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  ServerStatus\u225c{healthy,degraded,down}\n  UptimeReport\u225c{status:ServerStatus, uptime_pct:Float}\n}\n\n\u27e6\u0393:Rules\u27e7{\n  \u2200r\u2208UptimeReport:r.uptime_pct\u2208[0.0,100.0]\n  r.status=healthy\u2227r.uptime_pct\u226599.0\u21d2nominal(r)\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  reportUptime\u225c\u03bb(s,u).UptimeReport{status\u2254s, uptime_pct\u2254u}\n  currentReport\u225creportUptime(healthy, 99.7)\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.80;\u03c6\u225c100;\u03c4\u225c\u25ca\u207a\u207a\u27e9",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 266,
+        "o200k_base": 271
+      },
+      "latency_ms": 14018,
+      "timestamp": "2026-03-02T07:10:25.911177+00:00"
+    },
+    {
+      "task_id": "L1-03",
+      "condition": "aisp",
+      "model": "claude-sonnet",
+      "run_number": 3,
+      "output": "\ud835\udd381.0.error-report@2026-03-02\n\u03b3\u2254service-comm\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@service-agent\n  receiver\u225c@caller-agent\n  intent\u225cinform\n  id\u225c\"err-404-001\"\n  timestamp\u225c1740873600\n  reply_to\u225c\"req-001\"\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  HttpError\u225c{code:Int, status:String, resource:URI}\n  Status\u225c{found, not_found, forbidden, internal_error}\n  URI\u225cString\n}\n\n\u27e6\u0393:Rules\u27e7{\n  \u2200e\u2208HttpError:code(e)=404\u21d2status(e)=not_found\n  status(e)=not_found\u21d2\u2203resource(e):\u00acaccessible(resource(e))\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  reportError\u225c\u03bb(code,resource).HttpError{code\u2254code, status\u2254not_found, resource\u2254resource}\n  result\u225creportError(404, \"/api/requested-resource\")\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.82;\u03c6\u225c100;\u03c4\u225c\u25ca\u207a\u207a\u27e9",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 272,
+        "o200k_base": 277
+      },
+      "latency_ms": 14895,
+      "timestamp": "2026-03-02T07:10:40.807582+00:00"
+    },
+    {
+      "task_id": "L2-01",
+      "condition": "aisp",
+      "model": "claude-sonnet",
+      "run_number": 3,
+      "output": "\ud835\udd381.0.build-request@2026-03-02\n\u03b3\u2254ci-pipeline\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@ci-agent\n  receiver\u225c@builder-agent\n  intent\u225crequest\n  id\u225c\"ci-build-001\"\n  timestamp\u225c1740873600\n  reply_to\u225c\"null\"\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  BuildRequest\u225c{repo:URI, branch:String, commit:SHA, priority:Priority}\n  URI\u225cString\n  SHA\u225cString\n  Priority\u225c{low,normal,high,critical}\n  BuildStatus\u225c{queued,running,success,failure}\n  BuildResult\u225c{status:BuildStatus, artifacts:List[URI], logs:URI, duration:Int}\n}\n\n\u27e6\u0393:Rules\u27e7{\n  \u2200r\u2208BuildRequest:commit(r)\u2208SHA \u2227 len(commit(r))=40\n  \u2200r\u2208BuildRequest:branch(r)\u2260\u2205\n  commit(r)\u2208branch(r) \u21d2 build(r)\u2192BuildResult\n  \u00ac(commit(r)\u2208branch(r)) \u21d2 reject(r,\"commit-branch-mismatch\")\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  build\u225c\u03bb(req:BuildRequest).execute(\n    checkout(req.repo, req.branch, req.commit)\n    \u2192 compile()\n    \u2192 test()\n    \u2192 package()\n    \u2192 emit(BuildResult)\n  )\n  notify\u225c\u03bb(result:BuildResult).send(@ci-agent, result)\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.82;\u03c6\u225c100;\u03c4\u225c\u25ca\u207a\u207a\u27e9\n\n```\nBUILD_REQUEST {\n  repo   \u2254 \"https://github.com/org/invent-new-language\"\n  branch \u2254 \"feature/exp3-compositionality\"\n  commit \u2254 \"a3f8c21d904b77e1f592d0384c6b8e5a12097fcd\"\n  priority \u2254 high\n}\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 445,
+        "o200k_base": 458
+      },
+      "latency_ms": 17240,
+      "timestamp": "2026-03-02T07:10:58.049091+00:00"
+    },
+    {
+      "task_id": "L2-02",
+      "condition": "aisp",
+      "model": "claude-sonnet",
+      "run_number": 3,
+      "output": "\ud835\udd381.0.widget-negotiation@2026-03-02\n\u03b3\u2254procurement-negotiation\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@buyer-agent\n  receiver\u225c@supplier-agent\n  intent\u225ccounter\n  id\u225c\"msg-002\"\n  timestamp\u225c1740873600\n  reply_to\u225c\"msg-001\"\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  Offer\u225c{item:String, quantity:Int, unit_price:USD, total:USD}\n  Evidence\u225c{source:String, value:USD}\n  USD\u225cFloat\n}\n\n\u27e6\u0393:Rules\u27e7{\n  \u2200o\u2208Offer: o.total = o.quantity \u00d7 o.unit_price\n  \u2200p\u2208USD: p \u2264 market_avg(widget) \u21d2 p.justified = true\n  supplier_ask(2.50) > market_avg(2.15) \u21d2 counter_warranted = true\n  counter_price(2.20) > market_avg(2.15) \u2227 counter_price(2.20) < supplier_ask(2.50) \u21d2 offer.fair = true\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  counterOffer\u225c\u03bb(item, qty, price).Offer{\n    item\u225citem,\n    quantity\u225cqty,\n    unit_price\u225cprice,\n    total\u225cqty \u00d7 price\n  }\n  justification\u225c\u03bb(counter, market).{\n    rationale\u225c\"Counter reflects market conditions\",\n    delta_from_market\u225ccounter - market,\n    delta_from_ask\u225csupplier_ask - counter\n  }\n  proposedDeal\u225ccounterOffer(\"widget\", 10000, 2.20)\n  marketEvidence\u225cEvidence{source\u225c\"market-index-Q1-2026\", value\u225c2.15}\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.82;\u03c6\u225c100;\u03c4\u225c\u25ca\u207a\u207a\u27e9",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 423,
+        "o200k_base": 437
+      },
+      "latency_ms": 17821,
+      "timestamp": "2026-03-02T07:11:15.871125+00:00"
+    },
+    {
+      "task_id": "L2-03",
+      "condition": "aisp",
+      "model": "claude-sonnet",
+      "run_number": 3,
+      "output": "\ud835\udd381.0.task-distribute@2026-03-02\n\u03b3\u2254data-processing\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@planner\n  receiver\u225c@workers\n  intent\u225crequest\n  id\u225c\"dist-001\"\n  timestamp\u225c1740873600\n  reply_to\u225c\"null\"\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  Range\u225c{start:Int, end:Int}\n  Worker\u225c{id:String, segment:Range}\n  Task\u225c{operation:String, workers:List[Worker]}\n}\n\n\u27e6\u0393:Rules\u27e7{\n  \u2200w\u2208{w1,w2,w3}:segment(w)\u2208Range\n  segment(w1)={start:0, end:1000}\n  segment(w2)={start:1000, end:2000}\n  segment(w3)={start:2000, end:3000}\n  size(segment(w1))=size(segment(w2))=size(segment(w3))=1000\n  \u2200w:process(w)\u21d2report(w,planner)\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  split\u225c\u03bb(total,n).(total/n)\n  assign\u225c\u03bb(w,i).{start:(i\u00d7split(3000,3)), end:((i+1)\u00d7split(3000,3))}\n  dispatch\u225c\u03bb(task,workers).\u2200w\u2208workers:execute(w,task,assign(w,indexOf(w)))\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.82;\u03c6\u225c100;\u03c4\u225c\u25ca\u207a\u207a\u27e9",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 361,
+        "o200k_base": 367
+      },
+      "latency_ms": 16284,
+      "timestamp": "2026-03-02T07:11:32.156855+00:00"
+    },
+    {
+      "task_id": "L3-01",
+      "condition": "aisp",
+      "model": "claude-sonnet",
+      "run_number": 3,
+      "output": "\ud835\udd381.0.pipeline-orchestration@2026-03-02\n\u03b3\u2254data-pipeline\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@orchestrator\n  receiver\u225c@pipeline\n  intent\u225crequest\n  id\u225c\"msg-7f3a9c2e-0041\"\n  timestamp\u225c1740873600\n  reply_to\u225c\"null\"\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  Step\u225c{id:String, op:Operation, depends_on:List<String>}\n  Operation\u225c{fetch_url|parse_json|store_db}\n  Pipeline\u225c{steps:List<Step>, version:String}\n  Result\u225c{success:Bool, step_id:String, output:Any}\n  DBTarget\u225c{table:String, mode:WriteMode}\n  WriteMode\u225c{insert|upsert|replace}\n}\n\n\u27e6\u0393:Rules\u27e7{\n  \u2200s\u2208Pipeline.steps:s.depends_on\u2286{s'.id | s'\u2208Pipeline.steps \u2227 s'.id\u2260s.id}\n  step(\"parse\")\u21d2\u2203step(\"fetch\")\u2227status(step(\"fetch\"))=success\n  step(\"store\")\u21d2\u2203step(\"parse\")\u2227status(step(\"parse\"))=success\n  \u00acsuccess(s)\u21d2halt(pipeline)\u2227notify(@orchestrator, s.id)\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  execute\u225c\u03bb(pipeline).sequence(\n    fetch(url\u2254\"https://api.example.com/data/v2/records\",\n          method\u2254GET,\n          headers\u2254{\"Accept\":\"application/json\"}),\n    parse(input\u2254prev.body,\n          format\u2254json,\n          validate\u2254true),\n    store(input\u2254prev.result,\n          target\u2254DBTarget{table\u2254\"records\", mode\u2254upsert},\n          key\u2254\"id\")\n  )\n  onError\u225c\u03bb(step, err).alert(@orchestrator, {step_id\u2254step.id, error\u2254err.message})\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.82;\u03c6\u225c100;\u03c4\u225c\u25ca\u207a\u207a\u27e9",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 483,
+        "o200k_base": 487
+      },
+      "latency_ms": 18853,
+      "timestamp": "2026-03-02T07:11:51.012630+00:00"
+    },
+    {
+      "task_id": "L3-02",
+      "condition": "aisp",
+      "model": "claude-sonnet",
+      "run_number": 3,
+      "output": "\ud835\udd381.0.incident-alert@2026-03-02\n\u03b3\u2254incident-management\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@monitor-agent\n  receiver\u225c@ops-team\n  intent\u225calert\n  id\u225c\"inc-pay-20260302-001\"\n  timestamp\u225c1740873600\n  reply_to\u225c\"none\"\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  Incident\u225c{service:String, severity:Level, priority:Int, latency:Float, status:State}\n  Level\u225c{sev1, sev2, sev3, sev4}\n  State\u225c{active, resolved, mitigating}\n  CausalChain\u225c{root:Cause, intermediate:Cause, symptom:Symptom}\n  Cause\u225c{label:String, metric:String}\n  Symptom\u225c{label:String, threshold:Float, observed:Float}\n  Resolution\u225c{action:String, owner:Role, urgency:Priority}\n  Priority\u225c{p1, p2, p3, p4}\n  Role\u225c{dba, sre, oncall}\n}\n\n\u27e6\u0393:Rules\u27e7{\n  \u2200i\u2208Incident: i.severity=sev2 \u21d2 i.priority\u22644\n  \u2200i\u2208Incident: i.latency>2.0 \u21d2 alert(ops-team, i)\n  \u2200c\u2208CausalChain: c.root\u2192c.intermediate\u2192c.symptom\n  traffic_spike(payments-service) \u21d2 db_pool_exhaustion(payments-db)\n  db_pool_exhaustion(payments-db) \u21d2 high_latency(payments-service)\n  high_latency(payments-service) \u2227 latency>2.0 \u21d2 severity(sev2)\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  incident\u225c\u03bb(svc, sev, pri).{\n    service\u2254svc,\n    severity\u2254sev,\n    priority\u2254pri,\n    status\u2254active\n  }\n  causal_chain\u225c\u03bb(root, intermediate, symptom).{\n    root\u2254root,\n    intermediate\u2254intermediate,\n    symptom\u2254symptom,\n    direction\u2254root\u2192intermediate\u2192symptom\n  }\n  resolve\u225c\u03bb(action, owner, urgency).{\n    action\u2254action,\n    owner\u2254owner,\n    urgency\u2254urgency\n  }\n  current_incident\u225cincident(payments-service, sev2, 4)\n  observed_chain\u225ccausal_chain(\n    {label\u2254\"traffic-spike\", metric\u2254\"rps>baseline\u00d73.2\"},\n    {label\u2254\"db-connection-pool-exhaustion\", metric\u2254\"pool-utilization=100%\"},\n    {label\u2254\"high-latency\", threshold\u22542.0, observed\u22544.7}\n  )\n  recommended_resolution\u225cresolve(\n    \"scale-db-connection-pool \u2227 enable-rate-limiting \u2227 restart-pool-manager\",\n    oncall,\n    p4\n  )\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.82;\u03c6\u225c100;\u03c4\u225c\u25ca\u207a\u207a\u27e9",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 687,
+        "o200k_base": 684
+      },
+      "latency_ms": 21267,
+      "timestamp": "2026-03-02T07:12:12.281017+00:00"
+    },
+    {
+      "task_id": "L3-03",
+      "condition": "aisp",
+      "model": "claude-sonnet",
+      "run_number": 3,
+      "output": "\ud835\udd381.0.diagnostics-query@2026-03-02\n\u03b3\u2254system-diagnostics\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@agent-a\n  receiver\u225c@agent-b\n  intent\u225cquery\n  id\u225c\"msg-001\"\n  timestamp\u225c1740873600\n  reply_to\u225c\"\"\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  DiagRequest\u225c{scope:Scope, priority:Priority}\n  Scope\u225c{full, partial, targeted}\n  Priority\u225c{low, normal, high, critical}\n}\n\n\u27e6\u0393:Rules\u27e7{\n  \u2200r\u2208DiagRequest:scope(r)\u2208Scope\n  \u2200r\u2208DiagRequest:priority(r)\u2208Priority\n  priority(r)=high\u21d2include_bottlenecks=true\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  requestDiag\u225c\u03bb(scope,priority).DiagRequest{scope\u225cscope,priority\u225cpriority}\n  query\u225crequestDiag(full,high)\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.82;\u03c6\u225c100;\u03c4\u225c\u25ca\u207a\u207a\u27e9\n\n---\n\n\ud835\udd381.0.diagnostics-reply@2026-03-02\n\u03b3\u2254system-diagnostics\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@agent-b\n  receiver\u225c@agent-a\n  intent\u225creply\n  id\u225c\"msg-002\"\n  timestamp\u225c1740873615\n  reply_to\u225c\"msg-001\"\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  DiagReport\u225c{bottleneck:Bottleneck, connections:ConnStats, health:HealthStatus}\n  Bottleneck\u225c{component:String, utilization:Float, threshold:Float}\n  ConnStats\u225c{active:Int, queued:Int, failed:Int, latency_ms:Float}\n  HealthStatus\u225c{nominal, degraded, critical}\n}\n\n\u27e6\u0393:Rules\u27e7{\n  \u2200b\u2208Bottleneck:utilization(b)>threshold(b)\u21d2health=degraded\n  \u2200c\u2208ConnStats:failed(c)>0.05*active(c)\u21d2alert=true\n  health=degraded\u2227utilization>0.90\u21d2health=critical\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  report\u225cDiagReport{\n    bottleneck\u225cBottleneck{\n      component\u225c\"db-primary\",\n      utilization\u225c0.94,\n      threshold\u225c0.80\n    },\n    connections\u225cConnStats{\n      active\u225c1240,\n      queued\u225c387,\n      failed\u225c42,\n      latency_ms\u225c834.7\n    },\n    health\u225ccritical\n  }\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.91;\u03c6\u225c100;\u03c4\u225c\u25ca\u207a\u207a\u27e9\n\n---\n\n\ud835\udd381.0.scale-request@2026-03-02\n\u03b3\u2254system-diagnostics\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@agent-a\n  receiver\u225c@agent-b\n  intent\u225crequest\n  id\u225c\"msg-003\"\n  timestamp\u225c1740873630\n  reply_to\u225c\"msg-002\"\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  ScaleRequest\u225c{target:String, action:ScaleAction, factor:Float, reason:String}\n  ScaleAction\u225c{scale_up, scale_out, scale_down}\n  ScalePolicy\u225c{immediate, graceful, scheduled}\n}\n\n\u27e6\u0393:Rules\u27e7{\n  \u2200s\u2208ScaleRequest:factor(s)>1.0\u21d2action(s)\u2208{scale_up,scale_out}\n  health=critical\u2227queued>300\u21d2policy=immediate\n  \u2200s\u2208ScaleRequest:factor(s)\u2208[1.1,5.0]\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  scale\u225c\u03bb(target,action,factor,policy).ScaleRequest{\n    target\u225ctarget,\n    action\u225caction,\n    factor\u225cfactor,\n    reason\u225c\"db-primary critical utilization (0.94); 387 queued connections; latency 834ms\"\n  }\n  execute\u225cscale(\"db-primary\", scale_out, 2.5, immediate)\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.88;\u03c6\u225c100;\u03c4\u225c\u25ca\u207a\u207a\u27e9",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 999,
+        "o200k_base": 1011
+      },
+      "latency_ms": 24022,
+      "timestamp": "2026-03-02T07:12:36.304685+00:00"
+    }
+  ]
+}

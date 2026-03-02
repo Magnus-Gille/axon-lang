@@ -1,0 +1,415 @@
+{
+  "experiment": "exp0_learnability",
+  "model": "codex",
+  "model_display": "GPT-5.3 Codex",
+  "timestamp": "2026-03-02T07:25:51.382204+00:00",
+  "total_runs": 27,
+  "valid_count": 27,
+  "results": [
+    {
+      "task_id": "L1-01",
+      "condition": "aisp",
+      "model": "codex",
+      "run_number": 1,
+      "output": "\ud835\udd381.0.status-query@2026-03-02\n\u03b3\u2254agent-comm\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@agent-a\n  receiver\u225c@agent-b\n  intent\u225cquery\n  id\u225c\"msg-a2b-001\"\n  timestamp\u225c1772409600\n  reply_to\u225c\"\"\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  Status\u225c{healthy,degraded,down,unknown}\n  Server\u225c{name:String,health:Status}\n  StatusQuery\u225c{asker:String,target:String,field:{health}}\n}\n\n\u27e6\u0393:Rules\u27e7{\n  \u2200s\u2208Server:health(s)\u2208Status\n  \u2200q\u2208StatusQuery:(q.field=health)\u21d2(q.target\u2260\"\")\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  getStatus\u225c\u03bb(s).health(s)\n  mkQuery\u225c\u03bb(a,t).{asker:a,target:t,field:health}\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.82;\u03c6\u225c100;\u03c4\u225c\u25ca\u207a\u207a\u27e9",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 257,
+        "o200k_base": 266
+      },
+      "latency_ms": 19275,
+      "timestamp": "2026-03-02T07:12:55.582888+00:00"
+    },
+    {
+      "task_id": "L1-02",
+      "condition": "aisp",
+      "model": "codex",
+      "run_number": 1,
+      "output": "\ud835\udd381.0.server-health-inform@2026-03-02\n\u03b3\u2254agent-comm\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@agent-b\n  receiver\u225c@agent-a\n  intent\u225cinform\n  id\u225c\"m-server-health-001\"\n  timestamp\u225c1772409600\n  reply_to\u225c\"\"\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  Status\u225c{healthy,degraded,down}\n  ServerReport\u225c{name:String,health:Status,uptime:Float}\n}\n\n\u27e6\u0393:Rules\u27e7{\n  \u2200r\u2208ServerReport:health(r)\u2208Status \u2227 uptime(r)\u22650 \u2227 uptime(r)\u2264100\n  \u2203r\u2208ServerReport:(name(r)=\"primary-server\" \u2227 health(r)=healthy \u2227 uptime(r)=99.7)\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  getHealth\u225c\u03bb(r).health(r)\n  getUptime\u225c\u03bb(r).uptime(r)\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.997;\u03c6\u225c100;\u03c4\u225c\u25ca\u207a\u207a\u27e9",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 258,
+        "o200k_base": 271
+      },
+      "latency_ms": 18768,
+      "timestamp": "2026-03-02T07:13:14.353843+00:00"
+    },
+    {
+      "task_id": "L1-03",
+      "condition": "aisp",
+      "model": "codex",
+      "run_number": 1,
+      "output": "\ud835\udd381.0.not-found-report@2026-03-02\n\u03b3\u2254agent-comm\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@service-agent\n  receiver\u225c@caller-agent\n  intent\u225calert\n  id\u225c\"msg-404-0001\"\n  timestamp\u225c1772409600\n  reply_to\u225c\"req-0001\"\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  HttpCode\u225c{200,400,401,403,404,500}\n  ErrorReport\u225c{service:String, endpoint:String, code:HttpCode, reason:String}\n}\n\n\u27e6\u0393:Rules\u27e7{\n  \u2200e\u2208ErrorReport:code(e)\u2208HttpCode\n  \u2200e\u2208ErrorReport:code(e)=404\u21d2reason(e)=\"not-found\"\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  report404\u225c\u03bb(svc,ep).{service:svc,endpoint:ep,code:404,reason:\"not-found\"}\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.93;\u03c6\u225c100;\u03c4\u225c\u25ca\u207a\u207a\u27e9",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 257,
+        "o200k_base": 266
+      },
+      "latency_ms": 19522,
+      "timestamp": "2026-03-02T07:13:33.877656+00:00"
+    },
+    {
+      "task_id": "L2-01",
+      "condition": "aisp",
+      "model": "codex",
+      "run_number": 1,
+      "output": "\ud835\udd381.0.build-request@2026-03-02\n\u03b3\u2254ci-build\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@ci-agent\n  receiver\u225c@builder-agent\n  intent\u225crequest\n  id\u225c\"ci-msg-4821\"\n  timestamp\u225c1772409600\n  reply_to\u225c\"ci-run-7710\"\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  Repo\u225c{url:String, branch:String, commit:String}\n  BuildSpec\u225c{repo:Repo, target:{linux-amd64,linux-arm64}, clean:Boolean}\n  QueueState\u225c{pending,queued,started,success,failed}\n}\n\n\u27e6\u0393:Rules\u27e7{\n  \u2200b\u2208BuildSpec:target(b)\u2208{linux-amd64,linux-arm64}\n  (branch(repo(b))\u2260\"\" \u2227 |commit(repo(b))|=40 \u2227 clean(b)=true)\u21d2enqueue(b)\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  mkBuild\u225c\u03bb(u,br,sha,t).{repo:{url:u,branch:br,commit:sha},target:t,clean:true}\n  payload\u225c\u03bb().mkBuild(\"git@github.com:acme/invent-new-language.git\",\"feature/lexer-v2\",\"9f2c6d8b4e3a1c7d5f9a0b2c4d6e8f1a3b5c7d9e\",\"linux-amd64\")\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.83;\u03c6\u225c100;\u03c4\u225c\u25ca\u207a\u207a\u27e9",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 367,
+        "o200k_base": 375
+      },
+      "latency_ms": 26044,
+      "timestamp": "2026-03-02T07:13:59.923563+00:00"
+    },
+    {
+      "task_id": "L2-02",
+      "condition": "aisp",
+      "model": "codex",
+      "run_number": 1,
+      "output": "\ud835\udd381.0.widget-counter@2026-03-02\n\u03b3\u2254procurement-negotiation\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@buyer-agent\n  receiver\u225c@supplier-agent\n  intent\u225ccounter\n  id\u225c\"msg-widget-counter-001\"\n  timestamp\u225c1772409600\n  reply_to\u225c\"msg-supplier-offer-001\"\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  Money\u225cDecimal\n  Qty\u225cInteger\n  Offer\u225c{party:String, qty:Qty, unit_price:Money, rationale:String}\n  MarketRef\u225c{avg_price:Money}\n}\n\n\u27e6\u0393:Rules\u27e7{\n  \u2200o\u2208Offer: qty(o)>0 \u2227 unit_price(o)>0\n  \u2200m\u2208MarketRef: avg_price(m)>0\n  (unit_price(counter_offer())<unit_price(supplier_offer()) \u2227 unit_price(counter_offer())\u2265avg_price(market_ref()))\u21d2counter_is_reasoned(counter_offer())\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  supplier_offer\u225c\u03bb().{party:\"supplier\",qty:10000,unit_price:2.50,rationale:\"proposed unit price\"}\n  counter_offer\u225c\u03bb().{party:\"buyer\",qty:10000,unit_price:2.20,rationale:\"market average is 2.15\"}\n  market_ref\u225c\u03bb().{avg_price:2.15}\n  total_cost\u225c\u03bb(o).qty(o)\u00d7unit_price(o)\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.91;\u03c6\u225c100;\u03c4\u225c\u25ca\u207a\u207a\u27e9",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 369,
+        "o200k_base": 375
+      },
+      "latency_ms": 32344,
+      "timestamp": "2026-03-02T07:14:32.271640+00:00"
+    },
+    {
+      "task_id": "L2-03",
+      "condition": "aisp",
+      "model": "codex",
+      "run_number": 1,
+      "output": "\ud835\udd381.0.task-dispatch@2026-03-02\n\u03b3\u2254data-processing\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@planner\n  receiver\u225c@worker-cluster\n  intent\u225crequest\n  id\u225c\"msg-range-0-3000-split-3\"\n  timestamp\u225c1772409600\n  reply_to\u225c\"planner-root-001\"\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  Worker\u225c{@w1,@w2,@w3}\n  Segment\u225c{start:Int,end:Int}\n  Assignment\u225c{worker:Worker,segment:Segment}\n  Plan\u225cList[Assignment]\n}\n\n\u27e6\u0393:Rules\u27e7{\n  \u2200a:Assignment\n  a\u2208dispatch()\u21d2(0\u2264a.segment.start \u2227 a.segment.start<a.segment.end \u2227 a.segment.end\u22643000 \u2227 a.segment.end\u2212a.segment.start=1000)\n  \u2200x,y:Assignment\n  (x\u2208dispatch() \u2227 y\u2208dispatch() \u2227 x\u2260y)\u21d2(x.segment.end\u2264y.segment.start \u2228 y.segment.end\u2264x.segment.start)\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  split3\u225c\u03bb(r).[{start:0,end:1000},{start:1000,end:2000},{start:2000,end:3000}]\n  dispatch\u225c\u03bb().[\n    {worker:@w1,segment:{start:0,end:1000}},\n    {worker:@w2,segment:{start:1000,end:2000}},\n    {worker:@w3,segment:{start:2000,end:3000}}\n  ]\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.92;\u03c6\u225c100;\u03c4\u225c\u25ca\u207a\u207a\u27e9",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 399,
+        "o200k_base": 405
+      },
+      "latency_ms": 36143,
+      "timestamp": "2026-03-02T07:15:08.419633+00:00"
+    },
+    {
+      "task_id": "L3-01",
+      "condition": "aisp",
+      "model": "codex",
+      "run_number": 1,
+      "output": "\ud835\udd381.0.pipeline-instruction@2026-03-02\n\u03b3\u2254orchestration\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@orchestrator\n  receiver\u225c@pipeline\n  intent\u225crequest\n  id\u225c\"msg-20260302-001\"\n  timestamp\u225c1772409600\n  reply_to\u225c\"root-000\"\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  URL\u225cString\n  JSONDoc\u225cObject\n  DBConn\u225c{name:String,status:{ready,busy,down}}\n  Task\u225c{url:URL,db:DBConn}\n}\n\n\u27e6\u0393:Rules\u27e7{\n  \u2200u\u2208URL,d\u2208DBConn:reachable(u)\u2227status(d)=ready\n  reachable(u)\u2227status(d)=ready\u21d2store(d,parseJSON(fetch(u)))=ok\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  run\u225c\u03bb(u,d).store(d,parseJSON(fetch(u)))\n  dispatch\u225c\u03bb(t).run(t.url,t.db)\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.86;\u03c6\u225c100;\u03c4\u225c\u25ca\u207a\u207a\u27e9",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 274,
+        "o200k_base": 279
+      },
+      "latency_ms": 24956,
+      "timestamp": "2026-03-02T07:15:33.383621+00:00"
+    },
+    {
+      "task_id": "L3-02",
+      "condition": "aisp",
+      "model": "codex",
+      "run_number": 1,
+      "output": "\ud835\udd381.0.incident-alert@2026-03-02\n\u03b3\u2254incident-response\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@payments-monitor\n  receiver\u225c@incident-manager\n  intent\u225calert\n  id\u225c\"inc-payments-sev2-p4-20260302-001\"\n  timestamp\u225c1772409600\n  reply_to\u225c\"none\"\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  Severity\u225c{1,2,3,4,5}\n  Priority\u225c{1,2,3,4,5}\n  IncidentAlert\u225c{service:String,severity:Severity,priority:Priority,condition:String,causal_chain:List<String>,recommendation:String}\n}\n\n\u27e6\u0393:Rules\u27e7{\n  \u2200a\u2208IncidentAlert:service(a)=\"payments\" \u2227 severity(a)=2 \u2227 priority(a)=4\n  traffic_spike(\"payments\")\u21d2db_connection_pool_exhaustion(\"payments-db\")\n  db_connection_pool_exhaustion(\"payments-db\")\u21d2latency_ms(\"payments\")>2000\n  latency_ms(\"payments\")>2000\u21d2publish_alert(\"payments\",2,4)\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  buildAlert\u225c\u03bb().{service:\"payments\",severity:2,priority:4,condition:\"latency>2s\",causal_chain:[\"traffic spike\",\"database connection pool exhaustion\",\"high latency\"],recommendation:\"Increase DB connection pool capacity and app replicas immediately, apply burst rate-limiting, and add autoscaling plus pool-utilization alerts to prevent recurrence.\"}\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.88;\u03c6\u225c100;\u03c4\u225c\u25ca\u207a\u207a\u27e9",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 386,
+        "o200k_base": 390
+      },
+      "latency_ms": 40394,
+      "timestamp": "2026-03-02T07:16:13.783218+00:00"
+    },
+    {
+      "task_id": "L3-03",
+      "condition": "aisp",
+      "model": "codex",
+      "run_number": 1,
+      "output": "\ud835\udd381.0.diagnostics-query@2026-03-02\n\u03b3\u2254agent-comm\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@agent-a\n  receiver\u225c@agent-b\n  intent\u225cquery\n  id\u225c\"m-001\"\n  timestamp\u225c1772413200\n  reply_to\u225c\"thread-000\"\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  Service\u225c{name:String, region:String}\n  DiagQuery\u225c{service:Service, window_min:Int, metrics:Set}\n}\n\n\u27e6\u0393:Rules\u27e7{\n  \u2200q\u2208DiagQuery:q.window_min>0\n  q.metrics\u2260\u2205\u21d2query_ready(q)=true\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  buildDiagQuery\u225c\u03bb(s,w,m).{service:s,window_min:w,metrics:m}\n  payload\u225cbuildDiagQuery({name:\"gateway\",region:\"us-east-1\"},15,{\"cpu\",\"latency\",\"connections\",\"errors\"})\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.78;\u03c6\u225c100;\u03c4\u225c\u25ca\u207a\u207a\u27e9\n\n\ud835\udd381.0.diagnostics-reply@2026-03-02\n\u03b3\u2254agent-comm\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@agent-b\n  receiver\u225c@agent-a\n  intent\u225creply\n  id\u225c\"m-002\"\n  timestamp\u225c1772413260\n  reply_to\u225c\"m-001\"\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  ConnectionStats\u225c{active:Int, idle:Int, fail_rate:Float, retry_rate:Float, p95_ms:Int}\n  Bottleneck\u225c{component:String, reason:String, severity:String, queue_ms:Int}\n  DiagReply\u225c{service:String, bottleneck:Bottleneck, conn:ConnectionStats}\n}\n\n\u27e6\u0393:Rules\u27e7{\n  \u2200r\u2208DiagReply:r.conn.active\u22650\n  r.bottleneck.severity=\"high\"\u21d2scale_required(r)=true\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  composeReply\u225c\u03bb().{service:\"gateway\",bottleneck:{component:\"db_pool\",reason:\"pool_saturation\",severity:\"high\",queue_ms:420},conn:{active:1820,idle:74,fail_rate:0.032,retry_rate:0.118,p95_ms:187}}\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.82;\u03c6\u225c100;\u03c4\u225c\u25ca\u207a\u207a\u27e9\n\n\ud835\udd381.0.scaling-request@2026-03-02\n\u03b3\u2254agent-comm\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@agent-a\n  receiver\u225c@agent-b\n  intent\u225crequest\n  id\u225c\"m-003\"\n  timestamp\u225c1772413320\n  reply_to\u225c\"m-002\"\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  ScaleRequest\u225c{service:String, current_replicas:Int, target_replicas:Int, reason:String, deadline_s:Int}\n}\n\n\u27e6\u0393:Rules\u27e7{\n  \u2200s\u2208ScaleRequest:s.target_replicas>s.current_replicas\n  s.reason=\"pool_saturation\"\u21d2priority(s)=\"high\"\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  buildScaleRequest\u225c\u03bb().{service:\"gateway\",current_replicas:6,target_replicas:12,reason:\"pool_saturation\",deadline_s:300}\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.79;\u03c6\u225c100;\u03c4\u225c\u25ca\u207a\u207a\u27e9",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 825,
+        "o200k_base": 849
+      },
+      "latency_ms": 43845,
+      "timestamp": "2026-03-02T07:16:57.633528+00:00"
+    },
+    {
+      "task_id": "L1-01",
+      "condition": "aisp",
+      "model": "codex",
+      "run_number": 2,
+      "output": "\ud835\udd381.0.web-server-status-query@2026-03-02\n\u03b3\u2254agent-comm\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@agent-a\n  receiver\u225c@agent-b\n  intent\u225cquery\n  id\u225c\"m-webstatus-001\"\n  timestamp\u225c1772409600\n  reply_to\u225c\"\"\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  Status\u225c{healthy,degraded,down,unknown}\n  Server\u225c{name:String,url:String,health:Status}\n  StatusQuery\u225c{from:String,to:String,target:Server}\n}\n\n\u27e6\u0393:Rules\u27e7{\n  \u2200s\u2208Server:health(s)\u2208Status\n  \u2200q\u2208StatusQuery:(from(q)=\"@agent-a\" \u2227 to(q)=\"@agent-b\")\u21d2\u2203st\u2208Status:st=health(target(q))\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  getStatus\u225c\u03bb(srv).health(srv)\n  askStatus\u225c\u03bb(srv).StatusQuery{from:\"@agent-a\",to:\"@agent-b\",target:srv}\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.80;\u03c6\u225c100;\u03c4\u225c\u25ca\u207a\u207a\u27e9",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 284,
+        "o200k_base": 294
+      },
+      "latency_ms": 26212,
+      "timestamp": "2026-03-02T07:17:23.848537+00:00"
+    },
+    {
+      "task_id": "L1-02",
+      "condition": "aisp",
+      "model": "codex",
+      "run_number": 2,
+      "output": "\ud835\udd381.0.server-health-inform@2026-03-02\n\u03b3\u2254agent-comm\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@agent-b\n  receiver\u225c@agent-a\n  intent\u225cinform\n  id\u225c\"msg-server-health-001\"\n  timestamp\u225c1772409600\n  reply_to\u225c\"none\"\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  Percentage\u225cReal[0,100]\n  Status\u225c{healthy,degraded,down}\n  ServerReport\u225c{server:String,status:Status,uptime:Percentage}\n}\n\n\u27e6\u0393:Rules\u27e7{\n  \u2200r\u2208ServerReport:status(r)\u2208Status \u2227 uptime(r)\u2208Percentage\n  \u2200r\u2208ServerReport:status(r)=healthy\u21d2uptime(r)\u226599.0\n  \u2203r\u2208ServerReport:server(r)=\"primary\" \u2227 status(r)=healthy \u2227 uptime(r)=99.7\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  mkReport\u225c\u03bb(name,u).{server:name,status:healthy,uptime:u}\n  getStatus\u225c\u03bb(r).status(r)\n  getUptime\u225c\u03bb(r).uptime(r)\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.997;\u03c6\u225c100;\u03c4\u225c\u25ca\u207a\u207a\u27e9",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 304,
+        "o200k_base": 317
+      },
+      "latency_ms": 22508,
+      "timestamp": "2026-03-02T07:17:46.359315+00:00"
+    },
+    {
+      "task_id": "L1-03",
+      "condition": "aisp",
+      "model": "codex",
+      "run_number": 2,
+      "output": "\ud835\udd381.0.not-found-report@2026-03-02\n\u03b3\u2254agent-comm\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@service-agent\n  receiver\u225c@caller-agent\n  intent\u225calert\n  id\u225c\"msg-404-0001\"\n  timestamp\u225c1772409600\n  reply_to\u225c\"req-8842\"\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  NotFoundError\u225c{code:Int, reason:String, resource:String}\n  ServiceReply\u225c{status:String, error:NotFoundError}\n}\n\n\u27e6\u0393:Rules\u27e7{\n  \u2200e\u2208NotFoundError:e.code=404\n  e.code=404\u21d2e.reason=\"not-found\"\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  build404\u225c\u03bb(r).{status:\"error\", error:{code:404, reason:\"not-found\", resource:r}}\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.91;\u03c6\u225c100;\u03c4\u225c\u25ca\u207a\u207a\u27e9",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 234,
+        "o200k_base": 246
+      },
+      "latency_ms": 28015,
+      "timestamp": "2026-03-02T07:18:14.377349+00:00"
+    },
+    {
+      "task_id": "L2-01",
+      "condition": "aisp",
+      "model": "codex",
+      "run_number": 2,
+      "output": "\ud835\udd381.0.build-request@2026-03-02\n\u03b3\u2254ci-build\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@ci-agent\n  receiver\u225c@builder-agent\n  intent\u225crequest\n  id\u225c\"msg-ci-build-20260302-001\"\n  timestamp\u225c1772409600\n  reply_to\u225c\"pipeline-run-88421\"\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  Hash40\u225cString\n  RepoRef\u225c{repo:String,branch:String,commit:Hash40}\n  BuildReq\u225c{target:RepoRef,clean:Boolean,verify_tests:Boolean}\n}\n\n\u27e6\u0393:Rules\u27e7{\n  \u2200r:r\u2208BuildReq\n  (len(r.target.commit)=40 \u2227 r.target.branch\u2260\"\" \u2227 r.target.repo\u2260\"\")\u21d2valid(r)\n  valid(r)\u21d2enqueue_build(r)\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  makeReq\u225c\u03bb(repo,branch,commit).{target:{repo:repo,branch:branch,commit:commit},clean:true,verify_tests:true}\n  payload\u225cmakeReq(\"github.com/magnus/invent-new-language\",\"feature/ci-builder-handshake\",\"9f3c2b7a1d4e6f8091ab23cd45ef6789a0bc1234\")\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.82;\u03c6\u225c100;\u03c4\u225c\u25ca\u207a\u207a\u27e9",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 335,
+        "o200k_base": 341
+      },
+      "latency_ms": 29194,
+      "timestamp": "2026-03-02T07:18:43.574993+00:00"
+    },
+    {
+      "task_id": "L2-02",
+      "condition": "aisp",
+      "model": "codex",
+      "run_number": 2,
+      "output": "\ud835\udd381.0.widget-price-counter@2026-03-02\n\u03b3\u2254trade-negotiation\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@buyer-agent\n  receiver\u225c@supplier-agent\n  intent\u225ccounter\n  id\u225c\"msg-widget-ctr-001\"\n  timestamp\u225c1772409600\n  reply_to\u225c\"msg-widget-offer-001\"\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  Offer\u225c{party:String, item:String, qty:Int, unit_price:Decimal, currency:String, total:Decimal}\n  MarketRef\u225c{item:String, avg_unit_price:Decimal, currency:String}\n  CounterOffer\u225c{from:String, to:String, item:String, qty:Int, unit_price:Decimal, currency:String, rationale:MarketRef}\n}\n\n\u27e6\u0393:Rules\u27e7{\n  \u2200o\u2208Offer:o.qty>0 \u2227 o.unit_price>0\n  (o.qty>0 \u2227 o.unit_price>0)\u21d2(o.total=o.qty\u00d7o.unit_price)\n  \u2200c\u2208CounterOffer:c.unit_price>0 \u2227 c.rationale.avg_unit_price>0\n  (c.unit_price\u22642.50 \u2227 c.rationale.avg_unit_price=2.15)\u21d2(c.unit_price=2.20)\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  totalCost\u225c\u03bb(q,p).q\u00d7p\n  supplierOffer\u225c\u03bb().{party:\"supplier\",item:\"widget\",qty:10000,unit_price:2.50,currency:\"USD\",total:totalCost(10000,2.50)}\n  buyerCounter\u225c\u03bb().{from:\"buyer\",to:\"supplier\",item:\"widget\",qty:10000,unit_price:2.20,currency:\"USD\",rationale:{item:\"widget\",avg_unit_price:2.15,currency:\"USD\"}}\n  savingsVsOffer\u225c\u03bb().totalCost(10000,2.50)-totalCost(10000,2.20)\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.86;\u03c6\u225c100;\u03c4\u225c\u25ca\u207a\u207a\u27e9",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 472,
+        "o200k_base": 481
+      },
+      "latency_ms": 29910,
+      "timestamp": "2026-03-02T07:19:13.488779+00:00"
+    },
+    {
+      "task_id": "L2-03",
+      "condition": "aisp",
+      "model": "codex",
+      "run_number": 2,
+      "output": "\ud835\udd381.0.range-split@2026-03-02\n\u03b3\u2254distributed-processing\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@planner\n  receiver\u225c@orchestrator\n  intent\u225cinform\n  id\u225c\"msg-3000-split-3\"\n  timestamp\u225c1772409600\n  reply_to\u225c\"task-3000\"\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  Worker\u225c{@worker-1,@worker-2,@worker-3}\n  Segment\u225c{start:Int,end:Int,worker:Worker}\n  Plan\u225c[Segment]\n}\n\n\u27e6\u0393:Rules\u27e7{\n  \u2200s\u2208Plan:(s.end\u2212s.start)=1000 \u2227 0\u2264s.start<s.end\u22643000\n  workers=3 \u2227 range=[0,3000)\u21d2plan=[{start:0,end:1000,worker:@worker-1},{start:1000,end:2000,worker:@worker-2},{start:2000,end:3000,worker:@worker-3}]\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  split3\u225c\u03bb(r0,r1,ws).[{start:r0,end:r0+1000,worker:ws[0]},{start:r0+1000,end:r0+2000,worker:ws[1]},{start:r0+2000,end:r1,worker:ws[2]}]\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.93;\u03c6\u225c100;\u03c4\u225c\u25ca\u207a\u207a\u27e9",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 352,
+        "o200k_base": 359
+      },
+      "latency_ms": 24379,
+      "timestamp": "2026-03-02T07:19:37.871489+00:00"
+    },
+    {
+      "task_id": "L3-01",
+      "condition": "aisp",
+      "model": "codex",
+      "run_number": 2,
+      "output": "\ud835\udd381.0.pipeline-exec-request@2026-03-02\n\u03b3\u2254workflow-orchestration\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@orchestrator\n  receiver\u225c@pipeline\n  intent\u225crequest\n  id\u225c\"msg-9f32a1\"\n  timestamp\u225c1772409600\n  reply_to\u225c\"root-0\"\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  URL\u225cString\n  JSON\u225cObject\n  DBRef\u225c{engine:String,table:String}\n  Step\u225c{fetch,parse_json,store}\n  PipelineTask\u225c{url:URL,format:{json},target:DBRef,steps:[Step]}\n}\n\n\u27e6\u0393:Rules\u27e7{\n  \u2200t\u2208PipelineTask:steps(t)=[fetch,parse_json,store]\n  parse_json\u2208steps(t)\u21d2format(t)=json\n  store\u2208steps(t)\u21d2target(t)\u2208DBRef\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  mkTask\u225c\u03bb(u,db).{url:u,format:json,target:db,steps:[fetch,parse_json,store]}\n  execPlan\u225c\u03bb(t).fetch(t.url)\u2192parse_json\u2192store(t.target)\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.86;\u03c6\u225c100;\u03c4\u225c\u25ca\u207a\u207a\u27e9",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 320,
+        "o200k_base": 323
+      },
+      "latency_ms": 22393,
+      "timestamp": "2026-03-02T07:20:00.267456+00:00"
+    },
+    {
+      "task_id": "L3-02",
+      "condition": "aisp",
+      "model": "codex",
+      "run_number": 2,
+      "output": "\ud835\udd381.0.incident-alert@2026-03-02\n\u03b3\u2254incident-response\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@monitor\n  receiver\u225c@payments-oncall\n  intent\u225calert\n  id\u225c\"inc-payments-latency-sev2-p4-1772409600\"\n  timestamp\u225c1772409600\n  reply_to\u225c\"root-incident-stream\"\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  Service\u225c{payments}\n  Severity\u225c{1,2,3,4,5}\n  Priority\u225c{1,2,3,4,5}\n  Cause\u225c{traffic_spike,db_pool_exhaustion,high_latency}\n  Alert\u225c{service:Service,metric:String,threshold_s:Real,observed_s:Real,severity:Severity,priority:Priority,cause_chain:String,recommendation:String}\n}\n\n\u27e6\u0393:Rules\u27e7{\n  \u2200a:Alert\n  (a.service=payments \u2227 a.metric=\"latency\" \u2227 a.observed_s>2.0)\u21d2(a.severity=2 \u2227 a.priority=4)\n  traffic_spike\u21d2db_pool_exhaustion\n  db_pool_exhaustion\u21d2high_latency\n  high_latency\u21d2recommendation(payments)=\"Increase DB connection pool capacity, apply burst traffic throttling, and autoscale payments workers until latency is below 2s.\"\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  causeChain\u225c\u03bb().\"high_latency\u2190db_pool_exhaustion\u2190traffic_spike\"\n  buildAlert\u225c\u03bb(obs_s).{service:payments,metric:\"latency\",threshold_s:2.0,observed_s:obs_s,severity:2,priority:4,cause_chain:causeChain(),recommendation:\"Increase DB connection pool capacity, apply burst traffic throttling, and autoscale payments workers until latency is below 2s.\"}\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.92;\u03c6\u225c100;\u03c4\u225c\u25ca\u207a\u207a\u27e9",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 459,
+        "o200k_base": 463
+      },
+      "latency_ms": 34922,
+      "timestamp": "2026-03-02T07:20:35.192151+00:00"
+    },
+    {
+      "task_id": "L3-03",
+      "condition": "aisp",
+      "model": "codex",
+      "run_number": 2,
+      "output": "\ud835\udd381.0.diagnostics-query@2026-03-02\n\u03b3\u2254agent-comm\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@agent-a\n  receiver\u225c@agent-b\n  intent\u225cquery\n  id\u225c\"m-001\"\n  timestamp\u225c1772413200\n  reply_to\u225c\"thread-ops-9000\"\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  DiagQuery\u225c{service:String, window_min:Int, include_conn_stats:Bool}\n}\n\n\u27e6\u0393:Rules\u27e7{\n  \u2200q:q\u2208DiagQuery\n  include_conn_stats(q)=true\u21d2window_min(q)\u22651\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  makeQuery\u225c\u03bb(svc).{service:svc, window_min:15, include_conn_stats:true}\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.81;\u03c6\u225c100;\u03c4\u225c\u25ca\u207a\u207a\u27e9\n\n\ud835\udd381.0.diagnostics-reply@2026-03-02\n\u03b3\u2254agent-comm\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@agent-b\n  receiver\u225c@agent-a\n  intent\u225creply\n  id\u225c\"m-002\"\n  timestamp\u225c1772413230\n  reply_to\u225c\"m-001\"\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  DiagReport\u225c{bottleneck:String, cpu_pct:Int, db_pool_util_pct:Int, active_conn:Int, new_conn_per_s:Int, failed_conn_5m:Int, p95_latency_ms:Int}\n}\n\n\u27e6\u0393:Rules\u27e7{\n  \u2200r:r\u2208DiagReport\n  db_pool_util_pct(r)>90\u21d2bottleneck(r)=\"db_pool_exhaustion\"\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  report\u225c\u03bb().{bottleneck:\"db_pool_exhaustion\", cpu_pct:68, db_pool_util_pct:97, active_conn:1842, new_conn_per_s:126, failed_conn_5m:41, p95_latency_ms:412}\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.90;\u03c6\u225c100;\u03c4\u225c\u25ca\u207a\u207a\u27e9\n\n\ud835\udd381.0.scaling-request@2026-03-02\n\u03b3\u2254agent-comm\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@agent-a\n  receiver\u225c@agent-b\n  intent\u225crequest\n  id\u225c\"m-003\"\n  timestamp\u225c1772413260\n  reply_to\u225c\"m-002\"\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  ScaleReq\u225c{target:String, action:String, min_replicas:Int, max_replicas:Int, reason:String}\n}\n\n\u27e6\u0393:Rules\u27e7{\n  \u2200s:s\u2208ScaleReq\n  reason(s)=\"db_pool_exhaustion\"\u21d2action(s)=\"scale_out\"\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  makeScaleReq\u225c\u03bb(t).{target:t, action:\"scale_out\", min_replicas:8, max_replicas:14, reason:\"db_pool_exhaustion_active_conn_1842_p95_412ms\"}\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.84;\u03c6\u225c100;\u03c4\u225c\u25ca\u207a\u207a\u27e9",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 763,
+        "o200k_base": 785
+      },
+      "latency_ms": 37764,
+      "timestamp": "2026-03-02T07:21:12.959743+00:00"
+    },
+    {
+      "task_id": "L1-01",
+      "condition": "aisp",
+      "model": "codex",
+      "run_number": 3,
+      "output": "\ud835\udd381.0.server-status-query@2026-03-02\n\u03b3\u2254agent-comm\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@agent-a\n  receiver\u225c@agent-b\n  intent\u225cquery\n  id\u225c\"msg-20260302-001\"\n  timestamp\u225c1772409600\n  reply_to\u225c\"\"\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  Server\u225c{name:String,url:String}\n  Status\u225c{healthy,degraded,down,unknown}\n  StatusRequest\u225c{target:Server,requested_by:String}\n}\n\n\u27e6\u0393:Rules\u27e7{\n  \u2200r:r\u2208StatusRequest\u21d2r.target\u2208Server\n  \u2200s:s\u2208Status\u21d2s\u2208{healthy,degraded,down,unknown}\n  intent=query\u21d2receiver=@agent-b\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  buildStatusQuery\u225c\u03bb(srv).{action:\"get_status\",target:srv}\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.78;\u03c6\u225c100;\u03c4\u225c\u25ca\u207a\u207a\u27e9",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 259,
+        "o200k_base": 262
+      },
+      "latency_ms": 16956,
+      "timestamp": "2026-03-02T07:21:29.919706+00:00"
+    },
+    {
+      "task_id": "L1-02",
+      "condition": "aisp",
+      "model": "codex",
+      "run_number": 3,
+      "output": "\ud835\udd381.0.health-inform@2026-03-02\n\u03b3\u2254agent-comm\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@agent-b\n  receiver\u225c@agent-a\n  intent\u225cinform\n  id\u225c\"m-health-001\"\n  timestamp\u225c1772409600\n  reply_to\u225c\"none\"\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  Status\u225c{healthy,degraded,down}\n  ServerReport\u225c{server:String,status:Status,uptime:Float}\n}\n\n\u27e6\u0393:Rules\u27e7{\n  \u2200r\u2208ServerReport:0\u2264uptime(r)\u2227uptime(r)\u2264100\n  \u2203r\u2208ServerReport:server(r)=\"primary\"\u2227status(r)=healthy\u2227uptime(r)=99.7\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  mkReport\u225c\u03bb(name,up).{server:name,status:healthy,uptime:up}\n  isHealthy\u225c\u03bb(r).status(r)=healthy\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.997;\u03c6\u225c100;\u03c4\u225c\u25ca\u207a\u207a\u27e9",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 263,
+        "o200k_base": 274
+      },
+      "latency_ms": 25687,
+      "timestamp": "2026-03-02T07:21:55.609747+00:00"
+    },
+    {
+      "task_id": "L1-03",
+      "condition": "aisp",
+      "model": "codex",
+      "run_number": 3,
+      "output": "\ud835\udd381.0.not-found-report@2026-03-02\n\u03b3\u2254agent-comm\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@service-agent\n  receiver\u225c@caller-agent\n  intent\u225creply\n  id\u225c\"m-404-0001\"\n  timestamp\u225c1772445600\n  reply_to\u225c\"req-0001\"\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  Error\u225c{code:Int,message:String,resource:String}\n  Status\u225c{ok,not_found,error}\n  Report\u225c{error:Error,status:Status}\n}\n\n\u27e6\u0393:Rules\u27e7{\n  \u2200r\u2208Report:code(error(r))\u2208Int\n  code(error(r))=404\u21d2status(r)=not_found\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  mk404\u225c\u03bb(res).{error:{code:404,message:\"not-found\",resource:res},status:not_found}\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.86;\u03c6\u225c100;\u03c4\u225c\u25ca\u207a\u207a\u27e9",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 248,
+        "o200k_base": 255
+      },
+      "latency_ms": 22930,
+      "timestamp": "2026-03-02T07:22:18.543459+00:00"
+    },
+    {
+      "task_id": "L2-01",
+      "condition": "aisp",
+      "model": "codex",
+      "run_number": 3,
+      "output": "\ud835\udd381.0.build-request@2026-03-02\n\u03b3\u2254ci-build-orchestration\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@ci-agent\n  receiver\u225c@builder-agent\n  intent\u225crequest\n  id\u225c\"msg-ci-build-0001\"\n  timestamp\u225c1772409600\n  reply_to\u225c\"ci-run-8841\"\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  Hash\u225cString\n  BuildTarget\u225c{linux-amd64,linux-arm64,darwin-arm64}\n  BuildRequest\u225c{repo:String, branch:String, commit:Hash, target:BuildTarget}\n}\n\n\u27e6\u0393:Rules\u27e7{\n  \u2200r\u2208BuildRequest:repo(r)\u2260\"\" \u2227 branch(r)\u2260\"\" \u2227 commit(r)\u2260\"\"\n  (len(commit(payload))=40)\u21d2dispatchable(payload)\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  mkReq\u225c\u03bb(repo,br,sha,tgt).{repo:repo,branch:br,commit:sha,target:tgt}\n  payload\u225cmkReq(\"github.com/acme/invent-new-language\",\"release/2026.03\",\"3a4f6b8c2d1e9f0a7b6c5d4e3f2a1b0c9d8e7f6a\",linux-amd64)\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.86;\u03c6\u225c100;\u03c4\u225c\u25ca\u207a\u207a\u27e9",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 348,
+        "o200k_base": 356
+      },
+      "latency_ms": 32934,
+      "timestamp": "2026-03-02T07:22:51.479960+00:00"
+    },
+    {
+      "task_id": "L2-02",
+      "condition": "aisp",
+      "model": "codex",
+      "run_number": 3,
+      "output": "\ud835\udd381.0.widget-counter@2026-03-02\n\u03b3\u2254procurement-negotiation\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@buyer-agent\n  receiver\u225c@supplier-agent\n  intent\u225ccounter\n  id\u225c\"m-widget-counter-001\"\n  timestamp\u225c1772409600\n  reply_to\u225c\"m-supplier-proposal-001\"\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  Agent\u225c{@supplier-agent,@buyer-agent}\n  USD\u225cReal\n  Offer\u225c{party:Agent, qty:Int, unit_price:USD, total:USD}\n  Rationale\u225c{market_average:USD, note:String}\n}\n\n\u27e6\u0393:Rules\u27e7{\n  \u2200o\u2208Offer:total(o)\u225cqty(o)\u00d7unit_price(o)\n  (q_supplier\u225c10000 \u2227 p_supplier\u225c2.50 \u2227 p_market\u225c2.15)\u21d2(q_counter\u225c10000 \u2227 p_counter\u225c2.20 \u2227 p_counter>p_market)\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  totalCost\u225c\u03bb(q,p).q\u00d7p\n  counterOffer\u225c\u03bb(q,pm).{party:@buyer-agent,qty:q,unit_price:2.20,total:q\u00d72.20}\n  savingsVsSupplier\u225c\u03bb(q,ps,pc).q\u00d7(ps-pc)\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.86;\u03c6\u225c100;\u03c4\u225c\u25ca\u207a\u207a\u27e9",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 346,
+        "o200k_base": 355
+      },
+      "latency_ms": 27110,
+      "timestamp": "2026-03-02T07:23:18.591413+00:00"
+    },
+    {
+      "task_id": "L2-03",
+      "condition": "aisp",
+      "model": "codex",
+      "run_number": 3,
+      "output": "\ud835\udd381.0.task-distribution@2026-03-02\n\u03b3\u2254data-processing\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@planner\n  receiver\u225c@worker-pool\n  intent\u225cinform\n  id\u225c\"msg-plan-3000-3\"\n  timestamp\u225c1772409600\n  reply_to\u225c\"task-req-0\"\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  Worker\u225c{@worker-1,@worker-2,@worker-3}\n  Range\u225c{start:Int,end:Int,semantics:{half-open}}\n  Segment\u225c{worker:Worker,start:Int,end:Int}\n  Plan\u225c{task:String,range:Range,segments:{Segment,Segment,Segment}}\n}\n\n\u27e6\u0393:Rules\u27e7{\n  \u2200w\u2208Worker:\u2203s\u2208segments:worker(s)=w\n  (range.start=0 \u2227 range.end=3000 \u2227 |Worker|=3)\u21d2segments={\n    {worker:@worker-1,start:0,end:1000},\n    {worker:@worker-2,start:1000,end:2000},\n    {worker:@worker-3,start:2000,end:3000}\n  }\n  \u2200s\u2208segments:(end(s)-start(s)=1000)\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  split3\u225c\u03bb(a,b).{\n    {worker:@worker-1,start:a,end:a+1000},\n    {worker:@worker-2,start:a+1000,end:a+2000},\n    {worker:@worker-3,start:a+2000,end:b}\n  }\n  assign\u225c\u03bb(r).split3(r.start,r.end)\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.91;\u03c6\u225c100;\u03c4\u225c\u25ca\u207a\u207a\u27e9",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 404,
+        "o200k_base": 413
+      },
+      "latency_ms": 39087,
+      "timestamp": "2026-03-02T07:23:57.681414+00:00"
+    },
+    {
+      "task_id": "L3-01",
+      "condition": "aisp",
+      "model": "codex",
+      "run_number": 3,
+      "output": "\ud835\udd381.0.pipeline-instruction@2026-03-02\n\u03b3\u2254data-pipeline\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@orchestrator\n  receiver\u225c@pipeline\n  intent\u225crequest\n  id\u225c\"msg-orch-pipe-20260302-001\"\n  timestamp\u225c1772409600\n  reply_to\u225c\"\"\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  URL\u225cString\n  JSON\u225cObject\n  DBTarget\u225c{conn:String, table:String}\n  PipelineTask\u225c{url:URL, target:DBTarget}\n  PipelineResult\u225c{ok:Boolean, stored_rows:Int, error:String}\n}\n\n\u27e6\u0393:Rules\u27e7{\n  \u2200t\u2208PipelineTask: t.url\u2260\"\" \u2227 t.target.table\u2260\"\"\n  \u2200t\u2208PipelineTask: validURL(t.url)\u21d2fetch(t.url)\u2192parse_json(fetch(t.url))\u2192store(parse_json(fetch(t.url)),t.target)\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  runTask\u225c\u03bb(t).store(parse_json(fetch(t.url)),t.target)\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.82;\u03c6\u225c100;\u03c4\u225c\u25ca\u207a\u207a\u27e9",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 286,
+        "o200k_base": 296
+      },
+      "latency_ms": 21266,
+      "timestamp": "2026-03-02T07:24:18.950782+00:00"
+    },
+    {
+      "task_id": "L3-02",
+      "condition": "aisp",
+      "model": "codex",
+      "run_number": 3,
+      "output": "\ud835\udd381.0.payments-incident-alert@2026-03-02\n\u03b3\u2254incident-response\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@monitor\n  receiver\u225c@sre-oncall\n  intent\u225calert\n  id\u225c\"inc-payments-latency-sev2-p4-20260302\"\n  timestamp\u225c1772409600\n  reply_to\u225c\"\"\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  Severity\u225c{1,2,3,4,5}\n  Priority\u225c{1,2,3,4,5}\n  CauseChain\u225c{symptom:String,proximate:String,root:String}\n  Incident\u225c{service:String,severity:Severity,priority:Priority,metric:String,threshold_s:Real,observed_s:Real,cause:CauseChain,recommendation:String}\n}\n\n\u27e6\u0393:Rules\u27e7{\n  \u2200i\u2208Incident:(i.service=\"payments\" \u2227 i.severity=2 \u2227 i.priority=4 \u2227 i.metric=\"latency\" \u2227 i.observed_s>2.0)\u21d2publish(i)\n  \u2200c\u2208CauseChain:(c.root=\"traffic_spike\" \u2227 c.proximate=\"database_connection_pool_exhaustion\")\u21d2c.symptom=\"high_latency\"\n  traffic_spike\u21d2database_connection_pool_exhaustion\n  database_connection_pool_exhaustion\u21d2latency_gt_2s\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  incident\u225c\u03bb().{\n    service:\"payments\",\n    severity:2,\n    priority:4,\n    metric:\"latency\",\n    threshold_s:2.0,\n    observed_s:2.31,\n    cause:{symptom:\"high_latency\",proximate:\"database_connection_pool_exhaustion\",root:\"traffic_spike\"},\n    recommendation:\"Increase DB connection pool capacity, scale payments workers, and apply temporary traffic throttling until latency is below 2s.\"\n  }\n  publish\u225c\u03bb(i).\"SEV-2 alert (P4): payments latency \" + i.observed_s + \"s > \" + i.threshold_s + \"s; cause chain traffic_spike\u2192database_connection_pool_exhaustion\u2192high_latency; recommended resolution: \" + i.recommendation\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.92;\u03c6\u225c100;\u03c4\u225c\u25ca\u207a\u207a\u27e9",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 523,
+        "o200k_base": 530
+      },
+      "latency_ms": 44541,
+      "timestamp": "2026-03-02T07:25:03.495379+00:00"
+    },
+    {
+      "task_id": "L3-03",
+      "condition": "aisp",
+      "model": "codex",
+      "run_number": 3,
+      "output": "\ud835\udd381.0.diagnostics-query@2026-03-02\n\u03b3\u2254agent-comm\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@agent-a\n  receiver\u225c@agent-b\n  intent\u225cquery\n  id\u225c\"msg-001\"\n  timestamp\u225c1772413200\n  reply_to\u225c\"conv-000\"\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  DiagRequest\u225c{service:String, window_s:Int, include_conn:Boolean}\n  QueryPayload\u225c{ask:\"diagnostics\", service:\"edge-gateway\", window_s:300, include_conn:true}\n}\n\n\u27e6\u0393:Rules\u27e7{\n  \u2200r:r\u2208DiagRequest\n  include_conn(r)=true\u21d2must_report(r,\"connection_stats\")\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  mkReq\u225c\u03bb(s,w).{service:s, window_s:w, include_conn:true}\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.78;\u03c6\u225c100;\u03c4\u225c\u25ca\u207a\u207a\u27e9\n\n\ud835\udd381.0.diagnostics-reply@2026-03-02\n\u03b3\u2254agent-comm\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@agent-b\n  receiver\u225c@agent-a\n  intent\u225creply\n  id\u225c\"msg-002\"\n  timestamp\u225c1772413260\n  reply_to\u225c\"msg-001\"\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  Bottleneck\u225c{component:String, metric:String, value:Float, threshold:Float}\n  ConnStats\u225c{active:Int, new_per_s:Float, p95_ms:Int, error_rate:Float}\n  DiagReport\u225c{status:String, bottleneck:Bottleneck, conn:ConnStats}\n  ReplyPayload\u225c{status:\"degraded\", bottleneck:{component:\"db-pool\", metric:\"utilization\", value:0.92, threshold:0.80}, conn:{active:1840, new_per_s:128.4, p95_ms:240, error_rate:0.018}}\n}\n\n\u27e6\u0393:Rules\u27e7{\n  \u2200rep:rep\u2208DiagReport\n  value(bottleneck(rep))>threshold(bottleneck(rep))\u21d2status(rep)=\"degraded\"\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  summarize\u225c\u03bb(rep).\"bottleneck=db-pool;active=1840;new_per_s=128.4;p95_ms=240;error_rate=0.018\"\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.83;\u03c6\u225c100;\u03c4\u225c\u25ca\u207a\u207a\u27e9\n\n\ud835\udd381.0.scaling-request@2026-03-02\n\u03b3\u2254agent-comm\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@agent-a\n  receiver\u225c@agent-b\n  intent\u225crequest\n  id\u225c\"msg-003\"\n  timestamp\u225c1772413320\n  reply_to\u225c\"msg-002\"\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  ScaleRequest\u225c{target:String, action:String, min_instances:Int, reason:String}\n  ScalePayload\u225c{target:\"api-workers\", action:\"scale_out\", min_instances:6, reason:\"db-pool bottleneck and elevated p95 latency\"}\n}\n\n\u27e6\u0393:Rules\u27e7{\n  \u2200s:s\u2208ScaleRequest\n  min_instances(s)\u22656\u21d2priority(s)=\"high\"\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  reqScale\u225c\u03bb(t,n,r).{target:t, action:\"scale_out\", min_instances:n, reason:r}\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.80;\u03c6\u225c100;\u03c4\u225c\u25ca\u207a\u207a\u27e9",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 848,
+        "o200k_base": 870
+      },
+      "latency_ms": 47882,
+      "timestamp": "2026-03-02T07:25:51.381848+00:00"
+    }
+  ]
+}

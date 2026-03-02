@@ -1,0 +1,415 @@
+{
+  "experiment": "exp0_learnability",
+  "model": "claude-haiku",
+  "model_display": "Claude Haiku 4.5",
+  "timestamp": "2026-03-02T07:04:40.613266+00:00",
+  "total_runs": 27,
+  "valid_count": 27,
+  "results": [
+    {
+      "task_id": "L1-01",
+      "condition": "aisp",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "\ud835\udd381.0.server-status-query@2026-03-02\n\u03b3\u2254agent-comm\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@agent-a\n  receiver\u225c@agent-b\n  intent\u225cquery\n  id\u225c\"q1\"\n  timestamp\u225c1741046400\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  WebServer\u225c{name:String, status:Status}\n  Status\u225c{online,offline,degraded}\n}\n\n\u27e6\u0393:Rules\u27e7{\n  \u2200srv\u2208WebServer:status(srv)\u2208Status\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  getStatus\u225c\u03bb(srv).status(srv)\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.85;\u03c6\u225c100;\u03c4\u225c\u25ca\u207a\u207a\u27e9",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 192,
+        "o200k_base": 201
+      },
+      "latency_ms": 19943,
+      "timestamp": "2026-03-02T06:56:48.211521+00:00"
+    },
+    {
+      "task_id": "L1-02",
+      "condition": "aisp",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "\ud835\udd381.0.server-status-inform@2026-03-02\n\u03b3\u2254server-monitoring\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@B\n  receiver\u225c@A\n  intent\u225cinform\n  id\u225c\"m1\"\n  timestamp\u225c1741046400\n  reply_to\u225cnull\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  Server\u225c{name:String, status:Status, uptime:Float}\n  Status\u225c{healthy, degraded, down}\n}\n\n\u27e6\u0393:Rules\u27e7{\n  \u2200s\u2208Server: status(s) \u2208 Status\n  \u2200s\u2208Server: uptime(s) \u2208 [0.0, 1.0]\n  status(s)=healthy \u21d2 uptime(s)\u22650.99\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  reportServer\u225c\u03bb(name,status,uptime).(name, status, uptime)\n  serverHealth\u225creportServer(\"server\", healthy, 0.997)\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.92;\u03c6\u225c100;\u03c4\u225c\u25ca\u207a\u27e9",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 254,
+        "o200k_base": 266
+      },
+      "latency_ms": 15595,
+      "timestamp": "2026-03-02T06:57:03.807897+00:00"
+    },
+    {
+      "task_id": "L1-03",
+      "condition": "aisp",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "\ud835\udd381.0.error-404-report@2026-03-02\n\u03b3\u2254agent-error-handling\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@service\n  receiver\u225c@caller\n  intent\u225cinform\n  id\u225c\"err1\"\n  timestamp\u225c1741046400\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  Error\u225c{code:Integer, status:String, resource:String}\n  StatusCode\u225c{404}\n}\n\n\u27e6\u0393:Rules\u27e7{\n  \u2200e:Error : e.code=404 \u21d2 e.status=\"not-found\"\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  report_error\u225c\u03bb(resource).(code:404, status:\"not-found\", resource:resource)\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.80;\u03c6\u225c100;\u03c4\u225c\u25ca\u207a\u27e9",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 198,
+        "o200k_base": 208
+      },
+      "latency_ms": 12391,
+      "timestamp": "2026-03-02T06:57:16.201060+00:00"
+    },
+    {
+      "task_id": "L2-01",
+      "condition": "aisp",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "\ud835\udd381.0.build-acceptance@2026-03-02\n\u03b3\u2254agent-build-coordination\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@builder-agent\n  receiver\u225c@ci-agent\n  intent\u225caccept\n  id\u225c\"msg-builder-003\"\n  timestamp\u225c1740945600\n  reply_to\u225c\"msg-ci-002\"\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  Repository\u225c{name:String, url:String}\n  BuildSpec\u225c{repo:Repository, branch:String, commit:String, config:String}\n  BuildJob\u225c{id:String, spec:BuildSpec, status:Status, queue_pos:Integer}\n  Status\u225c{queued,in_progress,completed,failed}\n}\n\n\u27e6\u0393:Rules\u27e7{\n  \u2200s\u2208BuildSpec: repo(s)\u2260\u2205 \u2227 commit(s)\u2260\u2205 \u2227 len(commit(s))=40\n  \u2200j\u2208BuildJob: status(j)\u2208Status \u2227 queue_pos(j)\u22650\n  queued(j) \u2227 next_available() \u21d2 in_progress(j)\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  createJob\u225c\u03bb(spec).{id:uuid(), spec:spec, status:queued, queue_pos:current_queue_len()}\n  startBuild\u225c\u03bb(job).checkout(repo(job), commit(job)) \u2227 execute(config(spec(job)))\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.85;\u03c6\u225c100;\u03c4\u225c\u25ca\u207a\u207a\u27e9",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 337,
+        "o200k_base": 350
+      },
+      "latency_ms": 14813,
+      "timestamp": "2026-03-02T06:57:31.015484+00:00"
+    },
+    {
+      "task_id": "L2-02",
+      "condition": "aisp",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "\ud835\udd381.0.supplier-counter-offer@2026-03-02\n\u03b3\u2254procurement-negotiation\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@supplier\n  receiver\u225c@buyer\n  intent\u225ccounter\n  id\u225c\"offer-m2\"\n  timestamp\u225c1740912000\n  reply_to\u225c\"counter-m1\"\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  Proposal\u225c{quantity:Int, unit_price:Float, justification:String}\n}\n\n\u27e6\u0393:Rules\u27e7{\n  \u2200p\u2208Proposal: p.quantity = 10000\n  \u2200p\u2208Proposal: p.unit_price > 2.15 \u2227 p.unit_price \u2264 2.50\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  offer\u225c\u03bb().(10000, 2.35, \"Cost basis 2.08/unit; margin covers quality assurance and logistics\")\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.68;\u03c6\u225c90;\u03c4\u225c\u25ca\u207a\u27e9",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 237,
+        "o200k_base": 247
+      },
+      "latency_ms": 31263,
+      "timestamp": "2026-03-02T06:58:02.280624+00:00"
+    },
+    {
+      "task_id": "L2-03",
+      "condition": "aisp",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "\ud835\udd381.0.task-distribution@2026-03-02\n\u03b3\u2254data-processing\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@planner\n  receiver\u225c[@worker1, @worker2, @worker3]\n  intent\u225crequest\n  id\u225c\"dist-001\"\n  timestamp\u225c1741000000\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  Segment\u225c{worker:String, range_start:Int, range_end:Int}\n  DataTask\u225c{task_id:String, segment:Segment, status:Status}\n  Status\u225c{assigned, executing, completed}\n}\n\n\u27e6\u0393:Rules\u27e7{\n  \u2200s\u2208Segment: s.range_start < s.range_end \u2227 s.range_end - s.range_start = 1000\n  total_range \u225c 3000 \u2227 segment_count \u225c 3\n  \u2200i\u2208[1,2,3]: worker_segment(i) \u225c {start: (i-1) \u00d7 1000, end: i \u00d7 1000}\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  allocateSegment\u225c\u03bb(worker_id, segment_num).{start: segment_num \u00d7 1000, end: (segment_num + 1) \u00d7 1000}\n  processSegment\u225c\u03bb(range).execute_data_processing(range.start, range.end)\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.85;\u03c6\u225c100;\u03c4\u225c\u25ca\u207a\u27e9",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 326,
+        "o200k_base": 336
+      },
+      "latency_ms": 18481,
+      "timestamp": "2026-03-02T06:58:20.763576+00:00"
+    },
+    {
+      "task_id": "L3-01",
+      "condition": "aisp",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "\ud835\udd381.0.orchestrator-pipeline-task@2026-03-02\n\u03b3\u2254data-pipeline\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@orchestrator\n  receiver\u225c@pipeline\n  intent\u225crequest\n  id\u225c\"msg-001\"\n  timestamp\u225c1740960000\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  URL\u225cString\n  JSONData\u225c{key:String, value:Any}\n  DatabaseConfig\u225c{table:String, connection:String}\n  Result\u225c{status:String, data:JSONData}\n}\n\n\u27e6\u0393:Rules\u27e7{\n  \u2200url:URL \u2192 valid_http(url)\n  \u2200json:JSONData \u2192 valid_json(json)\n  fetch(url)\u21d2parse(response)\n  parse(response)\u21d2store(db,result)\n  \u00acvalid_json(data)\u21d2error\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  fetch\u225c\u03bb(url).http_get(url)\n  parse\u225c\u03bb(response).json_decode(response)\n  store\u225c\u03bb(db,data).db_insert(db,data)\n  pipeline\u225c\u03bb(url,db).(fetch(url)\u2192parse()\u2192store(db))\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.80;\u03c6\u225c100;\u03c4\u225c\u25ca\u207a\u27e9",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 293,
+        "o200k_base": 298
+      },
+      "latency_ms": 22121,
+      "timestamp": "2026-03-02T06:58:42.887016+00:00"
+    },
+    {
+      "task_id": "L3-02",
+      "condition": "aisp",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "\ud835\udd381.0.incident-severity2-payments@2026-03-02\n\u03b3\u2254incident-management\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@monitor\n  receiver\u225c@ops-team\n  intent\u225calert\n  id\u225c\"alert-20260302-payments-latency\"\n  timestamp\u225c1740945600\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  Incident\u225c{service:String,severity:Int,priority:Int,metric:String,value:Float,threshold:Float}\n  CausalChain\u225c{root:String,intermediate:String,symptom:String}\n}\n\n\u27e6\u0393:Rules\u27e7{\n  service(incident)=payments\n  severity(incident)=2 \u2227 priority(incident)=4\n  latency(payments)>2.0s\n  (traffic_spike \u2192 db_pool_exhaustion) \u2227 (db_pool_exhaustion \u2192 latency_threshold_breach)\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  root_cause\u225c\u03bb(svc).traffic_spike\n  chain\u225c\u03bb(r,i,e).[r,i,e]\n  remedy\u225c\u03bb(svc).increase_connection_pool_capacity(svc)\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.90;\u03c6\u225c100;\u03c4\u225c\u25ca\u207a\u27e9",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 287,
+        "o200k_base": 296
+      },
+      "latency_ms": 23952,
+      "timestamp": "2026-03-02T06:59:06.841886+00:00"
+    },
+    {
+      "task_id": "L3-03",
+      "condition": "aisp",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "\ud835\udd381.0.diagnostics-query@2026-03-02\n\u03b3\u2254agent-diagnostics\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@agent-a\n  receiver\u225c@agent-b\n  intent\u225cquery\n  id\u225c\"m1\"\n  timestamp\u225c1740826800\n  reply_to\u225cnull\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  DiagnosticRequest\u225c{resource_type:String, scope:String}\n  Resource\u225c{cpu,memory,network}\n}\n\n\u27e6\u0393:Rules\u27e7{\n  \u2200r:DiagnosticRequest \u21d2 r.scope\u2208{full,critical}\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  requestDiagnostics\u225c\u03bb(type).diagnostic_snapshot(type)\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.85;\u03c6\u225c100;\u03c4\u225c\u25ca\u207a\u27e9\n\n---\n\n\ud835\udd381.0.diagnostics-reply@2026-03-02\n\u03b3\u2254agent-diagnostics\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@agent-b\n  receiver\u225c@agent-a\n  intent\u225creply\n  id\u225c\"m2\"\n  timestamp\u225c1740826860\n  reply_to\u225c\"m1\"\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  BottleneckReport\u225c{location:String, severity:Int, metric:String}\n  ConnectionStats\u225c{latency:Float, throughput:Float, error_rate:Float}\n  DiagnosticReport\u225c{bottleneck:BottleneckReport, stats:ConnectionStats}\n}\n\n\u27e6\u0393:Rules\u27e7{\n  \u2200b:BottleneckReport \u21d2 b.severity\u2208[1,10]\n  \u2200c:ConnectionStats \u21d2 (c.latency\u22650 \u2227 c.error_rate\u22650)\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  analyzeBottleneck\u225c\u03bb(metrics).[max_congestion(metrics), link_health(metrics)]\n  reportStats\u225c\u03bb(sample).[mean_latency(sample), peak_throughput(sample), failures(sample)]\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.80;\u03c6\u225c100;\u03c4\u225c\u25ca\u207a\u27e9\n\n---\n\n\ud835\udd381.0.scaling-request@2026-03-02\n\u03b3\u2254agent-diagnostics\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@agent-a\n  receiver\u225c@agent-b\n  intent\u225crequest\n  id\u225c\"m3\"\n  timestamp\u225c1740826920\n  reply_to\u225c\"m2\"\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  ScalingRequest\u225c{target_resource:String, scale_factor:Float, timeline:String}\n  ScalingResponse\u225c{status:String, affected_nodes:Int, estimated_duration:Float}\n}\n\n\u27e6\u0393:Rules\u27e7{\n  \u2200s:ScalingRequest \u21d2 s.scale_factor>1.0 \u21d2 s.timeline\u2208{immediate,gradual,scheduled}\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  initiateScaling\u225c\u03bb(resource,factor).deploy_replica(resource,factor)\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.90;\u03c6\u225c100;\u03c4\u225c\u25ca\u207a\u27e9",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 713,
+        "o200k_base": 737
+      },
+      "latency_ms": 16537,
+      "timestamp": "2026-03-02T06:59:23.380742+00:00"
+    },
+    {
+      "task_id": "L1-01",
+      "condition": "aisp",
+      "model": "claude-haiku",
+      "run_number": 2,
+      "output": "\ud835\udd381.0.server-status-query@2026-03-02\n\u03b3\u2254agent-comm\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@A\n  receiver\u225c@B\n  intent\u225cquery\n  id\u225c\"msg-001\"\n  timestamp\u225c1743638400\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  Server\u225c{name:String, address:String}\n  Status\u225c{healthy,degraded,down}\n  StatusReport\u225c{server:Server, status:Status, timestamp:Integer}\n}\n\n\u27e6\u0393:Rules\u27e7{\n  \u2200s\u2208Server:getStatus(s)\u2208Status\n  status(s)=healthy \u21d2 available(s)=true\n  status(s)=down \u21d2 available(s)=false\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  getStatus\u225c\u03bb(srv).status(srv)\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.80;\u03c6\u225c100;\u03c4\u225c\u25ca\u207a\u27e9",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 225,
+        "o200k_base": 234
+      },
+      "latency_ms": 11213,
+      "timestamp": "2026-03-02T06:59:34.595652+00:00"
+    },
+    {
+      "task_id": "L1-02",
+      "condition": "aisp",
+      "model": "claude-haiku",
+      "run_number": 2,
+      "output": "\ud835\udd381.0.server-health-report@2026-03-02\n\u03b3\u2254server-monitoring\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@agent-b\n  receiver\u225c@agent-a\n  intent\u225cinform\n  id\u225c\"m1\"\n  timestamp\u225c1741000000\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  Server\u225c{status:Status, uptime:Float}\n  Status\u225c{healthy,degraded,down}\n}\n\n\u27e6\u0393:Rules\u27e7{\n  \u2200srv\u2208Server:uptime(srv)=0.997\u21d2status(srv)=healthy\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  healthReport\u225c\u03bb().(status:healthy, uptime:0.997)\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.99;\u03c6\u225c100;\u03c4\u225c\u25ca\u207a\u27e9",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 204,
+        "o200k_base": 210
+      },
+      "latency_ms": 14829,
+      "timestamp": "2026-03-02T06:59:49.425595+00:00"
+    },
+    {
+      "task_id": "L1-03",
+      "condition": "aisp",
+      "model": "claude-haiku",
+      "run_number": 2,
+      "output": "\ud835\udd381.0.not-found-error@2026-03-02\n\u03b3\u2254service-error-reporting\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@service-agent\n  receiver\u225c@caller-agent\n  intent\u225calert\n  id\u225c\"msg-404-001\"\n  timestamp\u225c1741046400\n  reply_to\u225c\"msg-request-001\"\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  Error\u225c{code:Int, status:String, message:String}\n  NotFound\u225cError\u2227{code=404}\n}\n\n\u27e6\u0393:Rules\u27e7{\n  \u2200e:Error:code(e)\u2208{400..599}\n  \u00acexists(resource)\u21d2Error{code=404,status=\"NOT_FOUND\"}\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  reportError\u225c\u03bb(r).Error{code:404, status:\"NOT_FOUND\", message:\"Resource not found: \"\u2225path(r)}\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.85;\u03c6\u225c100;\u03c4\u225c\u25ca\u207a\u27e9",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 244,
+        "o200k_base": 252
+      },
+      "latency_ms": 12282,
+      "timestamp": "2026-03-02T07:00:01.709022+00:00"
+    },
+    {
+      "task_id": "L2-01",
+      "condition": "aisp",
+      "model": "claude-haiku",
+      "run_number": 2,
+      "output": "\ud835\udd381.0.build-request@2026-03-02\n\u03b3\u2254agent-comm\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@ci-agent\n  receiver\u225c@builder-agent\n  intent\u225crequest\n  id\u225c\"build-req-20260302-001\"\n  timestamp\u225c1740960000\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  Repository\u225c{name:String, branch:String, commit:String}\n  BuildJob\u225c{repo:Repository, priority:String, timeout:Int}\n  BuildResult\u225c{status:String, logs:String, timestamp:Int}\n}\n\n\u27e6\u0393:Rules\u27e7{\n  \u2200r\u2208Repository: len(commit(r))=40 \u2227 len(branch(r))>0\n  \u2200b\u2208BuildJob: priority(b)\u2208{high,normal,low}\n  request(b)\u21d2status(result(b))\u2208{pending,building,success,failed}\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  submitBuild\u225c\u03bb(repo,priority).build_job(repo.name,repo.branch,repo.commit,priority)\n  getResult\u225c\u03bb(job_id).query_status(job_id)\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.85;\u03c6\u225c100;\u03c4\u225c\u25ca\u207a\u207a\u27e9",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 289,
+        "o200k_base": 299
+      },
+      "latency_ms": 15639,
+      "timestamp": "2026-03-02T07:00:17.349505+00:00"
+    },
+    {
+      "task_id": "L2-02",
+      "condition": "aisp",
+      "model": "claude-haiku",
+      "run_number": 2,
+      "output": "\ud835\udd381.0.widget-price-counteroffer@2026-03-02\n\u03b3\u2254procurement\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@buyer\n  receiver\u225c@supplier\n  intent\u225ccounter\n  id\u225c\"m-counter-001\"\n  timestamp\u225c1741046400\n  reply_to\u225c\"m-proposal-001\"\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  Quotation\u225c{quantity:\u2124, unit_price:\u211d, currency:String, total:\u211d}\n  MarketRef\u225c{benchmark_price:\u211d, source:String}\n}\n\n\u27e6\u0393:Rules\u27e7{\n  supplier_initial = Quotation(10000, 2.50, \"USD\", 25000)\n  buyer_revised = Quotation(10000, 2.20, \"USD\", 22000)\n  market_data = MarketRef(2.15, \"industry_average\")\n  buyer_revised.unit_price \u2248 market_data.benchmark_price + 0.05 \u21d2 reasonable_counteroffer\n  savings = supplier_initial.total - buyer_revised.total = 3000\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  reduction_percent\u225c\u03bb(supplier_rate, buyer_rate).(supplier_rate - buyer_rate) / supplier_rate \u00d7 100\n  justify_price\u225c\u03bb(proposed, benchmark).(proposed - benchmark) / benchmark\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.68;\u03c6\u225c89;\u03c4\u225c\u25ca\u207a\u27e9",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 334,
+        "o200k_base": 343
+      },
+      "latency_ms": 26195,
+      "timestamp": "2026-03-02T07:00:43.546190+00:00"
+    },
+    {
+      "task_id": "L2-03",
+      "condition": "aisp",
+      "model": "claude-haiku",
+      "run_number": 2,
+      "output": "\ud835\udd381.0.task-distribution@2026-03-02\n\u03b3\u2254task-planning\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@planner\n  receiver\u225c@workers\n  intent\u225crequest\n  id\u225c\"td001\"\n  timestamp\u225c1740960000\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  Assignment\u225c{worker:String, range:[Int,Int]}\n  Worker\u225c{id:String, status:Status}\n  Status\u225c{pending,active,complete}\n}\n\n\u27e6\u0393:Rules\u27e7{\n  \u2200a\u2208Assignment:(a.range[1]-a.range[0])=1000\n  total_range=[0,3000]\n  segment_count=3\n  \u2200w\u2208workers:\u2203!a\u2208Assignment:a.worker=w.id\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  segment_size\u225c\u03bb().3000\u00f73\n  assign\u225c\u03bb(id,start).Assignment{worker:id, range:[start, start+1000]}\n  distribute\u225c\u03bb().[assign(w\u2081,0), assign(w\u2082,1000), assign(w\u2083,2000)]\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.80;\u03c6\u225c100;\u03c4\u225c\u25ca\u207a\u27e9",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 292,
+        "o200k_base": 300
+      },
+      "latency_ms": 13778,
+      "timestamp": "2026-03-02T07:00:57.325250+00:00"
+    },
+    {
+      "task_id": "L3-01",
+      "condition": "aisp",
+      "model": "claude-haiku",
+      "run_number": 2,
+      "output": "\ud835\udd381.0.pipeline-fetch-parse-store@2026-03-02\n\u03b3\u2254data-orchestration\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@orchestrator\n  receiver\u225c@pipeline\n  intent\u225crequest\n  id\u225c\"fetch-parse-store-001\"\n  timestamp\u225c1741046400\n  reply_to\u225cnull\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  URL\u225cString\n  JSONData\u225c{key:String,value:Any}\n  StorageTarget\u225cString\n  PipelineTask\u225c{action:String,url:URL,store:StorageTarget}\n}\n\n\u27e6\u0393:Rules\u27e7{\n  \u2200t:PipelineTask:valid(t.url)\u2227valid(t.store)\n  fetch(t.url)\u21d2parse(content)\n  parse(content)\u21d2valid(json)\n  valid(json)\u21d2store(json,t.store)\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  fetch\u225c\u03bb(url:URL).http_get(url)\n  parse\u225c\u03bb(content:String).json_decode(content)\n  store\u225c\u03bb(data:JSONData,target:StorageTarget).db_insert(target,data)\n  execute\u225c\u03bb(task:PipelineTask).(fetch(task.url)\u2227parse(result)\u2227store(result,task.store))\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.82;\u03c6\u225c100;\u03c4\u225c\u25ca\u207a\u27e9",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 313,
+        "o200k_base": 318
+      },
+      "latency_ms": 16670,
+      "timestamp": "2026-03-02T07:01:13.996835+00:00"
+    },
+    {
+      "task_id": "L3-02",
+      "condition": "aisp",
+      "model": "claude-haiku",
+      "run_number": 2,
+      "output": "\ud835\udd381.0.incident-alert-payments@2026-03-02\n\u03b3\u2254incident-response\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@monitor\n  receiver\u225c@incident-responder\n  intent\u225calert\n  id\u225c\"inc-2026-03-02-001\"\n  timestamp\u225c1740945600\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  Incident\u225c{service:String, severity:Int, priority:Int, metric:String, threshold:Float, actual:Float}\n  CausalChain\u225c{root:String, intermediate:String, symptom:String}\n  Resolution\u225c{action:String, rationale:String}\n}\n\n\u27e6\u0393:Rules\u27e7{\n  \u2200i:Incident(i.severity=2 \u2227 i.metric=\"latency\" \u2227 i.actual>i.threshold)\u21d2alert(i)\n  chain_root(\"traffic_spike\")\u2192exhaustion(\"db_conn_pool\")\u2192symptom(\"latency>2s\")\n  \u2200c:CausalChain(root(c)\u2227intermediate(c))\u21d2requires(resolution)\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  alert\u225c\u03bb(i).(service:i.service, severity:i.severity, priority:i.priority, metric:i.metric, value:i.actual)\n  chain\u225c\u03bb().{root:\"traffic_spike\", intermediate:\"database_connection_pool_exhaustion\", symptom:\"latency_>_2s\"}\n  resolve\u225c\u03bb().(action:\"scale_db_connections|throttle_ingress\", rationale:\"restore_pool_headroom_and_shed_traffic\")\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.92;\u03c6\u225c100;\u03c4\u225c\u25ca\u207a\u27e9",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 366,
+        "o200k_base": 376
+      },
+      "latency_ms": 13277,
+      "timestamp": "2026-03-02T07:01:27.274711+00:00"
+    },
+    {
+      "task_id": "L3-03",
+      "condition": "aisp",
+      "model": "claude-haiku",
+      "run_number": 2,
+      "output": "\ud835\udd381.0.diag-query@2026-03-02\n\u03b3\u2254system-diagnostics\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@agent-a\n  receiver\u225c@agent-b\n  intent\u225cquery\n  id\u225c\"m1\"\n  timestamp\u225c1740873600\n  reply_to\u225cnull\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  QueryRequest\u225c{target:String, metrics:[String]}\n  MetricType\u225c{cpu,memory,latency,throughput,connection_count}\n}\n\n\u27e6\u0393:Rules\u27e7{\n  \u2200m\u2208metrics \u21d2 m\u2208MetricType\n  target\u2260null\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  query\u225c\u03bb(tgt,mtr).request_diagnostics(tgt,mtr)\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.80;\u03c6\u225c100;\u03c4\u225c\u25ca\u207a\u27e9\n\n---\n\n\ud835\udd381.0.diag-reply@2026-03-02\n\u03b3\u2254system-diagnostics\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@agent-b\n  receiver\u225c@agent-a\n  intent\u225cinform\n  id\u225c\"m2\"\n  timestamp\u225c1740873660\n  reply_to\u225c\"m1\"\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  DiagnosticReport\u225c{bottleneck:String, cpu:Float, memory:Float, latency:Int, active_connections:Int}\n  BottleneckType\u225c{memory,cpu,network}\n}\n\n\u27e6\u0393:Rules\u27e7{\n  bottleneck\u2208BottleneckType\n  cpu\u2208[0,100] \u2227 memory\u2208[0,100]\n  latency\u22650 \u2227 active_connections\u22650\n  (memory>85) \u21d2 bottleneck=memory\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  analyze\u225c\u03bb(c,m,l,a).(max(c,m)>80)\u2192memory:cpu\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.90;\u03c6\u225c100;\u03c4\u225c\u25ca\u207a\u207a\u27e9\n\n---\n\n\ud835\udd381.0.scale-request@2026-03-02\n\u03b3\u2254system-scaling\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@agent-a\n  receiver\u225c@agent-b\n  intent\u225crequest\n  id\u225c\"m3\"\n  timestamp\u225c1740873720\n  reply_to\u225c\"m2\"\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  ScalingRequest\u225c{dimension:String, factor:Float, trigger:String}\n  ScaleDimension\u225c{horizontal,vertical}\n}\n\n\u27e6\u0393:Rules\u27e7{\n  dimension\u2208ScaleDimension\n  factor>1.0 \u2227 factor\u226410.0\n  trigger\u2208[memory,throughput]\n  (trigger=memory) \u2227 (memory>85) \u21d2 dimension=horizontal\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  initiate\u225c\u03bb(d,f,t).execute_scaling(d,f)\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.75;\u03c6\u225c95;\u03c4\u225c\u25ca\u207a\u27e9",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 708,
+        "o200k_base": 739
+      },
+      "latency_ms": 25237,
+      "timestamp": "2026-03-02T07:01:52.512808+00:00"
+    },
+    {
+      "task_id": "L1-01",
+      "condition": "aisp",
+      "model": "claude-haiku",
+      "run_number": 3,
+      "output": "\ud835\udd381.0.server-status-query@2026-03-02\n\u03b3\u2254agent-comm\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@agent-a\n  receiver\u225c@agent-b\n  intent\u225cquery\n  id\u225c\"m1\"\n  timestamp\u225c1741000000\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  Server\u225c{name:String, endpoint:String}\n  Status\u225c{healthy,degraded,down}\n  ServerStatus\u225c{server:Server, state:Status}\n}\n\n\u27e6\u0393:Rules\u27e7{\n  \u2200s\u2208Server:\u2203st\u2208Status.status(s)=st\n  healthy\u21d2operational\n  \u00achealthy\u21d2\u00acoperational\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  getStatus\u225c\u03bb(srv).status(srv)\n  isHealthy\u225c\u03bb(srv).(status(srv)=healthy)\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.80;\u03c6\u225c100;\u03c4\u225c\u25ca\u207a\u207a\u27e9",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 239,
+        "o200k_base": 246
+      },
+      "latency_ms": 10809,
+      "timestamp": "2026-03-02T07:02:03.323420+00:00"
+    },
+    {
+      "task_id": "L1-02",
+      "condition": "aisp",
+      "model": "claude-haiku",
+      "run_number": 3,
+      "output": "\ud835\udd381.0.server-health-report@2026-03-02\n\u03b3\u2254monitoring\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@agent-b\n  receiver\u225c@agent-a\n  intent\u225cinform\n  id\u225c\"health-001\"\n  timestamp\u225c1740960000\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  Server\u225c{status:Status, uptime:Real}\n  Status\u225c{healthy,degraded,down}\n}\n\n\u27e6\u0393:Rules\u27e7{\n  server.status=healthy\n  server.uptime=99.7\n  \u2200s:Server:s.status\u2208Status \u2227 s.uptime\u2208[0,100]\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  getHealth\u225c\u03bb().{status:healthy,uptime:99.7}\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.95;\u03c6\u225c100;\u03c4\u225c\u25ca\u207a\u207a\u27e9",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 219,
+        "o200k_base": 228
+      },
+      "latency_ms": 21592,
+      "timestamp": "2026-03-02T07:02:24.916541+00:00"
+    },
+    {
+      "task_id": "L1-03",
+      "condition": "aisp",
+      "model": "claude-haiku",
+      "run_number": 3,
+      "output": "\ud835\udd381.0.error-404-not-found@2026-03-02\n\u03b3\u2254agent-comm\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@service\n  receiver\u225c@caller\n  intent\u225cinform\n  id\u225c\"err-404-001\"\n  timestamp\u225c1740960000\n  reply_to\u225c\"<caller-request-id>\"\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  ErrorResponse\u225c{code:Int, status:String, resource:String}\n  Status\u225c{not_found}\n}\n\n\u27e6\u0393:Rules\u27e7{\n  \u2200e:ErrorResponse:e.code=404\u21d2e.status=not_found\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  error404\u225c\u03bb(res).ErrorResponse{code:404, status:not_found, resource:res}\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.90;\u03c6\u225c100;\u03c4\u225c\u25ca\u207a\u27e9",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 212,
+        "o200k_base": 222
+      },
+      "latency_ms": 13353,
+      "timestamp": "2026-03-02T07:02:38.271201+00:00"
+    },
+    {
+      "task_id": "L2-01",
+      "condition": "aisp",
+      "model": "claude-haiku",
+      "run_number": 3,
+      "output": "\ud835\udd381.0.build-request@2026-03-02\n\u03b3\u2254ci-cd\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@ci-agent\n  receiver\u225c@builder-agent\n  intent\u225crequest\n  id\u225c\"br-00147\"\n  timestamp\u225c1741008000\n  reply_to\u225c\"\"\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  Repository\u225c{url:String, name:String}\n  BuildSpec\u225c{repo:Repository, branch:String, commit:String}\n  BuildStatus\u225c{pending,running,success,failure}\n  BuildResult\u225c{status:BuildStatus, build_id:String, logs:String}\n}\n\n\u27e6\u0393:Rules\u27e7{\n  \u2200b:BuildSpec \u21d2 b.commit\u2208[0-9a-f]{40}\n  \u2200b:BuildSpec \u21d2 b.branch\u2208String \u2227 b.branch\u2260\"\"\n  build_started(r) \u21d2 progress_reported(r)\n  status(r)=success \u21d2 artifacts_available(r)\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  build\u225c\u03bb(spec).execute_build(spec.repo, spec.branch, spec.commit)\n  notify_completion\u225c\u03bb(result).send_status_update(@ci-agent, result)\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.82;\u03c6\u225c100;\u03c4\u225c\u25ca\u207a\u27e9",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 298,
+        "o200k_base": 310
+      },
+      "latency_ms": 14681,
+      "timestamp": "2026-03-02T07:02:52.953605+00:00"
+    },
+    {
+      "task_id": "L2-02",
+      "condition": "aisp",
+      "model": "claude-haiku",
+      "run_number": 3,
+      "output": "\ud835\udd381.0.price-counter-offer@2026-03-02\n\u03b3\u2254procurement\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@buyer\n  receiver\u225c@supplier\n  intent\u225ccounter\n  id\u225c\"counter-001\"\n  timestamp\u225c1740888000\n  reply_to\u225c\"supplier-proposal-001\"\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  PriceProposal\u225c{quantity:Int, unitPrice:Float, currency:String}\n  MarketEvidence\u225c{benchmark:Float, source:String}\n}\n\n\u27e6\u0393:Rules\u27e7{\n  \u2200p\u2208PriceProposal: p.quantity = 10000 \u2227 p.unitPrice > 0\n  market_benchmark(2.15) \u2227 supplier_ask(2.50) \u21d2 buyer_counter(2.20)\n  counteroffer_justified \u2190 buyer_counter(2.20) \u2227 (buyer_counter(2.20) \u2265 market_benchmark(2.15))\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  submitCounter\u225c\u03bb(qty, price, market).{quantity: qty, unitPrice: price, justification: market}\n  marketAlignment\u225c\u03bb(offer, avg).(offer \u2265 avg)\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.70;\u03c6\u225c90;\u03c4\u225c\u25ca\u207a\u27e9",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 300,
+        "o200k_base": 313
+      },
+      "latency_ms": 22635,
+      "timestamp": "2026-03-02T07:03:15.589367+00:00"
+    },
+    {
+      "task_id": "L2-03",
+      "condition": "aisp",
+      "model": "claude-haiku",
+      "run_number": 3,
+      "output": "\ud835\udd381.0.task-distribution@2026-03-02\n\u03b3\u2254data-processing\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@planner\n  receiver\u225c[@worker1, @worker2, @worker3]\n  intent\u225crequest\n  id\u225c\"dist-001\"\n  timestamp\u225c1767129600\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  Segment\u225c{start:Integer, end:Integer}\n  Assignment\u225c{worker:String, segment:Segment}\n}\n\n\u27e6\u0393:Rules\u27e7{\n  segment(worker1) = {start:0, end:1000}\n  segment(worker2) = {start:1000, end:2000}\n  segment(worker3) = {start:2000, end:3000}\n  \u2200w\u2208[worker1, worker2, worker3]:size(segment(w)) = 1000\n  \u2200w\u2081,w\u2082\u2208[worker1, worker2, worker3]:w\u2081\u2260w\u2082 \u21d2 segment(w\u2081) \u2229 segment(w\u2082) = \u2205\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  process\u225c\u03bb(w,start,end).execute(w, \"process_range\", start, end)\n  size\u225c\u03bb(s).(s.end - s.start)\n  segment\u225c\u03bb(w).if w=worker1 then {start:0, end:1000} else if w=worker2 then {start:1000, end:2000} else {start:2000, end:3000}\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.85;\u03c6\u225c100;\u03c4\u225c\u25ca\u207a\u27e9",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 370,
+        "o200k_base": 382
+      },
+      "latency_ms": 34014,
+      "timestamp": "2026-03-02T07:03:49.604150+00:00"
+    },
+    {
+      "task_id": "L3-01",
+      "condition": "aisp",
+      "model": "claude-haiku",
+      "run_number": 3,
+      "output": "\ud835\udd381.0.fetch-parse-store@2026-03-02\n\u03b3\u2254pipeline-orchestration\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@orchestrator\n  receiver\u225c@pipeline\n  intent\u225crequest\n  id\u225c\"msg-001\"\n  timestamp\u225c1741046400\n  reply_to\u225cnull\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  URL\u225cString\n  JSONData\u225cObject\n  DBConfig\u225c{database:String, table:String}\n  PipelineTask\u225c{url:URL, config:DBConfig}\n}\n\n\u27e6\u0393:Rules\u27e7{\n  \u2200t:PipelineTask:(t.url\u2260\"\"\u2227t.config.database\u2260\"\")\u21d2execute(t)\n  fetch(url)\u21d2parseJSON(response)\u21d2storeDB(data)\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  run\u225c\u03bb(task).(\n    resp\u2190fetch(task.url);\n    json\u2190parseJSON(resp);\n    result\u2190storeDB(json, task.config);\n    result\n  )\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.82;\u03c6\u225c100;\u03c4\u225c\u25ca\u207a\u27e9",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 270,
+        "o200k_base": 272
+      },
+      "latency_ms": 19478,
+      "timestamp": "2026-03-02T07:04:09.083984+00:00"
+    },
+    {
+      "task_id": "L3-02",
+      "condition": "aisp",
+      "model": "claude-haiku",
+      "run_number": 3,
+      "output": "\ud835\udd381.0.incident-alert-payments@2026-03-02\n\u03b3\u2254incident-management\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@monitor\n  receiver\u225c@ops-team\n  intent\u225calert\n  id\u225c\"incident-payments-2026-03-02-001\"\n  timestamp\u225c1743609600\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  Incident\u225c{service:String, severity:Int, priority:Int, metric:String, threshold:Float, current:Float}\n  CausalChain\u225c[{event:String, cause:String}]\n  Resolution\u225c{action:String, eta:Int}\n}\n\n\u27e6\u0393:Rules\u27e7{\n  \u2200i:Incident: i.severity \u2208 {1,2,3,4,5}\n  \u2200i:Incident: i.priority \u2208 {1,2,3,4,5}\n  i.current > i.threshold \u21d2 i.severity \u2265 2\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  rootCause\u225c\u03bb(chain).chain[len(chain)-1]\n  recommend\u225c\u03bb(cause).\"scale_db_pool AND implement_traffic_throttle\"\n}\n\n\u27e6\u0395\u27e7\u27e8\n  incident\u225c{\n    service:\"payments\",\n    severity:2,\n    priority:4,\n    metric:\"latency_ms\",\n    threshold:2000,\n    current:2100\n  }\n  causalChain\u225c[\n    {event:\"high_latency\", cause:\"db_connection_pool_exhaustion\"},\n    {event:\"db_connection_pool_exhaustion\", cause:\"traffic_spike\"}\n  ]\n  resolution\u225c{\n    action:recommend(rootCause(causalChain)),\n    eta:300\n  }\n  \u03b4\u225c0.92;\u03c6\u225c100;\u03c4\u225c\u25ca\u207a\u27e9",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 391,
+        "o200k_base": 401
+      },
+      "latency_ms": 15940,
+      "timestamp": "2026-03-02T07:04:25.025044+00:00"
+    },
+    {
+      "task_id": "L3-03",
+      "condition": "aisp",
+      "model": "claude-haiku",
+      "run_number": 3,
+      "output": "\ud835\udd381.0.diagnostics-query@2026-03-02\n\u03b3\u2254agent-diagnostics\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@agent-a\n  receiver\u225c@agent-b\n  intent\u225cquery\n  id\u225c\"m1\"\n  timestamp\u225c1740960000\n  reply_to\u225cnull\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  DiagnosticRequest\u225c{system:String, metrics:[String]}\n  SystemType\u225c{compute,network,storage}\n}\n\n\u27e6\u0393:Rules\u27e7{\n  \u2200req:DiagnosticRequest \u21d2 metrics(req)\u2208[String]\n  reply_to(req)=null \u2228 reply_to(req)\u2208MessageID\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  requestDiagnostics\u225c\u03bb(agent,sys).(query,agent,sys)\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.85;\u03c6\u225c100;\u03c4\u225c\u25ca\u207a\u27e9\n\n---\n\n\ud835\udd381.0.diagnostics-reply@2026-03-02\n\u03b3\u2254agent-diagnostics\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@agent-b\n  receiver\u225c@agent-a\n  intent\u225creply\n  id\u225c\"m2\"\n  timestamp\u225c1740960060\n  reply_to\u225c\"m1\"\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  DiagnosticResponse\u225c{bottleneck:String,throughput:Int,latency:Int,connections:Int}\n  MetricValue\u225cInt\n}\n\n\u27e6\u0393:Rules\u27e7{\n  \u2200resp:DiagnosticResponse \u21d2 throughput(resp)>0 \u2227 latency(resp)\u22650\n  bottleneck(resp)\u2208{cpu,memory,network,disk}\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  reportDiagnostics\u225c\u03bb(bn,tp,lat,cn).(inform,bn,tp,lat,cn)\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.90;\u03c6\u225c100;\u03c4\u225c\u25ca\u207a\u27e9\n\n---\n\n\ud835\udd381.0.scaling-request@2026-03-02\n\u03b3\u2254agent-diagnostics\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@agent-a\n  receiver\u225c@agent-b\n  intent\u225crequest\n  id\u225c\"m3\"\n  timestamp\u225c1740960120\n  reply_to\u225c\"m2\"\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  ScalingRequest\u225c{resource:String,target_capacity:Int,priority:String}\n  ResourceType\u225c{cpu,memory,network}\n  PriorityLevel\u225c{low,medium,high,critical}\n}\n\n\u27e6\u0393:Rules\u27e7{\n  \u2200scale:ScalingRequest \u21d2 target_capacity(scale)>0\n  priority(scale)\u2208PriorityLevel\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  requestScaling\u225c\u03bb(res,cap,pri).(request,res,cap,pri)\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.88;\u03c6\u225c100;\u03c4\u225c\u25ca\u207a\u27e9",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 682,
+        "o200k_base": 713
+      },
+      "latency_ms": 15587,
+      "timestamp": "2026-03-02T07:04:40.613133+00:00"
+    }
+  ]
+}
