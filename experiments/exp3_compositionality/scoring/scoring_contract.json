@@ -1,0 +1,93 @@
+{
+  "description": "Exp 3 per-condition scoring contract — defines extraction method for elements AND composition-structure",
+  "frozen": "2026-03-01",
+  "grammar_version": "v0.1b",
+  "rationale": "Extends Exp 1 scoring contract with composition-structure dimension. AXON composition-structure scored via AST walking (machine); all other conditions use 3-judge panel. Element scoring reuses Exp 1 extractors.",
+
+  "scoring_dimensions": {
+    "elements": "Standard element presence (identity, intent, composition-step, metadata). Scored per Exp 1 contract.",
+    "composition_structure": "NEW: Structural relationships between steps. Primary DV for Exp 3."
+  },
+
+  "extraction_methods": {
+    "machine_ast": "AXON AST walking for composition operators (-> & | <- ! ~). Binary PRESENT/ABSENT.",
+    "machine_text": "Text pattern matching for structural keywords in non-AXON structured formats. Partial — supplements judge scoring.",
+    "judge": "3-judge LLM panel using composition_judge_prompt.txt. Verdicts: PRESENT/ABSENT/INCORRECT.",
+    "hybrid": "Machine text extraction as pre-filter, judge confirms. Used for JSON FC and FIPA-ACL composition-structure."
+  },
+
+  "conditions": {
+    "axon": {
+      "elements": "machine — reuse Exp 1 AXON extractor",
+      "composition_structure": "machine_ast — walk AST for BinaryExpr nodes with op in {->, &, |, <-} and CallExpr with func in {!, ~, neg}",
+      "nesting_depth": "machine — measure_nesting_depth() on content AST",
+      "cross_validation": "30 outputs also judge-scored (target: 90% agreement)"
+    },
+
+    "json_fc": {
+      "elements": "machine — reuse Exp 1 JSON FC extractor",
+      "composition_structure": "hybrid — text pattern matching for structural keywords, judge confirms relationships",
+      "nesting_depth": "judge — estimated from structural keyword depth"
+    },
+
+    "fipa_acl": {
+      "elements": "machine — reuse Exp 1 FIPA-ACL extractor",
+      "composition_structure": "hybrid — text pattern matching in :content, judge confirms",
+      "nesting_depth": "judge — estimated from S-expression nesting"
+    },
+
+    "free_english": {
+      "elements": "judge — reuse Exp 1 judge panel",
+      "composition_structure": "judge — assess structural relationships using composition_judge_prompt.txt",
+      "nesting_depth": "judge — estimate from text structure"
+    },
+
+    "structured_english": {
+      "elements": "judge — reuse Exp 1 judge panel",
+      "composition_structure": "judge — assess structural relationships",
+      "nesting_depth": "judge — estimate from text structure"
+    },
+
+    "instruction_matched_english": {
+      "elements": "judge — reuse Exp 1 judge panel",
+      "composition_structure": "judge — assess structural relationships",
+      "nesting_depth": "judge — estimate from text structure"
+    },
+
+    "aisp": {
+      "elements": "judge — reuse Exp 1 judge panel (exploratory, post-prereg)",
+      "composition_structure": "judge — assess structural relationships in AISP block structure",
+      "nesting_depth": "judge — estimate from block nesting",
+      "note": "AISP added as exploratory 7th condition. Results reported separately, uncorrected."
+    }
+  },
+
+  "validation_protocol": {
+    "cross_validation": {
+      "description": "30 AXON composition-structure outputs also scored by judges",
+      "selection": "Stratified: 1 per task (9) x 3 runs, plus 3 extra from L3 tasks",
+      "agreement_threshold": 0.90,
+      "action_if_below": "Review AST extraction rules, fix, re-run. If still below 0.85, expand to full judge scoring."
+    }
+  },
+
+  "primary_dv": {
+    "name": "composition_success_rate",
+    "formula": "composition_structure_correct / composition_structure_total",
+    "per_output": true,
+    "note": "Each output yields a proportion (0 to 1). This is the primary DV for the GLMM."
+  },
+
+  "secondary_dvs": [
+    {
+      "name": "element_rate",
+      "formula": "elements_present / elements_total",
+      "note": "Standard element presence rate (replicates Exp 1 methodology)"
+    },
+    {
+      "name": "nesting_depth",
+      "formula": "max_nesting_depth per output",
+      "note": "Only for L2+L3 tasks. Poisson GLMM."
+    }
+  ]
+}

@@ -1,0 +1,3870 @@
+{
+  "experiment": "exp3_compositionality",
+  "grammar_version": "v0.1b",
+  "model": "claude-haiku",
+  "model_display": "Claude Haiku 4.5",
+  "timestamp": "2026-03-01T20:41:29.361539+00:00",
+  "total_runs": 189,
+  "valid_count": 160,
+  "results": [
+    {
+      "task_id": "L1-01",
+      "condition": "free_english",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "```\nDIR(@processor>@worker): seq(\n  download(dataset, data_lake),\n  clean(dataset, null_rows),\n  upload(dataset, warehouse)\n)\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 33,
+        "o200k_base": 33
+      },
+      "latency_ms": 19397,
+      "timestamp": "2026-03-01T19:30:50.580052+00:00",
+      "complexity_level": 1,
+      "operators_tested": [
+        "->"
+      ]
+    },
+    {
+      "task_id": "L1-02",
+      "condition": "free_english",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "```\nCMD(@deployment_agent>@cluster_manager): parallel([check_cpu(), check_memory(), check_disk()])\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 22,
+        "o200k_base": 22
+      },
+      "latency_ms": 21800,
+      "timestamp": "2026-03-01T19:31:12.383244+00:00",
+      "complexity_level": 1,
+      "operators_tested": [
+        "&"
+      ]
+    },
+    {
+      "task_id": "L1-03",
+      "condition": "free_english",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "```\nDIR(@router>@handler): route(req1, endpoint: (available(primary_api) ? primary_api | fallback_cache))\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 27,
+        "o200k_base": 27
+      },
+      "latency_ms": 30599,
+      "timestamp": "2026-03-01T19:31:42.985776+00:00",
+      "complexity_level": 1,
+      "operators_tested": [
+        "|"
+      ]
+    },
+    {
+      "task_id": "L2-01",
+      "condition": "free_english",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "```\nCMD(@orchestrator>@pipeline): pipeline(\n  validate_schema(input),\n  parallel(sentiment_analysis(input), topic_classification(input)),\n  merge_results(results)\n)\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 35,
+        "o200k_base": 36
+      },
+      "latency_ms": 16950,
+      "timestamp": "2026-03-01T19:31:59.938068+00:00",
+      "complexity_level": 2,
+      "operators_tested": [
+        "->",
+        "&"
+      ]
+    },
+    {
+      "task_id": "L2-02",
+      "condition": "free_english",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "```axon\nCMD(@data_agent): IF cached(@table) THEN fetch(@cache, @table) ELSE (query(@db, @table) ; update(@cache, @table))\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 39,
+        "o200k_base": 39
+      },
+      "latency_ms": 12525,
+      "timestamp": "2026-03-01T19:32:12.464297+00:00",
+      "complexity_level": 2,
+      "operators_tested": [
+        "|",
+        "->"
+      ]
+    },
+    {
+      "task_id": "L2-03",
+      "condition": "free_english",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "```\nCMD(@security > @audit): parallel(scan_ports(), check_ssl()) where ~scope(internal_only)\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 23,
+        "o200k_base": 24
+      },
+      "latency_ms": 17052,
+      "timestamp": "2026-03-01T19:32:29.517506+00:00",
+      "complexity_level": 2,
+      "operators_tested": [
+        "&",
+        "!"
+      ]
+    },
+    {
+      "task_id": "L3-01",
+      "condition": "free_english",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "```\nAXON/0.1 MSG-ID:etl-001\nCMD(@orchestrator>@pipeline): execute(\n  par(extract(@api_source), extract(@database)),\n  transform(validate(@rules, $combined_data)),\n  if(is_valid($combined_data), \n     load(@warehouse, $combined_data),\n     route(@error_queue, $combined_data)\n  )\n)\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 80,
+        "o200k_base": 79
+      },
+      "latency_ms": 19127,
+      "timestamp": "2026-03-01T19:32:48.645957+00:00",
+      "complexity_level": 3,
+      "operators_tested": [
+        "->",
+        "&",
+        "|"
+      ]
+    },
+    {
+      "task_id": "L3-02",
+      "condition": "free_english",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "```\nALERT(@monitor>@ops,@deploy): \n  severity(critical),\n  location(cache_layer),\n  root_cause(missing_eviction_policy),\n  symptom(memory_leak),\n  impact(service_degradation),\n  remediation(parallel([restart(@cache_service), deploy(@hotfix)])),\n  verify(service_recovery)\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 67,
+        "o200k_base": 67
+      },
+      "latency_ms": 19242,
+      "timestamp": "2026-03-01T19:33:07.890373+00:00",
+      "complexity_level": 3,
+      "operators_tested": [
+        "<-",
+        "&",
+        "->"
+      ]
+    },
+    {
+      "task_id": "L3-03",
+      "condition": "free_english",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "```\nDLG(@negotiator > @supplier): \n  propose(\n    (product(A) & price(100) & justified(market_rate)) \n    | (product(B) & price(85) & justified(market_rate))\n  ) & \n  require(\n    confirm_inventory; \n    (ship_warehouse & send_invoice); \n    await_payment\n  )\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 79,
+        "o200k_base": 79
+      },
+      "latency_ms": 32717,
+      "timestamp": "2026-03-01T19:33:40.609455+00:00",
+      "complexity_level": 3,
+      "operators_tested": [
+        "->",
+        "|",
+        "&",
+        "<-"
+      ]
+    },
+    {
+      "task_id": "L1-01",
+      "condition": "structured_english",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "FROM: data-processing-agent\nTO: worker-agent\nTYPE: request\nCONTENT: Execute the following sequential steps: (1) Download dataset from data lake, (2) Clean dataset by removing null rows, (3) Upload cleaned dataset to warehouse.",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 51,
+        "o200k_base": 51
+      },
+      "latency_ms": 18521,
+      "timestamp": "2026-03-01T19:33:59.132287+00:00",
+      "complexity_level": 1,
+      "operators_tested": [
+        "->"
+      ]
+    },
+    {
+      "task_id": "L1-02",
+      "condition": "structured_english",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "FROM: deployment-agent\nTO: cluster-manager\nTYPE: request\nCONTENT: Execute three health checks simultaneously: check CPU usage, check memory usage, and check disk space.",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 35,
+        "o200k_base": 35
+      },
+      "latency_ms": 15509,
+      "timestamp": "2026-03-01T19:34:14.643732+00:00",
+      "complexity_level": 1,
+      "operators_tested": [
+        "&"
+      ]
+    },
+    {
+      "task_id": "L1-03",
+      "condition": "structured_english",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "FROM: routing-agent\nTO: handler-agent\nTYPE: inform\nCONTENT: Process incoming request via primary-api-endpoint if available; route to fallback-cache-service on primary unavailability.",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 37,
+        "o200k_base": 37
+      },
+      "latency_ms": 10096,
+      "timestamp": "2026-03-01T19:34:24.741822+00:00",
+      "complexity_level": 1,
+      "operators_tested": [
+        "|"
+      ]
+    },
+    {
+      "task_id": "L2-01",
+      "condition": "structured_english",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "FROM: orchestrator\nTO: pipeline-agent\nTYPE: request\nCONTENT: Execute pipeline: (1) validate input schema, (2) run sentiment-analysis and topic-classification in parallel on validated data, (3) merge results into unified report.",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 51,
+        "o200k_base": 51
+      },
+      "latency_ms": 10857,
+      "timestamp": "2026-03-01T19:34:35.600592+00:00",
+      "complexity_level": 2,
+      "operators_tested": [
+        "->",
+        "&"
+      ]
+    },
+    {
+      "task_id": "L2-02",
+      "condition": "structured_english",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "FROM: query-agent\nTO: data-agent\nTYPE: request\nCONTENT: REQ(@query-agent>@data-agent): if(cache_available($query), cache_fetch($query), (db_query($query) & cache_update($query)))",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 47,
+        "o200k_base": 48
+      },
+      "latency_ms": 21403,
+      "timestamp": "2026-03-01T19:34:57.005580+00:00",
+      "complexity_level": 2,
+      "operators_tested": [
+        "|",
+        "->"
+      ]
+    },
+    {
+      "task_id": "L2-03",
+      "condition": "structured_english",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "FROM: security-agent\nTO: audit-agent\nTYPE: request\nCONTENT: Execute simultaneous scan operations: (1) identify all open ports, (2) validate SSL certificates for each open port. Scope constraint: exclude all services marked as internal-only from both operations.",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 54,
+        "o200k_base": 54
+      },
+      "latency_ms": 11167,
+      "timestamp": "2026-03-01T19:35:08.175396+00:00",
+      "complexity_level": 2,
+      "operators_tested": [
+        "&",
+        "!"
+      ]
+    },
+    {
+      "task_id": "L3-01",
+      "condition": "structured_english",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "```\nREQ(@etl_orchestrator>@pipeline): etl_execute(\n  msg_id=\"ETL-20260301-001\",\n  protocol_version=\"0.1\",\n  task=sequence(\n    parallel_extract(api_source(), db_source()),\n    transform_validate(validate_schema(), validate_rules()),\n    route_conditional(\n      condition=validation_passed(),\n      on_success=load(data_warehouse),\n      on_failure=route(error_queue)\n    )\n  )\n)\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 95,
+        "o200k_base": 94
+      },
+      "latency_ms": 18870,
+      "timestamp": "2026-03-01T19:35:27.047711+00:00",
+      "complexity_level": 3,
+      "operators_tested": [
+        "->",
+        "&",
+        "|"
+      ]
+    },
+    {
+      "task_id": "L3-02",
+      "condition": "structured_english",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "FROM: operations-coordinator\nTO: monitoring-agent\nTYPE: confirm\nCONTENT: Alert received: service degradation due to cache layer memory leak from missing eviction policy. Executing simultaneous cache service restart and hotfix deployment. Health verification check will follow to confirm service recovery.",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 54,
+        "o200k_base": 54
+      },
+      "latency_ms": 18563,
+      "timestamp": "2026-03-01T19:35:45.612668+00:00",
+      "complexity_level": 3,
+      "operators_tested": [
+        "<-",
+        "&",
+        "->"
+      ]
+    },
+    {
+      "task_id": "L3-03",
+      "condition": "structured_english",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "FROM: negotiation-agent\nTO: supplier\nTYPE: propose\nCONTENT: We propose a deal for supply of either Product A at $100/unit or Product B at $85/unit. Both options require the following sequential workflow: (1) confirm inventory availability, (2) ship to warehouse and send invoice simultaneously, (3) await payment confirmation. Pricing reflects current market rates for comparable products in this category.",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 82,
+        "o200k_base": 82
+      },
+      "latency_ms": 7951,
+      "timestamp": "2026-03-01T19:35:53.566181+00:00",
+      "complexity_level": 3,
+      "operators_tested": [
+        "->",
+        "|",
+        "&",
+        "<-"
+      ]
+    },
+    {
+      "task_id": "L1-01",
+      "condition": "instruction_matched_english",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "[message-id: m1]\nCOMMAND (data-processor -> worker):\n  sequence: ordered\n  steps:\n    - order: 1\n      action: download\n      source: data-lake\n      resource: dataset\n    - order: 2\n      action: clean\n      operation: remove-null-rows\n      target: dataset\n    - order: 3\n      action: upload\n      destination: warehouse\n      source: cleaned-dataset",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 95,
+        "o200k_base": 95
+      },
+      "latency_ms": 13137,
+      "timestamp": "2026-03-01T19:36:06.705482+00:00",
+      "complexity_level": 1,
+      "operators_tested": [
+        "->"
+      ]
+    },
+    {
+      "task_id": "L1-02",
+      "condition": "instruction_matched_english",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "[message-id: m1]\nCOMMAND (deployment-agent -> cluster-manager):\n  action: run-health-checks\n  checks: [cpu-usage, memory-usage, disk-space]\n  mode: simultaneous\n  timestamp: 1740830400",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 51,
+        "o200k_base": 51
+      },
+      "latency_ms": 9010,
+      "timestamp": "2026-03-01T19:36:15.717580+00:00",
+      "complexity_level": 1,
+      "operators_tested": [
+        "&"
+      ]
+    },
+    {
+      "task_id": "L1-03",
+      "condition": "instruction_matched_english",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "```\n[message-id: route-req-20260301-1]\nINFORM (routing_agent -> handler_agent):\n  request_id: req-8743\n  primary_api: unavailable\n  fallback_cache: available\n  route_to: fallback_cache\n  reason: primary_endpoint_timeout\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 61,
+        "o200k_base": 61
+      },
+      "latency_ms": 16886,
+      "timestamp": "2026-03-01T19:36:32.606074+00:00",
+      "complexity_level": 1,
+      "operators_tested": [
+        "|"
+      ]
+    },
+    {
+      "task_id": "L2-01",
+      "condition": "instruction_matched_english",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "```\n[message-id: pipe-001]\nREQ(@orchestrator>@pipeline): execute_workflow(\n  validate_schema($data),\n  parallel(\n    sentiment_analysis($data),\n    topic_classification($data)\n  ),\n  merge_results()\n)\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 50,
+        "o200k_base": 52
+      },
+      "latency_ms": 28534,
+      "timestamp": "2026-03-01T19:37:01.143724+00:00",
+      "complexity_level": 2,
+      "operators_tested": [
+        "->",
+        "&"
+      ]
+    },
+    {
+      "task_id": "L2-02",
+      "condition": "instruction_matched_english",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "[message-id: m1]\nREQUEST (@query_agent -> @data_agent):\n  action: fetch_results\n  logic: if(available(@cache), fetch(@cache), and(query(@database), update(@cache, results)))\n  priority: cache_first",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 51,
+        "o200k_base": 51
+      },
+      "latency_ms": 15185,
+      "timestamp": "2026-03-01T19:37:16.330585+00:00",
+      "complexity_level": 2,
+      "operators_tested": [
+        "|",
+        "->"
+      ]
+    },
+    {
+      "task_id": "L2-03",
+      "condition": "instruction_matched_english",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "[message-id: m1]\nCOMMAND (security-agent -> audit-agent):\n  tasks: [scan_open_ports, check_ssl_certificates]\n  scope: all_services\n  exclude: internal_only_services\n  parallelism: concurrent\n\nOr in AXON syntax:\n\nCMD(@security > @audit): audit(scope: [scan_ports, check_ssl], exclude: internal_only) & parallel()",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 78,
+        "o200k_base": 78
+      },
+      "latency_ms": 13697,
+      "timestamp": "2026-03-01T19:37:30.029117+00:00",
+      "complexity_level": 2,
+      "operators_tested": [
+        "&",
+        "!"
+      ]
+    },
+    {
+      "task_id": "L3-01",
+      "condition": "instruction_matched_english",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "```\n[id: etl-001]\n[version: 0.1]\nCMD (@orchestrator > @pipeline):\n  seq(\n    par(extract(@api_source), extract(@db_source)),\n    transform(apply($combined_data, @validation_rules)),\n    cond(valid($combined_data), load(@warehouse), route(@error_queue))\n  )\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 73,
+        "o200k_base": 73
+      },
+      "latency_ms": 21115,
+      "timestamp": "2026-03-01T19:37:51.145905+00:00",
+      "complexity_level": 3,
+      "operators_tested": [
+        "->",
+        "&",
+        "|"
+      ]
+    },
+    {
+      "task_id": "L3-02",
+      "condition": "instruction_matched_english",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "[message-id: m-incident-remedy-cache-001]\nCOMMAND (incident-remediation-agent -> infrastructure-execution-agents):\n  alert-reference: svc-degradation-cache-layer\n  root-cause: missing-eviction-policy\n  immediate-symptom: memory-leak\n  remediation-actions:\n    - action: restart-service\n      target: cache-service\n      timing: concurrent\n    - action: deploy-hotfix\n      target: cache-service\n      description: enable eviction policy\n      timing: concurrent\n  verification-protocol:\n    - step: confirm-cache-restart\n      success-criteria: cache-service-healthy\n    - step: confirm-hotfix-deployed\n      success-criteria: eviction-policy-active\n    - step: verify-memory-stable\n      success-criteria: memory-usage-normalized\n    - step: verify-service-recovery\n      success-criteria: degradation-resolved\n  priority: critical\n  acknowledgment-required: true",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 200,
+        "o200k_base": 196
+      },
+      "latency_ms": 20036,
+      "timestamp": "2026-03-01T19:38:11.184553+00:00",
+      "complexity_level": 3,
+      "operators_tested": [
+        "<-",
+        "&",
+        "->"
+      ]
+    },
+    {
+      "task_id": "L3-03",
+      "condition": "instruction_matched_english",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "[message-id: prop-deal-001]\n[timestamp: 1740852000]\nPROPOSE (negotiation-agent -> supplier-agent):\n  proposal-type: supply-agreement\n  product-options:\n    option-1:\n      product: A\n      unit-price: $100\n      justification: current-market-rates\n    option-2:\n      product: B\n      unit-price: $85\n      justification: current-market-rates\n  selected-product: required-decision\n  delivery-sequence:\n    phase-1:\n      action: confirm-inventory\n      blocking: true\n    phase-2:\n      actions:\n        - ship-to-warehouse\n        - send-invoice\n      concurrency: parallel\n      blocking: true\n    phase-3:\n      action: await-payment-confirmation\n      blocking: true\n  terms-binding: upon-acceptance",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 179,
+        "o200k_base": 179
+      },
+      "latency_ms": 11464,
+      "timestamp": "2026-03-01T19:38:22.652072+00:00",
+      "complexity_level": 3,
+      "operators_tested": [
+        "->",
+        "|",
+        "&",
+        "<-"
+      ]
+    },
+    {
+      "task_id": "L1-01",
+      "condition": "json_fc",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "```\nREQ(@processor>@worker): seq(\n  download(dataset, \"data_lake\"),\n  clean(dataset, \"null_rows\"),\n  upload(dataset, \"warehouse\")\n)\n```",
+      "valid": false,
+      "errors": [
+        "Invalid JSON: Expecting value: line 1 column 1 (char 0)"
+      ],
+      "token_counts": {
+        "cl100k_base": 36,
+        "o200k_base": 36
+      },
+      "latency_ms": 16523,
+      "timestamp": "2026-03-01T19:38:39.177695+00:00",
+      "complexity_level": 1,
+      "operators_tested": [
+        "->"
+      ]
+    },
+    {
+      "task_id": "L1-02",
+      "condition": "json_fc",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "```\nCMD(@deployment>@cluster_mgr): run_health_checks(check_cpu_usage, check_memory_usage, check_disk_space)\n```",
+      "valid": false,
+      "errors": [
+        "Invalid JSON: Expecting value: line 1 column 1 (char 0)"
+      ],
+      "token_counts": {
+        "cl100k_base": 25,
+        "o200k_base": 25
+      },
+      "latency_ms": 17378,
+      "timestamp": "2026-03-01T19:38:56.557069+00:00",
+      "complexity_level": 1,
+      "operators_tested": [
+        "&"
+      ]
+    },
+    {
+      "task_id": "L1-03",
+      "condition": "json_fc",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "```\nINF(@router>@handler): route_request(request_id, endpoint: primary_available ? primary_api : fallback_cache)\n```",
+      "valid": false,
+      "errors": [
+        "Invalid JSON: Expecting value: line 1 column 1 (char 0)"
+      ],
+      "token_counts": {
+        "cl100k_base": 25,
+        "o200k_base": 25
+      },
+      "latency_ms": 16213,
+      "timestamp": "2026-03-01T19:39:12.771092+00:00",
+      "complexity_level": 1,
+      "operators_tested": [
+        "|"
+      ]
+    },
+    {
+      "task_id": "L2-01",
+      "condition": "json_fc",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "```\nCMD(@orchestrator>@pipeline): execute_pipeline(\n  sequence(\n    validate(input, schema),\n    parallel(\n      sentiment_analysis(validated_input),\n      topic_classification(validated_input)\n    ),\n    merge_results(\n      sentiment_output,\n      topic_output\n    )\n  )\n)\n```",
+      "valid": false,
+      "errors": [
+        "Invalid JSON: Expecting value: line 1 column 1 (char 0)"
+      ],
+      "token_counts": {
+        "cl100k_base": 59,
+        "o200k_base": 60
+      },
+      "latency_ms": 15907,
+      "timestamp": "2026-03-01T19:39:28.680041+00:00",
+      "complexity_level": 2,
+      "operators_tested": [
+        "->",
+        "&"
+      ]
+    },
+    {
+      "task_id": "L2-02",
+      "condition": "json_fc",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "```\nCMD(@query_agent>@data_agent):\n  available(results) ? fetch(results) : (query_db(results) >> update_cache(results))\n```",
+      "valid": false,
+      "errors": [
+        "Invalid JSON: Expecting value: line 1 column 1 (char 0)"
+      ],
+      "token_counts": {
+        "cl100k_base": 30,
+        "o200k_base": 30
+      },
+      "latency_ms": 14276,
+      "timestamp": "2026-03-01T19:39:42.957536+00:00",
+      "complexity_level": 2,
+      "operators_tested": [
+        "|",
+        "->"
+      ]
+    },
+    {
+      "task_id": "L2-03",
+      "condition": "json_fc",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "```json\n{\n  \"performative\": \"command\",\n  \"from\": \"security-agent\",\n  \"to\": \"audit-agent\",\n  \"content\": {\n    \"action\": \"execute_audit\",\n    \"tasks\": [\n      {\n        \"type\": \"port_scan\",\n        \"description\": \"Scan for open ports\"\n      },\n      {\n        \"type\": \"ssl_check\",\n        \"description\": \"Check SSL certificates\"\n      }\n    ],\n    \"execution_mode\": \"simultaneous\",\n    \"scope\": {\n      \"exclude\": [\"internal-only-services\"]\n    }\n  }\n}\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 121,
+        "o200k_base": 122
+      },
+      "latency_ms": 12239,
+      "timestamp": "2026-03-01T19:39:55.198189+00:00",
+      "complexity_level": 2,
+      "operators_tested": [
+        "&",
+        "!"
+      ]
+    },
+    {
+      "task_id": "L3-01",
+      "condition": "json_fc",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "```\n[version:0.1 message-id:etl-msg-001]\nCMD(@orchestrator > @pipeline): seq(\n  par(\n    extract(@api_source),\n    extract(@db_source)\n  ),\n  transform($combined_data, apply($validation_rules)),\n  if(passes_validation($combined_data),\n    load($combined_data, @warehouse),\n    route($combined_data, @error_queue)\n  )\n)\n```",
+      "valid": false,
+      "errors": [
+        "Invalid JSON: Expecting value: line 1 column 2 (char 1)"
+      ],
+      "token_counts": {
+        "cl100k_base": 88,
+        "o200k_base": 87
+      },
+      "latency_ms": 24614,
+      "timestamp": "2026-03-01T19:40:19.814044+00:00",
+      "complexity_level": 3,
+      "operators_tested": [
+        "->",
+        "&",
+        "|"
+      ]
+    },
+    {
+      "task_id": "L3-02",
+      "condition": "json_fc",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "```json\n{\n  \"performative\": \"publish\",\n  \"from\": \"monitoring-agent\",\n  \"to\": [\"remediation-agent\", \"deployment-agent\", \"verification-agent\"],\n  \"id\": \"alert-m001\",\n  \"timestamp\": 1740787200,\n  \"context\": \"cache-degradation-incident\",\n  \"content\": {\n    \"alert_type\": \"service_degradation\",\n    \"severity\": \"critical\",\n    \"description\": \"Cache layer memory leak causing service degradation\",\n    \"root_cause_chain\": [\n      \"missing eviction policy in cache layer\",\n      \"uncontrolled memory consumption\",\n      \"service latency degradation\"\n    ],\n    \"affected_service\": \"cache-service\",\n    \"remediation_actions\": [\n      {\n        \"action\": \"restart\",\n        \"target\": \"cache-service\",\n        \"concurrent\": true\n      },\n      {\n        \"action\": \"deploy\",\n        \"target\": \"cache-hotfix\",\n        \"concurrent\": true\n      }\n    ],\n    \"verification_required\": {\n      \"check\": \"service_recovery\",\n      \"metrics\": [\"latency\", \"error_rate\", \"memory_usage\"],\n      \"expected_state\": \"all_metrics_nominal\"\n    }\n  }\n}\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 255,
+        "o200k_base": 254
+      },
+      "latency_ms": 13515,
+      "timestamp": "2026-03-01T19:40:33.331248+00:00",
+      "complexity_level": 3,
+      "operators_tested": [
+        "<-",
+        "&",
+        "->"
+      ]
+    },
+    {
+      "task_id": "L3-03",
+      "condition": "json_fc",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "```\nPROP(@negotiator>@supplier):\n  choice(offer(A, 100), offer(B, 85)) \u2227\n  sequence(\n    confirm_inventory(),\n    parallel(ship_warehouse(), send_invoice()),\n    await_payment()\n  ) \u2227\n  justify(market_rates)\n```",
+      "valid": false,
+      "errors": [
+        "Invalid JSON: Expecting value: line 1 column 1 (char 0)"
+      ],
+      "token_counts": {
+        "cl100k_base": 58,
+        "o200k_base": 60
+      },
+      "latency_ms": 18014,
+      "timestamp": "2026-03-01T19:40:51.347569+00:00",
+      "complexity_level": 3,
+      "operators_tested": [
+        "->",
+        "|",
+        "&",
+        "<-"
+      ]
+    },
+    {
+      "task_id": "L1-01",
+      "condition": "fipa_acl",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "```\nREQ(@data_processor>@worker): [download(dataset, datalake); clean(dataset, null_rows); upload(dataset, warehouse)]\n```",
+      "valid": false,
+      "errors": [
+        "No recognized FIPA-ACL performative found"
+      ],
+      "token_counts": {
+        "cl100k_base": 29,
+        "o200k_base": 29
+      },
+      "latency_ms": 22664,
+      "timestamp": "2026-03-01T19:41:14.014433+00:00",
+      "complexity_level": 1,
+      "operators_tested": [
+        "->"
+      ]
+    },
+    {
+      "task_id": "L1-02",
+      "condition": "fipa_acl",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "```\n(request\n  :sender deployment-agent\n  :receiver cluster-manager\n  :content \"((parallel (check-cpu) (check-memory) (check-disk-space)))\"\n  :reply-with health-check-001\n  :language SL\n  :ontology cluster-management\n)\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 60,
+        "o200k_base": 60
+      },
+      "latency_ms": 11288,
+      "timestamp": "2026-03-01T19:41:25.303683+00:00",
+      "complexity_level": 1,
+      "operators_tested": [
+        "&"
+      ]
+    },
+    {
+      "task_id": "L1-03",
+      "condition": "fipa_acl",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "```\n(request\n  :sender routing-agent\n  :receiver handler-agent\n  :content \"(process incoming-request using (primary-api if available(primary-api), else cache-service))\"\n  :reply-with route-msg-001\n  :language SL\n  :ontology routing\n)\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 57,
+        "o200k_base": 58
+      },
+      "latency_ms": 20877,
+      "timestamp": "2026-03-01T19:41:46.182086+00:00",
+      "complexity_level": 1,
+      "operators_tested": [
+        "|"
+      ]
+    },
+    {
+      "task_id": "L2-01",
+      "condition": "fipa_acl",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "```\n(request\n  :sender orchestrator\n  :receiver pipeline-agent\n  :content \"((execute-pipeline (input user-data)))\"\n  :reply-with req1\n  :language SL\n)\n\n(request\n  :sender pipeline-agent\n  :receiver schema-validator\n  :content \"((validate-schema (data user-data)))\"\n  :reply-with m1\n  :language SL\n)\n\n(inform\n  :sender schema-validator\n  :receiver pipeline-agent\n  :content \"((validation-result (status valid) (data validated-data)))\"\n  :in-reply-to m1\n  :language SL\n)\n\n(request\n  :sender pipeline-agent\n  :receiver sentiment-agent\n  :content \"((analyze-sentiment (data validated-data)))\"\n  :reply-with m2\n  :language SL\n)\n\n(request\n  :sender pipeline-agent\n  :receiver topic-agent\n  :content \"((classify-topics (data validated-data)))\"\n  :reply-with m3\n  :language SL\n)\n\n(inform\n  :sender sentiment-agent\n  :receiver pipeline-agent\n  :content \"((sentiment-result (polarity positive) (score 0.87)))\"\n  :in-reply-to m2\n  :language SL\n)\n\n(inform\n  :sender topic-agent\n  :receiver pipeline-agent\n  :content \"((topic-result (topics (business market analysis))))\"\n  :in-reply-to m3\n  :language SL\n)\n\n(inform\n  :sender pipeline-agent\n  :receiver orchestrator\n  :content \"((merged-report (sentiment (polarity positive) (score 0.87)) (topics (business market analysis))))\"\n  :in-reply-to req1\n  :language SL\n)\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 366,
+        "o200k_base": 372
+      },
+      "latency_ms": 14143,
+      "timestamp": "2026-03-01T19:42:00.327169+00:00",
+      "complexity_level": 2,
+      "operators_tested": [
+        "->",
+        "&"
+      ]
+    },
+    {
+      "task_id": "L2-02",
+      "condition": "fipa_acl",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "```\n(request\n  :sender query-agent\n  :receiver data-agent\n  :content (if (cache-available)\n             (fetch-results-from-cache)\n             (and (fetch-results-from-database)\n                  (update-cache-with-results)))\n  :reply-with msg-1\n  :language SL\n  :ontology data-management\n)\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 70,
+        "o200k_base": 71
+      },
+      "latency_ms": 12094,
+      "timestamp": "2026-03-01T19:42:12.422541+00:00",
+      "complexity_level": 2,
+      "operators_tested": [
+        "|",
+        "->"
+      ]
+    },
+    {
+      "task_id": "L2-03",
+      "condition": "fipa_acl",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "```\n(request\n  :sender security-agent\n  :receiver audit-agent\n  :content \"((action (agent audit-agent) (simultaneous-scan :scan-ports true :check-ssl-certificates true :exclude-scope internal-only-services)))\"\n  :reply-with security-audit-req-001\n  :language SL\n  :ontology security-domain\n)\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 79,
+        "o200k_base": 79
+      },
+      "latency_ms": 12662,
+      "timestamp": "2026-03-01T19:42:25.085812+00:00",
+      "complexity_level": 2,
+      "operators_tested": [
+        "&",
+        "!"
+      ]
+    },
+    {
+      "task_id": "L3-01",
+      "condition": "fipa_acl",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "```\nREQ(ver=0.1, mid=etl-pipeline-001)\n  @orchestrator > @pipeline:\n    (seq\n      (par (extract :api) (extract :db))\n      (transform :validation)\n      (if (valid) (load :warehouse) (route :error_queue))\n    )\n```",
+      "valid": false,
+      "errors": [
+        "No recognized FIPA-ACL performative found"
+      ],
+      "token_counts": {
+        "cl100k_base": 70,
+        "o200k_base": 69
+      },
+      "latency_ms": 19332,
+      "timestamp": "2026-03-01T19:42:44.419472+00:00",
+      "complexity_level": 3,
+      "operators_tested": [
+        "->",
+        "&",
+        "|"
+      ]
+    },
+    {
+      "task_id": "L3-02",
+      "condition": "fipa_acl",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "```\n(inform\n  :sender monitoring-agent\n  :receiver incident-commander\n  :content \"((incident inc-001 :type service-degradation :component cache-service :root-cause (missing-eviction-policy cache-layer) :severity critical))\"\n  :reply-with msg-001\n  :language SL\n  :ontology incident-management\n)\n\n(request\n  :sender incident-commander\n  :receiver operations-agent\n  :content \"((perform-remediation inc-001 (restart-service cache-service) (deploy-hotfix eviction-policy-fix) :simultaneous true))\"\n  :reply-with msg-002\n  :language SL\n  :ontology incident-management\n)\n\n(query-if\n  :sender monitoring-agent\n  :receiver operations-agent\n  :content \"((service-recovery-verified cache-service))\"\n  :reply-with msg-003\n  :in-reply-to msg-002\n  :language SL\n  :ontology incident-management\n)\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 198,
+        "o200k_base": 204
+      },
+      "latency_ms": 36585,
+      "timestamp": "2026-03-01T19:43:21.006079+00:00",
+      "complexity_level": 3,
+      "operators_tested": [
+        "<-",
+        "&",
+        "->"
+      ]
+    },
+    {
+      "task_id": "L3-03",
+      "condition": "fipa_acl",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "```\nPROP(@negotiator>@supplier): (offer(A,100)|offer(B,85)) & seq(confirm_inventory(), par(ship_warehouse(),send_invoice()), await_payment()) & justified(market_rates)\n```",
+      "valid": false,
+      "errors": [
+        "No recognized FIPA-ACL performative found"
+      ],
+      "token_counts": {
+        "cl100k_base": 44,
+        "o200k_base": 44
+      },
+      "latency_ms": 19857,
+      "timestamp": "2026-03-01T19:43:40.864534+00:00",
+      "complexity_level": 3,
+      "operators_tested": [
+        "->",
+        "|",
+        "&",
+        "<-"
+      ]
+    },
+    {
+      "task_id": "L1-01",
+      "condition": "axon",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "```\n[id:\"m1\", %%:1] CMD(@processor>@worker): download(data_lake) -> clean(null_rows) -> upload(warehouse)\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 33,
+        "o200k_base": 33
+      },
+      "latency_ms": 26444,
+      "timestamp": "2026-03-01T19:44:07.319829+00:00",
+      "complexity_level": 1,
+      "operators_tested": [
+        "->"
+      ]
+    },
+    {
+      "task_id": "L1-02",
+      "condition": "axon",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "```\n[id:\"m-1\", %%:1] CMD(@deployment-agent>@cluster-manager): check_cpu_usage() & check_memory_usage() & check_disk_space()\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 35,
+        "o200k_base": 35
+      },
+      "latency_ms": 14011,
+      "timestamp": "2026-03-01T19:44:21.331981+00:00",
+      "complexity_level": 1,
+      "operators_tested": [
+        "&"
+      ]
+    },
+    {
+      "task_id": "L1-03",
+      "condition": "axon",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "```\n[id:\"m1\", %%:1]\nINF(@router>@handler): #route{service:(available(@api_endpoint) -> @api_endpoint | @cache_service)}\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 37,
+        "o200k_base": 37
+      },
+      "latency_ms": 24200,
+      "timestamp": "2026-03-01T19:44:45.533751+00:00",
+      "complexity_level": 1,
+      "operators_tested": [
+        "|"
+      ]
+    },
+    {
+      "task_id": "L2-01",
+      "condition": "axon",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "[id:\"cmd-001\", %%:1, ^:3]\nCMD(@orchestrator>@pipeline-agent): validate($input) -> (sentiment_analysis($input) & topic_classification($input)) -> merge($report)",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 46,
+        "o200k_base": 47
+      },
+      "latency_ms": 59502,
+      "timestamp": "2026-03-01T19:45:45.038469+00:00",
+      "complexity_level": 2,
+      "operators_tested": [
+        "->",
+        "&"
+      ]
+    },
+    {
+      "task_id": "L2-02",
+      "condition": "axon",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "```\n[id:\"m1\", %%:1]\nCMD(@query-agent>@data-agent): fetch($cache) | (query($db) -> update($cache))\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 35,
+        "o200k_base": 35
+      },
+      "latency_ms": 32682,
+      "timestamp": "2026-03-01T19:46:17.722718+00:00",
+      "complexity_level": 2,
+      "operators_tested": [
+        "|",
+        "->"
+      ]
+    },
+    {
+      "task_id": "L2-03",
+      "condition": "axon",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "[id:\"sec-cmd-001\", %%:1]\nCMD(@security-agent>@audit-agent): audit(ports:T, ssl_certificates:T, exclude:#service{scope:\"internal\"})",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 38,
+        "o200k_base": 38
+      },
+      "latency_ms": 25838,
+      "timestamp": "2026-03-01T19:46:43.563648+00:00",
+      "complexity_level": 2,
+      "operators_tested": [
+        "&",
+        "!"
+      ]
+    },
+    {
+      "task_id": "L3-01",
+      "condition": "axon",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "```\n[id:\"cmd-etl-001\", %%:1] CMD(@orchestrator>@pipeline): (extract(@api-source) & extract(@db-source)) -> transform(validate($combined-data, validation_rules)) -> (load(@warehouse) | route(@error-queue))\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 58,
+        "o200k_base": 58
+      },
+      "latency_ms": 42404,
+      "timestamp": "2026-03-01T19:47:25.970993+00:00",
+      "complexity_level": 3,
+      "operators_tested": [
+        "->",
+        "&",
+        "|"
+      ]
+    },
+    {
+      "task_id": "L3-02",
+      "condition": "axon",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "```\n[id:\"rem-001\", %%:1, ts:1740859200, ^:4]\nCMD(@remediation>@infra-team):\n  address(#incident{\n    severity:#critical,\n    cause_chain: $degradation <- $memory_leak <- !$eviction_policy\n  })\n  -> (restart(@cache_service, 30s) & deploy(#hotfix{version:\"1.2.3\"}))\n  -> verify(@cache_service, [$memory_usage < 80%, $latency < 200ms, $error_rate < 0.1%])\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 122,
+        "o200k_base": 121
+      },
+      "latency_ms": 48616,
+      "timestamp": "2026-03-01T19:48:14.589573+00:00",
+      "complexity_level": 3,
+      "operators_tested": [
+        "<-",
+        "&",
+        "->"
+      ]
+    },
+    {
+      "task_id": "L3-03",
+      "condition": "axon",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "```\n[id:\"supplier-proposal-001\", %%:1, ts:1740840000, ctx:\"negotiation-001\", ^:3]\nPRO(@negotiation-agent>@supplier): #offer{\n  products: (#productA{price:100usd} | #productB{price:85usd}),\n  process: confirm_inventory -> (ship_warehouse & send_invoice) -> await_payment_confirmation,\n  rationale: \"current market rates\"\n}\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 98,
+        "o200k_base": 96
+      },
+      "latency_ms": 31455,
+      "timestamp": "2026-03-01T19:48:46.048023+00:00",
+      "complexity_level": 3,
+      "operators_tested": [
+        "->",
+        "|",
+        "&",
+        "<-"
+      ]
+    },
+    {
+      "task_id": "L1-01",
+      "condition": "aisp",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "\ud835\udd381.0.data-pipeline-task@2026-03-01\n\u03b3\u2254warehouse-operations\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@data-processor\n  receiver\u225c@worker\n  intent\u225crequest\n  id\u225c\"task:pipeline-1\"\n  timestamp\u225c1746086400\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  Operation\u225c{id:String, action:String, status:Status}\n  Status\u225c{pending,active,done,failed}\n  Pipeline\u225c{step1:Operation, step2:Operation, step3:Operation}\n}\n\n\u27e6\u0393:Rules\u27e7{\n  step1.action=\"download\" \u2227 step1.source=\"data_lake\"\n  step1.done\u21d2execute(step2)\n  step2.action=\"clean\" \u2227 step2.removes=\"null_rows\"\n  step2.done\u21d2execute(step3)\n  step3.action=\"upload\" \u2227 step3.target=\"warehouse\"\n  \u2200step:step.done\u2228step.failed\u21d2close(step)\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  download\u225c\u03bb(src).fetch(src)\n  clean\u225c\u03bb(data).filter(data,\u00acisnull)\n  upload\u225c\u03bb(data,tgt).persist(tgt,data)\n  executeNext\u225c\u03bb(current).proceed(current+1)\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.85;\u03c6\u225c100;\u03c4\u225c\u25ca\u207a\u27e9",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 326,
+        "o200k_base": 330
+      },
+      "latency_ms": 22000,
+      "timestamp": "2026-03-01T19:49:08.050648+00:00",
+      "complexity_level": 1,
+      "operators_tested": [
+        "->"
+      ]
+    },
+    {
+      "task_id": "L1-02",
+      "condition": "aisp",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "\ud835\udd381.0.health-check-request@2026-03-01\n\u03b3\u2254cluster-management\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@deployment-agent\n  receiver\u225c@cluster-manager\n  intent\u225crequest\n  id\u225c\"hc-001\"\n  timestamp\u225c1746086400\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  Check\u225c{name:String, type:CheckType}\n  CheckType\u225c{cpu,memory,disk}\n  Result\u225c{check:String, value:Float, status:Status}\n  Status\u225c{ok,warning,critical}\n}\n\n\u27e6\u0393:Rules\u27e7{\n  \u2200c\u2208checks:c.type\u2208CheckType\n  concurrent=true\u21d2\u2200c\u1d62,c\u2c7c:start(c\u1d62)=start(c\u2c7c)\n  complete(checkCPU)\u2227complete(checkMemory)\u2227complete(checkDisk)\u21d2report\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  checkCPU\u225c\u03bb().{name:\"cpu_usage\",type:cpu}\n  checkMemory\u225c\u03bb().{name:\"memory_usage\",type:memory}\n  checkDisk\u225c\u03bb().{name:\"disk_space\",type:disk}\n  runConcurrent\u225c\u03bb(c\u2081,c\u2082,c\u2083).exec(c\u2081)\u2227exec(c\u2082)\u2227exec(c\u2083)\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.85;\u03c6\u225c100;\u03c4\u225c\u25ca\u207a\u27e9",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 336,
+        "o200k_base": 338
+      },
+      "latency_ms": 31525,
+      "timestamp": "2026-03-01T19:49:39.578237+00:00",
+      "complexity_level": 1,
+      "operators_tested": [
+        "&"
+      ]
+    },
+    {
+      "task_id": "L1-03",
+      "condition": "aisp",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "```\n\ud835\udd381.0.endpoint-routing@2026-03-01\n\u03b3\u2254request-routing\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@routing-agent\n  receiver\u225c@handler-agent\n  intent\u225cinform\n  id\u225c\"msg-r1\"\n  timestamp\u225c1743465600\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  Endpoint\u225c{name:String,type:{\"primary\",\"fallback\"},status:Status}\n  Status\u225c{\"available\",\"degraded\",\"unavailable\"}\n  RoutingDecision\u225c{selected:Endpoint,request_id:String,reason:String}\n}\n\n\u27e6\u0393:Rules\u27e7{\n  \u2200e\u2208Endpoint:e.status\u2208Status\n  (primary.status=\"available\")\u21d2(route\u2192primary)\n  (primary.status\u2208{\"degraded\",\"unavailable\"})\u2227(fallback.status=\"available\")\u21d2(route\u2192fallback)\n  \u2200d\u2208RoutingDecision:d.selected.status\u2208{\"available\",\"degraded\"}\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  selectEndpoint\u225c\u03bb(p,f).(p.status=\"available\"?p:f)\n  isUsable\u225c\u03bb(e).(e.status\u2260\"unavailable\")\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.78;\u03c6\u225c100;\u03c4\u225c\u25ca\u207a\u27e9\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 296,
+        "o200k_base": 304
+      },
+      "latency_ms": 18526,
+      "timestamp": "2026-03-01T19:49:58.106897+00:00",
+      "complexity_level": 1,
+      "operators_tested": [
+        "|"
+      ]
+    },
+    {
+      "task_id": "L2-01",
+      "condition": "aisp",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "\ud835\udd381.0.pipeline-orchestration@2026-03-01\n\u03b3\u2254multi-agent-orchestration\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@orchestrator\n  receiver\u225c@pipeline-agent\n  intent\u225crequest\n  id\u225c\"orchid-001\"\n  timestamp\u225c1740787200\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  Input\u225c{data:Any, schema:Schema}\n  ValidationResult\u225c{valid:Bool, errors:List}\n  SentimentResult\u225c{score:Number, polarity:String}\n  TopicResult\u225c{topic:String, confidence:Number}\n  AnalysisReport\u225c{validated:ValidationResult, sentiment:SentimentResult, topic:TopicResult}\n}\n\n\u27e6\u0393:Rules\u27e7{\n  \u2200data:Input: validate(data)\u2192sentiment(data)\n  \u2200data:Input: validate(data)\u2192topic(data)\n  \u2200data:Input: (sentiment(data)\u2227topic(data))\u2192merge(data)\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  validate\u225c\u03bb(input).validate_schema(input)\n  sentiment\u225c\u03bb(input).sentiment_analysis(input)\n  topic\u225c\u03bb(input).topic_classification(input)\n  merge\u225c\u03bb(validation,sentiment,topic).merge_results(validation,sentiment,topic)\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.82;\u03c6\u225c100;\u03c4\u225c\u25ca\u207a\u207a\u27e9",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 322,
+        "o200k_base": 333
+      },
+      "latency_ms": 31725,
+      "timestamp": "2026-03-01T19:50:29.835130+00:00",
+      "complexity_level": 2,
+      "operators_tested": [
+        "->",
+        "&"
+      ]
+    },
+    {
+      "task_id": "L2-02",
+      "condition": "aisp",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "\ud835\udd381.0.cache-first-fetch@2026-03-01\n\u03b3\u2254data-retrieval\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@query-agent\n  receiver\u225c@data-agent\n  intent\u225crequest\n  id\u225c\"m1\"\n  timestamp\u225c1740888000\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  Query\u225c{id:String, params:Map}\n  CacheEntry\u225c{id:String, data:Any, ts:Int, ttl:Int}\n  Result\u225c{source:String, data:Any}\n}\n\n\u27e6\u0393:Rules\u27e7{\n  \u2200q:Query: (inCache(q.id) \u2227 \u00acexpired(q.id)) \u21d2 useCache(q)\n  \u2200q:Query: (\u00acinCache(q.id) \u2228 expired(q.id)) \u21d2 (queryDB(q) \u2227 updateCache(q))\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  getResults\u225c\u03bb(q).(inCache(q.id) \u2227 \u00acexpired(q.id)) \n                  ? readCache(q.id) \n                  : (r\u2190queryDB(q), updateCache(q,r), r)\n  inCache\u225c\u03bb(id).\u2203e:CacheEntry(e.id=id)\n  expired\u225c\u03bb(id).\u2200e:CacheEntry(e.id=id \u21d2 now()-e.ts>e.ttl)\n  readCache\u225c\u03bb(id).{source:cache, data:cache[id]}\n  queryDB\u225c\u03bb(q).execute(db, q.params)\n  updateCache\u225c\u03bb(q,r).{id:q.id, data:r, ts:now(), ttl:3600}\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.82;\u03c6\u225c100;\u03c4\u225c\u25ca\u207a\u207a\u27e9",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 381,
+        "o200k_base": 397
+      },
+      "latency_ms": 39914,
+      "timestamp": "2026-03-01T19:51:09.751660+00:00",
+      "complexity_level": 2,
+      "operators_tested": [
+        "|",
+        "->"
+      ]
+    },
+    {
+      "task_id": "L2-03",
+      "condition": "aisp",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "\ud835\udd381.0.security-audit-dual-scan@2026-03-01\n\u03b3\u2254security\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@security-agent\n  receiver\u225c@audit-agent\n  intent\u225crequest\n  id\u225c\"sec-audit-001\"\n  timestamp\u225c1740787200\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  Host\u225c{hostname:String, port:Int, internal:Bool}\n  PortResult\u225c{port:Int, status:Status}\n  Status\u225c{open, closed, filtered}\n  CertResult\u225c{domain:String, issuer:String, valid:Bool, expiry:String}\n  ScanTask\u225c{hosts:Host[], parallel:Bool}\n}\n\n\u27e6\u0393:Rules\u27e7{\n  \u2200h\u2208Host: h.internal=true \u21d2 \u00ac(scan_port(h) \u2228 verify_cert(h))\n  \u2200h\u2208Host: h.internal=false \u21d2 (scan_port(h) \u2227 verify_cert(h))\n  scan_port(h) \u2227 verify_cert(h) \u21d2 simultaneous\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  scan_port\u225c\u03bb(h).probe(h.port)\n  verify_cert\u225c\u03bb(h).check_ssl(h.hostname)\n  execute\u225c\u03bb(task).\u2200h\u2208task.hosts:(\u00ach.internal \u21d2 (scan_port(h) \u2227 verify_cert(h)))\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.89;\u03c6\u225c100;\u03c4\u225c\u25ca\u207a\u27e9",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 327,
+        "o200k_base": 339
+      },
+      "latency_ms": 35267,
+      "timestamp": "2026-03-01T19:51:45.021101+00:00",
+      "complexity_level": 2,
+      "operators_tested": [
+        "&",
+        "!"
+      ]
+    },
+    {
+      "task_id": "L3-01",
+      "condition": "aisp",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "\ud835\udd381.0.etl-extract-transform-load@2026-03-01\n\u03b3\u2254etl-orchestration\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@orchestrator\n  receiver\u225c@pipeline\n  intent\u225crequest\n  id\u225c\"etl-msg-20260301-001\"\n  timestamp\u225c1740787200\n  reply_to\u225c\"none\"\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  Source\u225c{api,database}\n  ValidationResult\u225c{pass,fail}\n  Destination\u225c{warehouse,error-queue}\n}\n\n\u27e6\u0393:Rules\u27e7{\n  \u2200s\u2208Source:extract(s)\n  extracted(api)\u2227extracted(database)\u21d2transform(data)\n  validation(data)=pass\u21d2load(warehouse)\n  validation(data)=fail\u21d2route(error-queue)\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  extract-async\u225c\u03bb(api,db).(extract(api)\u2227extract(db))\n  validate-transform\u225c\u03bb(combined).apply-validation(combined)\n  conditional-route\u225c\u03bb(result,data).(result=pass\u2227load(warehouse))\u2228(result=fail\u2227route(error-queue))\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.82;\u03c6\u225c92;\u03c4\u225c\u25ca\u207a\u27e9",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 302,
+        "o200k_base": 303
+      },
+      "latency_ms": 23735,
+      "timestamp": "2026-03-01T19:52:08.758697+00:00",
+      "complexity_level": 3,
+      "operators_tested": [
+        "->",
+        "&",
+        "|"
+      ]
+    },
+    {
+      "task_id": "L3-02",
+      "condition": "aisp",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "\ud835\udd381.0.cache-degradation-remediation@2026-03-01\n\u03b3\u2254incident-management\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@monitor\n  receiver\u225c@ops\n  intent\u225calert\n  id\u225c\"m-cache-001\"\n  timestamp\u225c1740888000\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  Incident\u225c{component:String, severity:Level, root_cause:String}\n  Level\u225c{critical,high,medium,low}\n  Action\u225c{name:String, target:String}\n}\n\n\u27e6\u0393:Rules\u27e7{\n  missing_eviction_policy \u2192 cache_memory_leak\n  cache_memory_leak \u2192 service_degradation\n  service_degradation \u2227 component=\"cache_layer\" \u21d2 (restart_cache \u2227 deploy_hotfix)\n  (restart_cache \u2227 deploy_hotfix) \u2192 verify_recovery\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  restart_cache\u225c\u03bb().[name\u2190\"restart\", target\u2190\"cache_service\"]\n  deploy_hotfix\u225c\u03bb().[name\u2190\"deploy\", target\u2190\"cache_layer\", patch\u2190\"eviction_policy.diff\"]\n  verify_recovery\u225c\u03bb().[name\u2190\"verify\", target\u2190\"service_health\", metric\u2190\"degradation_resolved\"]\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.88;\u03c6\u225c100;\u03c4\u225c\u25ca\u207a\u27e9",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 309,
+        "o200k_base": 319
+      },
+      "latency_ms": 58317,
+      "timestamp": "2026-03-01T19:53:07.075925+00:00",
+      "complexity_level": 3,
+      "operators_tested": [
+        "<-",
+        "&",
+        "->"
+      ]
+    },
+    {
+      "task_id": "L3-03",
+      "condition": "aisp",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "\ud835\udd381.0.supplier-negotiation@2026-03-01\n\u03b3\u2254deal-proposal\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@negotiation-agent\n  receiver\u225c@supplier\n  intent\u225cpropose\n  id\u225c\"deal-prop-001\"\n  timestamp\u225c1777804800\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  Option\u225c{product:String, price:\u211d\u207a}\n}\n\n\u27e6\u0393:Rules\u27e7{\n  offer(A,100) \u2228 offer(B,85)\n  \u2200p\u2208{A,B}:justified_by_market_rates(p)\n  selected(p)\u21d2sequence(p)\n  sequence(p)\u225cconfirm_inventory(p) \u2192 (ship_warehouse(p)\u2227send_invoice(p)) \u2192 await_payment(p)\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  propose\u225c\u03bb(agent,supplier).(offer(A,100) \u2228 offer(B,85))\n  deliver\u225c\u03bb(p).[confirm_inventory(p), (ship_warehouse(p)\u2227send_invoice(p)), await_payment(p)]\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.78;\u03c6\u225c100;\u03c4\u225c\u25ca\u207a\u207a\u27e9",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 276,
+        "o200k_base": 284
+      },
+      "latency_ms": 48415,
+      "timestamp": "2026-03-01T19:53:55.494198+00:00",
+      "complexity_level": 3,
+      "operators_tested": [
+        "->",
+        "|",
+        "&",
+        "<-"
+      ]
+    },
+    {
+      "task_id": "L1-01",
+      "condition": "free_english",
+      "model": "claude-haiku",
+      "run_number": 2,
+      "output": "```\nCMD(@processor>@worker): download(datalake) ; clean(nulls) ; upload(warehouse)\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 24,
+        "o200k_base": 24
+      },
+      "latency_ms": 13101,
+      "timestamp": "2026-03-01T19:54:08.597432+00:00",
+      "complexity_level": 1,
+      "operators_tested": [
+        "->"
+      ]
+    },
+    {
+      "task_id": "L1-02",
+      "condition": "free_english",
+      "model": "claude-haiku",
+      "run_number": 2,
+      "output": "```axon\nCMD(@deployment>@cluster): {check_cpu(), check_memory(), check_disk_space()}\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 21,
+        "o200k_base": 21
+      },
+      "latency_ms": 15772,
+      "timestamp": "2026-03-01T19:54:24.371307+00:00",
+      "complexity_level": 1,
+      "operators_tested": [
+        "&"
+      ]
+    },
+    {
+      "task_id": "L1-03",
+      "condition": "free_english",
+      "model": "claude-haiku",
+      "run_number": 2,
+      "output": "```\nDIR(@routing > @handler): process(\n  request=$req,\n  preferred_service=if(available($primary_api), $primary_api, $fallback_cache)\n)\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 37,
+        "o200k_base": 37
+      },
+      "latency_ms": 22205,
+      "timestamp": "2026-03-01T19:54:46.577838+00:00",
+      "complexity_level": 1,
+      "operators_tested": [
+        "|"
+      ]
+    },
+    {
+      "task_id": "L2-01",
+      "condition": "free_english",
+      "model": "claude-haiku",
+      "run_number": 2,
+      "output": "```\nCMD(@orchestrator>@pipeline): execute(validate(schema, $input), parallel(sentiment_analysis($validated), topic_classification($validated)), merge_results($analysis, $report))\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 38,
+        "o200k_base": 39
+      },
+      "latency_ms": 22395,
+      "timestamp": "2026-03-01T19:55:08.974777+00:00",
+      "complexity_level": 2,
+      "operators_tested": [
+        "->",
+        "&"
+      ]
+    },
+    {
+      "task_id": "L2-02",
+      "condition": "free_english",
+      "model": "claude-haiku",
+      "run_number": 2,
+      "output": "```\nCMD(@query>@data): if(cache_hit(results)) retrieve_cache(results) else seq(fetch_db(results), update_cache(results))\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 28,
+        "o200k_base": 28
+      },
+      "latency_ms": 19162,
+      "timestamp": "2026-03-01T19:55:28.138418+00:00",
+      "complexity_level": 2,
+      "operators_tested": [
+        "|",
+        "->"
+      ]
+    },
+    {
+      "task_id": "L2-03",
+      "condition": "free_english",
+      "model": "claude-haiku",
+      "run_number": 2,
+      "output": "```\nREQ(@security>@audit): run_scan(check_ports: true, check_ssl: true, exclude: [internal])\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 26,
+        "o200k_base": 26
+      },
+      "latency_ms": 15081,
+      "timestamp": "2026-03-01T19:55:43.220577+00:00",
+      "complexity_level": 2,
+      "operators_tested": [
+        "&",
+        "!"
+      ]
+    },
+    {
+      "task_id": "L3-01",
+      "condition": "free_english",
+      "model": "claude-haiku",
+      "run_number": 2,
+      "output": "```\nCMD(@orchestrator>@pipeline): orchestrate_etl(\n  extract=concurrent(api_endpoint(), database_query()),\n  transform=apply_validation(rules()),\n  load=if(validation_passes(), load_warehouse(), route_error_queue()),\n  message_id=ETL_001,\n  protocol_version=0.1\n)\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 68,
+        "o200k_base": 69
+      },
+      "latency_ms": 23533,
+      "timestamp": "2026-03-01T19:56:06.755478+00:00",
+      "complexity_level": 3,
+      "operators_tested": [
+        "->",
+        "&",
+        "|"
+      ]
+    },
+    {
+      "task_id": "L3-02",
+      "condition": "free_english",
+      "model": "claude-haiku",
+      "run_number": 2,
+      "output": "```\nPUB(@monitor>@ops): incident(\n  event=service_degradation(cache),\n  root_cause=missing_eviction_policy,\n  direct_cause=memory_leak,\n  remediation=parallel(restart(cache), deploy(hotfix)),\n  verify=recovery(cache)\n)\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 60,
+        "o200k_base": 58
+      },
+      "latency_ms": 24410,
+      "timestamp": "2026-03-01T19:56:31.167049+00:00",
+      "complexity_level": 3,
+      "operators_tested": [
+        "<-",
+        "&",
+        "->"
+      ]
+    },
+    {
+      "task_id": "L3-03",
+      "condition": "free_english",
+      "model": "claude-haiku",
+      "run_number": 2,
+      "output": "```\nPROP(@negotiator>@supplier): (productA:100 | productB:85) & (confirm_inventory > (ship_warehouse & send_invoice) > await_payment) & justified_by(market_rates)\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 46,
+        "o200k_base": 46
+      },
+      "latency_ms": 21192,
+      "timestamp": "2026-03-01T19:56:52.360170+00:00",
+      "complexity_level": 3,
+      "operators_tested": [
+        "->",
+        "|",
+        "&",
+        "<-"
+      ]
+    },
+    {
+      "task_id": "L1-01",
+      "condition": "structured_english",
+      "model": "claude-haiku",
+      "run_number": 2,
+      "output": "```\nREQ(@data_processor>@worker): seq(download($lake), clean(null_rows), upload($warehouse))\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 23,
+        "o200k_base": 23
+      },
+      "latency_ms": 12839,
+      "timestamp": "2026-03-01T19:57:05.201544+00:00",
+      "complexity_level": 1,
+      "operators_tested": [
+        "->"
+      ]
+    },
+    {
+      "task_id": "L1-02",
+      "condition": "structured_english",
+      "model": "claude-haiku",
+      "run_number": 2,
+      "output": "FROM: deployment-agent\nTO: cluster-manager\nTYPE: request\nCONTENT: REQ(@deployment>@cluster): parallel(check_cpu(), check_memory(), check_disk())",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 32,
+        "o200k_base": 33
+      },
+      "latency_ms": 15107,
+      "timestamp": "2026-03-01T19:57:20.310172+00:00",
+      "complexity_level": 1,
+      "operators_tested": [
+        "&"
+      ]
+    },
+    {
+      "task_id": "L1-03",
+      "condition": "structured_english",
+      "model": "claude-haiku",
+      "run_number": 2,
+      "output": "```\nINF(@router>@handler): route($request, $service) where (primary_api($service) | fallback_cache($service)) & available($service)\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 34,
+        "o200k_base": 34
+      },
+      "latency_ms": 18708,
+      "timestamp": "2026-03-01T19:57:39.019277+00:00",
+      "complexity_level": 1,
+      "operators_tested": [
+        "|"
+      ]
+    },
+    {
+      "task_id": "L2-01",
+      "condition": "structured_english",
+      "model": "claude-haiku",
+      "run_number": 2,
+      "output": "FROM: orchestrator\nTO: pipeline-agent\nTYPE: request\nCONTENT: Execute sequential validation on input_data schema, then parallelize sentiment_analysis and topic_classification tasks on validated_output, finally merge both results into unified_report.",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 45,
+        "o200k_base": 46
+      },
+      "latency_ms": 7965,
+      "timestamp": "2026-03-01T19:57:46.986303+00:00",
+      "complexity_level": 2,
+      "operators_tested": [
+        "->",
+        "&"
+      ]
+    },
+    {
+      "task_id": "L2-02",
+      "condition": "structured_english",
+      "model": "claude-haiku",
+      "run_number": 2,
+      "output": "FROM: query-agent\nTO: data-agent\nTYPE: request\nCONTENT: Fetch results from cache if available; otherwise query database, store results in cache, and return fresh data.",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 37,
+        "o200k_base": 37
+      },
+      "latency_ms": 10034,
+      "timestamp": "2026-03-01T19:57:57.021730+00:00",
+      "complexity_level": 2,
+      "operators_tested": [
+        "|",
+        "->"
+      ]
+    },
+    {
+      "task_id": "L2-03",
+      "condition": "structured_english",
+      "model": "claude-haiku",
+      "run_number": 2,
+      "output": "REQ(@security>@audit): scan_open_ports(all) & check_ssl_certs(all) where ~internal_only()",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 23,
+        "o200k_base": 23
+      },
+      "latency_ms": 14531,
+      "timestamp": "2026-03-01T19:58:11.553985+00:00",
+      "complexity_level": 2,
+      "operators_tested": [
+        "&",
+        "!"
+      ]
+    },
+    {
+      "task_id": "L3-01",
+      "condition": "structured_english",
+      "model": "claude-haiku",
+      "run_number": 2,
+      "output": "```\nCMD(@orchestrator>@etl_pipeline)[id=msg_etl_001][version=1.0]: execute(parallel(extract_api(), extract_db()), transform(validate(combine(), $rules)), conditional(valid(), load_warehouse(), route_error_queue()))\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 55,
+        "o200k_base": 55
+      },
+      "latency_ms": 22916,
+      "timestamp": "2026-03-01T19:58:34.471222+00:00",
+      "complexity_level": 3,
+      "operators_tested": [
+        "->",
+        "&",
+        "|"
+      ]
+    },
+    {
+      "task_id": "L3-02",
+      "condition": "structured_english",
+      "model": "claude-haiku",
+      "run_number": 2,
+      "output": "FROM: remediation-coordinator\nTO: ops-team\nTYPE: request\nCONTENT: Executing remediation for cache memory leak (missing eviction policy). ACTION: (1) Restart cache-service and deploy hotfix-v2.1.4 in parallel; (2) Verify recovery by checking cache hit rate > 95%, heap usage < 2GB, and zero page faults within 5 minutes. Confirm completion status upon resolution.",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 88,
+        "o200k_base": 86
+      },
+      "latency_ms": 10565,
+      "timestamp": "2026-03-01T19:58:45.038161+00:00",
+      "complexity_level": 3,
+      "operators_tested": [
+        "<-",
+        "&",
+        "->"
+      ]
+    },
+    {
+      "task_id": "L3-03",
+      "condition": "structured_english",
+      "model": "claude-haiku",
+      "run_number": 2,
+      "output": "FROM: supplier_agent\nTO: negotiation_agent\nTYPE: accept\nCONTENT: Confirmed. Terms accepted: Product B at $85/unit. Process sequence acknowledged \u2014 (1) confirm inventory, (2) ship to warehouse and send invoice (parallel), (3) await payment confirmation. Market-rate pricing justified and acceptable.",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 65,
+        "o200k_base": 65
+      },
+      "latency_ms": 13629,
+      "timestamp": "2026-03-01T19:58:58.668802+00:00",
+      "complexity_level": 3,
+      "operators_tested": [
+        "->",
+        "|",
+        "&",
+        "<-"
+      ]
+    },
+    {
+      "task_id": "L1-01",
+      "condition": "instruction_matched_english",
+      "model": "claude-haiku",
+      "run_number": 2,
+      "output": "[message-id: m1]\nCOMMAND (data-processor -> worker):\n  objective: execute-data-pipeline\n  steps:\n    - sequence: 1\n      action: download\n      source: data-lake\n      output: raw-dataset\n    - sequence: 2\n      action: clean\n      input: raw-dataset\n      operation: remove-null-rows\n      output: cleaned-dataset\n    - sequence: 3\n      action: upload\n      input: cleaned-dataset\n      destination: warehouse\n  execution-order: sequential",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 115,
+        "o200k_base": 115
+      },
+      "latency_ms": 15731,
+      "timestamp": "2026-03-01T19:59:14.402642+00:00",
+      "complexity_level": 1,
+      "operators_tested": [
+        "->"
+      ]
+    },
+    {
+      "task_id": "L1-02",
+      "condition": "instruction_matched_english",
+      "model": "claude-haiku",
+      "run_number": 2,
+      "output": "[message-id: m1]\n[timestamp: 1740787200]\nCOMMAND (deployment-agent -> cluster-manager):\n  action: run-health-checks\n  checks: [cpu-usage, memory-usage, disk-space]\n  execution-mode: concurrent",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 52,
+        "o200k_base": 52
+      },
+      "latency_ms": 11847,
+      "timestamp": "2026-03-01T19:59:26.251090+00:00",
+      "complexity_level": 1,
+      "operators_tested": [
+        "&"
+      ]
+    },
+    {
+      "task_id": "L1-03",
+      "condition": "instruction_matched_english",
+      "model": "claude-haiku",
+      "run_number": 2,
+      "output": "```\nINF(@router > @handler): route(cond(available(@api_primary), @api_primary, @cache_fallback))\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 27,
+        "o200k_base": 27
+      },
+      "latency_ms": 24691,
+      "timestamp": "2026-03-01T19:59:50.943230+00:00",
+      "complexity_level": 1,
+      "operators_tested": [
+        "|"
+      ]
+    },
+    {
+      "task_id": "L2-01",
+      "condition": "instruction_matched_english",
+      "model": "claude-haiku",
+      "run_number": 2,
+      "output": "```\n[message-id: orch-msg-001]\n[timestamp: 1740782400]\n[context: data-processing-pipeline]\nCOMMAND (orchestrator -> pipeline-agent):\n  action: execute-workflow\n  step-1: validate-input-schema\n  step-2-mode: parallel\n  step-2-tasks: sentiment-analysis, topic-classification\n  step-2-input: validated-data\n  step-3: merge-results-to-report\n  output-format: unified-report\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 102,
+        "o200k_base": 102
+      },
+      "latency_ms": 17176,
+      "timestamp": "2026-03-01T20:00:08.120943+00:00",
+      "complexity_level": 2,
+      "operators_tested": [
+        "->",
+        "&"
+      ]
+    },
+    {
+      "task_id": "L2-02",
+      "condition": "instruction_matched_english",
+      "model": "claude-haiku",
+      "run_number": 2,
+      "output": "[message-id: m1]\n[timestamp: 1740873600]\nREQUEST (query-agent -> data-agent):\n  action: fetch_or_query_results\n  check_cache_first: true\n  cache_hit_action: return_cached_results\n  cache_miss_action: query_database\n  post_query_action: update_cache_with_results\n  target_resource: results",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 71,
+        "o200k_base": 72
+      },
+      "latency_ms": 12862,
+      "timestamp": "2026-03-01T20:00:20.984980+00:00",
+      "complexity_level": 2,
+      "operators_tested": [
+        "|",
+        "->"
+      ]
+    },
+    {
+      "task_id": "L2-03",
+      "condition": "instruction_matched_english",
+      "model": "claude-haiku",
+      "run_number": 2,
+      "output": "[message-id: m1]\n[timestamp: 1740859200]\nCOMMAND (security-agent -> audit-agent):\n  operations: [port-scan, ssl-check]\n  execution-mode: parallel\n  scope:\n    include: external-facing-services\n    exclude: internal-only-services\n  port-scan:\n    target: network-range\n    detect-open-ports: true\n  ssl-check:\n    target: network-range\n    validate-certificates: true\n    verify-chains: true\n  report-format: unified-findings",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 108,
+        "o200k_base": 108
+      },
+      "latency_ms": 9268,
+      "timestamp": "2026-03-01T20:00:30.255136+00:00",
+      "complexity_level": 2,
+      "operators_tested": [
+        "&",
+        "!"
+      ]
+    },
+    {
+      "task_id": "L3-01",
+      "condition": "instruction_matched_english",
+      "model": "claude-haiku",
+      "run_number": 2,
+      "output": "[message-id: etl-msg-20260301-001, protocol_version: 1.0]\nCMD(@orchestrator > @pipeline):\n  sequence(\n    parallel(\n      extract(source: @api_source),\n      extract(source: @database_source)\n    ),\n    transform(validation_rules: @validation),\n    conditional(\n      test: @validation_passed,\n      then: load(target: @warehouse),\n      else: route(target: @error_queue)\n    )\n  )",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 96,
+        "o200k_base": 97
+      },
+      "latency_ms": 30894,
+      "timestamp": "2026-03-01T20:01:01.150535+00:00",
+      "complexity_level": 3,
+      "operators_tested": [
+        "->",
+        "&",
+        "|"
+      ]
+    },
+    {
+      "task_id": "L3-02",
+      "condition": "instruction_matched_english",
+      "model": "claude-haiku",
+      "run_number": 2,
+      "output": "```\n[message-id: m-remediate-cache-degradation-001]\nCOMMAND (remediation-orchestrator -> operations-controller):\n  objective: resolve-service-degradation\n  root-cause: memory-leak-missing-eviction-policy\n  action-primary-1: restart-cache-service\n  action-primary-2: deploy-hotfix-cache-layer\n  action-verify: verify-service-recovery\n  execution-mode: parallel-with-checkpoint\n  timeout-sec: 300\n  recovery-check-interval-sec: 30\n  timestamp: 1740859200\n  context: cache-layer-alert\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 129,
+        "o200k_base": 125
+      },
+      "latency_ms": 17357,
+      "timestamp": "2026-03-01T20:01:18.509277+00:00",
+      "complexity_level": 3,
+      "operators_tested": [
+        "<-",
+        "&",
+        "->"
+      ]
+    },
+    {
+      "task_id": "L3-03",
+      "condition": "instruction_matched_english",
+      "model": "claude-haiku",
+      "run_number": 2,
+      "output": "```\n[message-id: deal-proposal-001]\nPROPOSE (negotiation-agent -> supplier):\n  product-options:\n    option-A:\n      product: A\n      unit-price: 100\n    option-B:\n      product: B\n      unit-price: 85\n  delivery-sequence:\n    step-1: confirm-inventory\n    step-2a: ship-to-warehouse\n    step-2b: send-invoice\n    step-3: await-payment-confirmation\n  step-2-concurrency: 2a-and-2b-simultaneous\n  price-justification: current-market-rates\n  timestamp: 2026-03-01\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 145,
+        "o200k_base": 145
+      },
+      "latency_ms": 12583,
+      "timestamp": "2026-03-01T20:01:31.094654+00:00",
+      "complexity_level": 3,
+      "operators_tested": [
+        "->",
+        "|",
+        "&",
+        "<-"
+      ]
+    },
+    {
+      "task_id": "L1-01",
+      "condition": "json_fc",
+      "model": "claude-haiku",
+      "run_number": 2,
+      "output": "```\nCMD(@dataproc>@worker): seq(\n  download(@datalake, dataset),\n  clean(dataset, remove_nulls: true),\n  upload(dataset, @warehouse)\n)\n```",
+      "valid": false,
+      "errors": [
+        "Invalid JSON: Expecting value: line 1 column 1 (char 0)"
+      ],
+      "token_counts": {
+        "cl100k_base": 38,
+        "o200k_base": 40
+      },
+      "latency_ms": 17379,
+      "timestamp": "2026-03-01T20:01:48.476025+00:00",
+      "complexity_level": 1,
+      "operators_tested": [
+        "->"
+      ]
+    },
+    {
+      "task_id": "L1-02",
+      "condition": "json_fc",
+      "model": "claude-haiku",
+      "run_number": 2,
+      "output": "```\nCMD(@deployment>@cluster_mgr): run(check_cpu(), check_memory(), check_disk())\n```",
+      "valid": false,
+      "errors": [
+        "Invalid JSON: Expecting value: line 1 column 1 (char 0)"
+      ],
+      "token_counts": {
+        "cl100k_base": 20,
+        "o200k_base": 20
+      },
+      "latency_ms": 15803,
+      "timestamp": "2026-03-01T20:02:04.280680+00:00",
+      "complexity_level": 1,
+      "operators_tested": [
+        "&"
+      ]
+    },
+    {
+      "task_id": "L1-03",
+      "condition": "json_fc",
+      "model": "claude-haiku",
+      "run_number": 2,
+      "output": "```\nINFORM(@router>@handler): \n  process_request(request, \n    endpoint(if(available(primary_api), primary_api, fallback_cache)))\n```",
+      "valid": false,
+      "errors": [
+        "Invalid JSON: Expecting value: line 1 column 1 (char 0)"
+      ],
+      "token_counts": {
+        "cl100k_base": 31,
+        "o200k_base": 31
+      },
+      "latency_ms": 13960,
+      "timestamp": "2026-03-01T20:02:18.242623+00:00",
+      "complexity_level": 1,
+      "operators_tested": [
+        "|"
+      ]
+    },
+    {
+      "task_id": "L2-01",
+      "condition": "json_fc",
+      "model": "claude-haiku",
+      "run_number": 2,
+      "output": "```json\n{\n  \"performative\": \"command\",\n  \"from\": \"orchestrator\",\n  \"to\": \"pipeline_agent\",\n  \"content\": {\n    \"workflow\": \"schema_validation_parallel_analysis_merge\",\n    \"steps\": [\n      {\n        \"step\": 1,\n        \"action\": \"validate_schema\",\n        \"input\": \"raw_data\"\n      },\n      {\n        \"step\": 2,\n        \"action\": \"parallel_execute\",\n        \"tasks\": [\n          {\n            \"task_id\": \"sentiment_analysis\",\n            \"action\": \"analyze_sentiment\",\n            \"input\": \"validated_data\"\n          },\n          {\n            \"task_id\": \"topic_classification\",\n            \"action\": \"classify_topics\",\n            \"input\": \"validated_data\"\n          }\n        ]\n      },\n      {\n        \"step\": 3,\n        \"action\": \"merge_results\",\n        \"inputs\": {\n          \"sentiment\": \"sentiment_analysis.output\",\n          \"topics\": \"topic_classification.output\"\n        },\n        \"output\": \"unified_report\"\n      }\n    ]\n  }\n}\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 224,
+        "o200k_base": 228
+      },
+      "latency_ms": 23638,
+      "timestamp": "2026-03-01T20:02:41.882423+00:00",
+      "complexity_level": 2,
+      "operators_tested": [
+        "->",
+        "&"
+      ]
+    },
+    {
+      "task_id": "L2-02",
+      "condition": "json_fc",
+      "model": "claude-haiku",
+      "run_number": 2,
+      "output": "```\nREQ(@query > @data): cond(cached($result), fetch($result), seq(query_db($result), update_cache($result)))\n```",
+      "valid": false,
+      "errors": [
+        "Invalid JSON: Expecting value: line 1 column 1 (char 0)"
+      ],
+      "token_counts": {
+        "cl100k_base": 31,
+        "o200k_base": 31
+      },
+      "latency_ms": 18738,
+      "timestamp": "2026-03-01T20:03:00.622455+00:00",
+      "complexity_level": 2,
+      "operators_tested": [
+        "|",
+        "->"
+      ]
+    },
+    {
+      "task_id": "L2-03",
+      "condition": "json_fc",
+      "model": "claude-haiku",
+      "run_number": 2,
+      "output": "```\nCMD(@security > @audit): concurrent_scan(check_ports(), validate_ssl_certs(), exclude=[internal_services])\n```",
+      "valid": false,
+      "errors": [
+        "Invalid JSON: Expecting value: line 1 column 1 (char 0)"
+      ],
+      "token_counts": {
+        "cl100k_base": 25,
+        "o200k_base": 25
+      },
+      "latency_ms": 23638,
+      "timestamp": "2026-03-01T20:03:24.262547+00:00",
+      "complexity_level": 2,
+      "operators_tested": [
+        "&",
+        "!"
+      ]
+    },
+    {
+      "task_id": "L3-01",
+      "condition": "json_fc",
+      "model": "claude-haiku",
+      "run_number": 2,
+      "output": "```\nREQ(@etl_orchestrator>@pipeline): {\n  message_id: \"etl_20260301_001\",\n  protocol_version: \"0.1-experimental\",\n  workflow: seq(\n    par(extract(api), extract(db)),\n    transform(validation_rules),\n    cond(valid(combined_data), load(warehouse), route(error_queue))\n  )\n}\n```",
+      "valid": false,
+      "errors": [
+        "Invalid JSON: Expecting value: line 1 column 1 (char 0)"
+      ],
+      "token_counts": {
+        "cl100k_base": 77,
+        "o200k_base": 74
+      },
+      "latency_ms": 22044,
+      "timestamp": "2026-03-01T20:03:46.308642+00:00",
+      "complexity_level": 3,
+      "operators_tested": [
+        "->",
+        "&",
+        "|"
+      ]
+    },
+    {
+      "task_id": "L3-02",
+      "condition": "json_fc",
+      "model": "claude-haiku",
+      "run_number": 2,
+      "output": "```\nPUB(@monitor): alert(service=cache_svc, root_cause=eviction_policy_missing, effect=degradation) >> CMD(parallel(restart(cache_svc), deploy(hotfix))) >> QRY(verify(cache_svc.status=healthy))\n```",
+      "valid": false,
+      "errors": [
+        "Invalid JSON: Expecting value: line 1 column 1 (char 0)"
+      ],
+      "token_counts": {
+        "cl100k_base": 53,
+        "o200k_base": 55
+      },
+      "latency_ms": 25785,
+      "timestamp": "2026-03-01T20:04:12.095681+00:00",
+      "complexity_level": 3,
+      "operators_tested": [
+        "<-",
+        "&",
+        "->"
+      ]
+    },
+    {
+      "task_id": "L3-03",
+      "condition": "json_fc",
+      "model": "claude-haiku",
+      "run_number": 2,
+      "output": "```\nPROP(@negotiator>@supplier):\n  (product(@a, 100) \u2228 product(@b, 85)) \u2227\n  justify(market_rates) \u2227\n  (confirm_inventory \u2192 (ship_warehouse \u2227 send_invoice) \u2192 confirm_payment)\n```",
+      "valid": false,
+      "errors": [
+        "Invalid JSON: Expecting value: line 1 column 1 (char 0)"
+      ],
+      "token_counts": {
+        "cl100k_base": 56,
+        "o200k_base": 59
+      },
+      "latency_ms": 25634,
+      "timestamp": "2026-03-01T20:04:37.731825+00:00",
+      "complexity_level": 3,
+      "operators_tested": [
+        "->",
+        "|",
+        "&",
+        "<-"
+      ]
+    },
+    {
+      "task_id": "L1-01",
+      "condition": "fipa_acl",
+      "model": "claude-haiku",
+      "run_number": 2,
+      "output": "```\nINSTR(@data_processor>@worker): seq(download(data_lake), clean(remove_nulls), upload(warehouse))\n```",
+      "valid": false,
+      "errors": [
+        "No recognized FIPA-ACL performative found"
+      ],
+      "token_counts": {
+        "cl100k_base": 26,
+        "o200k_base": 26
+      },
+      "latency_ms": 21363,
+      "timestamp": "2026-03-01T20:04:59.097394+00:00",
+      "complexity_level": 1,
+      "operators_tested": [
+        "->"
+      ]
+    },
+    {
+      "task_id": "L1-02",
+      "condition": "fipa_acl",
+      "model": "claude-haiku",
+      "run_number": 2,
+      "output": "```\n(request\n  :sender deployment-agent\n  :receiver cluster-manager\n  :content ((execute-health-checks\n              (check-cpu-usage)\n              (check-memory-usage)\n              (check-disk-space)))\n  :reply-with hc-001\n  :language SL\n  :ontology cluster-management\n)\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 68,
+        "o200k_base": 68
+      },
+      "latency_ms": 12085,
+      "timestamp": "2026-03-01T20:05:11.183544+00:00",
+      "complexity_level": 1,
+      "operators_tested": [
+        "&"
+      ]
+    },
+    {
+      "task_id": "L1-03",
+      "condition": "fipa_acl",
+      "model": "claude-haiku",
+      "run_number": 2,
+      "output": "```\n(inform\n  :sender routing-agent\n  :receiver handler-agent\n  :content \"(should-process-via (if (available primary-api-endpoint) primary-api-endpoint fallback-cache-service))\"\n  :language SL\n)\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 49,
+        "o200k_base": 50
+      },
+      "latency_ms": 13853,
+      "timestamp": "2026-03-01T20:05:25.038331+00:00",
+      "complexity_level": 1,
+      "operators_tested": [
+        "|"
+      ]
+    },
+    {
+      "task_id": "L2-01",
+      "condition": "fipa_acl",
+      "model": "claude-haiku",
+      "run_number": 2,
+      "output": "```\nREQ(@orchestrator>@pipeline): process(\n  steps=[\n    validate(input_schema),\n    parallel([\n      sentiment_analysis(validated_data),\n      topic_classification(validated_data)\n    ]),\n    merge(results, report_format)\n  ]\n)\n```",
+      "valid": false,
+      "errors": [
+        "No recognized FIPA-ACL performative found"
+      ],
+      "token_counts": {
+        "cl100k_base": 50,
+        "o200k_base": 51
+      },
+      "latency_ms": 15107,
+      "timestamp": "2026-03-01T20:05:40.146610+00:00",
+      "complexity_level": 2,
+      "operators_tested": [
+        "->",
+        "&"
+      ]
+    },
+    {
+      "task_id": "L2-02",
+      "condition": "fipa_acl",
+      "model": "claude-haiku",
+      "run_number": 2,
+      "output": "```\n(request\n  :sender query-agent\n  :receiver data-agent\n  :content \"((if-then-else (cache-available results) (fetch-cache results) (and (query-database results) (update-cache results))))\"\n  :reply-with msg-001\n  :language SL\n  :ontology data-management\n)\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 71,
+        "o200k_base": 72
+      },
+      "latency_ms": 12614,
+      "timestamp": "2026-03-01T20:05:52.762393+00:00",
+      "complexity_level": 2,
+      "operators_tested": [
+        "|",
+        "->"
+      ]
+    },
+    {
+      "task_id": "L2-03",
+      "condition": "fipa_acl",
+      "model": "claude-haiku",
+      "run_number": 2,
+      "output": "```\n(request\n  :sender security-agent\n  :receiver audit-agent\n  :content \"((parallel (scan-open-ports :exclude (internal-only)) (check-ssl-certificates :exclude (internal-only))))\"\n  :reply-with audit-req-001\n  :language SL\n  :ontology network-security\n)\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 69,
+        "o200k_base": 69
+      },
+      "latency_ms": 10837,
+      "timestamp": "2026-03-01T20:06:03.601353+00:00",
+      "complexity_level": 2,
+      "operators_tested": [
+        "&",
+        "!"
+      ]
+    },
+    {
+      "task_id": "L3-01",
+      "condition": "fipa_acl",
+      "model": "claude-haiku",
+      "run_number": 2,
+      "output": "```\n(request\n  :sender etl-orchestrator\n  :receiver etl-pipeline\n  :content \"((workflow\n    (message-id \\\"ETL-2026-03-01-001\\\")\n    (protocol-version \\\"1.0\\\")\n    (extract\n      (parallel\n        (api :url \\\"https://api.example.com/data\\\")\n        (database :connection \\\"postgresql://localhost/source\\\")))\n    (transform\n      (validation\n        (required-fields id source timestamp)\n        (type-checks {id: integer, source: string, timestamp: datetime})\n        (business-rules)))\n    (load\n      (conditional\n        (on-success :target \\\"datawarehouse.events.raw\\\")\n        (on-failure :destination \\\"error-queue\\\")))))\"\n  :reply-with \"ETL-2026-03-01-001-ack\"\n  :language SL\n  :ontology etl-domain\n)\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 200,
+        "o200k_base": 200
+      },
+      "latency_ms": 24326,
+      "timestamp": "2026-03-01T20:06:27.929622+00:00",
+      "complexity_level": 3,
+      "operators_tested": [
+        "->",
+        "&",
+        "|"
+      ]
+    },
+    {
+      "task_id": "L3-02",
+      "condition": "fipa_acl",
+      "model": "claude-haiku",
+      "run_number": 2,
+      "output": "```\n(request\n  :sender monitoring-agent\n  :receiver remediation-service\n  :content \"((alert (service degradation) (cause memory-leak) (root-cause missing-eviction-policy)) (perform (sequence (parallel (restart cache-service) (deploy hotfix)) (verify service-recovery))))\"\n  :reply-with cache-leak-mitigation-001\n  :language SL\n  :ontology infrastructure-management\n)\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 91,
+        "o200k_base": 91
+      },
+      "latency_ms": 26568,
+      "timestamp": "2026-03-01T20:06:54.500767+00:00",
+      "complexity_level": 3,
+      "operators_tested": [
+        "<-",
+        "&",
+        "->"
+      ]
+    },
+    {
+      "task_id": "L3-03",
+      "condition": "fipa_acl",
+      "model": "claude-haiku",
+      "run_number": 2,
+      "output": "```\nPROP(@negotiator > @supplier): (\n  (product(A) \u2227 price(100)) \u2228 (product(B) \u2227 price(85)) ;\n  confirm-inventory() ;\n  (ship-warehouse() \u2227 send-invoice()) ;\n  await-payment()\n) \u27e8 market-rates \u27e9\n```",
+      "valid": false,
+      "errors": [
+        "No recognized FIPA-ACL performative found"
+      ],
+      "token_counts": {
+        "cl100k_base": 65,
+        "o200k_base": 71
+      },
+      "latency_ms": 39535,
+      "timestamp": "2026-03-01T20:07:34.038206+00:00",
+      "complexity_level": 3,
+      "operators_tested": [
+        "->",
+        "|",
+        "&",
+        "<-"
+      ]
+    },
+    {
+      "task_id": "L1-01",
+      "condition": "axon",
+      "model": "claude-haiku",
+      "run_number": 2,
+      "output": "```\n[id:\"m1\", %%:1]\nCMD(@processor>@worker): download(source:\"data-lake\") -> clean(remove_nulls:T) -> upload(destination:\"warehouse\")\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 38,
+        "o200k_base": 38
+      },
+      "latency_ms": 26032,
+      "timestamp": "2026-03-01T20:08:00.072621+00:00",
+      "complexity_level": 1,
+      "operators_tested": [
+        "->"
+      ]
+    },
+    {
+      "task_id": "L1-02",
+      "condition": "axon",
+      "model": "claude-haiku",
+      "run_number": 2,
+      "output": "```\n[id:\"m1\", %%:1]\nCMD(@deployment-agent>@cluster-manager): checkCPU() & checkMemory() & checkDiskSpace()\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 32,
+        "o200k_base": 32
+      },
+      "latency_ms": 9174,
+      "timestamp": "2026-03-01T20:08:09.248440+00:00",
+      "complexity_level": 1,
+      "operators_tested": [
+        "&"
+      ]
+    },
+    {
+      "task_id": "L1-03",
+      "condition": "axon",
+      "model": "claude-haiku",
+      "run_number": 2,
+      "output": "```\n[id:\"r1\", %%:1]\nINF(@router>@handler): route($request, healthy(@api_endpoint) & @api_endpoint | @cache_service)\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 36,
+        "o200k_base": 36
+      },
+      "latency_ms": 28811,
+      "timestamp": "2026-03-01T20:08:38.061829+00:00",
+      "complexity_level": 1,
+      "operators_tested": [
+        "|"
+      ]
+    },
+    {
+      "task_id": "L2-01",
+      "condition": "axon",
+      "model": "claude-haiku",
+      "run_number": 2,
+      "output": "[id:\"m1\", %%:1, ts:1709251200, ctx:\"orchestration-pipeline\"]\nCMD(@orchestrator>@pipeline-agent): validate_schema($input) -> (analyze_sentiment($data) & classify_topics($data)) -> merge_report($results)",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 58,
+        "o200k_base": 59
+      },
+      "latency_ms": 35829,
+      "timestamp": "2026-03-01T20:09:13.892715+00:00",
+      "complexity_level": 2,
+      "operators_tested": [
+        "->",
+        "&"
+      ]
+    },
+    {
+      "task_id": "L2-02",
+      "condition": "axon",
+      "model": "claude-haiku",
+      "run_number": 2,
+      "output": "```\n[id:\"m1\", %%:1]\nCMD(@query-agent>@data-agent): cache_fetch($query) | (db_query($query) -> cache_update($result))\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 38,
+        "o200k_base": 38
+      },
+      "latency_ms": 13704,
+      "timestamp": "2026-03-01T20:09:27.599880+00:00",
+      "complexity_level": 2,
+      "operators_tested": [
+        "|",
+        "->"
+      ]
+    },
+    {
+      "task_id": "L2-03",
+      "condition": "axon",
+      "model": "claude-haiku",
+      "run_number": 2,
+      "output": "```\n[id:\"m-sec-1\", %%:1]\nCMD(@security>@audit): (scan_ports & check_certs) -> filter(!#internal_only)\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 36,
+        "o200k_base": 35
+      },
+      "latency_ms": 27611,
+      "timestamp": "2026-03-01T20:09:55.212558+00:00",
+      "complexity_level": 2,
+      "operators_tested": [
+        "&",
+        "!"
+      ]
+    },
+    {
+      "task_id": "L3-01",
+      "condition": "axon",
+      "model": "claude-haiku",
+      "run_number": 2,
+      "output": "```\n[id: \"etl-001\", %%: 1]\nCMD(@orchestrator>@pipeline): (extract($api) & extract($db)) -> validate($rules) -> (load($warehouse) | route($error_queue))\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 51,
+        "o200k_base": 50
+      },
+      "latency_ms": 37549,
+      "timestamp": "2026-03-01T20:10:32.764293+00:00",
+      "complexity_level": 3,
+      "operators_tested": [
+        "->",
+        "&",
+        "|"
+      ]
+    },
+    {
+      "task_id": "L3-02",
+      "condition": "axon",
+      "model": "claude-haiku",
+      "run_number": 2,
+      "output": "```\n[id:\"alert-001\", %%:1, ^:5] PUB(@monitoring-agent>@ops-team): \n  #alert{\n    severity:#critical,\n    condition:\"service degradation\",\n    root_cause:\"missing cache eviction policy\",\n    causal_chain:\"missing eviction policy\" -> \"memory leak in cache layer\" -> \"service degradation\",\n    remediation:restart_cache_service() & deploy_hotfix() -> verify_service_recovery()\n  }\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 93,
+        "o200k_base": 93
+      },
+      "latency_ms": 35227,
+      "timestamp": "2026-03-01T20:11:07.994047+00:00",
+      "complexity_level": 3,
+      "operators_tested": [
+        "<-",
+        "&",
+        "->"
+      ]
+    },
+    {
+      "task_id": "L3-03",
+      "condition": "axon",
+      "model": "claude-haiku",
+      "run_number": 2,
+      "output": "```\n[id:\"negotiation-001\", %%:1]\nPRO(@negotiator>@supplier): #deal{\n  products: (#product{name:\"A\", unit_price:100.00usd} | #product{name:\"B\", unit_price:85.00usd}),\n  delivery: confirm_inventory -> (ship_warehouse & send_invoice) -> await_payment,\n  justification: \"current market rates\"\n}\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 87,
+        "o200k_base": 85
+      },
+      "latency_ms": 18425,
+      "timestamp": "2026-03-01T20:11:26.421609+00:00",
+      "complexity_level": 3,
+      "operators_tested": [
+        "->",
+        "|",
+        "&",
+        "<-"
+      ]
+    },
+    {
+      "task_id": "L1-01",
+      "condition": "aisp",
+      "model": "claude-haiku",
+      "run_number": 2,
+      "output": "\ud835\udd381.0.pipeline-request@2026-03-01\n\u03b3\u2254data-pipeline\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@data-processor\n  receiver\u225c@worker\n  intent\u225crequest\n  id\u225c\"req-001\"\n  timestamp\u225c1746086400\n  reply_to\u225cnull\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  Step\u225c{sequence:Int, operation:String, input:String, output:String}\n  DataLocation\u225c{datalake, warehouse}\n}\n\n\u27e6\u0393:Rules\u27e7{\n  \u2200s\u2081\u2208Step: sequence(s\u2081)=1 \u21d2 operation(s\u2081)=download \u2227 input(s\u2081)=datalake\n  \u2200s\u2082\u2208Step: sequence(s\u2082)=2 \u21d2 operation(s\u2082)=clean \u2227 nullRows(output(s\u2082))=0\n  \u2200s\u2083\u2208Step: sequence(s\u2083)=3 \u21d2 operation(s\u2083)=upload \u2227 output(s\u2083)=warehouse\n  \u2200s,s'\u2208Step: (sequence(s) < sequence(s')) \u2227 done(s) \u21d2 \u00acpending(s')\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  executeWorkflow\u225c\u03bb(dataset).(download(dataset,datalake) \u2192 clean(dataset,removeNull) \u2192 upload(dataset,warehouse))\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.85;\u03c6\u225c92;\u03c4\u225c\u25ca\u207a\u27e9",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 312,
+        "o200k_base": 335
+      },
+      "latency_ms": 31236,
+      "timestamp": "2026-03-01T20:11:57.662728+00:00",
+      "complexity_level": 1,
+      "operators_tested": [
+        "->"
+      ]
+    },
+    {
+      "task_id": "L1-02",
+      "condition": "aisp",
+      "model": "claude-haiku",
+      "run_number": 2,
+      "output": "\ud835\udd381.0.health-check-request@2026-03-01\n\u03b3\u2254cluster-management\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@deployment-agent\n  receiver\u225c@cluster-manager\n  intent\u225crequest\n  id\u225c\"hc-req-001\"\n  timestamp\u225c1740787200\n  reply_to\u225c\"null\"\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  Check\u225c{metric:String, timeout:Number}\n  ExecutionMode\u225c{parallel,sequential}\n}\n\n\u27e6\u0393:Rules\u27e7{\n  \u2200c\u2208checks:c.metric\u2208{cpu,memory,disk}\n  mode=parallel\u21d2concurrent(Check_cpu,Check_memory,Check_disk)\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  runChecks\u225c\u03bb(checks,mode).execute(checks,mode)\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.80;\u03c6\u225c100;\u03c4\u225c\u25ca\u207a\u207a\u27e9",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 224,
+        "o200k_base": 229
+      },
+      "latency_ms": 25286,
+      "timestamp": "2026-03-01T20:12:22.950794+00:00",
+      "complexity_level": 1,
+      "operators_tested": [
+        "&"
+      ]
+    },
+    {
+      "task_id": "L1-03",
+      "condition": "aisp",
+      "model": "claude-haiku",
+      "run_number": 2,
+      "output": "\ud835\udd381.0.routing-decision@2026-03-01\n\u03b3\u2254endpoint-selection\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@router\n  receiver\u225c@handler\n  intent\u225cinform\n  id\u225c\"msg-route-001\"\n  timestamp\u225c1782835200\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  Service\u225c{name:String,available:Bool}\n  ProcessingTarget\u225c{primaryAPI:Service,fallbackCache:Service}\n}\n\n\u27e6\u0393:Rules\u27e7{\n  \u2200s:Service:(s.available=true)\u2228(s.available=false)\n  \u2200t:ProcessingTarget:(t.primaryAPI.available\u21d2use(t.primaryAPI))\n  \u2200t:ProcessingTarget:(\u00act.primaryAPI.available\u2227t.fallbackCache.available\u21d2use(t.fallbackCache))\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  selectEndpoint\u225c\u03bb(primary,fallback).(primary.available\u2192primary;fallback)\n  routeRequest\u225c\u03bb(target).{endpoint:selectEndpoint(target.primaryAPI,target.fallbackCache)}\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.85;\u03c6\u225c100;\u03c4\u225c\u25ca\u207a\u27e9",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 267,
+        "o200k_base": 273
+      },
+      "latency_ms": 35641,
+      "timestamp": "2026-03-01T20:12:58.594025+00:00",
+      "complexity_level": 1,
+      "operators_tested": [
+        "|"
+      ]
+    },
+    {
+      "task_id": "L2-01",
+      "condition": "aisp",
+      "model": "claude-haiku",
+      "run_number": 2,
+      "output": "\ud835\udd381.0.pipeline-orchestration@2026-03-01\n\u03b3\u2254agent-orchestration\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@orchestrator\n  receiver\u225c@pipeline-agent\n  intent\u225crequest\n  id\u225c\"msg-pipeline-001\"\n  timestamp\u225c1743465600\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  InputData\u225c{content:String, metadata:Object}\n  ValidationResult\u225c{valid:Boolean, errors:Array}\n  SentimentScore\u225c{polarity:Number, confidence:Number}\n  TopicResult\u225c{topics:Array, weights:Array}\n  MergedReport\u225c{input:InputData, validation:ValidationResult, sentiment:SentimentScore, topics:TopicResult, timestamp:String}\n}\n\n\u27e6\u0393:Rules\u27e7{\n  \u2200data:InputData: validate(data)\u21d2(sentiment(data)\u2227topic(data))\n  \u2200r1:SentimentScore, r2:TopicResult: (r1\u2227r2)\u21d2merge(r1,r2)\n  \u2200m:MergedReport: isComplete(m)\u2227isValid(m)\u21d2report(m)\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  validate\u225c\u03bb(input).checkSchema(input)\n  sentiment\u225c\u03bb(data).analyzeSentiment(data)\n  topic\u225c\u03bb(data).classifyTopics(data)\n  merge\u225c\u03bb(sent,top).combineResults(sent,top)\n  report\u225c\u03bb(result).formatReport(result)\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.78;\u03c6\u225c95;\u03c4\u225c\u25ca\u207a\u27e9",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 361,
+        "o200k_base": 369
+      },
+      "latency_ms": 11924,
+      "timestamp": "2026-03-01T20:13:10.520028+00:00",
+      "complexity_level": 2,
+      "operators_tested": [
+        "->",
+        "&"
+      ]
+    },
+    {
+      "task_id": "L2-02",
+      "condition": "aisp",
+      "model": "claude-haiku",
+      "run_number": 2,
+      "output": "\ud835\udd381.0.cache-or-query@2026-03-01\n\u03b3\u2254agent-data-services\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@query-agent\n  receiver\u225c@data-agent\n  intent\u225crequest\n  id\u225c\"m1\"\n  timestamp\u225c1772323200\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  Query\u225c{table:String, condition:String}\n  Result\u225c{data:Any, timestamp:Int}\n}\n\n\u27e6\u0393:Rules\u27e7{\n  \u2200q:Query:\n    isCached(q)\u21d2fetchCache(q)\n    \u00acisCached(q)\u21d2queryDB(q)\u2227updateCache(q)\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  isCached\u225c\u03bb(q).\u2203e\u2208cache:key(e)=hash(q)\n  fetchCache\u225c\u03bb(q).get(cache, hash(q))\n  queryDB\u225c\u03bb(q).execute(database, q)\n  updateCache\u225c\u03bb(q).put(cache, hash(q), queryDB(q))\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.80;\u03c6\u225c92;\u03c4\u225c\u25ca\u207a\u27e9",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 262,
+        "o200k_base": 268
+      },
+      "latency_ms": 39998,
+      "timestamp": "2026-03-01T20:13:50.521158+00:00",
+      "complexity_level": 2,
+      "operators_tested": [
+        "|",
+        "->"
+      ]
+    },
+    {
+      "task_id": "L2-03",
+      "condition": "aisp",
+      "model": "claude-haiku",
+      "run_number": 2,
+      "output": "\ud835\udd381.0.security-audit-request@2026-03-01\n\u03b3\u2254agent-sec-audit\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@security-agent\n  receiver\u225c@audit-agent\n  intent\u225crequest\n  id\u225c\"sec-audit-001\"\n  timestamp\u225c1740787200\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  Service\u225c{name:String, internal:Boolean, port:Integer}\n  ScanResult\u225c{ports:Set<Integer>, certs_valid:Boolean}\n}\n\n\u27e6\u0393:Rules\u27e7{\n  \u2200s:Service: s.internal=true\u21d2s\u2209audit_scope\n  port_scan(audit_scope)\u2227ssl_check(audit_scope)\u21d2concurrent\n  audit_scope\u225c{s|s\u2208services \u2227 s.internal\u2260true}\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  port_scan\u225c\u03bb(S).{probe(s.port)|s\u2208S}\n  ssl_check\u225c\u03bb(S).{verify_cert(s.port)|s\u2208S}\n  audit\u225c\u03bb().concurrent(port_scan(audit_scope),ssl_check(audit_scope))\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.76;\u03c6\u225c95;\u03c4\u225c\u25ca\u207a\u207a\u27e9",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 290,
+        "o200k_base": 295
+      },
+      "latency_ms": 33523,
+      "timestamp": "2026-03-01T20:14:24.046349+00:00",
+      "complexity_level": 2,
+      "operators_tested": [
+        "&",
+        "!"
+      ]
+    },
+    {
+      "task_id": "L3-01",
+      "condition": "aisp",
+      "model": "claude-haiku",
+      "run_number": 2,
+      "output": "\ud835\udd381.0.etl-pipeline-directive@2026-03-01\n\u03b3\u2254etl\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@etl-orchestrator\n  receiver\u225c@pipeline-executor\n  intent\u225crequest\n  id\u225c\"etl-202603-0147\"\n  timestamp\u225c1740825600\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  Source\u225c{kind:Kind, location:String}\n  Kind\u225c{api,database}\n  Batch\u225c{rows:Integer, origin:Source}\n  Validation\u225c{passed:Boolean, failures:Array}\n  Target\u225c{warehouse,error_queue}\n}\n\n\u27e6\u0393:Rules\u27e7{\n  extract(api) \u2227 extract(database)\u21d2combine(results)\n  \u2200batch:Batch: combined(batch)\u21d2validate(batch)\n  \u2200result:Validation: result.passed\u21d2route(warehouse)\n  \u2200result:Validation: \u00acresult.passed\u21d2route(error_queue)\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  extract\u225c\u03bb(src).readFrom(src.location)\n  combine\u225c\u03bb(api_batch,db_batch).merge(api_batch,db_batch)\n  validate\u225c\u03bb(data).applyRules(data)\n  route\u225c\u03bb(data,target).load(target,data)\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.82;\u03c6\u225c100;\u03c4\u225c\u25ca\u207a\u27e9",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 320,
+        "o200k_base": 320
+      },
+      "latency_ms": 58735,
+      "timestamp": "2026-03-01T20:15:22.783073+00:00",
+      "complexity_level": 3,
+      "operators_tested": [
+        "->",
+        "&",
+        "|"
+      ]
+    },
+    {
+      "task_id": "L3-02",
+      "condition": "aisp",
+      "model": "claude-haiku",
+      "run_number": 2,
+      "output": "\ud835\udd381.0.cache-remediation-alert@2026-03-01\n\u03b3\u2254incident-response\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@monitoring-agent\n  receiver\u225c@remediation-orchestrator\n  intent\u225calert\n  id\u225c\"alert-cache-leak-001\"\n  timestamp\u225c1773110400\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  Alert\u225c{service:String, status:String, cause:String, severity:String}\n  Action\u225c{type:String, target:String, execution:String}\n  ExecutionMode\u225c{sequential, parallel}\n  ServiceStatus\u225c{healthy, degraded, down}\n}\n\n\u27e6\u0393:Rules\u27e7{\n  cause=\"missing_eviction_policy\" \u21d2 (action_restart \u2227 action_deploy)\n  action_restart \u2227 action_deploy \u21d2 execution=parallel\n  status=degraded \u21d2 verify_recovery=true\n  remediation_complete \u21d2 status=healthy\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  process_alert\u225c\u03bb(a).(execute_remediation(a) \u2227 verify_recovery(a.service))\n  execute_remediation\u225c\u03bb(a).{restart_cache(a.service), deploy_hotfix(a.service)}\n  restart_cache\u225c\u03bb(svc).{type:\"restart\", target:svc, execution:\"parallel\"}\n  deploy_hotfix\u225c\u03bb(svc).{type:\"deploy\", target:svc, patch:\"eviction-policy\", execution:\"parallel\"}\n  verify_recovery\u225c\u03bb(svc).health_status(svc)=healthy\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.85;\u03c6\u225c100;\u03c4\u225c\u25ca\u207a\u207a\u27e9",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 360,
+        "o200k_base": 370
+      },
+      "latency_ms": 35316,
+      "timestamp": "2026-03-01T20:15:58.101876+00:00",
+      "complexity_level": 3,
+      "operators_tested": [
+        "<-",
+        "&",
+        "->"
+      ]
+    },
+    {
+      "task_id": "L3-03",
+      "condition": "aisp",
+      "model": "claude-haiku",
+      "run_number": 2,
+      "output": "\ud835\udd381.0.deal-proposal@2026-03-01\n\u03b3\u2254procurement\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@negotiation-agent\n  receiver\u225c@supplier\n  intent\u225cpropose\n  id\u225c\"prop-001\"\n  timestamp\u225c1743638400\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  Product\u225c{A,B}\n  Offer\u225c{product:Product,price:\u2115,justification:String}\n  DeliveryStage\u225c{confirm_inventory,ship_invoice,await_payment}\n}\n\n\u27e6\u0393:Rules\u27e7{\n  price(A)=100 \u2227 price(B)=85\n  \u2200o:Offer: o.justification=\"current market rates\"\n  confirm_inventory(p) \u2192 (ship(p) \u2227 invoice(p)) \u2192 await_payment(p)\n  ship(p) \u2225 invoice(p)\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  proposeOffer\u225c\u03bb(p).(p,price(p),\"current market rates\")\n  deliverySequence\u225c\u03bb(p).confirm_inventory(p) \u2192 (ship(p) \u2227 invoice(p)) \u2192 await_payment(p)\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.86;\u03c6\u225c100;\u03c4\u225c\u25ca\u207a\u27e9",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 278,
+        "o200k_base": 290
+      },
+      "latency_ms": 63672,
+      "timestamp": "2026-03-01T20:17:01.776504+00:00",
+      "complexity_level": 3,
+      "operators_tested": [
+        "->",
+        "|",
+        "&",
+        "<-"
+      ]
+    },
+    {
+      "task_id": "L1-01",
+      "condition": "free_english",
+      "model": "claude-haiku",
+      "run_number": 3,
+      "output": "```\nSEQ(\n  CMD(@processor>@worker): download(source=\"datalake\", output=$d),\n  CMD(@processor>@worker): clean(input=$d, remove_nulls=true, output=$c),\n  CMD(@processor>@worker): upload(input=$c, destination=\"warehouse\")\n)\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 60,
+        "o200k_base": 61
+      },
+      "latency_ms": 22817,
+      "timestamp": "2026-03-01T20:17:24.595629+00:00",
+      "complexity_level": 1,
+      "operators_tested": [
+        "->"
+      ]
+    },
+    {
+      "task_id": "L1-02",
+      "condition": "free_english",
+      "model": "claude-haiku",
+      "run_number": 3,
+      "output": "```\nCMD(@deployment>@cluster_manager): check_cpu() & check_memory() & check_disk()\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 21,
+        "o200k_base": 21
+      },
+      "latency_ms": 14836,
+      "timestamp": "2026-03-01T20:17:39.432569+00:00",
+      "complexity_level": 1,
+      "operators_tested": [
+        "&"
+      ]
+    },
+    {
+      "task_id": "L1-03",
+      "condition": "free_english",
+      "model": "claude-haiku",
+      "run_number": 3,
+      "output": "```axon\nDIR(@router>@handler): endpoint(if(available(@api_primary), @api_primary, @cache_fallback))\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 27,
+        "o200k_base": 27
+      },
+      "latency_ms": 17005,
+      "timestamp": "2026-03-01T20:17:56.440284+00:00",
+      "complexity_level": 1,
+      "operators_tested": [
+        "|"
+      ]
+    },
+    {
+      "task_id": "L2-01",
+      "condition": "free_english",
+      "model": "claude-haiku",
+      "run_number": 3,
+      "output": "```\nCMD(@orchestrator>@pipeline): validate(input) | (sentiment(data) & classify(data)) | merge(results)\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 28,
+        "o200k_base": 28
+      },
+      "latency_ms": 14356,
+      "timestamp": "2026-03-01T20:18:10.797616+00:00",
+      "complexity_level": 2,
+      "operators_tested": [
+        "->",
+        "&"
+      ]
+    },
+    {
+      "task_id": "L2-02",
+      "condition": "free_english",
+      "model": "claude-haiku",
+      "run_number": 3,
+      "output": "```\nQRY(@query>@data): cache_fetch($id) | db_query($id) & cache_store($id)\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 27,
+        "o200k_base": 27
+      },
+      "latency_ms": 32815,
+      "timestamp": "2026-03-01T20:18:43.615507+00:00",
+      "complexity_level": 2,
+      "operators_tested": [
+        "|",
+        "->"
+      ]
+    },
+    {
+      "task_id": "L2-03",
+      "condition": "free_english",
+      "model": "claude-haiku",
+      "run_number": 3,
+      "output": "```\nREQ(@security > @audit): scan_ports() & check_ssl_certs() WHERE !internal-only\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 24,
+        "o200k_base": 24
+      },
+      "latency_ms": 16745,
+      "timestamp": "2026-03-01T20:19:00.362063+00:00",
+      "complexity_level": 2,
+      "operators_tested": [
+        "&",
+        "!"
+      ]
+    },
+    {
+      "task_id": "L3-01",
+      "condition": "free_english",
+      "model": "claude-haiku",
+      "run_number": 3,
+      "output": "```\nCMD(@orchestrator>@pipeline): orchestrate_etl(\n  msg_id=\"etl-001\",\n  protocol_version=\"1.0\",\n  extract=parallel(api & database),\n  transform=apply_validation(),\n  on_success=load(warehouse),\n  on_failure=route(error_queue)\n)\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 64,
+        "o200k_base": 63
+      },
+      "latency_ms": 32578,
+      "timestamp": "2026-03-01T20:19:32.942048+00:00",
+      "complexity_level": 3,
+      "operators_tested": [
+        "->",
+        "&",
+        "|"
+      ]
+    },
+    {
+      "task_id": "L3-02",
+      "condition": "free_english",
+      "model": "claude-haiku",
+      "run_number": 3,
+      "output": "EVT(@monitor>@ops): alert(\n  severity=critical,\n  service=cache_layer,\n  status=degraded,\n  root_cause=memory_leak(component=cache, reason=missing_eviction_policy),\n  action=seq(\n    par(restart(cache_service), deploy(hotfix)),\n    verify(service_recovery)\n  )\n)",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 70,
+        "o200k_base": 71
+      },
+      "latency_ms": 15249,
+      "timestamp": "2026-03-01T20:19:48.193079+00:00",
+      "complexity_level": 3,
+      "operators_tested": [
+        "<-",
+        "&",
+        "->"
+      ]
+    },
+    {
+      "task_id": "L3-03",
+      "condition": "free_english",
+      "model": "claude-haiku",
+      "run_number": 3,
+      "output": "```\nPROPOSE(@negotiator > @supplier): (\n  (offer(A, 100) | offer(B, 85)) ;\n  confirm_inventory() ;\n  (ship_warehouse() & send_invoice()) ;\n  await_payment()\n) { justification: \"current market rates\" }\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 60,
+        "o200k_base": 60
+      },
+      "latency_ms": 33072,
+      "timestamp": "2026-03-01T20:20:21.266256+00:00",
+      "complexity_level": 3,
+      "operators_tested": [
+        "->",
+        "|",
+        "&",
+        "<-"
+      ]
+    },
+    {
+      "task_id": "L1-01",
+      "condition": "structured_english",
+      "model": "claude-haiku",
+      "run_number": 3,
+      "output": "FROM: data-processor\nTO: worker\nTYPE: request\nCONTENT: REQ: seq(download(\"data-lake\", $dataset), clean($dataset, \"remove-nulls\"), upload($dataset, \"warehouse\"))",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 44,
+        "o200k_base": 45
+      },
+      "latency_ms": 17084,
+      "timestamp": "2026-03-01T20:20:38.351026+00:00",
+      "complexity_level": 1,
+      "operators_tested": [
+        "->"
+      ]
+    },
+    {
+      "task_id": "L1-02",
+      "condition": "structured_english",
+      "model": "claude-haiku",
+      "run_number": 3,
+      "output": "FROM: deployment-agent\nTO: cluster-manager\nTYPE: request\nCONTENT: Execute the following health checks in parallel: check CPU usage, check memory usage, check disk space",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 35,
+        "o200k_base": 35
+      },
+      "latency_ms": 10095,
+      "timestamp": "2026-03-01T20:20:48.448594+00:00",
+      "complexity_level": 1,
+      "operators_tested": [
+        "&"
+      ]
+    },
+    {
+      "task_id": "L1-03",
+      "condition": "structured_english",
+      "model": "claude-haiku",
+      "run_number": 3,
+      "output": "FROM: routing-agent\nTO: handler-agent\nTYPE: inform\nCONTENT: Process the incoming request using the primary API endpoint if available; fall back to the cache service if the primary endpoint is unavailable.",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 41,
+        "o200k_base": 41
+      },
+      "latency_ms": 18394,
+      "timestamp": "2026-03-01T20:21:06.843995+00:00",
+      "complexity_level": 1,
+      "operators_tested": [
+        "|"
+      ]
+    },
+    {
+      "task_id": "L2-01",
+      "condition": "structured_english",
+      "model": "claude-haiku",
+      "run_number": 3,
+      "output": "REQ(@orchestrator>@pipeline): run_pipeline(\n  validate($input_schema),\n  parallel(\n    sentiment_analysis($validated_data),\n    topic_classification($validated_data)\n  ),\n  merge_report($sentiment_results, $topic_results)\n)",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 49,
+        "o200k_base": 50
+      },
+      "latency_ms": 26926,
+      "timestamp": "2026-03-01T20:21:33.772436+00:00",
+      "complexity_level": 2,
+      "operators_tested": [
+        "->",
+        "&"
+      ]
+    },
+    {
+      "task_id": "L2-02",
+      "condition": "structured_english",
+      "model": "claude-haiku",
+      "run_number": 3,
+      "output": "FROM: query-agent\nTO: data-agent\nTYPE: request\nCONTENT: Fetch results for the query. Check cache first; if available, return cached results. Otherwise, query the database, update the cache with fresh results, and return the data.",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 51,
+        "o200k_base": 51
+      },
+      "latency_ms": 10368,
+      "timestamp": "2026-03-01T20:21:44.142506+00:00",
+      "complexity_level": 2,
+      "operators_tested": [
+        "|",
+        "->"
+      ]
+    },
+    {
+      "task_id": "L2-03",
+      "condition": "structured_english",
+      "model": "claude-haiku",
+      "run_number": 3,
+      "output": "FROM: security-agent\nTO: audit-agent\nTYPE: request\nCONTENT: Execute simultaneous scans for open ports and SSL certificate validation. Exclude internal-only services from scan scope.",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 35,
+        "o200k_base": 36
+      },
+      "latency_ms": 8235,
+      "timestamp": "2026-03-01T20:21:52.379267+00:00",
+      "complexity_level": 2,
+      "operators_tested": [
+        "&",
+        "!"
+      ]
+    },
+    {
+      "task_id": "L3-01",
+      "condition": "structured_english",
+      "model": "claude-haiku",
+      "run_number": 3,
+      "output": "REQ(msgid:etl-001, version:1.0, @orchestrator > @pipeline): seq(\n  par(extract(api), extract(db)),\n  transform(validate),\n  cond(pass: load(warehouse), fail: route(error_queue))\n)",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 53,
+        "o200k_base": 52
+      },
+      "latency_ms": 34044,
+      "timestamp": "2026-03-01T20:22:26.424518+00:00",
+      "complexity_level": 3,
+      "operators_tested": [
+        "->",
+        "&",
+        "|"
+      ]
+    },
+    {
+      "task_id": "L3-02",
+      "condition": "structured_english",
+      "model": "claude-haiku",
+      "run_number": 3,
+      "output": "FROM: monitoring-agent\nTO: cache-service-controller\nTYPE: request\nCONTENT: Service degradation detected. Root cause: memory leak in cache layer due to missing eviction policy. Action required: restart cache service immediately.\n\nFROM: monitoring-agent\nTO: deployment-agent\nTYPE: request\nCONTENT: Concurrently with cache restart, deploy hotfix for missing eviction policy. Service: cache-layer. Criticality: high.\n\nFROM: monitoring-agent\nTO: verification-agent\nTYPE: request\nCONTENT: After cache restart and hotfix deployment complete, verify service recovery. Confirm: cache memory usage stable, service responding within SLA latency.",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 126,
+        "o200k_base": 125
+      },
+      "latency_ms": 12076,
+      "timestamp": "2026-03-01T20:22:38.502126+00:00",
+      "complexity_level": 3,
+      "operators_tested": [
+        "<-",
+        "&",
+        "->"
+      ]
+    },
+    {
+      "task_id": "L3-03",
+      "condition": "structured_english",
+      "model": "claude-haiku",
+      "run_number": 3,
+      "output": "FROM: negotiation_agent\nTO: supplier_agent\nTYPE: propose\nCONTENT: Offer product A at $100/unit or product B at $85/unit. Delivery sequence: (1) confirm inventory, (2) ship_warehouse \u2225 send_invoice, (3) await_payment_confirmation. Pricing basis: current market rates.",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 65,
+        "o200k_base": 65
+      },
+      "latency_ms": 18603,
+      "timestamp": "2026-03-01T20:22:57.107192+00:00",
+      "complexity_level": 3,
+      "operators_tested": [
+        "->",
+        "|",
+        "&",
+        "<-"
+      ]
+    },
+    {
+      "task_id": "L1-01",
+      "condition": "instruction_matched_english",
+      "model": "claude-haiku",
+      "run_number": 3,
+      "output": "[message-id: m1]\nCOMMAND (data-processor -> worker):\n  pipeline: dataset-processing\n  steps:\n    - order: 1\n      action: download\n      source: data-lake\n    - order: 2\n      action: clean\n      operation: remove-null-rows\n    - order: 3\n      action: upload\n      destination: warehouse",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 79,
+        "o200k_base": 79
+      },
+      "latency_ms": 17131,
+      "timestamp": "2026-03-01T20:23:14.240470+00:00",
+      "complexity_level": 1,
+      "operators_tested": [
+        "->"
+      ]
+    },
+    {
+      "task_id": "L1-02",
+      "condition": "instruction_matched_english",
+      "model": "claude-haiku",
+      "run_number": 3,
+      "output": "[message-id: m1]\nCOMMAND (deployment-agent -> cluster-manager):\n  action: run-health-checks\n  checks: [cpu-usage, memory-usage, disk-space]\n  mode: parallel",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 42,
+        "o200k_base": 42
+      },
+      "latency_ms": 10111,
+      "timestamp": "2026-03-01T20:23:24.353604+00:00",
+      "complexity_level": 1,
+      "operators_tested": [
+        "&"
+      ]
+    },
+    {
+      "task_id": "L1-03",
+      "condition": "instruction_matched_english",
+      "model": "claude-haiku",
+      "run_number": 3,
+      "output": "```\n[message-id: m1]\nINFORM (@router -> @handler):\n  request_id: incoming_request_12\n  process_via: if($primary.available, $primary_api_endpoint, $fallback_cache)\n  timestamp: 1746086400\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 54,
+        "o200k_base": 55
+      },
+      "latency_ms": 20062,
+      "timestamp": "2026-03-01T20:23:44.417300+00:00",
+      "complexity_level": 1,
+      "operators_tested": [
+        "|"
+      ]
+    },
+    {
+      "task_id": "L2-01",
+      "condition": "instruction_matched_english",
+      "model": "claude-haiku",
+      "run_number": 3,
+      "output": "[message-id: m1]\n[timestamp: 1740953460]\n[context: pipeline-orchestration]\nCOMMAND (@orchestrator > @pipeline):\n  task: execute_pipeline\n  sequence:\n    - stage: validate\n      input: data\n      against: schema\n    - stage: parallel\n      concurrent_tasks:\n        - sentiment_analysis(validated_data)\n        - topic_classification(validated_data)\n    - stage: merge\n      inputs: [sentiment_results, classification_results]\n      output: unified_report",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 107,
+        "o200k_base": 107
+      },
+      "latency_ms": 22461,
+      "timestamp": "2026-03-01T20:24:06.879796+00:00",
+      "complexity_level": 2,
+      "operators_tested": [
+        "->",
+        "&"
+      ]
+    },
+    {
+      "task_id": "L2-02",
+      "condition": "instruction_matched_english",
+      "model": "claude-haiku",
+      "run_number": 3,
+      "output": "[message-id: m1]\nREQUEST (query-agent -> data-agent):\n  operation: retrieve-data\n  source: cache\n  fallback: database\n  update-cache: on-miss\n  return: query-results",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 44,
+        "o200k_base": 44
+      },
+      "latency_ms": 19785,
+      "timestamp": "2026-03-01T20:24:26.666743+00:00",
+      "complexity_level": 2,
+      "operators_tested": [
+        "|",
+        "->"
+      ]
+    },
+    {
+      "task_id": "L2-03",
+      "condition": "instruction_matched_english",
+      "model": "claude-haiku",
+      "run_number": 3,
+      "output": "[message-id: sec-audit-001]\nCOMMAND (@security > @audit):\n  operations: [scan_ports(), check_ssl_certificates()]\n  scope: all_services & ~internal_only\n  mode: concurrent\n  timestamp: 1740825600",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 52,
+        "o200k_base": 52
+      },
+      "latency_ms": 19647,
+      "timestamp": "2026-03-01T20:24:46.315672+00:00",
+      "complexity_level": 2,
+      "operators_tested": [
+        "&",
+        "!"
+      ]
+    },
+    {
+      "task_id": "L3-01",
+      "condition": "instruction_matched_english",
+      "model": "claude-haiku",
+      "run_number": 3,
+      "output": "```\n[message-id: etl-001-20260301]\n[protocol-version: 0.1-experimental]\nCMD(@orchestrator>@pipeline):\n  seq(\n    par(\n      extract(source: api, endpoint: \"https://api.example.com/data\"),\n      extract(source: db, connection: \"prod-warehouse\")\n    ),\n    transform(input: $extracted, rules: [validate_schema, validate_types, validate_business_logic]),\n    if(\n      valid($transformed),\n      load(target: warehouse, payload: $transformed),\n      route(target: error_queue, payload: $transformed, reason: \"validation_failed\")\n    )\n  )\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 137,
+        "o200k_base": 137
+      },
+      "latency_ms": 24769,
+      "timestamp": "2026-03-01T20:25:11.086476+00:00",
+      "complexity_level": 3,
+      "operators_tested": [
+        "->",
+        "&",
+        "|"
+      ]
+    },
+    {
+      "task_id": "L3-02",
+      "condition": "instruction_matched_english",
+      "model": "claude-haiku",
+      "run_number": 3,
+      "output": "[message-id: alert-mem-001]\nPUBLISH (monitoring-agent -> [deployment-agent, operations-agent]):\n  alert-type: service-degradation\n  severity: critical\n  root-cause: memory-leak\n  affected-component: cache-layer\n  underlying-issue: missing-eviction-policy\n  remediation-plan:\n    - concurrent-action-1: restart-service\n      target: cache-service\n      mode: immediate\n    - concurrent-action-2: deploy-hotfix\n      target: cache-layer\n      mode: immediate\n  verification-action: check-service-recovery\n  verification-success-criteria: health-check-pass\n  timestamp: 1740859200\n  context: cache-degradation-incident",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 146,
+        "o200k_base": 147
+      },
+      "latency_ms": 11031,
+      "timestamp": "2026-03-01T20:25:22.119751+00:00",
+      "complexity_level": 3,
+      "operators_tested": [
+        "<-",
+        "&",
+        "->"
+      ]
+    },
+    {
+      "task_id": "L3-03",
+      "condition": "instruction_matched_english",
+      "model": "claude-haiku",
+      "run_number": 3,
+      "output": "[message-id: negotiation-proposal-001]\nPROPOSE (negotiation-agent -> supplier):\n  product-options: [{product: A, unit-price: 100, currency: USD}, {product: B, unit-price: 85, currency: USD}]\n  pricing-justification: current-market-rates\n  delivery-sequence:\n    step-1: confirm-inventory\n    step-2: parallel-execution(ship-to-warehouse, send-invoice)\n    step-3: await-payment-confirmation",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 105,
+        "o200k_base": 105
+      },
+      "latency_ms": 25558,
+      "timestamp": "2026-03-01T20:25:47.679770+00:00",
+      "complexity_level": 3,
+      "operators_tested": [
+        "->",
+        "|",
+        "&",
+        "<-"
+      ]
+    },
+    {
+      "task_id": "L1-01",
+      "condition": "json_fc",
+      "model": "claude-haiku",
+      "run_number": 3,
+      "output": "```\nCMD(@processor>@worker): download(data_lake, dataset); clean(dataset); upload(warehouse, dataset)\n```",
+      "valid": false,
+      "errors": [
+        "Invalid JSON: Expecting value: line 1 column 1 (char 0)"
+      ],
+      "token_counts": {
+        "cl100k_base": 25,
+        "o200k_base": 25
+      },
+      "latency_ms": 26543,
+      "timestamp": "2026-03-01T20:26:14.225397+00:00",
+      "complexity_level": 1,
+      "operators_tested": [
+        "->"
+      ]
+    },
+    {
+      "task_id": "L1-02",
+      "condition": "json_fc",
+      "model": "claude-haiku",
+      "run_number": 3,
+      "output": "```\nCMD(@deployment>@cluster_manager): parallel(checkCPU(), checkMemory(), checkDisk())\n```",
+      "valid": false,
+      "errors": [
+        "Invalid JSON: Expecting value: line 1 column 1 (char 0)"
+      ],
+      "token_counts": {
+        "cl100k_base": 20,
+        "o200k_base": 20
+      },
+      "latency_ms": 12668,
+      "timestamp": "2026-03-01T20:26:26.895583+00:00",
+      "complexity_level": 1,
+      "operators_tested": [
+        "&"
+      ]
+    },
+    {
+      "task_id": "L1-03",
+      "condition": "json_fc",
+      "model": "claude-haiku",
+      "run_number": 3,
+      "output": "```\nINF(@router>@handler): route(incoming_request, if(available(primary_api), primary_api, fallback_cache))\n```",
+      "valid": false,
+      "errors": [
+        "Invalid JSON: Expecting value: line 1 column 1 (char 0)"
+      ],
+      "token_counts": {
+        "cl100k_base": 26,
+        "o200k_base": 26
+      },
+      "latency_ms": 14708,
+      "timestamp": "2026-03-01T20:26:41.605455+00:00",
+      "complexity_level": 1,
+      "operators_tested": [
+        "|"
+      ]
+    },
+    {
+      "task_id": "L2-01",
+      "condition": "json_fc",
+      "model": "claude-haiku",
+      "run_number": 3,
+      "output": "```json\n{\n  \"performative\": \"command\",\n  \"from\": \"orchestrator\",\n  \"to\": \"pipeline-agent\",\n  \"content\": {\n    \"workflow\": [\n      {\n        \"step\": 1,\n        \"action\": \"validate_schema\",\n        \"input\": \"data\",\n        \"output\": \"validated_data\"\n      },\n      {\n        \"step\": 2,\n        \"action\": \"parallel_execute\",\n        \"tasks\": [\n          {\n            \"agent\": \"sentiment-analyzer\",\n            \"operation\": \"analyze_sentiment\",\n            \"input\": \"validated_data\"\n          },\n          {\n            \"agent\": \"topic-classifier\",\n            \"operation\": \"classify_topics\",\n            \"input\": \"validated_data\"\n          }\n        ],\n        \"await_all\": true\n      },\n      {\n        \"step\": 3,\n        \"action\": \"merge_results\",\n        \"sources\": [\"sentiment-analyzer\", \"topic-classifier\"],\n        \"output\": \"unified_report\"\n      }\n    ]\n  }\n}\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 215,
+        "o200k_base": 217
+      },
+      "latency_ms": 14104,
+      "timestamp": "2026-03-01T20:26:55.712207+00:00",
+      "complexity_level": 2,
+      "operators_tested": [
+        "->",
+        "&"
+      ]
+    },
+    {
+      "task_id": "L2-02",
+      "condition": "json_fc",
+      "model": "claude-haiku",
+      "run_number": 3,
+      "output": "```\nCMD(@query_agent>@data_agent): cached(results) | [query(results, db), update(cache, results)]\n```",
+      "valid": false,
+      "errors": [
+        "Invalid JSON: Expecting value: line 1 column 1 (char 0)"
+      ],
+      "token_counts": {
+        "cl100k_base": 26,
+        "o200k_base": 26
+      },
+      "latency_ms": 27860,
+      "timestamp": "2026-03-01T20:27:23.574122+00:00",
+      "complexity_level": 2,
+      "operators_tested": [
+        "|",
+        "->"
+      ]
+    },
+    {
+      "task_id": "L2-03",
+      "condition": "json_fc",
+      "model": "claude-haiku",
+      "run_number": 3,
+      "output": "```\nCMD(@security > @audit): execute_audit(targets=all, concurrent_tasks=[scan_ports(), verify_ssl_certs()], exclude_scope=internal_services)\n```",
+      "valid": false,
+      "errors": [
+        "Invalid JSON: Expecting value: line 1 column 1 (char 0)"
+      ],
+      "token_counts": {
+        "cl100k_base": 32,
+        "o200k_base": 35
+      },
+      "latency_ms": 17815,
+      "timestamp": "2026-03-01T20:27:41.390618+00:00",
+      "complexity_level": 2,
+      "operators_tested": [
+        "&",
+        "!"
+      ]
+    },
+    {
+      "task_id": "L3-01",
+      "condition": "json_fc",
+      "model": "claude-haiku",
+      "run_number": 3,
+      "output": "```\nCMD(@orchestrator>@pipeline): msg_id=etl_2026_0001, version=1.0, execute_pipeline(\n  extract: parallel(\n    fetch(@api_source, {endpoint: \"/data\", timeout: 30}),\n    query(@db_source, {table: \"raw_data\"})\n  ),\n  transform: validate(combined_data, {schema: strict, rules: [schema_check, null_check, business_rules]}),\n  load: if(validation_passed(result),\n    store(@warehouse, result),\n    route(@error_queue, result)\n  )\n)\n```",
+      "valid": false,
+      "errors": [
+        "Invalid JSON: Expecting value: line 1 column 1 (char 0)"
+      ],
+      "token_counts": {
+        "cl100k_base": 121,
+        "o200k_base": 121
+      },
+      "latency_ms": 26220,
+      "timestamp": "2026-03-01T20:28:07.612593+00:00",
+      "complexity_level": 3,
+      "operators_tested": [
+        "->",
+        "&",
+        "|"
+      ]
+    },
+    {
+      "task_id": "L3-02",
+      "condition": "json_fc",
+      "model": "claude-haiku",
+      "run_number": 3,
+      "output": "```json\n{\n  \"performative\": \"command\",\n  \"from\": \"remediation-orchestrator\",\n  \"to\": [\"cache-service-manager\", \"deployment-agent\", \"verification-agent\"],\n  \"content\": {\n    \"alert_id\": \"svc-degrade-cache-memleak\",\n    \"root_cause\": \"missing_eviction_policy\",\n    \"remediation\": {\n      \"parallel_actions\": [\n        {\n          \"action\": \"restart_service\",\n          \"target\": \"cache-service\",\n          \"timeout_sec\": 120\n        },\n        {\n          \"action\": \"deploy_hotfix\",\n          \"target\": \"cache-layer\",\n          \"fix\": \"add_eviction_policy\"\n        }\n      ],\n      \"verification\": {\n        \"action\": \"verify_recovery\",\n        \"checks\": [\"memory_level\", \"response_latency\", \"error_rate\"],\n        \"thresholds\": {\n          \"memory_level\": \"< 80%\",\n          \"response_latency\": \"< 200ms\",\n          \"error_rate\": \"< 0.1%\"\n        },\n        \"timeout_sec\": 300\n      }\n    }\n  },\n  \"id\": \"remediate-001\",\n  \"reply_to\": \"alert-cache-memleak\",\n  \"timestamp\": 1740811200\n}\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 265,
+        "o200k_base": 263
+      },
+      "latency_ms": 15374,
+      "timestamp": "2026-03-01T20:28:22.989041+00:00",
+      "complexity_level": 3,
+      "operators_tested": [
+        "<-",
+        "&",
+        "->"
+      ]
+    },
+    {
+      "task_id": "L3-03",
+      "condition": "json_fc",
+      "model": "claude-haiku",
+      "run_number": 3,
+      "output": "```json\n{\n  \"performative\": \"propose\",\n  \"from\": \"negotiation-agent\",\n  \"to\": \"supplier\",\n  \"content\": {\n    \"offer\": {\n      \"options\": [\n        {\n          \"product\": \"A\",\n          \"price_per_unit\": 100,\n          \"currency\": \"USD\"\n        },\n        {\n          \"product\": \"B\",\n          \"price_per_unit\": 85,\n          \"currency\": \"USD\"\n        }\n      ],\n      \"delivery_sequence\": [\n        {\n          \"step\": 1,\n          \"action\": \"confirm_inventory\"\n        },\n        {\n          \"step\": 2,\n          \"actions\": [\"ship_to_warehouse\", \"send_invoice\"],\n          \"concurrent\": true\n        },\n        {\n          \"step\": 3,\n          \"action\": \"await_payment_confirmation\"\n        }\n      ],\n      \"justification\": \"current_market_rates\"\n    }\n  }\n}\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 196,
+        "o200k_base": 196
+      },
+      "latency_ms": 23370,
+      "timestamp": "2026-03-01T20:28:46.361289+00:00",
+      "complexity_level": 3,
+      "operators_tested": [
+        "->",
+        "|",
+        "&",
+        "<-"
+      ]
+    },
+    {
+      "task_id": "L1-01",
+      "condition": "fipa_acl",
+      "model": "claude-haiku",
+      "run_number": 3,
+      "output": "```\n(request\n  :sender data-processor\n  :receiver worker\n  :content \"((sequence (download (source datalake)) (clean (operation remove-null-rows)) (upload (destination warehouse))))\"\n  :reply-with msg-001\n  :language SL\n  :ontology data-processing\n)\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 67,
+        "o200k_base": 67
+      },
+      "latency_ms": 16802,
+      "timestamp": "2026-03-01T20:29:03.166143+00:00",
+      "complexity_level": 1,
+      "operators_tested": [
+        "->"
+      ]
+    },
+    {
+      "task_id": "L1-02",
+      "condition": "fipa_acl",
+      "model": "claude-haiku",
+      "run_number": 3,
+      "output": "```\n(request\n  :sender deployment-agent\n  :receiver cluster-manager\n  :content ((action (agent cluster-manager) (concurrent (check-cpu) (check-memory) (check-disk-space))))\n  :reply-with health-checks-req-001\n  :language SL\n  :ontology cluster-management\n)\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 69,
+        "o200k_base": 69
+      },
+      "latency_ms": 15601,
+      "timestamp": "2026-03-01T20:29:18.770008+00:00",
+      "complexity_level": 1,
+      "operators_tested": [
+        "&"
+      ]
+    },
+    {
+      "task_id": "L1-03",
+      "condition": "fipa_acl",
+      "model": "claude-haiku",
+      "run_number": 3,
+      "output": "```\n(inform\n  :sender routing-agent\n  :receiver handler-agent\n  :content \"((route incoming-request-001) (primary-endpoint available) (target primary-api-endpoint))\"\n  :reply-with routing-001\n  :language SL\n  :ontology service-routing\n)\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 62,
+        "o200k_base": 63
+      },
+      "latency_ms": 13298,
+      "timestamp": "2026-03-01T20:29:32.070297+00:00",
+      "complexity_level": 1,
+      "operators_tested": [
+        "|"
+      ]
+    },
+    {
+      "task_id": "L2-01",
+      "condition": "fipa_acl",
+      "model": "claude-haiku",
+      "run_number": 3,
+      "output": "```\n(request\n  :sender orchestrator\n  :receiver pipeline-agent\n  :content \"(execute (sequence (validate-schema :input input-data) (parallel (sentiment-analysis :data validated-data) (topic-classification :data validated-data)) (merge-results :sentiment sentiment-output :topics topics-output :report final-report)))\"\n  :reply-with msg-001\n  :language SL\n  :ontology agent-pipeline\n)\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 91,
+        "o200k_base": 91
+      },
+      "latency_ms": 21592,
+      "timestamp": "2026-03-01T20:29:53.665112+00:00",
+      "complexity_level": 2,
+      "operators_tested": [
+        "->",
+        "&"
+      ]
+    },
+    {
+      "task_id": "L2-02",
+      "condition": "fipa_acl",
+      "model": "claude-haiku",
+      "run_number": 3,
+      "output": "(request\n  :sender query-agent\n  :receiver data-agent\n  :content \"((if (cache-hit ?key ?result) then (return ?result) else (and (query-database ?key ?result) (cache-update ?key ?result) (return ?result))))\"\n  :reply-with cache-query-1\n  :language SL\n  :ontology cache-database-protocol\n)",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 84,
+        "o200k_base": 84
+      },
+      "latency_ms": 14915,
+      "timestamp": "2026-03-01T20:30:08.581996+00:00",
+      "complexity_level": 2,
+      "operators_tested": [
+        "|",
+        "->"
+      ]
+    },
+    {
+      "task_id": "L2-03",
+      "condition": "fipa_acl",
+      "model": "claude-haiku",
+      "run_number": 3,
+      "output": "```\n(request\n  :sender security-agent\n  :receiver audit-agent\n  :content (AND\n             (scan-open-ports :exclude internal-only)\n             (check-ssl-certificates :exclude internal-only)\n           )\n  :reply-with security-audit-001\n  :language SL\n  :ontology security-audit\n)\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 71,
+        "o200k_base": 71
+      },
+      "latency_ms": 16099,
+      "timestamp": "2026-03-01T20:30:24.683267+00:00",
+      "complexity_level": 2,
+      "operators_tested": [
+        "&",
+        "!"
+      ]
+    },
+    {
+      "task_id": "L3-01",
+      "condition": "fipa_acl",
+      "model": "claude-haiku",
+      "run_number": 3,
+      "output": "```\nREQUEST(@orchestrator>@pipeline):\n  msgid=\"ETL-001\"\n  version=\"0.1\"\n  workflow=seq(\n    par(extract(@api_source), extract(@db_source)),\n    transform(validate($combined_data)),\n    if(valid($combined_data), load(@warehouse), route(@error_queue))\n  )\n```",
+      "valid": false,
+      "errors": [
+        "No recognized FIPA-ACL performative found"
+      ],
+      "token_counts": {
+        "cl100k_base": 70,
+        "o200k_base": 70
+      },
+      "latency_ms": 25268,
+      "timestamp": "2026-03-01T20:30:49.953633+00:00",
+      "complexity_level": 3,
+      "operators_tested": [
+        "->",
+        "&",
+        "|"
+      ]
+    },
+    {
+      "task_id": "L3-02",
+      "condition": "fipa_acl",
+      "model": "claude-haiku",
+      "run_number": 3,
+      "output": "```\n(inform\n  :sender monitoring-agent\n  :receiver remediation-agent\n  :content \"(alert (severity critical) (service cache-layer) (status degraded) (root-cause (missing-eviction-policy)))\"\n  :reply-with alert-001\n  :language SL\n  :ontology service-management\n)\n\n(request\n  :sender remediation-agent\n  :receiver cache-restart-agent\n  :content \"(restart-service cache-service)\"\n  :reply-with restart-001\n  :language SL\n  :ontology service-management\n)\n\n(request\n  :sender remediation-agent\n  :receiver deployment-agent\n  :content \"(deploy-hotfix cache-layer eviction-policy-fix)\"\n  :reply-with deploy-001\n  :language SL\n  :ontology service-management\n)\n\n(agree\n  :sender cache-restart-agent\n  :receiver remediation-agent\n  :in-reply-to restart-001\n  :content \"(restart-in-progress)\"\n  :language SL\n  :ontology service-management\n)\n\n(agree\n  :sender deployment-agent\n  :receiver remediation-agent\n  :in-reply-to deploy-001\n  :content \"(deployment-in-progress)\"\n  :language SL\n  :ontology service-management\n)\n\n(inform\n  :sender cache-restart-agent\n  :receiver remediation-agent\n  :in-reply-to restart-001\n  :content \"(restart-complete (timestamp 2026-03-01T14:32:15Z))\"\n  :language SL\n  :ontology service-management\n)\n\n(inform\n  :sender deployment-agent\n  :receiver remediation-agent\n  :in-reply-to deploy-001\n  :content \"(deployment-complete (version 1.2.5-hotfix))\"\n  :language SL\n  :ontology service-management\n)\n\n(request\n  :sender remediation-agent\n  :receiver verification-agent\n  :content \"(verify-service-recovery cache-layer (metrics (memory-usage latency error-rate)))\"\n  :reply-with verify-001\n  :language SL\n  :ontology service-management\n)\n\n(inform\n  :sender verification-agent\n  :receiver remediation-agent\n  :in-reply-to verify-001\n  :content \"(service-recovery-verified (status operational) (memory-stable true) (latency-nominal true) (errors-zero true))\"\n  :language SL\n  :ontology service-management\n)\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 495,
+        "o200k_base": 498
+      },
+      "latency_ms": 14114,
+      "timestamp": "2026-03-01T20:31:04.071103+00:00",
+      "complexity_level": 3,
+      "operators_tested": [
+        "<-",
+        "&",
+        "->"
+      ]
+    },
+    {
+      "task_id": "L3-03",
+      "condition": "fipa_acl",
+      "model": "claude-haiku",
+      "run_number": 3,
+      "output": "",
+      "valid": false,
+      "errors": [
+        "CLI error: Command '['claude', '-p', '--system-prompt', 'You are an agent in a multi-agent system. Communicate using FIPA-ACL (Agent Communication Language) format.\\n\\nFIPA-ACL messages use this structure:\\n(performative\\n  :sender agent-name\\n  :receiver agent-name\\n  :content \"message content\"\\n  :reply-with message-id\\n  :in-reply-to previous-message-id\\n  :language SL\\n  :ontology domain-name\\n)\\n\\nCore performatives: inform, query-if, query-ref, request, agree, refuse, propose, accept-proposal, reject-proposal, cfp, subscribe, cancel, not-understood, failure\\n\\nExample:\\n(query-ref\\n  :sender agent-a\\n  :receiver agent-b\\n  :content \"((status web-server))\"\\n  :reply-with m1\\n  :language SL\\n)', '--model', 'haiku', '--no-session-persistence', '--tools', '']' timed out after 120 seconds"
+      ],
+      "token_counts": {
+        "cl100k_base": 0,
+        "o200k_base": 0
+      },
+      "latency_ms": 0,
+      "timestamp": "2026-03-01T20:33:04.093841+00:00",
+      "complexity_level": 3,
+      "operators_tested": [
+        "->",
+        "|",
+        "&",
+        "<-"
+      ]
+    },
+    {
+      "task_id": "L1-01",
+      "condition": "axon",
+      "model": "claude-haiku",
+      "run_number": 3,
+      "output": "[id:\"cmd-1\", %%:1]\nCMD(@data-processor>@worker): fetch($data_lake) -> clean(remove_nulls) -> store($warehouse)",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 35,
+        "o200k_base": 35
+      },
+      "latency_ms": 14673,
+      "timestamp": "2026-03-01T20:33:18.770732+00:00",
+      "complexity_level": 1,
+      "operators_tested": [
+        "->"
+      ]
+    },
+    {
+      "task_id": "L1-02",
+      "condition": "axon",
+      "model": "claude-haiku",
+      "run_number": 3,
+      "output": "```\n[id:\"deploy-hc-1\", %%:1]\nCMD(@deployment-agent>@cluster-manager): check_cpu() & check_memory() & check_disk()\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 34,
+        "o200k_base": 34
+      },
+      "latency_ms": 10739,
+      "timestamp": "2026-03-01T20:33:29.512072+00:00",
+      "complexity_level": 1,
+      "operators_tested": [
+        "&"
+      ]
+    },
+    {
+      "task_id": "L1-03",
+      "condition": "axon",
+      "model": "claude-haiku",
+      "run_number": 3,
+      "output": "[id:\"routing-1\", %%:1] INF(@routing-agent>@handler-agent): route($request, available(@primary-api-endpoint) -> @primary-api-endpoint | @fallback-cache-service)",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 41,
+        "o200k_base": 41
+      },
+      "latency_ms": 21773,
+      "timestamp": "2026-03-01T20:33:51.287569+00:00",
+      "complexity_level": 1,
+      "operators_tested": [
+        "|"
+      ]
+    },
+    {
+      "task_id": "L2-01",
+      "condition": "axon",
+      "model": "claude-haiku",
+      "run_number": 3,
+      "output": "```\n[id:\"m1\", %%:1]\nCMD(@orchestrator>@pipeline-agent): validate_schema($input) -> (sentiment_analysis($data) & topic_classification($data)) -> merge_results($sentiment, $topic) -> generate_report($final)\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 56,
+        "o200k_base": 57
+      },
+      "latency_ms": 35130,
+      "timestamp": "2026-03-01T20:34:26.419626+00:00",
+      "complexity_level": 2,
+      "operators_tested": [
+        "->",
+        "&"
+      ]
+    },
+    {
+      "task_id": "L2-02",
+      "condition": "axon",
+      "model": "claude-haiku",
+      "run_number": 3,
+      "output": "```\n[id:\"msg-1\", %%:1] CMD(@query-agent>@data-agent): fetch($cache) | (query($database) -> update($cache))\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 36,
+        "o200k_base": 36
+      },
+      "latency_ms": 18683,
+      "timestamp": "2026-03-01T20:34:45.105433+00:00",
+      "complexity_level": 2,
+      "operators_tested": [
+        "|",
+        "->"
+      ]
+    },
+    {
+      "task_id": "L2-03",
+      "condition": "axon",
+      "model": "claude-haiku",
+      "run_number": 3,
+      "output": "```\n[id:\"msg-1\", %%:1]\nCMD(@security-agent>@audit-agent): scan(#ports{exclude:#internal}) & check(#ssl{exclude:#internal})\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 38,
+        "o200k_base": 38
+      },
+      "latency_ms": 23374,
+      "timestamp": "2026-03-01T20:35:08.482318+00:00",
+      "complexity_level": 2,
+      "operators_tested": [
+        "&",
+        "!"
+      ]
+    },
+    {
+      "task_id": "L3-01",
+      "condition": "axon",
+      "model": "claude-haiku",
+      "run_number": 3,
+      "output": "[id:\"etl-cmd-001\", %%:1] CMD(@orchestrator>@pipeline): (extract(@api_source) & extract(@db_source)) -> transform(validate) -> (load(@warehouse) | route(@error_queue))",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 49,
+        "o200k_base": 48
+      },
+      "latency_ms": 24898,
+      "timestamp": "2026-03-01T20:35:33.383940+00:00",
+      "complexity_level": 3,
+      "operators_tested": [
+        "->",
+        "&",
+        "|"
+      ]
+    },
+    {
+      "task_id": "L3-02",
+      "condition": "axon",
+      "model": "claude-haiku",
+      "run_number": 3,
+      "output": "[id:\"alert-cache-001\", %%:1, ^:5, ts:1709251200]\nPUB(@monitoring-agent>@operations-team): #alert{\n  severity:#critical,\n  component:\"cache-layer\",\n  problem:\"service-degradation\",\n  root_cause:\"missing-eviction-policy\",\n  symptom:\"memory-leak\",\n  remediation:(\"restart-cache-service\" & \"deploy-hotfix\") -> \"verify-recovery\"\n}",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 92,
+        "o200k_base": 91
+      },
+      "latency_ms": 29516,
+      "timestamp": "2026-03-01T20:36:02.902323+00:00",
+      "complexity_level": 3,
+      "operators_tested": [
+        "<-",
+        "&",
+        "->"
+      ]
+    },
+    {
+      "task_id": "L3-03",
+      "condition": "axon",
+      "model": "claude-haiku",
+      "run_number": 3,
+      "output": "```\n[id:\"deal-proposal\", %%:1]\nPRO(@negotiator>@supplier):\n  #proposal{\n    products: [\n      #option{product:\"A\", unit_price:100.00usd},\n      #option{product:\"B\", unit_price:85.00usd}\n    ],\n    workflow: confirm_inventory() -> (ship_to_warehouse() & send_invoice()) -> await_payment(),\n    justification: \"current market rates\"\n  }\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 96,
+        "o200k_base": 94
+      },
+      "latency_ms": 30209,
+      "timestamp": "2026-03-01T20:36:33.114252+00:00",
+      "complexity_level": 3,
+      "operators_tested": [
+        "->",
+        "|",
+        "&",
+        "<-"
+      ]
+    },
+    {
+      "task_id": "L1-01",
+      "condition": "aisp",
+      "model": "claude-haiku",
+      "run_number": 3,
+      "output": "\ud835\udd381.0.worker-pipeline-instruction@2026-03-01\n\u03b3\u2254data-processing\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@data-processor\n  receiver\u225c@worker\n  intent\u225crequest\n  id\u225c\"pipe-001\"\n  timestamp\u225c1740787200\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  Pipeline\u225c{steps:Step[]}\n  Step\u225c{index:Int, task:Task, source:String, dest:String}\n  Task\u225c{download, clean, upload}\n}\n\n\u27e6\u0393:Rules\u27e7{\n  \u2200p:Pipeline, \u2200s\u2208p.steps: s.index \u2208 {1,2,3}\n  \u2200p:Pipeline: p.steps[1].task=download \u2227 p.steps[1].source=\"datalake\"\n  \u2200p:Pipeline: p.steps[2].task=clean \u2227 purges_nulls(p.steps[2])\n  \u2200p:Pipeline: p.steps[3].task=upload \u2227 p.steps[3].dest=\"warehouse\"\n  \u2200p:Pipeline, \u2200i\u2208{1,2}: p.steps[i].status=COMPLETE \u21d2 p.steps[i+1].status=READY\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  download\u225c\u03bb(src).read_dataset(src)\n  clean\u225c\u03bb(data).filter(data, \u03bb(row).\u00achas_null_fields(row))\n  upload\u225c\u03bb(data, dst).write_dataset(dst, data)\n  execute_pipeline\u225c\u03bb(p).\u2200s\u2208p.steps: execute(s)\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.83;\u03c6\u225c91;\u03c4\u225c\u25ca\u207a\u27e9",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 372,
+        "o200k_base": 391
+      },
+      "latency_ms": 38339,
+      "timestamp": "2026-03-01T20:37:11.456436+00:00",
+      "complexity_level": 1,
+      "operators_tested": [
+        "->"
+      ]
+    },
+    {
+      "task_id": "L1-02",
+      "condition": "aisp",
+      "model": "claude-haiku",
+      "run_number": 3,
+      "output": "\ud835\udd381.0.parallel-health-checks@2026-03-01\n\u03b3\u2254cluster-ops\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@deployment\n  receiver\u225c@cluster-mgr\n  intent\u225crequest\n  id\u225c\"hc-001\"\n  timestamp\u225c1740787200\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  Check\u225c{type:String, metric:String}\n  Result\u225c{check:String, value:Number, unit:String}\n}\n\n\u27e6\u0393:Rules\u27e7{\n  \u2200t\u2208{cpu,memory,disk}:t\u2208Check.type\n  concurrent(c\u2081,c\u2082,c\u2083)\u2227c\u2081.type=cpu\u2227c\u2082.type=memory\u2227c\u2083.type=disk\u21d2all_parallel(c\u2081,c\u2082,c\u2083)\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  run_health_checks\u225c\u03bb().concurrent(check(cpu), check(memory), check(disk))\n  check\u225c\u03bb(metric).health_check(metric)\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.82;\u03c6\u225c100;\u03c4\u225c\u25ca\u207a\u27e9",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 259,
+        "o200k_base": 268
+      },
+      "latency_ms": 23366,
+      "timestamp": "2026-03-01T20:37:34.824597+00:00",
+      "complexity_level": 1,
+      "operators_tested": [
+        "&"
+      ]
+    },
+    {
+      "task_id": "L1-03",
+      "condition": "aisp",
+      "model": "claude-haiku",
+      "run_number": 3,
+      "output": "\ud835\udd381.0.routing-dispatch@2026-03-01\n\u03b3\u2254agent-routing\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@routing-agent\n  receiver\u225c@handler-agent\n  intent\u225cinform\n  id\u225c\"msg-route-1\"\n  timestamp\u225c1740787200\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  Endpoint\u225c{name:String, status:Status}\n  Status\u225c{available,degraded,unavailable}\n  Request\u225c{id:String, data:String}\n  RouteTarget\u225c{endpoint:Endpoint, reason:String}\n}\n\n\u27e6\u0393:Rules\u27e7{\n  \u2200req:Request:\n    (status(primary)=available) \u21d2 route(req,primary)\n  \u2200req:Request:\n    (status(primary)\u2260available \u2227 status(fallback)=available) \u21d2 route(req,fallback)\n  \u2200req:Request:\n    (status(primary)=unavailable \u2227 status(fallback)=unavailable) \u21d2 reject(req)\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  selectTarget\u225c\u03bb(req).if status(primary)=available then primary else if status(fallback)=available then fallback else none\n  route\u225c\u03bb(req,endpoint).process(req,endpoint)\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.72;\u03c6\u225c100;\u03c4\u225c\u25ca\u207a\u27e9",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 300,
+        "o200k_base": 311
+      },
+      "latency_ms": 16454,
+      "timestamp": "2026-03-01T20:37:51.281677+00:00",
+      "complexity_level": 1,
+      "operators_tested": [
+        "|"
+      ]
+    },
+    {
+      "task_id": "L2-01",
+      "condition": "aisp",
+      "model": "claude-haiku",
+      "run_number": 3,
+      "output": "\ud835\udd381.0.pipeline-instruction@2026-03-01\n\u03b3\u2254orchestration\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@orchestrator\n  receiver\u225c@pipeline_agent\n  intent\u225crequest\n  id\u225c\"orch-001\"\n  timestamp\u225c1740787200\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  InputData\u225c{schema:Schema, content:String}\n  Schema\u225c{fields:List<Field>, rules:List<Rule>}\n  Field\u225c{name:String, type:String}\n  Rule\u225c{field:String, constraint:String}\n  ValidationResult\u225c{valid:Bool, errors:List<String>}\n  SentimentAnalysis\u225c{polarity:Float, confidence:Float}\n  TopicClassification\u225c{topics:List<String>, scores:List<Float>}\n  FinalReport\u225c{validated:ValidationResult, sentiment:SentimentAnalysis, topics:TopicClassification}\n}\n\n\u27e6\u0393:Rules\u27e7{\n  \u2200data:InputData: validate(data)\u2192(sentiment(data)\u2227topic(data))\n  \u2200v:ValidationResult,s:SentimentAnalysis,t:TopicClassification: (v.valid\u2227s\u2227t)\u21d2report(v,s,t)\n  \u2200data:InputData: \u00acvalidate(data)\u21d2abort\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  validate\u225c\u03bb(data).(data.content matches data.schema)\n  sentiment\u225c\u03bb(data).score(data.content)\n  topic\u225c\u03bb(data).classify(data.content)\n  report\u225c\u03bb(v,s,t).{validated:v,sentiment:s,topics:t}\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.82;\u03c6\u225c100;\u03c4\u225c\u25ca\u207a\u27e9",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 385,
+        "o200k_base": 395
+      },
+      "latency_ms": 39919,
+      "timestamp": "2026-03-01T20:38:31.202825+00:00",
+      "complexity_level": 2,
+      "operators_tested": [
+        "->",
+        "&"
+      ]
+    },
+    {
+      "task_id": "L2-02",
+      "condition": "aisp",
+      "model": "claude-haiku",
+      "run_number": 3,
+      "output": "\ud835\udd381.0.cache-fetch-instruction@2026-03-01\n\u03b3\u2254query-cache-service\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@query-agent\n  receiver\u225c@data-agent\n  intent\u225crequest\n  id\u225c\"msg-cache-001\"\n  timestamp\u225c1777718400\n  reply_to\u225c\"\"\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  CacheEntry\u225c{key:String, data:Object, timestamp:Int}\n  QueryResult\u225c{payload:Object, source:String}\n}\n\n\u27e6\u0393:Rules\u27e7{\n  \u2200e\u2208cache:(now - e.timestamp) < 3600 \u21d2 fresh(e)\n  fresh(e) \u21d2 returnCache(e.key)\n  \u00acfresh(e) \u21d2 queryAndCache(e.key)\n  \u2200k:\u2203e\u2208cache:e.key = k \u21d2 isCached(k)\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  fetchOrQuery\u225c\u03bb(key).\n    (isCached(key) \u2227 fresh(getEntry(key))) \u2192 getEntry(key).data\n    \u2228 (\u00acisCached(key) \u2228 \u00acfresh(getEntry(key))) \u2192 (res \u2190 queryDb(key), updateCache(key, res), res)\n  \n  isCached\u225c\u03bb(key).\u2203e\u2208cache:e.key = key\n  getEntry\u225c\u03bb(key).cache[key]\n  fresh\u225c\u03bb(e).(currentTime - e.timestamp) < 3600\n  queryDb\u225c\u03bb(key).executeQuery(database, key)\n  updateCache\u225c\u03bb(key, result).store(cache, key, result)\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.72;\u03c6\u225c88;\u03c4\u225c\u25ca\u207a\u27e9",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 375,
+        "o200k_base": 390
+      },
+      "latency_ms": 46585,
+      "timestamp": "2026-03-01T20:39:17.791088+00:00",
+      "complexity_level": 2,
+      "operators_tested": [
+        "|",
+        "->"
+      ]
+    },
+    {
+      "task_id": "L2-03",
+      "condition": "aisp",
+      "model": "claude-haiku",
+      "run_number": 3,
+      "output": "\ud835\udd381.0.security-audit-request@2026-03-01\n\u03b3\u2254security-audit\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@security-agent\n  receiver\u225c@audit-agent\n  intent\u225crequest\n  id\u225c\"audit-001\"\n  timestamp\u225c1740787200\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  Service\u225c{name:String, isInternal:Boolean}\n  AuditScope\u225cList<Service>\n  ScanResult\u225c{ports:List<Integer>, certificates:List<CertStatus>}\n  CertStatus\u225c{service:String, valid:Boolean, expiry:Date}\n}\n\n\u27e6\u0393:Rules\u27e7{\n  \u2200srv:Service: \u00acsrv.isInternal \u21d2 srv\u2208AuditScope\n  \u2200srv:Service: srv.isInternal \u21d2 srv\u2209AuditScope\n  scanPorts \u2227 checkSSLCerts \u21d2 ExecuteSimultaneously\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  filterExternalServices\u225c\u03bb(services:List<Service>).[s | s\u2208services \u2227 \u00acs.isInternal]\n  scanOpenPorts\u225c\u03bb(scope:AuditScope).(openPorts(scope))\n  checkSSLCerts\u225c\u03bb(scope:AuditScope).(validateCerts(scope))\n  auditExecute\u225c\u03bb(services:List<Service>).(scanOpenPorts(filterExternalServices(services)) \u2227 checkSSLCerts(filterExternalServices(services)))\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.85;\u03c6\u225c95;\u03c4\u225c\u25ca\u207a\u27e9",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 334,
+        "o200k_base": 350
+      },
+      "latency_ms": 22854,
+      "timestamp": "2026-03-01T20:39:40.647095+00:00",
+      "complexity_level": 2,
+      "operators_tested": [
+        "&",
+        "!"
+      ]
+    },
+    {
+      "task_id": "L3-01",
+      "condition": "aisp",
+      "model": "claude-haiku",
+      "run_number": 3,
+      "output": "\ud835\udd381.0.etl-instruction@2026-03-01\n\u03b3\u2254etl-orchestration\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@orchestrator\n  receiver\u225c@pipeline\n  intent\u225crequest\n  id\u225c\"etl-001\"\n  timestamp\u225c1740787200\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  Source\u225c{name:String, type\u2208{api,database}}\n  ExtractedData\u225c{api:Object, database:Object}\n  ValidationRule\u225c{id:String, predicate:Function}\n  ValidationResult\u225c{valid:Boolean, errors:List[String]}\n  LoadTarget\u225c{type\u2208{warehouse,error_queue}}\n}\n\n\u27e6\u0393:Rules\u27e7{\n  \u2200src\u2208{api,database}: extract(src) \u2227 parallel_execution\n  \u2200rule\u2208validation_rules: apply(rule, combined_data) \u2192 ValidationResult\n  ValidationResult.valid \u21d2 destination=warehouse\n  \u00acValidationResult.valid \u21d2 destination=error_queue\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  extract_sources\u225c\u03bb(api,db).(fetch(api) \u2227 fetch(db))\n  validate_combined\u225c\u03bb(data,rules).(\u2200r\u2208rules: r.predicate(data))\n  conditional_load\u225c\u03bb(data,valid).(valid \u2227 load(warehouse,data)) \u2228 (\u00acvalid \u2227 load(error_queue,data))\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.85;\u03c6\u225c100;\u03c4\u225c\u25ca\u207a\u27e9",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 332,
+        "o200k_base": 350
+      },
+      "latency_ms": 36167,
+      "timestamp": "2026-03-01T20:40:16.816313+00:00",
+      "complexity_level": 3,
+      "operators_tested": [
+        "->",
+        "&",
+        "|"
+      ]
+    },
+    {
+      "task_id": "L3-02",
+      "condition": "aisp",
+      "model": "claude-haiku",
+      "run_number": 3,
+      "output": "\ud835\udd381.0.cache-service-alert@2026-03-01\n\u03b3\u2254incident-response\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@monitoring-agent\n  receiver\u225c@ops-agent\n  intent\u225calert\n  id\u225c\"incident-cache-leak-001\"\n  timestamp\u225c1740787200\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  Alert\u225c{incident_id:String, service:String, component:String, cause:String, severity:Level}\n  Level\u225c{critical, high, medium, low}\n  RootCause\u225c{missing_eviction_policy, memory_leak, cache_layer}\n  RemediationAction\u225c{action:String, target:String}\n  ServiceStatus\u225c{healthy, degraded, recovering}\n}\n\n\u27e6\u0393:Rules\u27e7{\n  \u2200a:Alert: cause(a)=memory_leak \u2227 component(a)=cache \u2227 source(a)=missing_eviction_policy \u21d2 severity(a)=critical\n  \u2200a:Alert: severity(a)=critical \u21d2 (restart(target(a)) \u2227 deploy_hotfix(target(a)))\n  restart(t) \u2227 deploy_hotfix(t) \u21d2 verify_recovery(t)\n  verify_recovery(s) \u21d2 status(s)=healthy\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  remediate\u225c\u03bb(alert).(restart_cache(alert.service) \u2227 deploy_hotfix(alert.service) \u2227 verify_recovery(alert.service))\n  restart_cache\u225c\u03bb(svc).{action: \"restart\", target: svc, concurrent: true}\n  deploy_hotfix\u225c\u03bb(svc).{action: \"deploy\", patch: \"eviction-policy-v1.2.1\", target: svc, concurrent: true}\n  verify_recovery\u225c\u03bb(svc).health_check(svc) \u2192 status(svc)=healthy\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.82;\u03c6\u225c92;\u03c4\u225c\u25ca\u207a\u27e9",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 407,
+        "o200k_base": 427
+      },
+      "latency_ms": 31325,
+      "timestamp": "2026-03-01T20:40:48.143943+00:00",
+      "complexity_level": 3,
+      "operators_tested": [
+        "<-",
+        "&",
+        "->"
+      ]
+    },
+    {
+      "task_id": "L3-03",
+      "condition": "aisp",
+      "model": "claude-haiku",
+      "run_number": 3,
+      "output": "\ud835\udd381.0.procurement-proposal@2026-03-01\n\u03b3\u2254supply-chain\n\n\u27e6\u03a9:Meta\u27e7{\n  sender\u225c@negotiation-agent\n  receiver\u225c@supplier\n  intent\u225cpropose\n  id\u225c\"proposal-001\"\n  timestamp\u225c1741046400\n  protocol\u225c1\n}\n\n\u27e6\u03a3:Types\u27e7{\n  Product\u225c{id:String, price:Decimal}\n  Stage\u225c{name:String, sequence:Nat}\n  Deal\u225c{product:Product, delivery:Array<Stage>}\n}\n\n\u27e6\u0393:Rules\u27e7{\n  ProductA\u225c{id:\"A\", price:100}\n  ProductB\u225c{id:\"B\", price:85}\n  \u2200d\u2208Deal: d.product \u2208 {ProductA, ProductB}\n  \u2200d\u2208Deal: (d.product = ProductA \u2228 d.product = ProductB) \u2227 \u00ac(d.product = ProductA \u2227 d.product = ProductB)\n  \u2200d\u2208Deal: d.delivery = [confirm_inventory, ship \u2225 invoice, payment_confirmation]\n  \u2200p\u2208{ProductA, ProductB}: p.price \u2264 market_rate(p.id)\n}\n\n\u27e6\u039b:Funcs\u27e7{\n  propose\u225c\u03bb(). (ProductA \u2228 ProductB) \u2227 \u2200selected: market_justified(selected.price)\n  execute_delivery\u225c\u03bb(product). sequence(confirm_inventory(product), parallel(ship(product), invoice(product)), await_payment())\n  market_justified\u225c\u03bb(price). price \u2264 current_market_benchmark\n}\n\n\u27e6\u0395\u27e7\u27e8\u03b4\u225c0.87;\u03c6\u225c94;\u03c4\u225c\u25ca\u207a\u27e9",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 367,
+        "o200k_base": 385
+      },
+      "latency_ms": 41215,
+      "timestamp": "2026-03-01T20:41:29.361188+00:00",
+      "complexity_level": 3,
+      "operators_tested": [
+        "->",
+        "|",
+        "&",
+        "<-"
+      ]
+    }
+  ]
+}

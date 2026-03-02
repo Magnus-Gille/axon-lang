@@ -1,0 +1,78 @@
+{
+  "description": "Exp 3 compositionality tasks at 3 complexity levels. Each task tests specific composition operators.",
+  "grammar_version": "v0.1b",
+  "tasks": [
+    {
+      "id": "L1-01",
+      "level": 1,
+      "description": "Sequential pipeline",
+      "operators_tested": ["->"],
+      "instruction": "A data-processing agent instructs a worker agent to perform three steps in order: download a dataset from the data lake, clean it by removing null rows, then upload the cleaned version to the warehouse.",
+      "expected_elements": ["sender", "receiver", "request_intent", "step_download", "step_clean", "step_upload"]
+    },
+    {
+      "id": "L1-02",
+      "level": 1,
+      "description": "Parallel execution",
+      "operators_tested": ["&"],
+      "instruction": "A deployment agent tells a cluster manager to run three health checks simultaneously: check CPU usage, check memory usage, and check disk space.",
+      "expected_elements": ["sender", "receiver", "request_intent", "check_cpu", "check_memory", "check_disk"]
+    },
+    {
+      "id": "L1-03",
+      "level": 1,
+      "description": "Alternative paths",
+      "operators_tested": ["|"],
+      "instruction": "A routing agent informs a handler agent that an incoming request should be processed by either the primary API endpoint or the fallback cache service, depending on availability.",
+      "expected_elements": ["sender", "receiver", "inform_intent", "option_primary_api", "option_fallback_cache", "availability_condition"]
+    },
+    {
+      "id": "L2-01",
+      "level": 2,
+      "description": "Sequence with parallel sub-steps",
+      "operators_tested": ["->", "&"],
+      "instruction": "An orchestrator instructs a pipeline agent to first validate the input schema, then simultaneously run both a sentiment analysis and a topic classification on the validated data, then merge the results into a single report.",
+      "expected_elements": ["sender", "receiver", "request_intent", "step_validate", "step_sentiment", "step_topic", "step_merge", "parallel_analysis"]
+    },
+    {
+      "id": "L2-02",
+      "level": 2,
+      "description": "Alternative with sequential fallback",
+      "operators_tested": ["|", "->"],
+      "instruction": "A query agent instructs a data agent to either fetch results from the cache if available, or query the database and then update the cache with fresh results.",
+      "expected_elements": ["sender", "receiver", "request_intent", "option_cache", "option_query_db", "step_update_cache", "fallback_sequence"]
+    },
+    {
+      "id": "L2-03",
+      "level": 2,
+      "description": "Parallel with negation constraint",
+      "operators_tested": ["&", "!"],
+      "instruction": "A security agent instructs an audit agent to simultaneously scan for open ports and check SSL certificates, but exclude any internal-only services from the scan scope.",
+      "expected_elements": ["sender", "receiver", "request_intent", "scan_ports", "check_ssl", "exclude_internal", "parallel_scans"]
+    },
+    {
+      "id": "L3-01",
+      "level": 3,
+      "description": "Full pipeline with parallel stage and metadata",
+      "operators_tested": ["->", "&", "|"],
+      "instruction": "An ETL orchestrator instructs a pipeline to: first extract data from both an API source and a database source simultaneously, then transform the combined data by applying validation rules, then either load into the data warehouse if validation passes or route to an error queue if it fails. Include a message ID and protocol version.",
+      "expected_elements": ["sender", "receiver", "request_intent", "extract_api", "extract_db", "parallel_extract", "step_transform", "option_load_warehouse", "option_error_queue", "validation_branch", "metadata_id", "metadata_version"]
+    },
+    {
+      "id": "L3-02",
+      "level": 3,
+      "description": "Causal chain with parallel effects",
+      "operators_tested": ["<-", "&", "->"],
+      "instruction": "A monitoring agent publishes an alert: a service degradation was caused by a memory leak in the cache layer, which was caused by a missing eviction policy. As remediation, simultaneously restart the cache service and deploy a hotfix, then verify service recovery.",
+      "expected_elements": ["sender", "receiver", "alert_intent", "effect_degradation", "cause_memory_leak", "root_cause_eviction", "causal_chain", "step_restart", "step_deploy_hotfix", "parallel_remediation", "step_verify"]
+    },
+    {
+      "id": "L3-03",
+      "level": 3,
+      "description": "Multi-path negotiation with nested composition",
+      "operators_tested": ["->", "|", "&", "<-"],
+      "instruction": "A negotiation agent proposes a deal to a supplier: deliver either product A at $100/unit or product B at $85/unit. For whichever product is chosen, the delivery must proceed in sequence: confirm inventory, then ship to warehouse and send invoice simultaneously, then await payment confirmation. The pricing is justified by current market rates.",
+      "expected_elements": ["sender", "receiver", "propose_intent", "option_product_a", "option_product_b", "price_a", "price_b", "step_confirm_inventory", "step_ship", "step_invoice", "parallel_ship_invoice", "step_payment", "justification"]
+    }
+  ]
+}

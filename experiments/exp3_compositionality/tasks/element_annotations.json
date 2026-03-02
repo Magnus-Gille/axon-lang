@@ -1,0 +1,256 @@
+{
+  "description": "Exp 3 semantic element definitions with composition-structure scoring",
+  "grammar_version": "v0.1b",
+  "element_categories": {
+    "identity": "Sender/receiver agents. Machine-scored for structured formats.",
+    "intent": "Performative/action type. Machine for structured, judge for English.",
+    "composition-step": "Individual actions/operations within a composed message.",
+    "composition-structure": "NEW: Structural relationships between steps (sequence order, parallel grouping, alternatives, causation). This is the primary scoring dimension for Exp 3."
+  },
+  "tasks": [
+    {
+      "id": "L1-01",
+      "level": 1,
+      "description": "Sequential pipeline",
+      "instruction": "A data-processing agent instructs a worker agent to perform three steps in order: download a dataset from the data lake, clean it by removing null rows, then upload the cleaned version to the warehouse.",
+      "elements": {
+        "count": 6,
+        "items": [
+          {"id": "e1", "name": "sender", "category": "identity", "check": "A data-processing agent is identified as sender"},
+          {"id": "e2", "name": "receiver", "category": "identity", "check": "A worker agent is identified as receiver"},
+          {"id": "e3", "name": "request_intent", "category": "intent", "check": "A request/command/instruct action is expressed"},
+          {"id": "e4", "name": "step_download", "category": "composition-step", "check": "A download/fetch dataset action is present"},
+          {"id": "e5", "name": "step_clean", "category": "composition-step", "check": "A clean/remove-nulls action is present"},
+          {"id": "e6", "name": "step_upload", "category": "composition-step", "check": "An upload-to-warehouse action is present"}
+        ]
+      },
+      "composition_structure": {
+        "count": 2,
+        "items": [
+          {"id": "cs1", "name": "seq_download_clean", "type": "sequence", "check": "Download step is expressed as occurring BEFORE clean step", "operands": ["step_download", "step_clean"]},
+          {"id": "cs2", "name": "seq_clean_upload", "type": "sequence", "check": "Clean step is expressed as occurring BEFORE upload step", "operands": ["step_clean", "step_upload"]}
+        ]
+      }
+    },
+    {
+      "id": "L1-02",
+      "level": 1,
+      "description": "Parallel execution",
+      "instruction": "A deployment agent tells a cluster manager to run three health checks simultaneously: check CPU usage, check memory usage, and check disk space.",
+      "elements": {
+        "count": 6,
+        "items": [
+          {"id": "e1", "name": "sender", "category": "identity", "check": "A deployment agent is identified as sender"},
+          {"id": "e2", "name": "receiver", "category": "identity", "check": "A cluster manager is identified as receiver"},
+          {"id": "e3", "name": "request_intent", "category": "intent", "check": "A request/tell/command action is expressed"},
+          {"id": "e4", "name": "check_cpu", "category": "composition-step", "check": "A CPU usage check is mentioned"},
+          {"id": "e5", "name": "check_memory", "category": "composition-step", "check": "A memory usage check is mentioned"},
+          {"id": "e6", "name": "check_disk", "category": "composition-step", "check": "A disk space check is mentioned"}
+        ]
+      },
+      "composition_structure": {
+        "count": 2,
+        "items": [
+          {"id": "cs1", "name": "parallel_cpu_memory", "type": "parallel", "check": "CPU and memory checks are expressed as running simultaneously/in parallel", "operands": ["check_cpu", "check_memory"]},
+          {"id": "cs2", "name": "parallel_memory_disk", "type": "parallel", "check": "Memory and disk checks are expressed as running simultaneously/in parallel", "operands": ["check_memory", "check_disk"]}
+        ]
+      }
+    },
+    {
+      "id": "L1-03",
+      "level": 1,
+      "description": "Alternative paths",
+      "instruction": "A routing agent informs a handler agent that an incoming request should be processed by either the primary API endpoint or the fallback cache service, depending on availability.",
+      "elements": {
+        "count": 6,
+        "items": [
+          {"id": "e1", "name": "sender", "category": "identity", "check": "A routing agent is identified as sender"},
+          {"id": "e2", "name": "receiver", "category": "identity", "check": "A handler agent is identified as receiver"},
+          {"id": "e3", "name": "inform_intent", "category": "intent", "check": "An inform action is expressed"},
+          {"id": "e4", "name": "option_primary_api", "category": "composition-step", "check": "A primary API endpoint option is mentioned"},
+          {"id": "e5", "name": "option_fallback_cache", "category": "composition-step", "check": "A fallback cache service option is mentioned"},
+          {"id": "e6", "name": "availability_condition", "category": "composition-step", "check": "Availability as a condition for the choice is mentioned"}
+        ]
+      },
+      "composition_structure": {
+        "count": 1,
+        "items": [
+          {"id": "cs1", "name": "alt_api_cache", "type": "alternative", "check": "Primary API and fallback cache are expressed as alternatives (either/or choice)", "operands": ["option_primary_api", "option_fallback_cache"]}
+        ]
+      }
+    },
+    {
+      "id": "L2-01",
+      "level": 2,
+      "description": "Sequence with parallel sub-steps",
+      "instruction": "An orchestrator instructs a pipeline agent to first validate the input schema, then simultaneously run both a sentiment analysis and a topic classification on the validated data, then merge the results into a single report.",
+      "elements": {
+        "count": 7,
+        "items": [
+          {"id": "e1", "name": "sender", "category": "identity", "check": "An orchestrator agent is identified as sender"},
+          {"id": "e2", "name": "receiver", "category": "identity", "check": "A pipeline agent is identified as receiver"},
+          {"id": "e3", "name": "request_intent", "category": "intent", "check": "A request/instruct action is expressed"},
+          {"id": "e4", "name": "step_validate", "category": "composition-step", "check": "A validate/schema-check step is present"},
+          {"id": "e5", "name": "step_sentiment", "category": "composition-step", "check": "A sentiment analysis step is present"},
+          {"id": "e6", "name": "step_topic", "category": "composition-step", "check": "A topic classification step is present"},
+          {"id": "e7", "name": "step_merge", "category": "composition-step", "check": "A merge/combine results step is present"}
+        ]
+      },
+      "composition_structure": {
+        "count": 4,
+        "items": [
+          {"id": "cs1", "name": "seq_validate_analysis", "type": "sequence", "check": "Validate step occurs BEFORE the analysis steps", "operands": ["step_validate", "step_sentiment"]},
+          {"id": "cs2", "name": "parallel_analysis", "type": "parallel", "check": "Sentiment and topic classification run simultaneously/in parallel", "operands": ["step_sentiment", "step_topic"]},
+          {"id": "cs3", "name": "seq_analysis_merge", "type": "sequence", "check": "Analysis steps occur BEFORE the merge step", "operands": ["step_sentiment", "step_merge"]},
+          {"id": "cs4", "name": "nesting_parallel_in_seq", "type": "nesting", "check": "The parallel analysis is nested inside the overall sequence (validate -> (sentiment & topic) -> merge)", "operands": ["parallel_analysis", "seq_validate_analysis"]}
+        ]
+      }
+    },
+    {
+      "id": "L2-02",
+      "level": 2,
+      "description": "Alternative with sequential fallback",
+      "instruction": "A query agent instructs a data agent to either fetch results from the cache if available, or query the database and then update the cache with fresh results.",
+      "elements": {
+        "count": 7,
+        "items": [
+          {"id": "e1", "name": "sender", "category": "identity", "check": "A query agent is identified as sender"},
+          {"id": "e2", "name": "receiver", "category": "identity", "check": "A data agent is identified as receiver"},
+          {"id": "e3", "name": "request_intent", "category": "intent", "check": "A request/instruct action is expressed"},
+          {"id": "e4", "name": "option_cache", "category": "composition-step", "check": "Fetching from cache is mentioned as an option"},
+          {"id": "e5", "name": "option_query_db", "category": "composition-step", "check": "Querying the database is mentioned"},
+          {"id": "e6", "name": "step_update_cache", "category": "composition-step", "check": "Updating the cache after DB query is mentioned"},
+          {"id": "e7", "name": "cache_condition", "category": "composition-step", "check": "Cache availability as a condition is mentioned"}
+        ]
+      },
+      "composition_structure": {
+        "count": 3,
+        "items": [
+          {"id": "cs1", "name": "alt_cache_or_db", "type": "alternative", "check": "Cache fetch and DB query are expressed as alternatives (either/or)", "operands": ["option_cache", "option_query_db"]},
+          {"id": "cs2", "name": "seq_db_update", "type": "sequence", "check": "DB query occurs BEFORE cache update in the fallback path", "operands": ["option_query_db", "step_update_cache"]},
+          {"id": "cs3", "name": "nesting_seq_in_alt", "type": "nesting", "check": "The DB->update sequence is nested inside the alternative (cache | (db -> update))", "operands": ["seq_db_update", "alt_cache_or_db"]}
+        ]
+      }
+    },
+    {
+      "id": "L2-03",
+      "level": 2,
+      "description": "Parallel with negation constraint",
+      "instruction": "A security agent instructs an audit agent to simultaneously scan for open ports and check SSL certificates, but exclude any internal-only services from the scan scope.",
+      "elements": {
+        "count": 7,
+        "items": [
+          {"id": "e1", "name": "sender", "category": "identity", "check": "A security agent is identified as sender"},
+          {"id": "e2", "name": "receiver", "category": "identity", "check": "An audit agent is identified as receiver"},
+          {"id": "e3", "name": "request_intent", "category": "intent", "check": "A request/instruct action is expressed"},
+          {"id": "e4", "name": "scan_ports", "category": "composition-step", "check": "An open port scan is mentioned"},
+          {"id": "e5", "name": "check_ssl", "category": "composition-step", "check": "An SSL certificate check is mentioned"},
+          {"id": "e6", "name": "exclude_internal", "category": "composition-step", "check": "Exclusion of internal-only services is mentioned"},
+          {"id": "e7", "name": "scope_definition", "category": "composition-step", "check": "The scan scope or target set is defined"}
+        ]
+      },
+      "composition_structure": {
+        "count": 2,
+        "items": [
+          {"id": "cs1", "name": "parallel_scans", "type": "parallel", "check": "Port scan and SSL check are expressed as running simultaneously/in parallel", "operands": ["scan_ports", "check_ssl"]},
+          {"id": "cs2", "name": "negation_internal", "type": "negation", "check": "Internal services are excluded/negated from the scope (expressed as NOT/exclude/except)", "operands": ["exclude_internal"]}
+        ]
+      }
+    },
+    {
+      "id": "L3-01",
+      "level": 3,
+      "description": "Full pipeline with parallel stage and metadata",
+      "instruction": "An ETL orchestrator instructs a pipeline to: first extract data from both an API source and a database source simultaneously, then transform the combined data by applying validation rules, then either load into the data warehouse if validation passes or route to an error queue if it fails. Include a message ID and protocol version.",
+      "elements": {
+        "count": 10,
+        "items": [
+          {"id": "e1", "name": "sender", "category": "identity", "check": "An ETL orchestrator is identified as sender"},
+          {"id": "e2", "name": "receiver", "category": "identity", "check": "A pipeline agent is identified as receiver"},
+          {"id": "e3", "name": "request_intent", "category": "intent", "check": "A request/instruct action is expressed"},
+          {"id": "e4", "name": "extract_api", "category": "composition-step", "check": "Extracting from API source is mentioned"},
+          {"id": "e5", "name": "extract_db", "category": "composition-step", "check": "Extracting from database source is mentioned"},
+          {"id": "e6", "name": "step_transform", "category": "composition-step", "check": "A transform/validation step is mentioned"},
+          {"id": "e7", "name": "option_load_warehouse", "category": "composition-step", "check": "Loading to data warehouse is mentioned"},
+          {"id": "e8", "name": "option_error_queue", "category": "composition-step", "check": "Routing to error queue is mentioned"},
+          {"id": "e9", "name": "metadata_id", "category": "metadata", "check": "A message ID is present"},
+          {"id": "e10", "name": "metadata_version", "category": "metadata", "check": "A protocol version is present"}
+        ]
+      },
+      "composition_structure": {
+        "count": 5,
+        "items": [
+          {"id": "cs1", "name": "parallel_extract", "type": "parallel", "check": "API and DB extraction run simultaneously/in parallel", "operands": ["extract_api", "extract_db"]},
+          {"id": "cs2", "name": "seq_extract_transform", "type": "sequence", "check": "Extraction occurs BEFORE transform", "operands": ["extract_api", "step_transform"]},
+          {"id": "cs3", "name": "seq_transform_load", "type": "sequence", "check": "Transform occurs BEFORE load/error routing", "operands": ["step_transform", "option_load_warehouse"]},
+          {"id": "cs4", "name": "alt_load_or_error", "type": "alternative", "check": "Load to warehouse and route to error queue are expressed as alternatives", "operands": ["option_load_warehouse", "option_error_queue"]},
+          {"id": "cs5", "name": "nesting_depth_2", "type": "nesting", "check": "At least 2 levels of nesting: parallel inside sequence, and alternative inside sequence", "operands": ["parallel_extract", "alt_load_or_error"]}
+        ]
+      }
+    },
+    {
+      "id": "L3-02",
+      "level": 3,
+      "description": "Causal chain with parallel effects",
+      "instruction": "A monitoring agent publishes an alert: a service degradation was caused by a memory leak in the cache layer, which was caused by a missing eviction policy. As remediation, simultaneously restart the cache service and deploy a hotfix, then verify service recovery.",
+      "elements": {
+        "count": 10,
+        "items": [
+          {"id": "e1", "name": "sender", "category": "identity", "check": "A monitoring agent is identified as sender"},
+          {"id": "e2", "name": "receiver", "category": "identity", "check": "A receiving agent is identified"},
+          {"id": "e3", "name": "alert_intent", "category": "intent", "check": "An alert/publish action is expressed"},
+          {"id": "e4", "name": "effect_degradation", "category": "composition-step", "check": "Service degradation is mentioned as the observed effect"},
+          {"id": "e5", "name": "cause_memory_leak", "category": "composition-step", "check": "Memory leak in cache layer is mentioned as a cause"},
+          {"id": "e6", "name": "root_cause_eviction", "category": "composition-step", "check": "Missing eviction policy is mentioned as root cause"},
+          {"id": "e7", "name": "step_restart", "category": "composition-step", "check": "Restarting cache service is mentioned"},
+          {"id": "e8", "name": "step_deploy_hotfix", "category": "composition-step", "check": "Deploying a hotfix is mentioned"},
+          {"id": "e9", "name": "step_verify", "category": "composition-step", "check": "Verifying service recovery is mentioned"},
+          {"id": "e10", "name": "remediation_plan", "category": "composition-step", "check": "A remediation/resolution plan is expressed"}
+        ]
+      },
+      "composition_structure": {
+        "count": 5,
+        "items": [
+          {"id": "cs1", "name": "causal_degradation_leak", "type": "causation", "check": "Service degradation is expressed as CAUSED BY memory leak (causal relationship)", "operands": ["effect_degradation", "cause_memory_leak"]},
+          {"id": "cs2", "name": "causal_leak_eviction", "type": "causation", "check": "Memory leak is expressed as CAUSED BY missing eviction policy (causal chain)", "operands": ["cause_memory_leak", "root_cause_eviction"]},
+          {"id": "cs3", "name": "parallel_remediation", "type": "parallel", "check": "Restart and hotfix deployment run simultaneously/in parallel", "operands": ["step_restart", "step_deploy_hotfix"]},
+          {"id": "cs4", "name": "seq_remediation_verify", "type": "sequence", "check": "Parallel remediation occurs BEFORE verification", "operands": ["step_restart", "step_verify"]},
+          {"id": "cs5", "name": "nesting_depth_2", "type": "nesting", "check": "At least 2 levels of nesting: causal chain AND parallel-inside-sequence", "operands": ["causal_degradation_leak", "parallel_remediation"]}
+        ]
+      }
+    },
+    {
+      "id": "L3-03",
+      "level": 3,
+      "description": "Multi-path negotiation with nested composition",
+      "instruction": "A negotiation agent proposes a deal to a supplier: deliver either product A at $100/unit or product B at $85/unit. For whichever product is chosen, the delivery must proceed in sequence: confirm inventory, then ship to warehouse and send invoice simultaneously, then await payment confirmation. The pricing is justified by current market rates.",
+      "elements": {
+        "count": 11,
+        "items": [
+          {"id": "e1", "name": "sender", "category": "identity", "check": "A negotiation agent is identified as sender"},
+          {"id": "e2", "name": "receiver", "category": "identity", "check": "A supplier agent is identified as receiver"},
+          {"id": "e3", "name": "propose_intent", "category": "intent", "check": "A propose/offer action is expressed"},
+          {"id": "e4", "name": "option_product_a", "category": "composition-step", "check": "Product A is mentioned as an option"},
+          {"id": "e5", "name": "option_product_b", "category": "composition-step", "check": "Product B is mentioned as an option"},
+          {"id": "e6", "name": "price_a", "category": "composition-step", "check": "Price of $100/unit for product A is mentioned"},
+          {"id": "e7", "name": "price_b", "category": "composition-step", "check": "Price of $85/unit for product B is mentioned"},
+          {"id": "e8", "name": "step_confirm_inventory", "category": "composition-step", "check": "Confirming inventory is mentioned"},
+          {"id": "e9", "name": "step_ship", "category": "composition-step", "check": "Shipping to warehouse is mentioned"},
+          {"id": "e10", "name": "step_invoice", "category": "composition-step", "check": "Sending invoice is mentioned"},
+          {"id": "e11", "name": "step_payment", "category": "composition-step", "check": "Awaiting payment confirmation is mentioned"}
+        ]
+      },
+      "composition_structure": {
+        "count": 6,
+        "items": [
+          {"id": "cs1", "name": "alt_products", "type": "alternative", "check": "Product A and Product B are expressed as alternatives (either/or choice)", "operands": ["option_product_a", "option_product_b"]},
+          {"id": "cs2", "name": "seq_inventory_ship", "type": "sequence", "check": "Confirm inventory occurs BEFORE ship/invoice", "operands": ["step_confirm_inventory", "step_ship"]},
+          {"id": "cs3", "name": "parallel_ship_invoice", "type": "parallel", "check": "Shipping and invoicing run simultaneously/in parallel", "operands": ["step_ship", "step_invoice"]},
+          {"id": "cs4", "name": "seq_ship_payment", "type": "sequence", "check": "Ship/invoice occurs BEFORE payment confirmation", "operands": ["step_ship", "step_payment"]},
+          {"id": "cs5", "name": "nesting_parallel_in_seq", "type": "nesting", "check": "The parallel ship/invoice is nested inside the delivery sequence", "operands": ["parallel_ship_invoice", "seq_inventory_ship"]},
+          {"id": "cs6", "name": "nesting_seq_in_alt", "type": "nesting", "check": "The delivery sequence applies to the chosen alternative (overall nesting depth >= 2)", "operands": ["seq_inventory_ship", "alt_products"]}
+        ]
+      }
+    }
+  ]
+}

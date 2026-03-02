@@ -42,6 +42,7 @@ Parser and validator are stdlib Python only. Experiments require `tiktoken` (`pi
 - `experiments/` — Experiment infrastructure (Exp 0–5)
   - `experiments/lib/` — Shared utilities (token counter, condition adapters)
   - `experiments/exp0_learnability/` — Learnability gate experiment
+  - `experiments/exp3_compositionality/` — Composition operator evaluation (co-primary with Exp 1)
   - `experiments/exp_aisp_comparison/` — AISP competitive analysis benchmarks (B, C complete; A pending)
   - `experiments/FAIRNESS.md` — Fairness protocol for 7-condition design
   - `experiments/PREREGISTRATION.md` — Pre-registered analysis plan
@@ -89,7 +90,8 @@ Every debate feeds Track B. All future debates must capture: per-point metadata,
 - Validator: 3-level checker (syntax, tier compliance, semantics)
 - **Exp 0 complete**: AXON passes learnability gate on all 3 models (3x replications). See `experiments/exp0_learnability/RESULTS.md`.
 - **Exp 1 Track A scoring complete**: 486 outputs scored. AXON #1 in tok/unit (15.4 mean, ~32% better than JSON FC). Statistical analysis pending. See `experiments/exp1_token_efficiency/RESULTS.md`.
-- Exp 0/1 runner uses CLI tools (`claude -p`, `codex exec`) — zero API cost
+- **Exp 3 design complete**: Compositionality experiment (co-primary with Exp 1). 9 tasks, 7 conditions, composition-structure scoring via AST walking. Ready for data generation. See `experiments/exp3_compositionality/DESIGN.md`.
+- Exp 0/1/3 runner uses CLI tools (`claude -p`, `codex exec`) — zero API cost
 - ~100 critique points raised, ~85% resolved
 - Paper A framing: "Benchmarking agent communication formats for LLM-to-LLM communication" (advisor debate consensus)
 - Methodology paper (Track B): publishable as registered pilot + prospective protocol paper if 6-item checklist is met
