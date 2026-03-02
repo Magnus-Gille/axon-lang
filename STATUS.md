@@ -2,29 +2,35 @@
 
 **Last session:** 2026-03-02
 **Branch:** main
-**Latest commit:** 57c2e5e
+**Latest commit:** c06fb58
 
 ## Completed This Session
-- Designed and implemented Exp 3 (compositionality) — full infrastructure
-  - 9 tasks × 3 complexity levels, 7 conditions, 30 composition-structure elements
-  - AST-based composition extractor for AXON, text-based for others, judge prompt for English
-  - GLMM analysis pipeline matching pre-registration
-- Generated all 567 cells (3 models × 7 conditions × 9 tasks × 3 runs)
-- Updated CLAUDE.md with Exp 3 in project structure and current state
+- Scored all 567 Exp 3 outputs (machine scoring: AXON AST + text extraction)
+- Ran full statistical analysis (GLMM + pairwise + interaction + nesting depth)
 
-## Key Early Signal (validity only — scoring not yet run)
-- **AXON: 99% valid** (80/81, 1 Sonnet parse error on `^` in content)
-- **JSON FC: 73% valid** — collapsed to 22% on Haiku (composition too complex for flat JSON)
-- **FIPA-ACL: 90% valid** — 70% on Haiku
-- All English conditions + AISP: 100% valid
-- Composition tasks expose structural limits of JSON FC that simple tasks (Exp 0/1) did not
+## Key Results — Exp 3 Composition Scoring
+- **AXON: 66.2% composition rate** — highest of all conditions
+- 4/5 prereg comparisons significant after Holm correction:
+  - AXON vs JSON FC: +41.2%, d=1.05, p<0.0001 ***
+  - AXON vs FIPA-ACL: +21.8%, d=0.54, p=0.005 **
+  - AXON vs Inst-Matched: +20.0%, d=0.50, p=0.007 **
+  - AXON vs Free English: +14.8%, d=0.35, p=0.011 *
+  - AXON vs Structured English: +5.2%, d=0.13, p=0.086 ns
+- JSON FC: 27.2% failure rate, 24.9% composition rate — collapsed on Haiku
+- Only AXON produces nesting (mean 1.87, max 5)
+- Convergence caveat on primary model (same 3-model RE issue as Exp 1)
+
+## Pending — English Judge Scoring
+- ~3,500 elements need LLM judge scoring (English + AISP conditions)
+- `--judge` flag in score.py is a stub — implementation needed
+- Machine-scored conditions (AXON, JSON FC, FIPA-ACL) are complete
 
 ## In Progress
 - Human validation: Items 1-7 complete (100% agreement), items 8-30 remaining
 
 ## Next Steps (prioritized)
-1. **Score Exp 3 outputs** — `python3 experiments/exp3_compositionality/scoring/score.py` on all 3 result files
-2. **Run Exp 3 statistical analysis** — `python3 experiments/exp3_compositionality/analysis/analyze.py --all`
+1. **Implement judge scoring** for English/AISP conditions (~3500 elements)
+2. **Re-run analysis** with complete dataset
 3. Finish human validation (items 8-30)
 4. Build AXON↔A2A field mapping table
 5. Generate AISP Benchmark A cells (81 cells)
