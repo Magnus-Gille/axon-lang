@@ -1,0 +1,36 @@
+You are analyzing an agent-to-agent communication message for structural decomposition.
+
+Given a message between agents, extract:
+
+1. **Individual Steps/Actions**: What distinct operations or steps are described?
+2. **Relationships Between Steps**: How are the steps related to each other?
+
+For each relationship, classify it as one of:
+- SEQUENCE: Step A must happen before Step B
+- PARALLEL: Steps happen simultaneously
+- ALTERNATIVE: Steps are mutually exclusive options
+- CAUSAL: One step caused or resulted from another
+- NESTED: One relationship is contained within another
+
+## Output Format
+
+Respond with EXACTLY this JSON structure:
+```json
+{
+  "steps": [
+    {"id": "s1", "action": "brief description of step"},
+    {"id": "s2", "action": "brief description of step"}
+  ],
+  "relationships": [
+    {"type": "SEQUENCE", "from": "s1", "to": "s2", "evidence": "quote or paraphrase"}
+  ],
+  "nesting": "description of any nested structure, or 'none'"
+}
+```
+
+Rules:
+- Extract ALL steps, even implicit ones
+- Classify ALL relationships between steps
+- If a relationship is ambiguous, note it in evidence
+- If the message is unclear or garbled, extract what you can and note gaps
+- Do not infer relationships that aren't expressed in the message

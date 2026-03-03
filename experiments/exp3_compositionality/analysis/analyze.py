@@ -454,6 +454,117 @@ def nesting_depth_analysis(records: list[AnalysisRecord]):
         print("\n  statsmodels not installed. Skipping Poisson model.")
 
 
+# ── Error Taxonomy ───────────────────────────────────────────────────
+
+ERROR_CATEGORIES = {
+    "structural_failure": "Output failed validation (invalid syntax/format)",
+    "compositional_collapse": "All composition elements absent (zero comp rate)",
+    "partial_composition": "Some composition elements present, some absent (degraded)",
+    "perfect": "All composition elements present",
+}
+
+
+def error_taxonomy(records: list[AnalysisRecord]):
+    """Classify outputs into error categories and cross-tabulate.
+
+    Categories:
+    - structural_failure: output marked invalid
+    - compositional_collapse: valid but composition_rate = 0
+    - partial_composition: 0 < composition_rate < 1 (degraded but usable)
+    - perfect: composition_rate = 1.0
+    """
+    print("\n" + "=" * 80)
+    print("ERROR TAXONOMY")
+    print("=" * 80)
+
+    def classify(r: AnalysisRecord) -> str:
+        if not r.valid:
+            return "structural_failure"
+        if r.cs_total == 0:
+            return "perfect"  # No composition to score
+        if r.composition_rate == 0.0:
+            return "compositional_collapse"
+        if r.composition_rate < 1.0:
+            return "partial_composition"
+        return "perfect"
+
+    # Per-condition breakdown
+    print(f"\n{'Condition':<28} {'Struct Fail':>11} {'Comp Collapse':>14} "
+          f"{'Partial':>8} {'Perfect':>8} {'N':>5}")
+    print("-" * 80)
+    for cond in CONDITIONS_ALL:
+        cr = [r for r in records if r.condition == cond]
+        if not cr:
+            continue
+        cats = {}
+        for r in cr:
+            cat = classify(r)
+            cats[cat] = cats.get(cat, 0) + 1
+        n = len(cr)
+        sf = cats.get("structural_failure", 0)
+        cc = cats.get("compositional_collapse", 0)
+        pc = cats.get("partial_composition", 0)
+        pf = cats.get("perfect", 0)
+        marker = " *" if cond == "aisp" else ""
+        print(f"  {cond:<26} {sf:>5} ({sf/n:>4.0%}) {cc:>5} ({cc/n:>4.0%}) "
+              f"{pc:>3} ({pc/n:>4.0%}) {pf:>3} ({pf/n:>4.0%}) {n:>5}{marker}")
+
+    # Per-model breakdown
+    print(f"\n{'Model':<28} {'Struct Fail':>11} {'Comp Collapse':>14} "
+          f"{'Partial':>8} {'Perfect':>8} {'N':>5}")
+    print("-" * 80)
+    for model in sorted(set(r.model for r in records)):
+        mr = [r for r in records if r.model == model]
+        cats = {}
+        for r in mr:
+            cat = classify(r)
+            cats[cat] = cats.get(cat, 0) + 1
+        n = len(mr)
+        sf = cats.get("structural_failure", 0)
+        cc = cats.get("compositional_collapse", 0)
+        pc = cats.get("partial_composition", 0)
+        pf = cats.get("perfect", 0)
+        print(f"  {model:<26} {sf:>5} ({sf/n:>4.0%}) {cc:>5} ({cc/n:>4.0%}) "
+              f"{pc:>3} ({pc/n:>4.0%}) {pf:>3} ({pf/n:>4.0%}) {n:>5}")
+
+    # Per-condition × complexity
+    print(f"\n{'Cond × Level':<35} {'StructFail':>10} {'Collapse':>9} "
+          f"{'Partial':>8} {'Perfect':>8}")
+    print("-" * 75)
+    for cond in CONDITIONS_ALL:
+        for level_name, level_num in COMPLEXITY_MAP.items():
+            cr = [r for r in records
+                  if r.condition == cond and r.complexity_level == level_num]
+            if not cr:
+                continue
+            cats = {}
+            for r in cr:
+                cat = classify(r)
+                cats[cat] = cats.get(cat, 0) + 1
+            n = len(cr)
+            sf = cats.get("structural_failure", 0)
+            cc = cats.get("compositional_collapse", 0)
+            pc = cats.get("partial_composition", 0)
+            pf = cats.get("perfect", 0)
+            print(f"  {cond} × {level_name:<17} {sf:>4} ({sf/n:>4.0%}) "
+                  f"{cc:>4} ({cc/n:>4.0%}) {pc:>3} ({pc/n:>4.0%}) {pf:>3} ({pf/n:>4.0%})")
+
+    # Bimodality analysis: percentage at 0% or 100% composition
+    print(f"\n{'BIMODALITY ANALYSIS':=^80}")
+    print(f"  Percentage of outputs at extreme composition rates (0% or 100%)")
+    print(f"\n  {'Condition':<28} {'Zero':>8} {'Perfect':>8} {'Bimodal%':>9}")
+    print("  " + "-" * 55)
+    for cond in CONDITIONS_ALL:
+        cr = [r for r in records if r.condition == cond and r.valid and r.cs_total > 0]
+        if not cr:
+            continue
+        zeros = sum(1 for r in cr if r.composition_rate == 0.0)
+        perfects = sum(1 for r in cr if r.composition_rate == 1.0)
+        bimodal_pct = (zeros + perfects) / len(cr) if cr else 0
+        print(f"  {cond:<28} {zeros/len(cr):>7.0%} {perfects/len(cr):>7.0%} "
+              f"{bimodal_pct:>8.0%}")
+
+
 # ── Overall Element Rate Analysis ────────────────────────────────────
 
 
@@ -567,6 +678,7 @@ def main():
 
     # Run analyses
     descriptive_stats(all_records)
+    error_taxonomy(all_records)
     element_rate_analysis(all_records)
 
     try:

@@ -1,0 +1,554 @@
+{
+  "experiment": "exp_json_contracts",
+  "condition": "json_contracts",
+  "model": "codex",
+  "model_display": "GPT-5.3 Codex",
+  "timestamp": "2026-03-02T08:31:14.776048+00:00",
+  "total_runs": 27,
+  "valid_count": 27,
+  "results": [
+    {
+      "task_id": "L1-01",
+      "condition": "json_contracts",
+      "model": "codex",
+      "run_number": 1,
+      "output": "{\"performative\":\"command\",\"from\":\"data-processing-agent\",\"to\":\"worker-agent\",\"preconditions\":[\"dataset exists in data lake\",\"worker agent has read access to data lake\",\"worker agent has write access to warehouse\"],\"postconditions\":[\"dataset is downloaded from data lake\",\"null rows are removed from dataset\",\"cleaned dataset is uploaded to warehouse\"],\"lifecycle_stage\":\"execution\",\"content\":{\"workflow\":\"dataset_transfer_and_cleaning\",\"source\":\"data_lake\",\"destination\":\"warehouse\"},\"steps\":[{\"action\":\"download_dataset\",\"params\":{\"from\":\"data_lake\"},\"relation\":\"sequence\"},{\"action\":\"clean_dataset\",\"params\":{\"operation\":\"remove_null_rows\"},\"relation\":\"sequence\"},{\"action\":\"upload_cleaned_dataset\",\"params\":{\"to\":\"warehouse\"},\"relation\":\"sequence\"}]}",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 148,
+        "o200k_base": 155
+      },
+      "latency_ms": 13340,
+      "timestamp": "2026-03-02T08:22:05.150497+00:00",
+      "complexity_level": 1,
+      "operators_tested": [
+        "->"
+      ]
+    },
+    {
+      "task_id": "L1-02",
+      "condition": "json_contracts",
+      "model": "codex",
+      "run_number": 1,
+      "output": "{\"performative\":\"command\",\"from\":\"deployment_agent\",\"to\":\"cluster_manager\",\"preconditions\":[\"cluster manager is reachable\",\"monitoring agents are active on target nodes\",\"sufficient permissions exist to read CPU, memory, and disk metrics\"],\"postconditions\":[\"CPU usage check completed\",\"memory usage check completed\",\"disk space check completed\",\"health check results returned to deployment agent\"],\"lifecycle_stage\":\"execution\",\"content\":{\"operation\":\"run_health_checks\",\"mode\":\"simultaneous\",\"checks\":[\"cpu_usage\",\"memory_usage\",\"disk_space\"]},\"steps\":[{\"action\":\"check_cpu_usage\",\"params\":{\"scope\":\"cluster\"},\"relation\":\"parallel\"},{\"action\":\"check_memory_usage\",\"params\":{\"scope\":\"cluster\"},\"relation\":\"parallel\"},{\"action\":\"check_disk_space\",\"params\":{\"scope\":\"cluster\"},\"relation\":\"parallel\"},{\"action\":\"return_health_results\",\"params\":{\"recipient\":\"deployment_agent\"},\"relation\":\"sequence\"}]}",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 173,
+        "o200k_base": 180
+      },
+      "latency_ms": 41992,
+      "timestamp": "2026-03-02T08:22:47.146455+00:00",
+      "complexity_level": 1,
+      "operators_tested": [
+        "&"
+      ]
+    },
+    {
+      "task_id": "L1-03",
+      "condition": "json_contracts",
+      "model": "codex",
+      "run_number": 1,
+      "output": "{\"performative\":\"inform\",\"from\":\"routing_agent\",\"to\":\"handler_agent\",\"preconditions\":[\"Incoming request has been received and parsed\",\"Primary API health/availability can be evaluated\",\"Fallback cache service is reachable\"],\"postconditions\":[\"Handler has a conditional routing directive for this request\",\"Request will be sent to the primary API if available\",\"Request will be sent to the fallback cache service if primary is unavailable\"],\"lifecycle_stage\":\"execution\",\"content\":{\"request_id\":\"req-78421\",\"directive\":\"Process via primary API endpoint when available; otherwise use fallback cache service.\",\"primary_endpoint\":\"primary_api\",\"fallback_service\":\"cache_service\"},\"steps\":[{\"action\":\"check_primary_availability\",\"params\":{\"service\":\"primary_api\"},\"relation\":\"sequence\"},{\"action\":\"route_request_to_primary\",\"params\":{\"target\":\"primary_api\",\"request_id\":\"req-78421\"},\"relation\":\"alternative\",\"condition\":\"primary_api_available == true\"},{\"action\":\"route_request_to_fallback\",\"params\":{\"target\":\"cache_service\",\"request_id\":\"req-78421\"},\"relation\":\"alternative\",\"condition\":\"primary_api_available == false\"}]}",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 214,
+        "o200k_base": 221
+      },
+      "latency_ms": 17305,
+      "timestamp": "2026-03-02T08:23:04.454022+00:00",
+      "complexity_level": 1,
+      "operators_tested": [
+        "|"
+      ]
+    },
+    {
+      "task_id": "L2-01",
+      "condition": "json_contracts",
+      "model": "codex",
+      "run_number": 1,
+      "output": "{\"id\":\"msg-001\",\"performative\":\"command\",\"from\":\"orchestrator\",\"to\":\"pipeline\",\"preconditions\":[\"input payload is available\",\"input schema definition is loaded\",\"pipeline agent is ready\"],\"postconditions\":[\"input schema is validated\",\"sentiment and topic analyses are completed on validated data\",\"a single merged report is produced\"],\"lifecycle_stage\":\"execution\",\"content\":{\"workflow\":\"validate_then_parallel_analyze_then_merge\",\"target\":\"input_payload\"},\"steps\":[{\"action\":\"validate_schema\",\"params\":{\"target\":\"input_payload\",\"schema\":\"input_schema\"},\"relation\":\"sequence\"},{\"action\":\"run_sentiment_analysis\",\"params\":{\"target\":\"validated_data\"},\"relation\":\"parallel\"},{\"action\":\"run_topic_classification\",\"params\":{\"target\":\"validated_data\"},\"relation\":\"parallel\"},{\"action\":\"merge_results\",\"params\":{\"inputs\":[\"sentiment_output\",\"topic_output\"],\"output\":\"single_report\"},\"relation\":\"sequence\"}]}",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 174,
+        "o200k_base": 184
+      },
+      "latency_ms": 12802,
+      "timestamp": "2026-03-02T08:23:17.257717+00:00",
+      "complexity_level": 2,
+      "operators_tested": [
+        "->",
+        "&"
+      ]
+    },
+    {
+      "task_id": "L2-02",
+      "condition": "json_contracts",
+      "model": "codex",
+      "run_number": 1,
+      "output": "{\"performative\":\"command\",\"from\":\"query_agent\",\"to\":\"data_agent\",\"preconditions\":[\"cache service is reachable\",\"database connection is available\",\"query payload is valid\"],\"postconditions\":[\"results are returned to query_agent\",\"if cache hit, cached results are used\",\"if cache miss, database results are cached and returned\"],\"lifecycle_stage\":\"execution\",\"content\":{\"operation\":\"get_results\",\"strategy\":\"cache_first\",\"query\":{\"key\":\"result_key\",\"payload\":{\"sql\":\"SELECT * FROM items WHERE criteria = :criteria\",\"params\":{\"criteria\":\"value\"}}},\"cache\":{\"ttl_seconds\":300}},\"steps\":[{\"action\":\"check_cache\",\"params\":{\"key\":\"result_key\"},\"relation\":\"sequence\"},{\"action\":\"fetch_from_cache\",\"params\":{\"key\":\"result_key\"},\"relation\":\"alternative\",\"condition\":\"cache_hit\"},{\"action\":\"query_database\",\"params\":{\"sql\":\"SELECT * FROM items WHERE criteria = :criteria\",\"params\":{\"criteria\":\"value\"}},\"relation\":\"alternative\",\"condition\":\"cache_miss\"},{\"action\":\"update_cache\",\"params\":{\"key\":\"result_key\",\"value\":\"db_results\",\"ttl_seconds\":300},\"relation\":\"causal\",\"caused_by\":\"query_database\"},{\"action\":\"return_results\",\"params\":{\"source\":\"cache_or_db\"},\"relation\":\"sequence\"}]}",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 245,
+        "o200k_base": 252
+      },
+      "latency_ms": 20439,
+      "timestamp": "2026-03-02T08:23:37.698380+00:00",
+      "complexity_level": 2,
+      "operators_tested": [
+        "|",
+        "->"
+      ]
+    },
+    {
+      "task_id": "L2-03",
+      "condition": "json_contracts",
+      "model": "codex",
+      "run_number": 1,
+      "output": "{\"id\":\"msg-sec-001\",\"performative\":\"command\",\"from\":\"security_agent\",\"to\":\"audit_agent\",\"preconditions\":[\"Target inventory is available\",\"Public-facing services are identifiable\",\"Internal-only services are tagged or mappable by network policy\"],\"postconditions\":[\"Open-port scan results are produced for in-scope targets\",\"SSL certificate check results are produced for in-scope targets\",\"All internal-only services are excluded from scan scope\"],\"lifecycle_stage\":\"execution\",\"content\":{\"task\":\"Run concurrent external audit checks\",\"scope\":{\"include\":[\"public-facing services\"],\"exclude\":[\"internal-only services\"]},\"constraints\":{\"simultaneous_checks\":true}},\"steps\":[{\"action\":\"define_scan_scope\",\"params\":{\"include\":\"public-facing services\",\"exclude\":[\"internal-only services\",\"private-only endpoints\"]},\"relation\":\"sequence\"},{\"action\":\"scan_open_ports\",\"params\":{\"targets\":\"defined_scope.targets\",\"mode\":\"external\"},\"relation\":\"parallel\"},{\"action\":\"check_ssl_certificates\",\"params\":{\"targets\":\"defined_scope.targets\",\"checks\":[\"expiry\",\"hostname_match\",\"chain_trust\",\"protocol_validity\"]},\"relation\":\"parallel\"},{\"action\":\"compile_audit_report\",\"params\":{\"sources\":[\"open_port_scan\",\"ssl_certificate_check\"],\"scope_enforcement\":\"exclude_internal_only\"},\"relation\":\"sequence\"}]}",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 247,
+        "o200k_base": 254
+      },
+      "latency_ms": 19599,
+      "timestamp": "2026-03-02T08:23:57.299268+00:00",
+      "complexity_level": 2,
+      "operators_tested": [
+        "&",
+        "!"
+      ]
+    },
+    {
+      "task_id": "L3-01",
+      "condition": "json_contracts",
+      "model": "codex",
+      "run_number": 1,
+      "output": "{\"id\":\"msg-etl-20260302-001\",\"protocol_version\":\"1.0\",\"performative\":\"request\",\"from\":\"etl_orchestrator\",\"to\":\"pipeline\",\"preconditions\":[\"API source endpoint is reachable\",\"Database source is reachable with valid credentials\",\"Pipeline workers are available\",\"Validation rules are loaded\"],\"postconditions\":[\"Data from API and database sources is extracted\",\"Extracted datasets are combined and validated\",\"If validation passes, data is loaded into the data warehouse\",\"If validation fails, data is routed to the error queue\"],\"lifecycle_stage\":\"execution\",\"content\":{\"workflow\":\"etl_orchestration\",\"objective\":\"extract_transform_and_conditionally_load\"},\"steps\":[{\"action\":\"extract\",\"params\":{\"source\":\"api_source\",\"output\":\"api_dataset\"},\"relation\":\"sequence\"},{\"action\":\"extract\",\"params\":{\"source\":\"database_source\",\"output\":\"db_dataset\"},\"relation\":\"parallel\"},{\"action\":\"combine\",\"params\":{\"inputs\":[\"api_dataset\",\"db_dataset\"],\"output\":\"combined_dataset\"},\"relation\":\"sequence\"},{\"action\":\"apply_validation_rules\",\"params\":{\"input\":\"combined_dataset\",\"ruleset\":\"validation_rules\",\"output\":\"validated_dataset\",\"result_flag\":\"validation_passed\"},\"relation\":\"sequence\"},{\"action\":\"load\",\"params\":{\"input\":\"validated_dataset\",\"destination\":\"data_warehouse\"},\"relation\":\"alternative\",\"condition\":\"validation_passed == true\"},{\"action\":\"route\",\"params\":{\"input\":\"combined_dataset\",\"destination\":\"error_queue\",\"error_type\":\"validation_failure\"},\"relation\":\"alternative\",\"condition\":\"validation_passed == false\"}]}",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 295,
+        "o200k_base": 306
+      },
+      "latency_ms": 18327,
+      "timestamp": "2026-03-02T08:24:15.629332+00:00",
+      "complexity_level": 3,
+      "operators_tested": [
+        "->",
+        "&",
+        "|"
+      ]
+    },
+    {
+      "task_id": "L3-02",
+      "condition": "json_contracts",
+      "model": "codex",
+      "run_number": 1,
+      "output": "{\"id\":\"msg-incident-20260302-001\",\"performative\":\"publish\",\"from\":\"monitoring-agent\",\"to\":[\"cache-ops-agent\",\"release-agent\",\"recovery-verifier-agent\"],\"preconditions\":[\"Service degradation alert is active\",\"Root-cause analysis identifies cache-layer memory leak\",\"Memory leak is traced to missing eviction policy\",\"Restart and deployment permissions are granted\"],\"postconditions\":[\"Cache service is restarted\",\"Hotfix adding eviction policy is deployed\",\"Service recovery is verified via health checks and SLO metrics\"],\"lifecycle_stage\":\"execution\",\"content\":{\"alert\":\"service_degradation\",\"service\":\"core-service\",\"severity\":\"high\",\"causal_chain\":[{\"cause\":\"missing eviction policy\",\"effect\":\"cache-layer memory leak\"},{\"cause\":\"cache-layer memory leak\",\"effect\":\"service degradation\"}],\"remediation\":\"parallel restart and hotfix deployment followed by recovery verification\"},\"steps\":[{\"action\":\"restart_cache_service\",\"params\":{\"service\":\"cache-service\",\"mode\":\"rolling\"},\"relation\":\"parallel\"},{\"action\":\"deploy_hotfix\",\"params\":{\"component\":\"cache-layer\",\"change\":\"add eviction policy\",\"artifact\":\"hotfix\"},\"relation\":\"parallel\"},{\"action\":\"verify_service_recovery\",\"params\":{\"service\":\"core-service\",\"checks\":[\"latency_slo\",\"error_rate_slo\",\"cache_memory_stability\",\"success_rate\"],\"observation_window\":\"15m\"},\"relation\":\"sequence\"}]}",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 266,
+        "o200k_base": 277
+      },
+      "latency_ms": 33098,
+      "timestamp": "2026-03-02T08:24:48.729775+00:00",
+      "complexity_level": 3,
+      "operators_tested": [
+        "<-",
+        "&",
+        "->"
+      ]
+    },
+    {
+      "task_id": "L3-03",
+      "condition": "json_contracts",
+      "model": "codex",
+      "run_number": 1,
+      "output": "{\"performative\":\"propose\",\"from\":\"negotiation_agent\",\"to\":\"supplier_agent\",\"preconditions\":[\"Current market-rate benchmarks are available\",\"Supplier can fulfill at least one offered product option\",\"Both parties are authorized to agree on commercial terms\"],\"postconditions\":[\"A single product option (A or B) is selected\",\"Delivery and billing workflow is explicitly defined\",\"Payment confirmation is awaited after shipment and invoicing\"],\"lifecycle_stage\":\"negotiation\",\"content\":{\"deal_type\":\"alternative_offer\",\"currency\":\"USD\",\"options\":[{\"product\":\"A\",\"unit_price\":100},{\"product\":\"B\",\"unit_price\":85}],\"pricing_justification\":\"Pricing is based on current market rates.\"},\"steps\":[{\"action\":\"choose_product_A\",\"params\":{\"product\":\"A\",\"unit_price\":\"100 USD/unit\"},\"relation\":\"alternative\",\"condition\":\"Use if supplier accepts product A terms\"},{\"action\":\"choose_product_B\",\"params\":{\"product\":\"B\",\"unit_price\":\"85 USD/unit\"},\"relation\":\"alternative\",\"condition\":\"Use if supplier accepts product B terms\"},{\"action\":\"confirm_inventory\",\"params\":{\"product\":\"selected_option\"},\"relation\":\"sequence\"},{\"action\":\"ship_to_warehouse\",\"params\":{\"product\":\"selected_option\",\"destination\":\"warehouse\"},\"relation\":\"parallel\"},{\"action\":\"send_invoice\",\"params\":{\"product\":\"selected_option\",\"billing_basis\":\"agreed_unit_price\"},\"relation\":\"parallel\"},{\"action\":\"await_payment_confirmation\",\"params\":{\"product\":\"selected_option\"},\"relation\":\"sequence\"}]}",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 286,
+        "o200k_base": 295
+      },
+      "latency_ms": 24589,
+      "timestamp": "2026-03-02T08:25:13.321207+00:00",
+      "complexity_level": 3,
+      "operators_tested": [
+        "->",
+        "|",
+        "&",
+        "<-"
+      ]
+    },
+    {
+      "task_id": "L1-01",
+      "condition": "json_contracts",
+      "model": "codex",
+      "run_number": 2,
+      "output": "{\"performative\":\"command\",\"from\":\"data-processing-agent\",\"to\":\"worker-agent\",\"preconditions\":[\"dataset_id is provided\",\"worker-agent has read access to the data lake\",\"worker-agent has write access to the warehouse\"],\"postconditions\":[\"raw dataset is downloaded from the data lake\",\"all rows containing null values are removed\",\"cleaned dataset is uploaded to the warehouse\"],\"lifecycle_stage\":\"execution\",\"content\":{\"task\":\"dataset_download_clean_upload\",\"dataset_id\":\"dataset_id\",\"source_system\":\"data_lake\",\"target_system\":\"warehouse\"},\"steps\":[{\"action\":\"download_dataset\",\"params\":{\"dataset_id\":\"dataset_id\",\"from\":\"data_lake\"},\"relation\":\"sequence\"},{\"action\":\"clean_dataset\",\"params\":{\"method\":\"remove_null_rows\",\"input\":\"downloaded_dataset\"},\"relation\":\"sequence\"},{\"action\":\"upload_dataset\",\"params\":{\"to\":\"warehouse\",\"artifact\":\"cleaned_dataset\"},\"relation\":\"sequence\"}]}",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 176,
+        "o200k_base": 183
+      },
+      "latency_ms": 14540,
+      "timestamp": "2026-03-02T08:25:27.864148+00:00",
+      "complexity_level": 1,
+      "operators_tested": [
+        "->"
+      ]
+    },
+    {
+      "task_id": "L1-02",
+      "condition": "json_contracts",
+      "model": "codex",
+      "run_number": 2,
+      "output": "{\"performative\":\"request\",\"from\":\"deployment_agent\",\"to\":\"cluster_manager\",\"preconditions\":[\"cluster_manager is reachable\",\"target cluster nodes are online\",\"monitoring access is available for CPU, memory, and disk metrics\"],\"postconditions\":[\"CPU usage health check has executed\",\"memory usage health check has executed\",\"disk space health check has executed\",\"health check results are available to deployment_agent\"],\"lifecycle_stage\":\"execution\",\"content\":{\"task\":\"run_health_checks\",\"mode\":\"simultaneous\",\"checks\":[\"cpu_usage\",\"memory_usage\",\"disk_space\"]},\"steps\":[{\"action\":\"check_cpu_usage\",\"params\":{\"scope\":\"cluster\"},\"relation\":\"parallel\"},{\"action\":\"check_memory_usage\",\"params\":{\"scope\":\"cluster\"},\"relation\":\"parallel\"},{\"action\":\"check_disk_space\",\"params\":{\"scope\":\"cluster\"},\"relation\":\"parallel\"}]}",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 160,
+        "o200k_base": 166
+      },
+      "latency_ms": 11901,
+      "timestamp": "2026-03-02T08:25:39.767287+00:00",
+      "complexity_level": 1,
+      "operators_tested": [
+        "&"
+      ]
+    },
+    {
+      "task_id": "L1-03",
+      "condition": "json_contracts",
+      "model": "codex",
+      "run_number": 2,
+      "output": "{\"performative\":\"inform\",\"from\":\"routing_agent\",\"to\":\"handler_agent\",\"preconditions\":[\"Incoming request has been received and validated\",\"Availability state for primary API endpoint and fallback cache service is current\",\"At least one processing target is available\"],\"postconditions\":[\"Handler routes the request to the primary API endpoint when available\",\"Handler routes the request to the fallback cache service when the primary API is unavailable\",\"Request is assigned to exactly one processing path\"],\"lifecycle_stage\":\"execution\",\"content\":{\"request_id\":\"incoming_request\",\"routing_policy\":\"prefer_primary_else_fallback\",\"primary_endpoint\":\"primary_api_endpoint\",\"fallback_service\":\"fallback_cache_service\",\"instruction\":\"Process via primary endpoint if available; otherwise process via fallback cache service.\"},\"steps\":[{\"action\":\"evaluate_target_availability\",\"params\":{\"targets\":[\"primary_api_endpoint\",\"fallback_cache_service\"]},\"relation\":\"sequence\"},{\"action\":\"dispatch_to_primary\",\"params\":{\"target\":\"primary_api_endpoint\"},\"relation\":\"alternative\",\"condition\":\"primary_api_endpoint.available == true\"},{\"action\":\"dispatch_to_fallback\",\"params\":{\"target\":\"fallback_cache_service\"},\"relation\":\"alternative\",\"condition\":\"primary_api_endpoint.available == false\"}]}",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 224,
+        "o200k_base": 229
+      },
+      "latency_ms": 20428,
+      "timestamp": "2026-03-02T08:26:00.198036+00:00",
+      "complexity_level": 1,
+      "operators_tested": [
+        "|"
+      ]
+    },
+    {
+      "task_id": "L2-01",
+      "condition": "json_contracts",
+      "model": "codex",
+      "run_number": 2,
+      "output": "{\"performative\":\"request\",\"from\":\"orchestrator\",\"to\":\"pipeline\",\"preconditions\":[\"input payload is available\",\"input schema is loaded\",\"pipeline agent is idle\"],\"postconditions\":[\"input schema is validated\",\"sentiment and topic analyses are completed on validated data\",\"a single merged report is produced\"],\"lifecycle_stage\":\"execution\",\"content\":{\"workflow\":\"validate_then_parallel_analyze_then_merge\",\"input\":\"raw_payload\",\"output\":\"single_report\"},\"steps\":[{\"action\":\"validate_schema\",\"params\":{\"input\":\"raw_payload\",\"schema\":\"input_schema\"},\"relation\":\"sequence\"},{\"action\":\"run_sentiment_analysis\",\"params\":{\"input\":\"validated_data\"},\"relation\":\"parallel\"},{\"action\":\"run_topic_classification\",\"params\":{\"input\":\"validated_data\"},\"relation\":\"parallel\"},{\"action\":\"merge_results\",\"params\":{\"inputs\":[\"sentiment_result\",\"topic_result\"],\"output\":\"single_report\"},\"relation\":\"sequence\"}]}",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 172,
+        "o200k_base": 182
+      },
+      "latency_ms": 12922,
+      "timestamp": "2026-03-02T08:26:13.122532+00:00",
+      "complexity_level": 2,
+      "operators_tested": [
+        "->",
+        "&"
+      ]
+    },
+    {
+      "task_id": "L2-02",
+      "condition": "json_contracts",
+      "model": "codex",
+      "run_number": 2,
+      "output": "{\"performative\":\"command\",\"from\":\"query_agent\",\"to\":\"data_agent\",\"preconditions\":[\"Query payload and cache key are provided\",\"Cache service is reachable\",\"Database connection is available\"],\"postconditions\":[\"If cache hit, cached results are returned to query_agent\",\"If cache miss, database results are returned to query_agent\",\"If cache miss, cache is updated with fresh results\"],\"lifecycle_stage\":\"execution\",\"content\":{\"workflow\":\"cache_first_fetch\",\"cache_key\":\"results:<query_hash>\",\"query\":{\"sql\":\"SELECT ...\",\"params\":{\"...\":\"...\"}}},\"steps\":[{\"action\":\"check_cache\",\"params\":{\"key\":\"results:<query_hash>\"},\"relation\":\"sequence\"},{\"action\":\"fetch_from_cache\",\"params\":{\"key\":\"results:<query_hash>\"},\"relation\":\"alternative\",\"condition\":\"cache_hit\"},{\"action\":\"query_database\",\"params\":{\"sql\":\"SELECT ...\",\"params\":{\"...\":\"...\"}},\"relation\":\"alternative\",\"condition\":\"cache_miss\"},{\"action\":\"return_cached_results\",\"params\":{\"recipient\":\"query_agent\"},\"relation\":\"causal\",\"caused_by\":\"fetch_from_cache\"},{\"action\":\"update_cache\",\"params\":{\"key\":\"results:<query_hash>\",\"source\":\"query_database\",\"ttl_seconds\":300},\"relation\":\"causal\",\"caused_by\":\"query_database\"},{\"action\":\"return_fresh_results\",\"params\":{\"recipient\":\"query_agent\"},\"relation\":\"causal\",\"caused_by\":\"update_cache\"}]}",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 276,
+        "o200k_base": 284
+      },
+      "latency_ms": 26952,
+      "timestamp": "2026-03-02T08:26:40.078174+00:00",
+      "complexity_level": 2,
+      "operators_tested": [
+        "|",
+        "->"
+      ]
+    },
+    {
+      "task_id": "L2-03",
+      "condition": "json_contracts",
+      "model": "codex",
+      "run_number": 2,
+      "output": "{\"performative\":\"command\",\"from\":\"security_agent\",\"to\":\"audit_agent\",\"preconditions\":[\"Asset inventory is current\",\"Services are tagged as internal-only vs external-facing\",\"Audit agent has required network and certificate inspection permissions\"],\"postconditions\":[\"Open-port findings are produced for external-facing services only\",\"SSL certificate findings are produced for external-facing services only\",\"Internal-only services are excluded from all scan activities\"],\"lifecycle_stage\":\"execution\",\"content\":{\"task\":\"external_surface_audit\",\"scope\":{\"include\":[\"external-facing services\"],\"exclude\":[\"internal-only services\"]},\"deliverable\":\"Unified report of open ports and SSL certificate status\"},\"steps\":[{\"action\":\"build_filtered_scope\",\"params\":{\"exclude_service_class\":[\"internal-only\"]},\"relation\":\"sequence\"},{\"action\":\"scan_open_ports\",\"params\":{\"target_scope\":\"filtered_scope\"},\"relation\":\"parallel\"},{\"action\":\"check_ssl_certificates\",\"params\":{\"target_scope\":\"filtered_scope\"},\"relation\":\"parallel\"},{\"action\":\"merge_audit_results\",\"params\":{\"inputs\":[\"open_ports\",\"ssl_certificates\"]},\"relation\":\"sequence\"}]}",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 203,
+        "o200k_base": 212
+      },
+      "latency_ms": 15440,
+      "timestamp": "2026-03-02T08:26:55.519679+00:00",
+      "complexity_level": 2,
+      "operators_tested": [
+        "&",
+        "!"
+      ]
+    },
+    {
+      "task_id": "L3-01",
+      "condition": "json_contracts",
+      "model": "codex",
+      "run_number": 2,
+      "output": "{\"id\":\"msg-etl-001\",\"protocol_version\":\"1.0\",\"performative\":\"command\",\"from\":\"etl_orchestrator\",\"to\":\"etl_pipeline\",\"content\":{\"workflow\":\"etl_batch_run\",\"sources\":[\"api_source\",\"database_source\"],\"validation_ruleset\":\"default_validation\",\"success_destination\":\"data_warehouse\",\"failure_destination\":\"error_queue\"},\"preconditions\":[\"etl_pipeline is idle\",\"api_source is reachable\",\"database_source is reachable\",\"validation rules are available\"],\"postconditions\":[\"extracted data from api_source and database_source is combined\",\"combined data is validated\",\"data is loaded into data_warehouse if validation passes\",\"data is routed to error_queue if validation fails\"],\"lifecycle_stage\":\"execution\",\"steps\":[{\"action\":\"extract_from_api\",\"params\":{\"source\":\"api_source\"},\"relation\":\"parallel\"},{\"action\":\"extract_from_database\",\"params\":{\"source\":\"database_source\"},\"relation\":\"parallel\"},{\"action\":\"combine_data\",\"params\":{\"inputs\":[\"api_source\",\"database_source\"]},\"relation\":\"sequence\"},{\"action\":\"apply_validation_rules\",\"params\":{\"ruleset\":\"default_validation\"},\"relation\":\"sequence\"},{\"action\":\"load_into_data_warehouse\",\"params\":{\"destination\":\"data_warehouse\"},\"relation\":\"alternative\",\"condition\":\"validation_passes\"},{\"action\":\"route_to_error_queue\",\"params\":{\"destination\":\"error_queue\"},\"relation\":\"alternative\",\"condition\":\"validation_fails\"}]}",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 269,
+        "o200k_base": 274
+      },
+      "latency_ms": 19167,
+      "timestamp": "2026-03-02T08:27:14.689147+00:00",
+      "complexity_level": 3,
+      "operators_tested": [
+        "->",
+        "&",
+        "|"
+      ]
+    },
+    {
+      "task_id": "L3-02",
+      "condition": "json_contracts",
+      "model": "codex",
+      "run_number": 2,
+      "output": "{\"performative\":\"command\",\"from\":\"incident_orchestrator\",\"to\":[\"cache_ops_agent\",\"release_agent\",\"monitoring_agent\"],\"preconditions\":[\"Alert from monitoring agent is active for service degradation\",\"Root cause chain is confirmed: missing eviction policy -> cache memory leak -> service degradation\",\"Hotfix artifact with eviction policy is available and approved for emergency deployment\",\"Cache service restart permissions are available\"],\"postconditions\":[\"Cache service has been restarted\",\"Hotfix enabling eviction policy is deployed\",\"Service health metrics are back within SLO and stable for the verification window\",\"Incident status is updated to recovered, or escalated if verification fails\"],\"lifecycle_stage\":\"execution\",\"content\":{\"incident\":\"service_degradation\",\"root_cause\":{\"primary\":\"memory leak in cache layer\",\"underlying\":\"missing eviction policy\"},\"remediation_goal\":\"restore service and stop unbounded cache memory growth\"},\"steps\":[{\"action\":\"restart_cache_service\",\"params\":{\"service\":\"cache\",\"strategy\":\"rolling_restart\"},\"relation\":\"parallel\"},{\"action\":\"deploy_hotfix\",\"params\":{\"target\":\"cache_layer\",\"change\":\"introduce eviction policy\",\"deployment_type\":\"hotfix\"},\"relation\":\"parallel\"},{\"action\":\"verify_service_recovery\",\"params\":{\"checks\":[\"service_error_rate\",\"p95_latency\",\"cache_memory_usage\",\"cache_evictions\"],\"verification_window\":\"15m\",\"success_threshold\":\"all checks within SLO\"},\"relation\":\"causal\",\"caused_by\":[\"restart_cache_service\",\"deploy_hotfix\"]}]}",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 284,
+        "o200k_base": 294
+      },
+      "latency_ms": 40583,
+      "timestamp": "2026-03-02T08:27:55.275097+00:00",
+      "complexity_level": 3,
+      "operators_tested": [
+        "<-",
+        "&",
+        "->"
+      ]
+    },
+    {
+      "task_id": "L3-03",
+      "condition": "json_contracts",
+      "model": "codex",
+      "run_number": 2,
+      "output": "{\"performative\":\"propose\",\"from\":\"negotiation_agent\",\"to\":\"supplier_agent\",\"preconditions\":[\"Current market rate data is available and validated\",\"Supplier can fulfill either Product A or Product B\",\"Warehouse receiving channel and invoicing channel are active\"],\"postconditions\":[\"Supplier receives a mutually exclusive product-price choice\",\"Execution workflow is explicitly defined for the chosen product\",\"Pricing rationale based on current market rates is communicated\"],\"lifecycle_stage\":\"negotiation\",\"content\":{\"deal_options\":[{\"product\":\"A\",\"unit_price_usd\":100},{\"product\":\"B\",\"unit_price_usd\":85}],\"currency\":\"USD\",\"pricing_justification\":\"Unit pricing is justified by current market rates.\",\"selection_rule\":\"Supplier selects exactly one option.\"},\"steps\":[{\"action\":\"select_product_A\",\"params\":{\"product\":\"A\",\"unit_price_usd\":100},\"relation\":\"alternative\",\"condition\":\"if supplier chooses Product A\"},{\"action\":\"select_product_B\",\"params\":{\"product\":\"B\",\"unit_price_usd\":85},\"relation\":\"alternative\",\"condition\":\"if supplier chooses Product B\"},{\"action\":\"confirm_inventory\",\"params\":{\"product\":\"selected_product\"},\"relation\":\"sequence\"},{\"action\":\"ship_to_warehouse\",\"params\":{\"product\":\"selected_product\",\"destination\":\"warehouse\"},\"relation\":\"parallel\"},{\"action\":\"send_invoice\",\"params\":{\"product\":\"selected_product\",\"unit_price_usd\":\"selected_unit_price\"},\"relation\":\"parallel\"},{\"action\":\"await_payment_confirmation\",\"params\":{\"invoice_id\":\"generated_invoice_id\"},\"relation\":\"sequence\"}]}",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 295,
+        "o200k_base": 302
+      },
+      "latency_ms": 33113,
+      "timestamp": "2026-03-02T08:28:28.390856+00:00",
+      "complexity_level": 3,
+      "operators_tested": [
+        "->",
+        "|",
+        "&",
+        "<-"
+      ]
+    },
+    {
+      "task_id": "L1-01",
+      "condition": "json_contracts",
+      "model": "codex",
+      "run_number": 3,
+      "output": "{\"performative\":\"command\",\"from\":\"data-processing-agent\",\"to\":\"worker-agent\",\"preconditions\":[\"dataset is available in the data lake\",\"worker agent has read access to the data lake\",\"worker agent has write access to the warehouse\"],\"postconditions\":[\"dataset is downloaded locally by worker agent\",\"all rows containing null values are removed\",\"cleaned dataset is uploaded to the warehouse\"],\"lifecycle_stage\":\"execution\",\"content\":{\"task\":\"process_dataset_pipeline\",\"source_system\":\"data_lake\",\"target_system\":\"warehouse\"},\"steps\":[{\"action\":\"download_dataset\",\"params\":{\"from\":\"data_lake\"},\"relation\":\"sequence\"},{\"action\":\"clean_dataset\",\"params\":{\"method\":\"remove_null_rows\"},\"relation\":\"sequence\"},{\"action\":\"upload_cleaned_dataset\",\"params\":{\"to\":\"warehouse\"},\"relation\":\"sequence\"}]}",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 155,
+        "o200k_base": 162
+      },
+      "latency_ms": 10788,
+      "timestamp": "2026-03-02T08:28:39.181343+00:00",
+      "complexity_level": 1,
+      "operators_tested": [
+        "->"
+      ]
+    },
+    {
+      "task_id": "L1-02",
+      "condition": "json_contracts",
+      "model": "codex",
+      "run_number": 3,
+      "output": "{\"performative\":\"command\",\"from\":\"deployment_agent\",\"to\":\"cluster_manager\",\"preconditions\":[\"cluster manager is reachable\",\"target cluster is online\",\"monitoring endpoints for CPU, memory, and disk are accessible\"],\"postconditions\":[\"CPU usage health check executed\",\"memory usage health check executed\",\"disk space health check executed\",\"combined health-check status is available to deployment agent\"],\"lifecycle_stage\":\"execution\",\"content\":{\"workflow\":\"run_health_checks\",\"mode\":\"simultaneous\",\"target\":\"cluster\"},\"steps\":[{\"action\":\"check_cpu_usage\",\"params\":{\"threshold_percent\":85},\"relation\":\"parallel\"},{\"action\":\"check_memory_usage\",\"params\":{\"threshold_percent\":90},\"relation\":\"parallel\"},{\"action\":\"check_disk_space\",\"params\":{\"min_free_percent\":15},\"relation\":\"parallel\"}]}",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 152,
+        "o200k_base": 156
+      },
+      "latency_ms": 12630,
+      "timestamp": "2026-03-02T08:28:51.813629+00:00",
+      "complexity_level": 1,
+      "operators_tested": [
+        "&"
+      ]
+    },
+    {
+      "task_id": "L1-03",
+      "condition": "json_contracts",
+      "model": "codex",
+      "run_number": 3,
+      "output": "{\"performative\":\"inform\",\"from\":\"routing_agent\",\"to\":\"handler_agent\",\"preconditions\":[\"incoming request has been received and validated\",\"handler_agent is available to process routing instructions\",\"primary endpoint health can be evaluated\"],\"postconditions\":[\"request is routed to exactly one target service\",\"primary API endpoint is used when available\",\"fallback cache service is used when primary is unavailable\"],\"lifecycle_stage\":\"execution\",\"content\":{\"routing_policy\":\"primary_then_fallback\",\"primary_endpoint\":\"https://api.primary.service/endpoint\",\"fallback_service\":\"cache://fallback-service\",\"target_request\":\"incoming_request\"},\"steps\":[{\"action\":\"evaluate_primary_availability\",\"params\":{\"endpoint\":\"https://api.primary.service/endpoint\"},\"relation\":\"sequence\"},{\"action\":\"dispatch_to_primary_api\",\"params\":{\"endpoint\":\"https://api.primary.service/endpoint\",\"request\":\"incoming_request\"},\"relation\":\"alternative\",\"condition\":\"primary_available == true\"},{\"action\":\"dispatch_to_fallback_cache\",\"params\":{\"service\":\"cache://fallback-service\",\"request\":\"incoming_request\"},\"relation\":\"alternative\",\"condition\":\"primary_available == false\"}]}",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 208,
+        "o200k_base": 215
+      },
+      "latency_ms": 12583,
+      "timestamp": "2026-03-02T08:29:04.398915+00:00",
+      "complexity_level": 1,
+      "operators_tested": [
+        "|"
+      ]
+    },
+    {
+      "task_id": "L2-01",
+      "condition": "json_contracts",
+      "model": "codex",
+      "run_number": 3,
+      "output": "{\"performative\":\"request\",\"from\":\"orchestrator\",\"to\":\"pipeline\",\"preconditions\":[\"input payload is available\",\"input schema is loaded\",\"pipeline is ready to execute\"],\"postconditions\":[\"input schema is validated\",\"sentiment analysis is completed on validated data\",\"topic classification is completed on validated data\",\"results are merged into a single report\"],\"lifecycle_stage\":\"execution\",\"content\":{\"workflow\":\"validate_analyze_merge\",\"input\":\"raw_input\",\"output\":\"single_report\"},\"steps\":[{\"action\":\"validate_input_schema\",\"params\":{\"target\":\"raw_input\",\"schema\":\"input_schema\"},\"relation\":\"sequence\"},{\"action\":\"analyze_sentiment\",\"params\":{\"target\":\"validated_data\"},\"relation\":\"parallel\"},{\"action\":\"classify_topic\",\"params\":{\"target\":\"validated_data\"},\"relation\":\"parallel\"},{\"action\":\"merge_analysis_results\",\"params\":{\"sources\":[\"sentiment_output\",\"topic_output\"],\"output\":\"single_report\"},\"relation\":\"sequence\"}]}",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 177,
+        "o200k_base": 188
+      },
+      "latency_ms": 10683,
+      "timestamp": "2026-03-02T08:29:15.083398+00:00",
+      "complexity_level": 2,
+      "operators_tested": [
+        "->",
+        "&"
+      ]
+    },
+    {
+      "task_id": "L2-02",
+      "condition": "json_contracts",
+      "model": "codex",
+      "run_number": 3,
+      "output": "{\"performative\":\"command\",\"from\":\"query_agent\",\"to\":\"data_agent\",\"preconditions\":[\"query payload and cache key are provided\",\"cache service is reachable\",\"database service is reachable\",\"data_agent is idle or able to accept work\"],\"postconditions\":[\"results are returned to query_agent\",\"if cache hit, results come from cache and database is not queried\",\"if cache miss, database is queried and cache is updated before returning results\"],\"lifecycle_stage\":\"execution\",\"content\":{\"task\":\"resolve_query_with_cache_fallback\",\"cache_key\":\"results:{query_hash}\",\"query\":\"<database_query>\",\"ttl_seconds\":300},\"steps\":[{\"action\":\"check_cache\",\"params\":{\"key\":\"results:{query_hash}\"},\"relation\":\"sequence\"},{\"action\":\"return_cached_results\",\"params\":{\"key\":\"results:{query_hash}\"},\"relation\":\"alternative\",\"condition\":\"cache_hit == true\"},{\"action\":\"query_database\",\"params\":{\"query\":\"<database_query>\"},\"relation\":\"alternative\",\"condition\":\"cache_hit == false\"},{\"action\":\"update_cache\",\"params\":{\"key\":\"results:{query_hash}\",\"value\":\"db_results\",\"ttl_seconds\":300},\"relation\":\"causal\",\"caused_by\":\"query_database\"},{\"action\":\"return_fresh_results\",\"params\":{\"source\":\"db_results\"},\"relation\":\"causal\",\"caused_by\":\"update_cache\"}]}",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 261,
+        "o200k_base": 268
+      },
+      "latency_ms": 21024,
+      "timestamp": "2026-03-02T08:29:36.109519+00:00",
+      "complexity_level": 2,
+      "operators_tested": [
+        "|",
+        "->"
+      ]
+    },
+    {
+      "task_id": "L2-03",
+      "condition": "json_contracts",
+      "model": "codex",
+      "run_number": 3,
+      "output": "{\"id\":\"msg-sec-audit-001\",\"performative\":\"command\",\"from\":\"security_agent\",\"to\":\"audit_agent\",\"preconditions\":[\"Target service inventory is available\",\"Services are labeled with exposure type (internal-only vs external-facing)\",\"Audit agent has authorized network scanning permissions\"],\"postconditions\":[\"Open-port scan completed for all non-internal services in scope\",\"SSL certificate checks completed for all non-internal services in scope\",\"Internal-only services are excluded from all scan activities\",\"Findings are consolidated into a single audit report\"],\"lifecycle_stage\":\"execution\",\"content\":{\"objective\":\"Run concurrent network/security checks on allowed services\",\"scope\":{\"exclude\":[\"internal-only services\"],\"include\":[\"external-facing services\",\"public endpoints\",\"partner-accessible endpoints\"]},\"outputs\":[\"open_ports_report\",\"ssl_certificate_report\",\"combined_audit_summary\"]},\"steps\":[{\"action\":\"derive_scan_scope\",\"params\":{\"exclude_tag\":\"internal-only\",\"include_exposure\":[\"external\",\"public\",\"partner\"]},\"relation\":\"sequence\"},{\"action\":\"scan_open_ports\",\"params\":{\"targets\":\"derived_scope.targets\",\"scan_profile\":\"standard_tcp_udp\"},\"relation\":\"parallel\"},{\"action\":\"check_ssl_certificates\",\"params\":{\"targets\":\"derived_scope.tls_endpoints\",\"checks\":[\"validity_period\",\"hostname_match\",\"issuer_chain\",\"revocation_status\",\"protocol_strength\"]},\"relation\":\"parallel\"},{\"action\":\"merge_and_publish_results\",\"params\":{\"inputs\":[\"scan_open_ports\",\"check_ssl_certificates\"],\"format\":\"audit_summary\"},\"relation\":\"sequence\"}]}",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 290,
+        "o200k_base": 298
+      },
+      "latency_ms": 17201,
+      "timestamp": "2026-03-02T08:29:53.313857+00:00",
+      "complexity_level": 2,
+      "operators_tested": [
+        "&",
+        "!"
+      ]
+    },
+    {
+      "task_id": "L3-01",
+      "condition": "json_contracts",
+      "model": "codex",
+      "run_number": 3,
+      "output": "{\"id\":\"msg-etl-001\",\"protocol_version\":\"1.0\",\"performative\":\"command\",\"from\":\"etl_orchestrator\",\"to\":\"etl_pipeline\",\"preconditions\":[\"API source is reachable\",\"Database source is reachable\",\"Pipeline workers are available\",\"Validation rules are configured\",\"Data warehouse and error queue endpoints are available\"],\"postconditions\":[\"Data is extracted from API and database sources\",\"Extracted data is combined and transformed via validation rules\",\"If validation passes, data is loaded into the data warehouse\",\"If validation fails, data is routed to the error queue\"],\"lifecycle_stage\":\"execution\",\"content\":{\"workflow\":\"etl_ingestion\",\"objective\":\"extract from API and database in parallel, validate combined data, then conditionally load or route errors\"},\"steps\":[{\"action\":\"extract_data\",\"params\":{\"source\":\"api_source\"},\"relation\":\"parallel\"},{\"action\":\"extract_data\",\"params\":{\"source\":\"database_source\"},\"relation\":\"parallel\"},{\"action\":\"combine_data\",\"params\":{\"sources\":[\"api_source\",\"database_source\"]},\"relation\":\"sequence\"},{\"action\":\"transform_data\",\"params\":{\"operation\":\"apply_validation_rules\",\"ruleset\":\"default_validation_rules\"},\"relation\":\"sequence\"},{\"action\":\"load_data\",\"params\":{\"target\":\"data_warehouse\"},\"relation\":\"alternative\",\"condition\":\"validation_status == 'pass'\"},{\"action\":\"route_data\",\"params\":{\"target\":\"error_queue\",\"reason\":\"validation_failed\"},\"relation\":\"alternative\",\"condition\":\"validation_status == 'fail'\"}]}",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 287,
+        "o200k_base": 292
+      },
+      "latency_ms": 21503,
+      "timestamp": "2026-03-02T08:30:14.819887+00:00",
+      "complexity_level": 3,
+      "operators_tested": [
+        "->",
+        "&",
+        "|"
+      ]
+    },
+    {
+      "task_id": "L3-02",
+      "condition": "json_contracts",
+      "model": "codex",
+      "run_number": 3,
+      "output": "{\"performative\":\"request\",\"from\":\"monitoring_agent\",\"to\":\"remediation_orchestrator\",\"preconditions\":[\"Service degradation alert is active\",\"Root-cause chain has been identified (memory leak in cache layer caused by missing eviction policy)\",\"Cache restart permissions are available\",\"Hotfix artifact for eviction policy is available\"],\"postconditions\":[\"Cache service has been restarted\",\"Eviction-policy hotfix has been deployed\",\"Service recovery has been verified against health metrics\",\"Incident state is updated to recovered\"],\"lifecycle_stage\":\"execution\",\"content\":{\"incident\":\"service_degradation\",\"severity\":\"high\",\"root_cause\":{\"issue\":\"memory_leak_in_cache_layer\",\"caused_by\":\"missing_eviction_policy\"},\"objective\":\"Execute parallel remediation and verify recovery\"},\"steps\":[{\"action\":\"record_incident_context\",\"params\":{\"incident\":\"service_degradation\",\"root_cause\":\"memory_leak_in_cache_layer\",\"upstream_cause\":\"missing_eviction_policy\"},\"relation\":\"sequence\"},{\"action\":\"restart_cache_service\",\"params\":{\"service\":\"cache\",\"mode\":\"rolling_restart\"},\"relation\":\"sequence\"},{\"action\":\"deploy_hotfix\",\"params\":{\"component\":\"cache_layer\",\"fix\":\"add_eviction_policy\",\"deployment\":\"hotfix\"},\"relation\":\"parallel\"},{\"action\":\"verify_service_recovery\",\"params\":{\"checks\":[\"latency\",\"error_rate\",\"memory_usage\",\"cache_hit_ratio\"],\"stability_window\":\"5m\"},\"relation\":\"sequence\"}]}",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 277,
+        "o200k_base": 285
+      },
+      "latency_ms": 28998,
+      "timestamp": "2026-03-02T08:30:43.820714+00:00",
+      "complexity_level": 3,
+      "operators_tested": [
+        "<-",
+        "&",
+        "->"
+      ]
+    },
+    {
+      "task_id": "L3-03",
+      "condition": "json_contracts",
+      "model": "codex",
+      "run_number": 3,
+      "output": "{\"performative\":\"propose\",\"from\":\"negotiation_agent\",\"to\":\"supplier_agent\",\"preconditions\":[\"Current market rate data is available and validated\",\"Supplier can fulfill product A or product B\",\"Warehouse delivery and invoicing channels are operational\"],\"postconditions\":[\"Supplier has received two mutually exclusive pricing options\",\"One product option (A or B) is selected for fulfillment\",\"Inventory is confirmed before downstream execution\",\"Shipment and invoice are executed in parallel\",\"Payment confirmation is awaited after shipment and invoicing\"],\"lifecycle_stage\":\"negotiation\",\"content\":{\"deal_options\":[{\"product\":\"A\",\"unit_price_usd\":100},{\"product\":\"B\",\"unit_price_usd\":85}],\"selection_rule\":\"Choose exactly one option\",\"pricing_justification\":\"Unit prices are aligned with current market rates.\"},\"steps\":[{\"action\":\"present_deal_options\",\"params\":{\"offers\":[{\"product\":\"A\",\"unit_price_usd\":100},{\"product\":\"B\",\"unit_price_usd\":85}]},\"relation\":\"sequence\"},{\"action\":\"select_product_A_contract\",\"params\":{\"product\":\"A\",\"unit_price_usd\":100},\"relation\":\"alternative\",\"condition\":\"Supplier accepts product A offer\"},{\"action\":\"select_product_B_contract\",\"params\":{\"product\":\"B\",\"unit_price_usd\":85},\"relation\":\"alternative\",\"condition\":\"Supplier accepts product B offer\"},{\"action\":\"confirm_inventory\",\"params\":{\"selected_product\":\"A_or_B\"},\"relation\":\"causal\",\"caused_by\":\"select_product_A_contract or select_product_B_contract\"},{\"action\":\"ship_to_warehouse\",\"params\":{\"selected_product\":\"A_or_B\",\"destination\":\"warehouse\"},\"relation\":\"sequence\"},{\"action\":\"send_invoice\",\"params\":{\"selected_product\":\"A_or_B\",\"currency\":\"USD\"},\"relation\":\"parallel\"},{\"action\":\"await_payment_confirmation\",\"params\":{\"selected_product\":\"A_or_B\"},\"relation\":\"causal\",\"caused_by\":\"ship_to_warehouse and send_invoice\"}]}",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 376,
+        "o200k_base": 384
+      },
+      "latency_ms": 30952,
+      "timestamp": "2026-03-02T08:31:14.775643+00:00",
+      "complexity_level": 3,
+      "operators_tested": [
+        "->",
+        "|",
+        "&",
+        "<-"
+      ]
+    }
+  ]
+}

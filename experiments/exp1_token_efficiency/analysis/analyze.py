@@ -433,6 +433,64 @@ def prompt_overhead_analysis():
             else:
                 print(f"  vs {cond}: {overhead_diff} prompt tokens (AXON prompt is smaller)")
 
+    return prompt_tokens
+
+
+def prompt_amortization_table(prompt_tokens: dict, records: list[AnalysisRecord]):
+    """Formal amortization table: messages to break even on AXON's prompt overhead.
+
+    For each condition pair, computes:
+    - Prompt overhead delta (AXON - other)
+    - Mean per-message token savings (other_mean_tokens - axon_mean_tokens)
+    - Breakeven message count = ceil(overhead_delta / per_msg_savings)
+    """
+    if not prompt_tokens or "axon" not in prompt_tokens:
+        return
+
+    print("\n" + "=" * 80)
+    print("PROMPT AMORTIZATION TABLE")
+    print("=" * 80)
+
+    axon_prompt = prompt_tokens["axon"]["cl100k_base"]
+
+    # Compute mean raw tokens per condition
+    mean_tokens = {}
+    for cond in CONDITIONS_EXPLORATORY:
+        cr = [r for r in records if r.condition == cond]
+        if cr:
+            mean_tokens[cond] = np.mean([r.tokens_cl100k for r in cr])
+
+    print(f"\n  AXON system prompt: {axon_prompt} tokens (cl100k)")
+    print(f"  AXON mean message:  {mean_tokens.get('axon', 0):.1f} tokens")
+    print()
+
+    all_conds = [c for c in CONDITIONS_EXPLORATORY if c != "axon"]
+    print(f"  {'Condition':<28} {'Prompt Δ':>9} {'Msg Save':>9} "
+          f"{'Breakeven':>10} {'AXON msg':>9} {'Other msg':>10}")
+    print("  " + "-" * 80)
+
+    for cond in all_conds:
+        if cond not in prompt_tokens or cond not in mean_tokens:
+            continue
+        other_prompt = prompt_tokens[cond]["cl100k_base"]
+        overhead = axon_prompt - other_prompt
+        axon_msg = mean_tokens.get("axon", 0)
+        other_msg = mean_tokens.get(cond, 0)
+        per_msg_saving = other_msg - axon_msg  # Positive = AXON saves
+
+        if overhead <= 0:
+            breakeven = "0 (no overhead)"
+        elif per_msg_saving <= 0:
+            breakeven = "never"
+        else:
+            import math
+            be = math.ceil(overhead / per_msg_saving)
+            breakeven = str(be)
+
+        marker = " *" if cond == "aisp" else ""
+        print(f"  {cond:<28} {overhead:>+9} {per_msg_saving:>+9.1f} "
+              f"{breakeven:>10} {axon_msg:>9.1f} {other_msg:>10.1f}{marker}")
+
 
 # ── Main ─────────────────────────────────────────────────────────────
 
@@ -484,7 +542,9 @@ def run_analysis(results_paths: list[Path]):
         print("  See experiments/exp_aisp_comparison/DEVIATION.md for deviation notice.")
         _aisp_exploratory_analysis(all_records)
 
-    prompt_overhead_analysis()
+    prompt_tokens = prompt_overhead_analysis()
+    if prompt_tokens:
+        prompt_amortization_table(prompt_tokens, all_records)
 
     # Mixed-effects models
     mixed_effects_analysis(all_records, outcome="log_tpu")

@@ -1,8 +1,10 @@
-# Agent-to-Agent Communication Ecosystem Landscape (Feb 2026)
+# Agent-to-Agent Communication Ecosystem Landscape (Feb–Mar 2026)
 
 ## Purpose
 
-Map the full ecosystem of agent communication protocols, formats, and standards as of February 2026. Assess where AXON fits (if at all), identify direct competitors, and evaluate whether a pivot is needed.
+Map the full ecosystem of agent communication protocols, formats, and standards as of early 2026. Assess where AXON fits (if at all), identify direct competitors, and evaluate whether a pivot is needed.
+
+**Updated March 2026**: Added SEMAP, StructEval, ReliabilityBench, A2ASecBench, ProtocolBench (ICLR 2026 version), WMAC 2026, and Planner-Coder Gap study.
 
 ---
 
@@ -56,12 +58,18 @@ The landscape has **five distinct layers**. Understanding which layer AXON opera
 
 | Work | Venue | Key Finding |
 |------|-------|-------------|
-| **ProtocolBench** (2025) | arXiv 2510.17149 | Protocol choice varies performance by 36.5%. No single protocol dominates all scenarios |
+| **ProtocolBench** (2025→2026) | ICLR 2026 (arXiv 2510.17149) | 4-axis evaluation (success, latency, overhead, robustness). Protocol choice varies performance by 36.5%. Introduces ProtocolRouter for per-scenario selection |
+| **SEMAP** (Oct 2025) | arXiv 2510.12120 | Structured contracts over A2A reduce agent failures by 47-70%. Behavioral contracts (pre/post-conditions) + lifecycle-guided execution + verification |
+| **StructEval** (2025) | TMLR 2025 (arXiv 2505.20139) | 18 formats, 44 tasks. Even o1-mini achieves only 75.6% avg. JSON/HTML near-perfect; TOML/Mermaid conversion <36% |
+| **ReliabilityBench** (Jan 2026) | arXiv 2601.06112 | Chaos-engineering reliability testing. R(k,ε,λ) surface: consistency, perturbation robustness, fault tolerance. Perturbations reduce success 96.9%→88.1% |
+| **A2ASecBench** (2025→2026) | ICLR 2026 (OpenReview LfdFnakqGJ) | First A2A-specific security benchmark. 6 attack vectors across supply-chain and protocol-logic. Dynamic adapter layer for heterogeneous stacks |
 | **LACP** | NeurIPS 2025 AI4NextG | Telecom-inspired 3-layer architecture proposal for standardization |
 | **"Beyond Self-Talk"** (2025) | arXiv 2502.14321 | Communication-centric survey: 5 architectures, efficiency/security/scalability gaps |
 | **Agora** (Oxford) | arXiv 2410.11905 | Meta-protocol negotiation via Protocol Documents. Theoretical only, no implementation |
 | **Token-Efficient Codified Communication** (2025) | arXiv 2507.03254 | YAML-based codified prompts reduce tokens vs NL Chain-of-Thought |
 | **Survey of AI Agent Protocols** (2025) | arXiv 2504.16736 | Comprehensive taxonomy of MCP, ACP, A2A, ANP + 10 others |
+| **WMAC 2026** | AAAI 2026 Bridge Program | Workshop on Advancing LLM-Based Multi-Agent Collaboration. Coordination, knowledge sharing, scalability |
+| **Planner-Coder Gap** (2025) | arXiv 2510.10460 | Multi-agent code generation robustness: MASs fail 7.9-83.3% of initially-solved problems under mutations |
 
 ### The Governance Convergence
 
@@ -292,11 +300,17 @@ Option B (A2A integration) is a good **follow-up** project if the paper lands an
 ### Research Papers
 - [Survey of Agent Interoperability Protocols](https://arxiv.org/abs/2505.02279) — MCP, ACP, A2A, ANP comparison
 - [Survey of AI Agent Protocols](https://arxiv.org/abs/2504.16736) — Comprehensive taxonomy
-- [ProtocolBench](https://arxiv.org/abs/2510.17149) — Protocol benchmarking, no single protocol dominates
+- [ProtocolBench](https://arxiv.org/abs/2510.17149) — 4-axis protocol evaluation (ICLR 2026)
+- [SEMAP](https://arxiv.org/abs/2510.12120) — Structured contracts reduce agent failures 47-70%
+- [StructEval](https://arxiv.org/abs/2505.20139) — 18-format structural output benchmark (TMLR 2025)
+- [ReliabilityBench](https://arxiv.org/abs/2601.06112) — Chaos-engineering reliability testing for LLM agents
+- [A2ASecBench](https://openreview.net/forum?id=LfdFnakqGJ) — A2A security benchmark (ICLR 2026)
 - [LACP](https://arxiv.org/abs/2510.13821) — Telecom-inspired standardization proposal (NeurIPS 2025)
 - [Beyond Self-Talk](https://arxiv.org/abs/2502.14321) — Communication-centric MAS survey
 - [Token-Efficient Codified Communication](https://arxiv.org/abs/2507.03254) — YAML codified prompts
 - [Agora Protocol](https://arxiv.org/abs/2410.11905) — Oxford meta-protocol negotiation
+- [Planner-Coder Gap](https://arxiv.org/abs/2510.10460) — Multi-agent robustness under mutations
+- [WMAC 2026](https://multiagents.org/2026/) — AAAI 2026 Bridge Program on Multi-Agent Collaboration
 - [A2A Protocol Criticism](https://medium.com/@ckekula/everything-wrong-with-agent2agent-a2a-protocol-7e5ae8d4ab2b)
 - [A2A Adoption Analysis](https://blog.fka.dev/blog/2025-09-11-what-happened-to-googles-a2a/)
 
