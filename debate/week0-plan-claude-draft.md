@@ -1,6 +1,6 @@
 # Week 0 Prerequisites — Implementation Plan (Debate Draft)
 
-*Snapshot of artifact under review. Source: `/Users/magnus/.claude/plans/valiant-chasing-falcon.md`*
+*Snapshot of artifact under review. Source: `<home>/.claude/plans/valiant-chasing-falcon.md`*
 
 ## Context
 The AXON project has 6 experiments designed but none started. Week 0 must complete first: freeze the spec, build a real validator, document fairness constraints, and scaffold the experiments directory. Without this, Experiment 0 (the learnability gate) cannot run.

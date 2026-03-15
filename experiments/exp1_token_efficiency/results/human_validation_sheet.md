@@ -283,7 +283,7 @@ QUERY (agent-a -> agent-b):
 
 REQUEST (ci-agent -> builder-agent):
   action: build
-  repository: /Users/magnus/repos/invent-new-language
+  repository: <repo>/invent-new-language
   branch: main
   commit: 4f3c2b1a9e8d7c6b5a4f3c2b1a9e8d7c6b5a4f3c
   build-target: ci

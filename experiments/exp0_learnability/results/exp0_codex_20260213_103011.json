@@ -326,7 +326,7 @@
       "condition": "instruction_matched_english",
       "model": "codex",
       "run_number": 1,
-      "output": "[message-id: m-ci-0001]\n[timestamp: 1770940800]\n[context: ci-build-invent-new-language]\n\nREQUEST (ci-agent -> builder-agent):\n  action: build\n  repository: /Users/magnus/repos/invent-new-language\n  branch: main\n  commit: 4f3c2b1a9e8d7c6b5a4f3c2b1a9e8d7c6b5a4f3c\n  build-target: ci\n  notify-on-completion: ci-agent",
+      "output": "[message-id: m-ci-0001]\n[timestamp: 1770940800]\n[context: ci-build-invent-new-language]\n\nREQUEST (ci-agent -> builder-agent):\n  action: build\n  repository: <repo>/invent-new-language\n  branch: main\n  commit: 4f3c2b1a9e8d7c6b5a4f3c2b1a9e8d7c6b5a4f3c\n  build-target: ci\n  notify-on-completion: ci-agent",
       "valid": true,
       "errors": [],
       "token_counts": {
@@ -1946,7 +1946,7 @@
       "condition": "instruction_matched_english",
       "model": "codex",
       "run_number": 3,
-      "output": "[message-id: m-ci-20260213-001]\nREQUEST (ci-agent -> builder-agent):\n  timestamp: 1770940800\n  context: ci-run-58421\n  repository: /Users/magnus/repos/invent-new-language\n  branch: feature/ci-integration\n  commit: 9f3c2a1b7e6d5c4b3a2910ffeedccbbaa9988776\n  task: build\n  build-target: linux-amd64\n  priority: high",
+      "output": "[message-id: m-ci-20260213-001]\nREQUEST (ci-agent -> builder-agent):\n  timestamp: 1770940800\n  context: ci-run-58421\n  repository: <repo>/invent-new-language\n  branch: feature/ci-integration\n  commit: 9f3c2a1b7e6d5c4b3a2910ffeedccbbaa9988776\n  task: build\n  build-target: linux-amd64\n  priority: high",
       "valid": true,
       "errors": [],
       "token_counts": {
