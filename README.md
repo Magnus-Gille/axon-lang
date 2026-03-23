@@ -1,8 +1,40 @@
 # AXON — Agent eXchange Optimized Notation
 
-> **Status**: Draft v0.1 — promising concept, not validated standard. Efficiency claims are hypotheses pending benchmarking.
+> **Status**: Draft v0.1 — experimentally validated concept (Exp 0–3 complete), not yet a production standard. See experimental results below.
 
 A purpose-built language for agent-to-agent communication, designed from first principles using information theory, formal linguistics, and multi-agent systems research.
+
+## Relationship to A2A
+
+[Google's A2A protocol](https://github.com/google/A2A) defines how agents discover each other, negotiate capabilities, and exchange messages over the network. AXON is **complementary** — it optimizes what goes *inside* those messages.
+
+| Layer | A2A | AXON |
+|-------|-----|------|
+| Transport, Discovery, Auth | ✅ | — |
+| Task Lifecycle | ✅ | — |
+| Message Format | JSON (default) | **32% fewer tokens** (Exp 1, mixed model, p<0.001) |
+| Semantic Intent | Unstructured | **20 speech-act performatives** |
+| Compositionality | — | **66.2% composition rate** (vs 24.9% JSON FC) |
+
+**A2A is the protocol. AXON is the format.** They work together:
+
+```python
+# A2A message with AXON-formatted payload (per A2A ProtoJSON spec)
+a2a_message = {
+    "messageId": "msg-001",
+    "role": "ROLE_USER",
+    "parts": [{
+        "text": "REQ(@orch>@analyzer): analyze($data) -> summarize(#brief) & extract(#entities)",
+        "mediaType": "application/axon"
+    }]
+}
+```
+
+AXON plugs into A2A through standard content negotiation — agents declare `application/axon` in their Agent Card's `defaultInputModes`/`defaultOutputModes`, and A2A's existing `media_type` field on Parts carries the format through. No protocol changes required.
+
+**What AXON does NOT replace**: A2A's transport (HTTP/SSE), discovery (Agent Cards), authentication (OAuth/JWT), task lifecycle, or push notifications. AXON is a serialization format — it makes payloads smaller and more semantically explicit while A2A moves them around.
+
+See the full bridge example: [`examples/a2a_bridge.py`](examples/a2a_bridge.py)
 
 ## Why Not English?
 
@@ -115,7 +147,8 @@ CMD(@admin>@server): restart()
 │   ├── basic.axon                   # Basic examples (8 messages)
 │   ├── advanced.axon                # Complex patterns (11 messages)
 │   ├── real_world_scenarios.axon    # CI/CD, incident response, fleet coordination (30 messages)
-│   └── comparisons.md              # Side-by-side English vs AXON (pilot data)
+│   ├── comparisons.md              # Side-by-side English vs AXON (pilot data)
+│   └── a2a_bridge.py               # AXON ↔ A2A bridge example with token comparison
 ├── src/
 │   └── axon_parser.py              # Reference parser (Python, recursive descent)
 └── debate/                          # Adversarial review (Claude vs Codex, 4 rounds)
@@ -169,3 +202,4 @@ This language was designed through a structured process:
 3. **Reference implementation** — Recursive descent parser in Python
 4. **Adversarial review** — 4-round structured debate between Claude (Opus 4.6) and Codex (GPT-5.3), resolving ~85% of ~100 critique points
 5. **Revision** — All debate-agreed changes incorporated into spec, parser, and research document
+6. **Ecosystem positioning** — Analyzed as complementary format for A2A protocol (see [positioning document](https://github.com/Magnus-Gille/axon-lang/blob/main/examples/a2a_bridge.py))
