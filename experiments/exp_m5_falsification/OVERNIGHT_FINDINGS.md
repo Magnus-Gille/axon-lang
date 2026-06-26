@@ -151,7 +151,27 @@ So the capability floor decomposes into **three** layers:
    (comparisons, member access, inline units on names). This last layer is an AXON *design*
    limitation, not a model failure, and is the part no preprocessor fixes.
 
-## Phase D — Cross-reader decode sweep (firm "easy to read") — RUNNING (b56bb44xc)
+## Phase D — Cross-reader decode sweep (firm "easy to read") — DONE
+
+Decoded the same 114 AXON messages (run0+1) with four readers of differing capability:
+
+| reader | n decoded | AXON fidelity |
+|---|---|---|
+| gemma4 (weak) | 44 / 114¹ | 0.985¹ |
+| qwen3-30b (mid) | 113 | 0.945 |
+| gpt-oss-120b (large) | 114 | 0.951 |
+| qwen3-coder-80b (code) | 114 | 0.930 |
+
+¹ gemma4-as-reader was time-boxed (heavy reasoner, ~21s/cell) and only finished 44/114 —
+high fidelity on the subset it reached, but partial coverage, so inconclusive for the weak end.
+
+Among the three readers that decoded the **full** set, **AXON fidelity is flat (0.93–0.95)
+regardless of reader capability**. → the capability floor is **purely sender-side**: AXON is
+hard to *write* (steep validity floor on the sender) but easy to *read* (any capable reader
+recovers it, and even a deterministic parser would once it's valid). The sender-vs-reader
+asymmetry — the §4.7 claim — is now firmed with a proper reader-capability curve (was 2 points).
+
+## Phase G — Weak-end replication (gemma4/qwen35 → n=4) — RUNNING/NEXT (firm the threshold)
 
 ---
 
