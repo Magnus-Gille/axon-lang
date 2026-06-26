@@ -217,6 +217,35 @@ penalty but not the valid-but-wrong failure on complex payloads. Net: constraine
 is a **real but partial** rescue, strongest for weak models — pair it with payload
 validation on compositional messages.
 
+### 4.7 The floor is on the writer, not the reader
+
+Re-decoding the same AXON / JSON+Schema messages with readers of different strength:
+
+| reader | AXON fidelity | JSON+Schema fidelity |
+|---|---|---|
+| mid (qwen3-30b) | 0.942 | 0.959 |
+| strong (qwen3-coder-80b) | 0.918 | 0.965 |
+
+Among capable readers, AXON is recovered **as robustly as JSON** — flat across reader
+strength. So AXON's capability requirement is **asymmetric**: hard to *write* (needs a
+capable sender, §4.2) but easy to *read* (a mid model recovers it fine). Practical upshot:
+in a mixed fleet, put AXON *generation* on your strong/code-tuned models; the *consumer* can
+be modest — or, ideally, a deterministic parser (AXON's actual intended reader, not exercised
+here). The truly-weak reader (qwen35-a3b) test was **inconclusive** — the box returned
+HTTP 530 on 118/131 of its calls (an infra/model-load failure, equal on JSON and AXON), so
+it carries no signal.
+
+### 4.8 Statistical firming
+
+- Per-condition fidelity, 95% bootstrap CI: AXON **0.848 [0.775, 0.911]**, non-overlapping
+  with JSON **0.938 [0.913, 0.961]** — AXON is significantly lowest overall.
+- Capability floor as a rank effect: **Spearman(model capability, AXON fidelity) = +1.00**
+  (and +0.90 for validity) vs **+0.20 for JSON** — AXON tracks capability almost perfectly;
+  JSON is flat.
+- Paired over 70 model×task cells, AXON **ties** JSON+Schema on 45, **loses** 16, **wins** 9
+  (mean −0.084): AXON matches the incumbent on most cells and is dragged down by a minority
+  of hard failures.
+
 ## 5. Verdict (against the pre-registered criteria)
 
 - **Falsified overall: YES.** In the OVERALL slice and at every individual task Level,
