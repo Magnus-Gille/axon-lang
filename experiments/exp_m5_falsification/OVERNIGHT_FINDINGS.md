@@ -60,9 +60,29 @@ Across all emitted AXON (n=106 ok messages, 2 runs on 3 models + 1 run on 2 mode
   of failures — i.e. much of the "capability floor" is a *small, fixable grammar-surface gap*,
   not a deep semantic limit. (To be cross-checked against the repair experiment, Phase E.)
 
-## Phase C — Extra replications (runs 3–4, headline models) — PENDING
+## Phase E — Deterministic syntactic repair (box-free) — DONE (fidelity check queued)
+
+The taxonomy implied much of the emission floor is *surface-syntax strictness*. Tested it
+directly with `axon_repair.py` — a ~15-line, **meaning-preserving** normalizer (no model, no
+box) applied only to messages the strict grammar rejects:
+- **R1** multi-receiver routing `(@X>@a, @b, @c)` → `(@X>[@a,@b,@c])`
+- **R2** bare clock-time `02:00` → `"02:00"` (so `:` isn't read as a record separator)
+- **R3** bare labelled record `alert{level:3}` → `#alert{level:3}` (tag)
+
+**Result: 24/46 invalid AXON messages (52%) become parseable** — for free, deterministically.
+Fired: R2 quote-time ×16, R3 tag-record ×11, R1 routing-list ×5. → **roughly half of AXON's
+"capability floor" is a spec-strictness gap a lenient preprocessor/grammar closes**, not a
+model-capability wall. Repaired messages saved to `results/repaired_axon.jsonl`.
+
+⚠ **Caveat (the key check):** parse-recovery ≠ correctness. The repairs are meaning-preserving
+by construction, but I must confirm the repaired messages *decode to the right fields* (no
+valid-but-wrong, the failure mode that bit retry-until-valid in §4.6). **Decode+fidelity check
+queued for the next box window (Phase F).** If fidelity holds, this is the practical headline:
+AXON's emission floor is cheaply, safely removable.
+
+## Phase C — Extra replications (runs 3–4, headline models) — RUNNING (byjf2rqsw)
 ## Phase D — Cross-model decode sweep (multiple readers) — PENDING
-## Phase E — (stretch) syntactic-repair rescue of invalid AXON — PENDING
+## Phase F — Decode repaired AXON → confirm fidelity holds — QUEUED (box)
 
 ---
 
