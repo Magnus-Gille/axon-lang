@@ -134,7 +134,24 @@ models just make *more* slips, not deeper ones. Effective parse-validity after t
    Validity is decisive **only** for the deterministic-parser pitch (machine-parse, no LLM) —
    which is exactly AXON's reason to exist. There, the free preprocessor is high-leverage.
 
-## Phase D — Cross-reader decode sweep (firm "easy to read") — RUNNING/NEXT
+### Residual failures (the unrepaired ~51%) — the floor has 3 layers, not 2
+
+Categorising the 32 messages the normalizer does *not* fix:
+- **multi-error surface slips** (a message with 2+ strictness errors; one repair fires but
+  others remain) — fixable with more transforms;
+- **genuine expressiveness gaps** — the model reaches for constructs AXON's grammar *lacks*:
+  comparison/member-access in conditionals (`if(response.status == 200, store(...))`), units
+  glued to identifiers (`CPU_exceeded_95%`), `key:val` as a bare call-arg, positional `$1`
+  backrefs. These aren't strictness — AXON genuinely can't express them.
+
+So the capability floor decomposes into **three** layers:
+1. ~49% trivially-fixable surface strictness (the safe repairs),
+2. multi-error surface slips (more transforms would catch these),
+3. **genuine expressiveness gaps** — AXON's grammar is missing constructs models reach for
+   (comparisons, member access, inline units on names). This last layer is an AXON *design*
+   limitation, not a model failure, and is the part no preprocessor fixes.
+
+## Phase D — Cross-reader decode sweep (firm "easy to read") — RUNNING (b56bb44xc)
 
 ---
 

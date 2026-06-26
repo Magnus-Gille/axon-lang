@@ -45,8 +45,11 @@ def main():
     ap.add_argument("--out", default=os.path.join(HERE, "results", "decode.jsonl"))
     ap.add_argument("--tasks-file", default=os.path.join(HERE, "tasks.json"))
     ap.add_argument("--max-tokens", type=int, default=800)
+    ap.add_argument("--conditions", default="", help="comma list to filter (e.g. axon); blank=all")
+    ap.add_argument("--max-run", type=int, default=-1, help="only decode runs <= this (-1 = all)")
     args = ap.parse_args()
 
+    conds = set(args.conditions.split(",")) if args.conditions else None
     tasks = {t["id"]: t for t in json.load(open(args.tasks_file))["tasks"]}
     encs = []
     with open(args.inp) as f:
@@ -55,8 +58,13 @@ def main():
                 r = json.loads(line)
             except Exception:
                 continue
-            if r.get("ok") and (r.get("msg") or "").strip():
-                encs.append(r)
+            if not (r.get("ok") and (r.get("msg") or "").strip()):
+                continue
+            if conds and r.get("condition") not in conds:
+                continue
+            if args.max_run >= 0 and r.get("run", 0) > args.max_run:
+                continue
+            encs.append(r)
 
     done = load_existing(args.out)
     out = open(args.out, "a")
