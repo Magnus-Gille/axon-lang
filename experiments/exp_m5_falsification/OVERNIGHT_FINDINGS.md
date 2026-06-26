@@ -80,9 +80,61 @@ valid-but-wrong, the failure mode that bit retry-until-valid in §4.6). **Decode
 queued for the next box window (Phase F).** If fidelity holds, this is the practical headline:
 AXON's emission floor is cheaply, safely removable.
 
-## Phase C — Extra replications (runs 3–4, headline models) — RUNNING (byjf2rqsw)
-## Phase D — Cross-model decode sweep (multiple readers) — PENDING
-## Phase F — Decode repaired AXON → confirm fidelity holds — QUEUED (box)
+## Phase C — Replication to n=4 (3 headline models) — DONE
+
+With 4 runs each, the validity "ladder" **collapses into a threshold, not a smooth climb**:
+
+| model | #runs | validity % (mean±SD) | decoded fidelity |
+|---|---|---|---|
+| gemma4 (weak) | 2 | **36 ± 7** | 0.943 |
+| qwen35-a3b (~3B) | 2 | **45 ± 12** | 0.979 |
+| qwen3-30b (mid) | 4 | 66 ± 8 | 0.914 |
+| gpt-oss-120b (large) | 4 | 70 ± 8 | 0.960 |
+| qwen3-coder-80b (code) | 4 | 68 ± 11 | 0.953 |
+
+- The three **capable models are statistically indistinguishable** (66–70%, overlapping SDs);
+  the weak models sit far below (36–45%). So it's a **capability *threshold*** (below it AXON
+  validity collapses; above it it plateaus ~68%), **not** a monotonic ladder.
+- **The "code-tuned model is the best host (86% valid)" claim is REFUTED by replication** —
+  coder (68±11) ≈ gpt-oss (70±8) ≈ qwen3-30b (66±8). Run0's 86% was noise. ← key correction.
+- Decoded fidelity flat/high everywhere (0.91–0.98), reconfirming: floor = emission, not meaning.
+
+## Phase F — Decode the repaired AXON (parse ≠ correct check) — DONE
+
+Decoded the 24 repaired messages and scored vs ground truth:
+- **Repairs are SAFE: 0/24 "valid-but-wrong"** (none drop below 0.5 fidelity). The §4.6
+  failure mode of retry-until-valid (forcing parse → wrong meaning) does **not** occur here,
+  because the repairs are meaning-preserving by construction.
+- **But repair barely moves fidelity** (orig-invalid 0.877 → repaired 0.881, Δ+0.004): the LLM
+  decoder *already* reads invalid AXON fine. → **validity barely matters to an LLM reader.**
+
+**Repair recovery is ~uniform across capability** (gemma4 44%, qwen3-30b 53%, gpt-oss 50%,
+coder 41%; overall 49%): weak and strong models fail in the *same repairable ways* — weak
+models just make *more* slips, not deeper ones. Effective parse-validity after the free repair:
+
+| model | orig valid% | + deterministic repair | lift |
+|---|---|---|---|
+| gemma4 | 53% | **74%** | +21 |
+| qwen3-30b | 66% | **84%** | +18 |
+| gpt-oss-120b | 71% | **85%** | +15 |
+| qwen3-coder-80b | 69% | **82%** | +13 |
+
+### Synthesis (the night's payoff)
+
+1. **The capability floor is a syntactic-*emission* floor.** Decoded fidelity is flat & high
+   (0.91–0.98) across every model; *only validity* varies. AXON is faithful once it parses.
+2. **Validity is a threshold, not a ladder.** Weak models ~36–45%; capable models plateau
+   ~66–70% (indistinguishable). The code-model "best host" peak was single-run noise.
+3. **~Half the floor is spec-strictness, removable for free & safely.** A 15-line deterministic
+   normalizer recovers 49% of failures (0 valid-but-wrong), lifting capable models to ~82–85%
+   parse-valid — uniformly across capability (so it raises the whole curve, doesn't close the
+   weak/capable gap; the residual gap is the "real" capability component).
+4. **AXON's strict validity only matters for AXON's *own* use case.** For an LLM reader, even
+   invalid AXON decodes at ~0.88 — validity is nearly irrelevant, and JSON would do as well.
+   Validity is decisive **only** for the deterministic-parser pitch (machine-parse, no LLM) —
+   which is exactly AXON's reason to exist. There, the free preprocessor is high-leverage.
+
+## Phase D — Cross-reader decode sweep (firm "easy to read") — RUNNING/NEXT
 
 ---
 
