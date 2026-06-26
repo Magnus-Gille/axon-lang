@@ -22,23 +22,44 @@ import time
 import urllib.error
 import urllib.request
 
-BASE = os.environ.get("M5_BASE", "https://inference.gille.ai/v1")
-
-# Default points at the session scratchpad file holding "Bearer <token>".
-# Override with M5_AUTH_FILE. The file lives outside the repo and is never
-# committed.
-DEFAULT_AUTH_FILE = os.environ.get(
-    "M5_AUTH_FILE",
-    "/private/tmp/claude-501/-Users-magnus-repos-invent-new-language/"
-    "53c42d89-2684-449c-9a8c-43bc4c4c2a2e/scratchpad/.m5auth",
+BASE = (
+    os.environ.get("M5_BASE")
+    or os.environ.get("M5_BASE_URL")  # set by `eval "$(m5-auth --env)"`
+    or "https://inference.gille.ai/v1"
 )
 
 _RETRYABLE = {408, 409, 425, 429, 500, 502, 503, 504}
 
+# Auth precedence (secret-safe — see ~/.claude/CLAUDE.md "Harness auth: how a
+# SCRIPT (not the MCP) reaches the box"). The token lives in the macOS Keychain
+# and is read via the `m5-auth` CLI; it never touches the repo or a scratchpad
+# file that dies with the session.
+#   1. M5_API_KEY env   — preferred:  export M5_API_KEY=$(m5-auth)
+#   2. M5_AUTH_FILE     — read ONCE and cached, so a `<(m5-auth)` process-
+#                         substitution (a single-read pipe) also works.
+# Either source may be a raw token or already "Bearer <token>"; we normalize.
+_AUTH_CACHE = None
+
 
 def _auth() -> str:
-    with open(DEFAULT_AUTH_FILE) as f:
-        return f.read().strip()
+    global _AUTH_CACHE
+    if _AUTH_CACHE is not None:
+        return _AUTH_CACHE
+    raw = os.environ.get("M5_API_KEY")
+    if not raw:
+        path = os.environ.get("M5_AUTH_FILE")
+        if not path:
+            raise RuntimeError(
+                "No M5 auth configured. Use `export M5_API_KEY=$(m5-auth)` "
+                "or `M5_AUTH_FILE=<(m5-auth)` (token from the m5-auth CLI / Keychain)."
+            )
+        with open(path) as f:
+            raw = f.read()
+    raw = raw.strip()
+    if not raw.lower().startswith("bearer "):
+        raw = "Bearer " + raw
+    _AUTH_CACHE = raw
+    return _AUTH_CACHE
 
 
 def chat(
