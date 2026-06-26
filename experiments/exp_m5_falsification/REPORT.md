@@ -171,6 +171,12 @@ are roughly flat across the size axis:
 | gpt-oss-120b (large) | 0.947 | 71% | struct_eng 0.964 | **YES** |
 | qwen3-coder-80b (code) | **0.960** | 86% | json_schema 0.954 | **YES** |
 
+> ⚠ **These are single-run numbers; the validity column does not replicate.** With n=4 runs
+> (§4.9) the three capable models are statistically tied (~66–70% validity) and the
+> "86%" code-model peak is noise. Read the *fidelity* column (robust) and treat the per-model
+> *validity* figures as indicative only — the firmed structure is a weak→capable **threshold**,
+> not a smooth ladder.
+
 This is the headline. The intuition that a constrained notation would *scaffold* weak
 models is **falsified**: on the small/mid models AXON's validity collapses to 43–64% and
 its fidelity trails the incumbents by 0.04–0.23. AXON has a steep **capability floor** —
@@ -307,6 +313,37 @@ it carries no signal.
   (mean −0.084): AXON matches the incumbent on most cells and is dragged down by a minority
   of hard failures.
 
+### 4.9 Replication & robustness firming (multi-run + repair)
+
+A follow-up campaign added **2–4 runs per cell** on the headline models (3 models × 4 runs;
+gemma4 × 2–4; qwen35-a3b partial) plus a cross-reader sweep and a deterministic-repair probe
+(`replication_stats.py`, `axon_repair.py`, `OVERNIGHT_FINDINGS.md`). It **strengthens the core
+thesis but corrects two single-run claims**:
+
+- **The capability floor is a *syntactic-emission* floor, not a semantic one.** Decoded-only
+  fidelity is flat and high across *every* model (0.91–0.98, run-to-run SD ≈ 0). AXON is
+  recovered faithfully *once it parses*; **all** capability dependence lives in **validity**.
+- **Validity is a *threshold*, not a smooth ladder — and there is no code-model peak.** With
+  n=4, the three capable models are statistically indistinguishable (qwen3-30b 66±8, gpt-oss
+  70±8, qwen3-coder 68±11); the weak models sit far below (gemma4 36±7, qwen35 45±12). **The
+  §4.2 single-run "code model 86% valid, best host" was noise** — the corrected picture is a
+  weak-vs-capable step (~40% → ~68% plateau), not a monotonic climb.
+- **The floor is purely sender-side (firmed).** Decoding the same AXON messages with readers of
+  differing capability gives flat fidelity (qwen3-30b 0.945, gpt-oss 0.951, qwen3-coder 0.930):
+  hard to *write*, easy to *read*.
+- **~Half the floor is removable for free, safely.** A 15-line deterministic, meaning-preserving
+  normalizer (quote bare times, tag bare records, bracket multi-receiver routing) makes **49%**
+  of invalid AXON parse — recovery is **uniform across capability** and produces **0 valid-but-
+  wrong** (the repaired messages decode at the same fidelity). Effective parse-validity rises
+  +13–21 pts (capable models → 82–85%). The residual decomposes into multi-error surface slips
+  and **genuine expressiveness gaps** (comparisons / member-access in conditionals,
+  units-glued-to-identifiers) that AXON's grammar cannot express — an AXON *design* limit, not
+  a model failure.
+- **Practical upshot:** AXON's strict validity matters **only for its own deterministic-parse
+  pitch** (machine-parse, no LLM). For an LLM reader, even *invalid* AXON decodes at ~0.88, so
+  validity is nearly irrelevant and JSON would serve as well. Where the no-LLM-parse pitch is
+  the point, the free preprocessor is the highest-leverage fix on the validity axis.
+
 ## 5. Verdict (against the pre-registered criteria)
 
 - **Falsified overall (per the pre-registered criterion): NO — but it fails as a
@@ -364,8 +401,11 @@ next 1–3 weeks).
 - `qwen35-a3b` and `gemma4` are heavy reasoners; early cells were budget-truncated and
   re-run with larger budgets (the truncations were a harness artifact, not a format
   failure — see §4).
-- Replication: single run per cell for the headline (the box's serial throughput and a
-  pathologically verbose small model made a full second pass infeasible overnight).
+- Replication: the *original* headline tables (§4.1–4.2) are single-run. A follow-up added
+  **2–4 runs** on the headline models and 2 runs on gemma4 (§4.9): decoded **fidelity is
+  stable** (run-to-run SD ≈ 0), but **per-model validity is noisier** than one run implied —
+  hence the §4.2 validity column is corrected to a threshold (not a ladder) in §4.9.
+  qwen35-a3b remains under-sampled (pathologically verbose; partial 2nd run).
 
 ## 8. Reproduce
 
