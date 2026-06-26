@@ -182,6 +182,41 @@ message itself at 0.926 but the recovered tuple at 0.892 — a **decoder loss of
 confirming the fidelity differences are driven by the **format (encoding)**, not by decoder
 weakness.
 
+### 4.6 Does fixing validity rescue AXON? (constrained-decoding follow-up)
+
+The box honors `response_format: json_schema` but **ignores grammar-constraint params**
+(`guided_grammar`/`guided_choice`/`guided_json`), so AXON can't be EBNF-constrained here.
+We proxy it two ways: a **valid-only re-slice** of the existing data, and a real
+**retry-until-valid** run (resample ≤3×, keep first valid) on 4 models.
+
+- **Valid-only (biased, optimistic):** among messages that already parse, AXON fidelity is
+  0.96 overall — tied with the best incumbent — at ~half the tokens; even weak gemma4's
+  valid AXON scores 1.00. Suggests validity is the whole problem.
+- **Retry-until-valid (de-biased):** forcing the hard cells to parse tells a subtler story
+  (pooled, 4 models):
+
+  | | valid% | fidelity | wire tok | eff. wire tok |
+  |---|---|---|---|---|
+  | AXON baseline | 66% | 0.889 | 29.3 | 32.9 |
+  | AXON retry-until-valid | 79% | 0.905 | 30.3 | 33.4 |
+  | json_schema (incumbent) | 98% | 0.940 | 51.8 | 55.1 |
+
+  The effect **splits by model**:
+  - **gemma4 (weak) — rescued:** fidelity 0.73 → **0.95** (now *above* json_schema 0.947) at
+    half the tokens. Its failures were pure syntax.
+  - **gpt-oss-120b (large) — hurt:** fidelity 0.95 → **0.81** — forcing previously-invalid
+    *complex* cells to parse produced **valid-but-wrong** messages. Validity ≠ correctness.
+  - qwen3-30b / coder: roughly flat.
+
+**Takeaway.** The capability floor is *mostly* a **syntax-production floor** (constrained
+decoding fixes it — biggest win for weak models, and ~40% fewer wire tokens persists
+throughout) but *partly* a genuine **semantic-expressiveness limit on composition** that no
+validity-forcing repairs — and may even *mask* (valid-but-wrong). Retry never reached 100%
+valid and ~doubled generation cost; true single-pass constrained decoding would avoid that
+penalty but not the valid-but-wrong failure on complex payloads. Net: constrained decoding
+is a **real but partial** rescue, strongest for weak models — pair it with payload
+validation on compositional messages.
+
 ## 5. Verdict (against the pre-registered criteria)
 
 - **Falsified overall: YES.** In the OVERALL slice and at every individual task Level,
@@ -213,8 +248,15 @@ code-tuned (capability floor); (2) cost is dominated by *payload* tokens, not ge
 **grammar-constrained decoding** (unavailable on this box) to lift validity from 64% toward
 100% by construction — the single highest-leverage fix, since validity, not expressiveness,
 is AXON's binding constraint. Absent constrained decoding, AXON does not earn a general
-place; with it, the contest collapses to tokens-per-correct-message, where AXON already
-leads.
+place; with it, the contest moves toward tokens-per-correct-message, where AXON leads on
+cost (~40% fewer wire tokens). But the follow-up (§4.6) shows the rescue is **partial, not
+clean**: forcing validity helps *weak* models a lot (gemma4 0.73→0.95) yet can *hurt* strong
+ones by turning honest parse-failures into valid-but-wrong messages on complex payloads. So
+the realistic niche is narrower still: **constrained-decoded AXON between strong/code-tuned
+agents for mostly-flat (non-deeply-compositional) payloads, with payload validation kept on
+the complex ones.** Venues for writing this up are scouted in `VENUES.md` (arXiv now;
+workshop targets MOSS@COLM, REALM@EMNLP, Negative-Results@EMNLP — several deadlines in the
+next 1–3 weeks).
 
 ## 7. Limitations & honesty notes
 
