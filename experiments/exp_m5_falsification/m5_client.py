@@ -18,6 +18,8 @@ from __future__ import annotations
 
 import json
 import os
+import shutil
+import subprocess
 import time
 import urllib.error
 import urllib.request
@@ -30,35 +32,49 @@ BASE = (
 
 _RETRYABLE = {408, 409, 425, 429, 500, 502, 503, 504}
 
-# Auth precedence (secret-safe — see ~/.claude/CLAUDE.md "Harness auth: how a
-# SCRIPT (not the MCP) reaches the box"). The token lives in the macOS Keychain
-# and is read via the `m5-auth` CLI; it never touches the repo or a scratchpad
-# file that dies with the session.
-#   1. M5_API_KEY env   — preferred:  export M5_API_KEY=$(m5-auth)
-#   2. M5_AUTH_FILE     — read ONCE and cached, so a `<(m5-auth)` process-
-#                         substitution (a single-read pipe) also works.
-# Either source may be a raw token or already "Bearer <token>"; we normalize.
+# Auth (secret-safe — see ~/.claude/CLAUDE.md "Harness auth: how a SCRIPT (not
+# the MCP) reaches the box"). The token lives in the macOS Keychain and is read
+# via the `m5-auth` CLI; it never touches the repo or a session scratchpad file.
+#
+# The gateway token is SHORT-LIVED (~20 min), so for a long batch we must NOT
+# capture one token up front — that expires mid-run (observed: encode passes
+# succeed, then the decode pass 401s an hour later). Instead we fetch fresh and
+# AUTO-REFRESH on a 401 (see chat()). Fetch precedence:
+#   1. `m5-auth` CLI on PATH — preferred, always returns a fresh Keychain token
+#   2. M5_API_KEY env        — for environments without the CLI
+#   3. M5_AUTH_FILE          — file/`<(m5-auth)` bridge (read once)
+# Source may be raw or already "Bearer <token>"; we normalize.
 _AUTH_CACHE = None
 
 
-def _auth() -> str:
-    global _AUTH_CACHE
-    if _AUTH_CACHE is not None:
-        return _AUTH_CACHE
+def _fetch_token() -> str:
+    exe = shutil.which("m5-auth")
+    if exe:
+        try:
+            out = subprocess.run([exe], capture_output=True, text=True, timeout=15)
+            tok = (out.stdout or "").strip()
+            if tok:
+                return tok
+        except Exception:
+            pass  # fall through to env / file
     raw = os.environ.get("M5_API_KEY")
-    if not raw:
-        path = os.environ.get("M5_AUTH_FILE")
-        if not path:
-            raise RuntimeError(
-                "No M5 auth configured. Use `export M5_API_KEY=$(m5-auth)` "
-                "or `M5_AUTH_FILE=<(m5-auth)` (token from the m5-auth CLI / Keychain)."
-            )
+    if raw:
+        return raw.strip()
+    path = os.environ.get("M5_AUTH_FILE")
+    if path:
         with open(path) as f:
-            raw = f.read()
-    raw = raw.strip()
-    if not raw.lower().startswith("bearer "):
-        raw = "Bearer " + raw
-    _AUTH_CACHE = raw
+            return f.read().strip()
+    raise RuntimeError(
+        "No M5 auth: install the `m5-auth` CLI, or set M5_API_KEY=$(m5-auth) "
+        "or M5_AUTH_FILE=<(m5-auth)."
+    )
+
+
+def _auth(force: bool = False) -> str:
+    global _AUTH_CACHE
+    if force or _AUTH_CACHE is None:
+        raw = _fetch_token()
+        _AUTH_CACHE = raw if raw.lower().startswith("bearer ") else "Bearer " + raw
     return _AUTH_CACHE
 
 
@@ -85,6 +101,7 @@ def chat(
     }
     data = json.dumps(payload).encode()
     last_err = None
+    refreshed = False  # whether we've already force-refreshed the token on a 401
     for attempt in range(retries):
         # Cloudflare fronts the box and 403s (code 1010) on the default
         # Python-urllib User-Agent, so present a normal browser UA.
@@ -119,8 +136,18 @@ def chat(
             except Exception:
                 detail = b""
             last_err = f"HTTP {e.code}: {detail!r}"
+            if e.code == 401 and not refreshed:
+                # Token expired mid-batch (the gateway key is short-lived) — fetch
+                # a fresh one from m5-auth and retry immediately (no backoff).
+                refreshed = True
+                try:
+                    _auth(force=True)
+                except Exception as ae:
+                    last_err = f"HTTP 401 + token-refresh failed: {ae}"
+                    break
+                continue
             if e.code not in _RETRYABLE:
-                break  # 4xx (bad request etc.) — retrying won't help
+                break  # other 4xx (bad request etc.) — retrying won't help
         except Exception as e:  # timeout (cold swap), conn reset, JSON error
             last_err = f"{type(e).__name__}: {e}"
         time.sleep(backoff * (attempt + 1))
