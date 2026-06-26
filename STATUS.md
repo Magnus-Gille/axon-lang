@@ -27,9 +27,21 @@ composition-heavy tasks = 350 cells, 338 decoded. Scorer validated against a fro
   leverage fix is grammar-constrained decoding (validity is the binding constraint, not
   expressiveness).
 
-**Next:** human review of REPORT.md; decide if this reframes the paper (capability-floor +
-code-model niche is a cleaner, more honest story than the original intrinsic-composition
-thesis). Consider a cross-model-decode sweep and a constrained-decoding test.
+### Follow-ups completed same session (PR #2: b3efed0, ee17af1)
+- **Constrained decoding** (retry-until-valid proxy; box can't grammar-constrain AXON): rescue
+  is **partial and splits by model** — gemma4 (weak) rescued 0.73→0.95, gpt-oss (strong) hurt
+  0.95→0.81 (forcing invalid complex cells to parse → valid-but-wrong). Validity ≠ correctness.
+- **Receiver-capability test**: AXON is **hard to write, easy to read** — among capable readers
+  fidelity is flat (mid 0.942 ≈ strong 0.918; JSON ~0.96). Floor is sender-side. Weak-reader
+  arm inconclusive (box HTTP 530 on 118/131).
+- **Stats**: AXON 0.848 [0.775,0.911] 95% CI (below JSON 0.938); Spearman(capability, AXON
+  fidelity)=+1.00 vs +0.20 JSON; paired AXON ties json_schema 45/70, loses 16, wins 9.
+- **Venues** (`VENUES.md`): no venue pays author travel → best = **EMNLP 2026 Budapest, present
+  remotely** (workshop REALM, deadline ~Jul 17); EU in-person backup NeurIPS Paris satellite.
+
+**Next:** write the **REALM workshop short paper** (report has the spine) + put on arXiv. Run
+`/debate-codex` on the results before finalizing. A clean param-size sweep needs a model family
+the M5 lacks (current axis is capability-proxy, not parameter ladder). Human review of REPORT.md.
 
 ---
 

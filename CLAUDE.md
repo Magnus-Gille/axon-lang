@@ -49,6 +49,7 @@ Parser and validator are stdlib Python only. Experiments require `tiktoken` (`pi
   - `experiments/exp5_cross_model/` — Cross-model generalization analysis
   - `experiments/exp_aisp_comparison/` — AISP competitive analysis benchmarks (A, B, C complete)
   - `experiments/exp_json_contracts/` — JSON+Contracts (SEMAP-inspired, exploratory)
+  - `experiments/exp_m5_falsification/` — Falsification campaign on local open models (M5); round-trip fidelity, capability-floor finding (REPORT.md, VENUES.md)
   - `experiments/FAIRNESS.md` — Fairness protocol for 8-condition design
   - `experiments/PREREGISTRATION.md` — Pre-registered analysis plan
   - `experiments/MASSGEN_ADDENDUM.md` — Exploratory MassGen ecosystem-validity extension
@@ -102,6 +103,7 @@ Every debate feeds Track B. All future debates must capture: per-point metadata,
 - **Exp 3 Phase 2 complete**: Round-trip decomposition. 177 cross-model calls, 99% parseable. See `experiments/exp3_compositionality/phase2/`.
 - **Exp 5 complete**: Cross-model variance. AXON lowest SD (0.048 composition). See `experiments/exp5_cross_model/RESULTS.md`.
 - **JSON+Contracts complete**: 81 cells. 51.6% composition rate — contracts help but don't match AXON. See `experiments/exp_json_contracts/RESULTS.md`.
+- **M5 falsification complete** (2026-06-26, branch `axon-m5-falsification` / PR #2): first eval on **local open models** via round-trip fidelity. AXON **falsified as a general format** (last on fidelity 0.85, only 64% parse-valid) but **earns a niche on large/code-tuned models** (~40% fewer tokens at matched fidelity, on the Pareto frontier). **Capability floor is sender-side** (Spearman(capability, AXON fidelity)=+1.00; easy to read, hard to write). Constrained-decoding rescue is partial (validity≠correctness). Scorer validated vs frontier judge (r=0.875). See `experiments/exp_m5_falsification/REPORT.md`; venues in `VENUES.md`.
 - **AISP comparison complete**: All benchmarks (A, B, C, 1, 2, 3). AISP 5.1x more tokens than AXON. See `experiments/exp_aisp_comparison/RESULTS.md`.
 - Exp 0/1/3 runner uses CLI tools (`claude -p`, `codex exec`) — zero API cost
 - ~100 critique points raised, ~85% resolved

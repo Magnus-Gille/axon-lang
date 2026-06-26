@@ -48,3 +48,29 @@ Lambert) · Ahead of AI (Sebastian Raschka) · Hacker News (Show HN) · r/LocalL
 "At 3 models with no size-sweep and no constrained-decoding baseline, the *breaks weak
 models* claim is suggestive, not airtight — a reviewer will ask whether constrained decoding
 rescues weak models." → exactly the follow-up now running (`run_constrained.py`).
+
+---
+
+## Conference logistics & travel (scouted 2026-06-26)
+
+**Travel for paper presenters: NOT paid at any of these** (that's invited keynotes only).
+For a Sweden-based independent (non-student): travel grants prioritize students/D&I/first-
+time-need (you rank low); volunteer-for-registration is students-only; NeurIPS aid covers
+registration + ~7 hotel nights but NOT flights. Real levers: present **remotely** (EMNLP is
+hybrid) or pick an **EU** venue.
+
+| Host | City | Dates | Format | You'd pay | Remote? | Our workshops |
+|---|---|---|---|---|---|---|
+| EMNLP 2026 | Budapest 🇭🇺 | Oct 24–29 | Hybrid | virtual ≈$100 | YES | REALM, Negative-Results, GroundLM |
+| NeurIPS 2026 (Paris satellite/EurIPS) | Paris 🇫🇷 | Dec 9–13 | in-person | TBA | no | ENLSP (not yet announced) |
+| COLM 2026 | San Francisco 🇺🇸 | Oct 6–9 | in-person only | ~$875 industry | no | MOSS, Efficient-Reasoning, Lifelong-Agents, Agent-Behavior |
+| NeurIPS 2026 (main) | Sydney 🇦🇺 | Dec 6–12 | in-person | ~$1k+ | no | ENLSP (TBA) |
+
+(EMNLP/NeurIPS fees + ENLSP workshop status unannounced as of 2026-06-26.)
+
+**Recommendation (self-funding):**
+1. **EMNLP 2026 Budapest, present REMOTELY** — winner: hybrid, ~zero travel, best-fit workshop (REALM). Cheap EU hop if attending in person.
+2. **NeurIPS Paris satellite (EurIPS)** — EU in-person backup, conditional on ENLSP being accepted + presentable in Paris (verify after mid-July).
+3. Skip SF/Sydney unless the destination has standalone value.
+
+Timing: EMNLP-Budapest workshops submit in ~3 weeks (REALM ~Jul 17; Negative-Results ~Aug ARR). arXiv anytime.
