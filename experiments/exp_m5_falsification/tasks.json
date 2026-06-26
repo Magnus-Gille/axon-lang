@@ -1,0 +1,167 @@
+{
+  "meta": {
+    "name": "M5 falsification task corpus",
+    "purpose": "Agent-to-agent intents with machine-checkable ground truth. Each task is conveyed by Agent A in a condition format, decoded by Agent B back to canonical fields, and scored against the ground truth here. Composition-heavy by design: L2/L3 tasks stress sequence/parallel/conditional/causal structure, the exact place AXON claims advantage and previously underperformed.",
+    "field_kinds": {
+      "enum": "lowercased token; match if equals value or any of alts",
+      "ref": "agent reference; normalize (strip @, lowercase) then exact",
+      "text": "free text; normalized equality OR mutual substring OR token-Jaccard>=0.5",
+      "num": "numeric value; match within 2% relative (unit ignored for matching)",
+      "bool": "boolean; T/F/true/false/yes/no",
+      "list_ordered": "ordered list; score = LCS(recovered,gt)/len(gt) with fuzzy item match",
+      "list_set": "unordered list; score = |intersect|/|union| with fuzzy item match"
+    }
+  },
+  "tasks": [
+    {
+      "id": "T01", "level": 1, "category": "query",
+      "nl_intent": "Ask agent @agent-b for the current status of the web server @web-server.",
+      "fields": {
+        "speech_act": {"kind": "enum", "value": "query", "alts": ["request", "ask", "status_query", "qry"]},
+        "target": {"kind": "ref", "value": "web-server"},
+        "subject": {"kind": "enum", "value": "status", "alts": ["health", "state"]}
+      }
+    },
+    {
+      "id": "T02", "level": 1, "category": "inform_metrics",
+      "nl_intent": "Tell @monitor that the payments service is healthy, with 99.7% uptime and 45ms latency.",
+      "fields": {
+        "speech_act": {"kind": "enum", "value": "inform", "alts": ["report", "status", "inf"]},
+        "service": {"kind": "text", "value": "payments"},
+        "status": {"kind": "enum", "value": "healthy", "alts": ["ok", "up", "online"]},
+        "uptime": {"kind": "num", "value": 99.7, "unit": "%"},
+        "latency": {"kind": "num", "value": 45, "unit": "ms"}
+      }
+    },
+    {
+      "id": "T03", "level": 1, "category": "action_args",
+      "nl_intent": "Request that worker @worker fetch the URL https://api.example.com/data with a timeout of 30 seconds.",
+      "fields": {
+        "speech_act": {"kind": "enum", "value": "request", "alts": ["command", "action", "req", "cmd"]},
+        "action": {"kind": "enum", "value": "fetch", "alts": ["get", "retrieve", "download"]},
+        "url": {"kind": "text", "value": "https://api.example.com/data"},
+        "timeout": {"kind": "num", "value": 30, "unit": "s"}
+      }
+    },
+    {
+      "id": "T04", "level": 1, "category": "error_report",
+      "nl_intent": "Send an error to @caller: the resource was not found (HTTP 404), and it should not be retried.",
+      "fields": {
+        "speech_act": {"kind": "enum", "value": "error", "alts": ["err", "failure", "fail"]},
+        "code": {"kind": "num", "value": 404},
+        "reason": {"kind": "text", "value": "not found"},
+        "retry": {"kind": "bool", "value": false}
+      }
+    },
+    {
+      "id": "T05", "level": 2, "category": "sequence_plan",
+      "nl_intent": "Instruct pipeline @pipeline to perform these steps in order: first fetch the URL $url, then parse the result as JSON, then store it in @db.",
+      "fields": {
+        "speech_act": {"kind": "enum", "value": "request", "alts": ["command", "instruct", "req", "cmd"]},
+        "steps": {"kind": "list_ordered", "value": ["fetch", "parse", "store"]},
+        "store_target": {"kind": "ref", "value": "db"}
+      }
+    },
+    {
+      "id": "T06", "level": 2, "category": "parallel_actions",
+      "nl_intent": "Ask team @team to do three things in parallel with no ordering between them: analyze the dataset, summarize the dataset, and validate the dataset.",
+      "fields": {
+        "speech_act": {"kind": "enum", "value": "request", "alts": ["command", "instruct", "req"]},
+        "actions": {"kind": "list_set", "value": ["analyze", "summarize", "validate"]},
+        "parallel": {"kind": "bool", "value": true}
+      }
+    },
+    {
+      "id": "T07", "level": 2, "category": "conditional",
+      "nl_intent": "Tell scheduler @worker: if the load is below 80%, execute task #task-42; otherwise queue it.",
+      "fields": {
+        "speech_act": {"kind": "enum", "value": "request", "alts": ["command", "instruct", "inform", "req"]},
+        "condition_metric": {"kind": "enum", "value": "load", "alts": ["cpu_load", "system_load"]},
+        "threshold": {"kind": "num", "value": 80, "unit": "%"},
+        "if_true": {"kind": "enum", "value": "execute", "alts": ["exec", "run", "do"]},
+        "if_false": {"kind": "enum", "value": "queue", "alts": ["defer", "enqueue", "wait"]},
+        "task_ref": {"kind": "text", "value": "task-42"}
+      }
+    },
+    {
+      "id": "T08", "level": 2, "category": "causal_chain",
+      "nl_intent": "Inform @admin of a level-3 alert, caused by CPU exceeding 95%, which was itself triggered by a traffic spike from @web-server.",
+      "fields": {
+        "speech_act": {"kind": "enum", "value": "inform", "alts": ["alert", "report", "inf"]},
+        "alert_level": {"kind": "num", "value": 3},
+        "cause_metric": {"kind": "enum", "value": "cpu", "alts": ["cpu_usage", "processor"]},
+        "cause_threshold": {"kind": "num", "value": 95, "unit": "%"},
+        "root_cause": {"kind": "text", "value": "spike"},
+        "source": {"kind": "ref", "value": "web-server"}
+      }
+    },
+    {
+      "id": "T09", "level": 2, "category": "multi_agent_fanout",
+      "nl_intent": "Broadcast to workers @w1, @w2, and @w3 a request to process dataset #data, split across the ranges 0-1000, 1001-2000, and 2001-3000, merging results back to @planner, with a deadline of 300 seconds.",
+      "fields": {
+        "speech_act": {"kind": "enum", "value": "request", "alts": ["command", "broadcast", "req"]},
+        "recipients": {"kind": "list_set", "value": ["w1", "w2", "w3"]},
+        "task": {"kind": "text", "value": "data"},
+        "merge_to": {"kind": "ref", "value": "planner"},
+        "deadline": {"kind": "num", "value": 300, "unit": "s"}
+      }
+    },
+    {
+      "id": "T10", "level": 2, "category": "proposal_constraints",
+      "nl_intent": "Propose to @buyer: supply 10000 widgets at 2.50 USD each, delivery within a 02:00-04:00 window.",
+      "fields": {
+        "speech_act": {"kind": "enum", "value": "propose", "alts": ["proposal", "offer", "pro"]},
+        "item": {"kind": "text", "value": "widget"},
+        "qty": {"kind": "num", "value": 10000},
+        "price": {"kind": "num", "value": 2.5, "unit": "usd"},
+        "window": {"kind": "text", "value": "02:00-04:00"}
+      }
+    },
+    {
+      "id": "T11", "level": 3, "category": "nested_delegation",
+      "nl_intent": "Delegate from @ceo to @vp: instruct the whole team to complete project #project-x, because the deadline is 2025-03-01.",
+      "fields": {
+        "speech_act": {"kind": "enum", "value": "delegate", "alts": ["delegation", "assign", "del"]},
+        "delegate_to": {"kind": "ref", "value": "vp"},
+        "inner_action": {"kind": "enum", "value": "complete", "alts": ["finish", "deliver", "do"]},
+        "project": {"kind": "text", "value": "project-x"},
+        "reason": {"kind": "text", "value": "deadline"},
+        "deadline": {"kind": "text", "value": "2025-03-01"}
+      }
+    },
+    {
+      "id": "T12", "level": 3, "category": "subscribe_filter",
+      "nl_intent": "Subscribe @dashboard to metrics from @prod at a 30-second interval, but only for CPU and memory.",
+      "fields": {
+        "speech_act": {"kind": "enum", "value": "subscribe", "alts": ["sub", "watch", "register"]},
+        "source": {"kind": "ref", "value": "prod"},
+        "interval": {"kind": "num", "value": 30, "unit": "s"},
+        "metrics": {"kind": "list_set", "value": ["cpu", "memory"]}
+      }
+    },
+    {
+      "id": "T13", "level": 3, "category": "mixed_plan_conditional",
+      "nl_intent": "Request @worker: fetch the URL $url, then if the response status is 200, parse and store the body in @db; otherwise log an error. The whole job must finish within 60 seconds.",
+      "fields": {
+        "speech_act": {"kind": "enum", "value": "request", "alts": ["command", "instruct", "req"]},
+        "first_step": {"kind": "enum", "value": "fetch", "alts": ["get", "retrieve"]},
+        "condition_metric": {"kind": "text", "value": "status"},
+        "condition_value": {"kind": "num", "value": 200},
+        "if_true_steps": {"kind": "list_ordered", "value": ["parse", "store"]},
+        "if_false": {"kind": "enum", "value": "log", "alts": ["error", "report", "logerror"]},
+        "deadline": {"kind": "num", "value": 60, "unit": "s"}
+      }
+    },
+    {
+      "id": "T14", "level": 3, "category": "negotiation_counter",
+      "nl_intent": "Counter @a's migration proposal: agree to migrate @server-2 but change the maintenance window to 04:00-06:00, because peak load occurs during 02:00-03:00.",
+      "fields": {
+        "speech_act": {"kind": "enum", "value": "counter", "alts": ["counter_propose", "ctr", "counteroffer", "counterproposal"]},
+        "action": {"kind": "enum", "value": "migrate", "alts": ["migration", "move"]},
+        "target": {"kind": "ref", "value": "server-2"},
+        "new_window": {"kind": "text", "value": "04:00-06:00"},
+        "reason": {"kind": "text", "value": "peak load"}
+      }
+    }
+  ]
+}

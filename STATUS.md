@@ -1,10 +1,41 @@
 # AXON Project Status
 
-**Last session:** 2026-03-03
-**Branch:** main
-**Latest commit:** ccc3561 (pre-session)
+**Last session:** 2026-06-26 (overnight autonomous — M5 falsification campaign)
+**Branch:** axon-m5-falsification (PR pending)
 
-## Completed This Session
+## Session 2026-06-26 — M5 Falsification Campaign (local open models)
+
+New experiment: `experiments/exp_m5_falsification/` — full report in `REPORT.md`.
+First AXON evaluation on **local open models** (M5 box, `inference.gille.ai`), framed as a
+kill-shot. Metric: **round-trip fidelity** (Agent A encodes intent → fixed Agent B decodes
+→ machine-scored vs ground truth), plus validity, neutral tokens, latency. 5 models
+(~3B→120B) × 5 conditions (axon, json, json_schema, struct_english, fipa_acl) × 14
+composition-heavy tasks = 350 cells, 338 decoded. Scorer validated against a frontier judge
+(Pearson r=0.875, MAE=0.050; fair to AXON, MAE 0.034).
+
+**Verdict: AXON falsified overall, but earns a narrow niche.**
+- Overall AXON is LAST on fidelity (0.85 vs 0.91–0.94) and ALONE on poor validity (64% vs
+  97–100%). But it is densest (27 tok) and wins **effective tokens** (31.9 tok/correct msg).
+- **Size axis (headline, opposite of weak-model hypothesis):** AXON needs a STRONG model.
+  Fidelity/validity climb with capability: qwen35-a3b 0.69/57% → gemma4 0.73/43% →
+  qwen3-30b 0.91/64% → gpt-oss-120b 0.95/71% → **qwen3-coder-80b 0.96/86%**.
+- **Earns its place on the 2 large models** (gpt-oss-120b, qwen3-coder-80b): matches best
+  incumbent fidelity at ~40% fewer tokens, on the Pareto frontier. Code-tuned model is its
+  best host of all.
+- No latency win: reasoning models burn 3–5× completion tokens "thinking" to emit AXON.
+- Niche: terse payloads between strong/code-tuned agents in token-metered settings; highest-
+  leverage fix is grammar-constrained decoding (validity is the binding constraint, not
+  expressiveness).
+
+**Next:** human review of REPORT.md; decide if this reframes the paper (capability-floor +
+code-model niche is a cleaner, more honest story than the original intrinsic-composition
+thesis). Consider a cross-model-decode sweep and a constrained-decoding test.
+
+---
+
+## Previous session 2026-03-03 — Multi-Phase Experiment Plan (frontier models)
+
+### Multi-Phase Experiment Plan — All Phases Complete
 
 ### Multi-Phase Experiment Plan — All Phases Complete
 Executed all 5 phases of the experiment plan in a single session.
