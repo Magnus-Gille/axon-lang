@@ -65,6 +65,11 @@ def build_cells(enc, dec, tasks):
             fidelity = 0.0
         else:
             fidelity, _ = score_task(recovered, task)
+        # A cell is "decoded" only if the encode succeeded AND Agent B returned a
+        # dict of recovered fields. The headline (all-attempt) metric imputes
+        # fidelity=0 for non-decoded cells; the decoded-only sensitivity table
+        # below restricts to just these rows.
+        decoded = bool(e.get("ok")) and (d is not None) and isinstance(recovered, dict)
         cells.append({
             "model": e["model"],
             "condition": e["condition"],
@@ -73,6 +78,7 @@ def build_cells(enc, dec, tasks):
             "run": e["run"],
             "ok": bool(e.get("ok")),
             "valid": bool(e.get("valid")),
+            "decoded": decoded,
             "fidelity": fidelity,
             "ntok": e.get("neutral_tokens"),
             "ctok": e.get("completion_tokens"),
@@ -88,15 +94,20 @@ def agg(cells, keyfn):
     rows = {}
     for k, cs in groups.items():
         fid = [c["fidelity"] for c in cs]
+        dec_cs = [c for c in cs if c.get("decoded")]
         rows[k] = {
-            "n": len(cs),
+            "n": len(cs),                      # attempts (all-attempt denominator)
             "valid_pct": 100 * mean([c["valid"] for c in cs]),
             "ok_pct": 100 * mean([c["ok"] for c in cs]),
-            "fidelity": mean(fid),
+            "fidelity": mean(fid),             # all-attempt: non-decoded imputed 0
             "fidelity_sd": sd(fid),
-            "ntok": mean([c["ntok"] for c in cs]),
+            "ntok": mean([c["ntok"] for c in cs]),          # attempt-mean wire tokens
             "ctok": mean([c["ctok"] for c in cs]),
             "latency": mean([c["latency"] for c in cs]),
+            # decoded-only sensitivity: restrict to rows Agent B actually decoded
+            "decoded_n": len(dec_cs),
+            "decoded_fidelity": mean([c["fidelity"] for c in dec_cs]),
+            "emitted_ntok": mean([c["ntok"] for c in dec_cs]),  # emitted-mean wire tokens
         }
         f = rows[k]["fidelity"]
         rows[k]["eff_tokens"] = (rows[k]["ntok"] / f) if f > 0 else float("inf")
@@ -114,18 +125,40 @@ def pareto(rows_by_cond):
     return front
 
 
+def _cond_of(k):
+    return k[0] if isinstance(k, (tuple, list)) else k
+
+
 def fmt_table(rows, order=None, label="key"):
     keys = order or sorted(rows)
-    out = [f"{label:<22} {'n':>4} {'valid%':>7} {'fidelity':>9} {'±sd':>6} {'ntok':>6} {'ctok':>7} {'lat_s':>6} {'eff_tok':>8}"]
+    # 'surf_val%' = SURFACE validity, condition-specific (AXON: reference parser;
+    # json_schema: envelope contract; fipa: performative+slots; json: json.loads).
+    # struct_english has no parser -> 'n/a' (valid by construction), excluded from
+    # the validity comparison.
+    out = [f"{label:<22} {'n':>4} {'surf_val%':>9} {'fidelity':>9} {'±sd':>6} {'ntok':>6} {'ctok':>7} {'lat_s':>6} {'eff_tok':>8}"]
     for k in keys:
         if k not in rows:
             continue
         r = rows[k]
         eff = f"{r['eff_tokens']:.1f}" if r["eff_tokens"] != float("inf") else "inf"
+        val = "n/a" if _cond_of(k) == "struct_english" else f"{r['valid_pct']:.0f}%"
         out.append(
-            f"{str(k):<22} {r['n']:>4} {r['valid_pct']:>6.0f}% {r['fidelity']:>9.3f} "
+            f"{str(k):<22} {r['n']:>4} {val:>9} {r['fidelity']:>9.3f} "
             f"{r['fidelity_sd']:>6.3f} {r['ntok']:>6.1f} {str(round(r['ctok'],1) if r['ctok'] else '-'):>7} "
             f"{r['latency']:>6.1f} {eff:>8}"
+        )
+    return "\n".join(out)
+
+
+def fmt_decoded_table(rows, order=None, label="condition"):
+    keys = order or sorted(rows)
+    out = [f"{label:<22} {'dec_n':>6} {'dec_fidelity':>12} {'emit_ntok':>10}"]
+    for k in keys:
+        if k not in rows:
+            continue
+        r = rows[k]
+        out.append(
+            f"{str(k):<22} {r['decoded_n']:>6} {r['decoded_fidelity']:>12.3f} {r['emitted_ntok']:>10.1f}"
         )
     return "\n".join(out)
 
@@ -154,8 +187,25 @@ def main():
     L.append(f"# M5 Falsification — analysis ({len(cells)} cells, {len(enc)} encoded, {len(dec)} decoded)")
     models = sorted({c["model"] for c in cells})
     L.append(f"\nModels present: {models}")
-    L.append("\n## By condition (overall)\n```")
+    n_decoded = sum(1 for c in cells if c.get("decoded"))
+    L.append("\n## By condition (overall) — ALL-ATTEMPT denominator")
+    L.append(f"_{len(cells)} attempted cells; {n_decoded} decoded. Non-ok / empty / "
+             "non-decoded encode attempts are counted as fidelity 0 here, and ntok is the "
+             "attempt-mean (failed attempts carry 0 wire tokens). This is the headline metric._")
+    L.append("```")
     L.append(fmt_table(by_cond, COND_ORDER, "condition"))
+    L.append("```")
+
+    # Denominator sensitivity: fidelity/tokens over DECODED messages only (the
+    # rows Agent B actually recovered). AXON's emission failures are excluded, so
+    # this isolates "how faithful is AXON *when it decodes*" from "how often does
+    # AXON fail to emit a usable message".
+    L.append("\n## Decoded-only sensitivity (fidelity & tokens over decoded messages only)")
+    L.append("_Excludes failed/empty/non-decoded encodes instead of imputing 0. Read"
+             " ALONGSIDE the all-attempt table: the gap between them is AXON's emission-"
+             "reliability penalty, not a fidelity penalty._")
+    L.append("```")
+    L.append(fmt_decoded_table(by_cond, COND_ORDER, "condition"))
     L.append("```")
 
     L.append("\n## By condition × level\n```")

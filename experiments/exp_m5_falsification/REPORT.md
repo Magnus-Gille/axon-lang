@@ -5,21 +5,28 @@
 **Frame:** kill-shot — try hard to show AXON adds nothing; if it survives, find the niche.
 
 > **TL;DR.** A genuine attempt to kill AXON mostly succeeds — and locates exactly one
-> defensible niche. On round-trip fidelity across **5 open models × 5 formats × 14 tasks
-> (338 decoded messages)**, AXON ranks **last** (0.85 vs 0.91–0.94 for JSON / structured-
-> English / FIPA) and is the **only** format with poor validity (**64%** parse-valid vs
-> 97–100%). It is **falsified overall**. But the failure is concentrated in **small and
-> mid models**, where AXON's validity collapses to 43–64%: AXON does **not** help weak
-> models — it *requires* a capable one. On the two **large** models (gpt-oss-120b,
-> qwen3-coder-80b) AXON **earns its place**: it matches the best incumbent's fidelity
-> (0.95–0.96) at **~40% fewer tokens** and sits on the fidelity-vs-tokens Pareto frontier.
-> Its single best host is the **code-tuned** model (0.96 fidelity, 86% valid, best of all
-> five formats). Two caveats cut against even this: on a *tokens-per-correct-message*
-> basis AXON is competitive-to-best everywhere (density partly offsets errors), but it
-> buys **no latency win** — reasoning models spend 3–5× more generation tokens "thinking"
-> to emit valid AXON. **Net:** not a general-purpose payload format, but a real, narrow
-> seam — terse machine-payloads between strong, structure-fluent (especially code-tuned)
-> agents, where token cost matters more than the last few points of fidelity.
+> defensible niche. Across **5 open models × 5 formats × 14 tasks (350 attempted cells,
+> 338 decoded)**, on the **all-attempt** metric (a failed/empty/undecoded encode counted
+> as fidelity 0) AXON ranks **last** (0.85 vs 0.91–0.94 for JSON / structured-English /
+> FIPA) and is the **only** format with poor surface validity (**64%** parse-valid vs
+> 97–100%). But that deficit is **emission reliability, not faithfulness**: AXON yields a
+> usable message on only 63/70 attempts (vs 70/70 for JSON), and on the messages it *does*
+> decode its fidelity is **0.94 — mid-pack**, indistinguishable from the incumbents
+> (0.938–0.959). So AXON **fails as a general/default format** — not because what it
+> conveys is wrong, but because weaker models too often can't write valid AXON at all. That
+> failure is concentrated in **small and mid models**, where validity collapses to 43–64%:
+> AXON does **not** help weak models — it *requires* a capable one. On the two **large**
+> models (gpt-oss-120b, qwen3-coder-80b) AXON **earns its place** and sits on the
+> fidelity-vs-tokens Pareto frontier: it matches the best incumbent's fidelity (0.95–0.96)
+> at fewer tokens — on the code model it is *both* more faithful and **~40% cheaper** than
+> the best incumbent (JSON+Schema); on gpt-oss-120b it is only **~4% cheaper than the best
+> incumbent** (structured English) though ~34% cheaper than JSON+Schema. Its single best
+> host is the **code-tuned** model (0.96 fidelity, 86% valid, best of all five formats). On
+> a *tokens-per-correct-message* basis AXON is best overall (31.9), but it buys **no latency
+> win** — reasoning models spend 3–5× more generation tokens "thinking" to emit valid AXON.
+> **Net:** not a general-purpose payload format, but a real, narrow seam — terse machine-
+> payloads between strong, structure-fluent (especially code-tuned) agents, where token cost
+> matters more than the last few points of fidelity.
 
 ---
 
@@ -107,24 +114,49 @@ incumbent), `struct_english` (the Exp 3 surprise winner), `fipa_acl`.
 budget-truncated and re-run at 6k/8k token budgets; `qwen35-a3b` still failed 8 cells
 (timeout at 8k — it is pathologically verbose). Full tables in `results/summary.md`.
 
-### 4.1 Overall — AXON is last on correctness, alone on fragility
+### 4.1 Overall — AXON is last *end-to-end*, but faithful once it decodes
 
-| condition | valid% | fidelity | neutral tok | eff. tok (tok/correct) |
+**All-attempt** denominator (350 attempts; a failed/empty/undecoded encode = fidelity 0;
+`ntok` is the attempt-mean). This is the headline metric — it charges AXON for messages it
+*fails to emit*, which is a real end-to-end cost:
+
+| condition | surf. valid% | fidelity (all-attempt) | neutral tok | eff. tok (tok/correct) |
 |---|---|---|---|---|
 | **axon** | **64%** | **0.848** (last) | **27.0** (lowest) | **31.9** (best) |
 | json | 100% | 0.938 | 37.6 | 40.1 |
 | json_schema | 97% | 0.932 | 50.6 | 54.3 |
-| struct_english | 99% | 0.928 | 35.9 | 38.7 |
+| struct_english | n/a¹ | 0.928 | 35.9 | 38.7 |
 | fipa_acl | 97% | 0.915 | 42.7 | 46.6 |
 
-Two opposite truths sit here. On **fidelity** and **validity**, AXON is worst by a clear
-margin — the only format a receiver can't reliably parse (64%) and the least faithfully
-recovered (0.85). On **density** it is decisively best (27 tok), and because the density
-gap (~30–47%) is larger than the fidelity gap (~9%), AXON also wins **effective tokens**
-(31.9) — the fewest wire-tokens per *fully correct* message. Which number you privilege
-is the whole argument: correctness-first kills AXON; cost-per-correct-unit rehabilitates
-it. AXON is on the Pareto frontier (with `json` and `struct_english`) — the cheap,
-less-accurate corner.
+¹ *Surface validity is **format-specific**, so it is not apples-to-apples across conditions:
+AXON via its reference parser; `json` via `json.loads`; `json_schema` via the envelope
+contract (speech_act ∈ allowed set, sender/receiver/content present); `fipa_acl` via
+performative + balanced parens + `:sender`/`:receiver`/`:content` slots; `struct_english`
+has no parser, so it is N/A (valid by construction) and excluded from the validity
+comparison. Re-validating the corpus with these stricter envelope/slot checks gives the
+**same** percentages as the original lenient ones — the 64-vs-97 gap is robust (see §4.4).*
+
+**Decoded-only** sensitivity (restrict to the messages Agent B actually recovered — excludes
+emission failures instead of imputing 0):
+
+| condition | decoded n | fidelity (decoded-only) | emitted tok |
+|---|---|---|---|
+| **axon** | 63 | **0.942** (mid-pack) | 30.0 |
+| json | 70 | 0.938 | 37.6 |
+| json_schema | 68 | 0.959 | 52.1 |
+| struct_english | 69 | 0.941 | 36.5 |
+| fipa_acl | 68 | 0.942 | 43.9 |
+
+The two tables are the whole story. **AXON's correctness problem is emission reliability, not
+faithfulness:** it only produces a usable message on 63/70 attempts (vs 70/70 for JSON), and
+*when it decodes* its fidelity (0.942) is statistically indistinguishable from the field
+(0.938–0.959, mid of five). The all-attempt headline (0.848, last) is driven almost entirely
+by those 7 emission failures being scored as zero. On **density** AXON is decisively best
+(27 tok), and because the density gap (~30–47%) dwarfs the *decoded* fidelity gap (~2%), AXON
+also wins **effective tokens** (31.9) — the fewest wire-tokens per *fully correct* message.
+Which denominator you privilege is the argument: end-to-end success (all-attempt) penalises
+AXON's brittle emission; cost-per-correct-unit rehabilitates it. AXON is on the Pareto frontier
+(with `json` and `struct_english`).
 
 ### 4.2 The size axis — AXON needs a strong model (opposite of the weak-model hypothesis)
 
@@ -151,6 +183,17 @@ its best host of all (0.96 fidelity — highest of *any* format on that model �
 30.5 tok vs JSON+Schema's 51.2). Code models are trained on dense structured syntax, so
 AXON sits closest to their distribution.
 
+The token saving is **larger on the code model than on gpt-oss-120b**, and how big it is
+depends on which incumbent you compare against:
+
+- **qwen3-coder-80b:** AXON (0.960, 30.5 tok) beats the best incumbent (json_schema 0.954,
+  51.2 tok) on *both* axes — more faithful **and ~40% fewer tokens**. Unambiguous win.
+- **gpt-oss-120b:** the best-fidelity incumbent is structured English (0.964, 32.9 tok);
+  AXON (0.947, 31.6 tok) is ~0.02 less faithful and only **~4% cheaper** than it. AXON is
+  ~34% cheaper than *JSON+Schema* on this model, but JSON+Schema is not the best incumbent
+  here. So "~40% fewer tokens" is a clean claim only on the code model and only vs
+  JSON+Schema; on gpt-oss-120b the honest figure vs the best incumbent is single-digit.
+
 ### 4.3 Density buys no speed on reasoning models
 
 AXON's fewer *output* tokens do **not** translate to lower latency on reasoning models —
@@ -168,6 +211,16 @@ times (`02:00..04:00`), units inside identifiers (`CPU_exceeded_95%`), wrong lis
 composition tasks** (validity L1 90% → L3 50%) — i.e. exactly where AXON's operators were
 supposed to be the advantage, the model most often emits invalid AXON. JSON/English never
 hit these walls.
+
+**On metric fairness.** "Surface validity" is **format-specific** and the conditions are not
+equally strict by nature, so the "64% vs 97–100%" gap must be read with that in mind. To keep
+the incumbents from getting a free pass, we validate each as strictly as its format admits
+(`validators.py`, self-tested): AXON via the reference parser, `json_schema` via the *envelope
+contract* (not just `json.loads`), `fipa_acl` via *performative + slot* presence (not just
+paren-balance), `struct_english` marked **N/A** (prose has no parser) rather than 100%.
+Re-validating the committed corpus with these stricter checks reproduces the **same**
+percentages — every parse-OK `json_schema`/`fipa` message already satisfied its contract — so
+the gap reflects AXON's real fragility, not a lenient yardstick for the baselines.
 
 ### 4.5 Frontier calibration — the scorer is trustworthy and fair to AXON
 
@@ -237,24 +290,38 @@ it carries no signal.
 
 ### 4.8 Statistical firming
 
-- Per-condition fidelity, 95% bootstrap CI: AXON **0.848 [0.775, 0.911]**, non-overlapping
-  with JSON **0.938 [0.913, 0.961]** — AXON is significantly lowest overall.
-- Capability floor as a rank effect: **Spearman(model capability, AXON fidelity) = +1.00**
-  (and +0.90 for validity) vs **+0.20 for JSON** — AXON tracks capability almost perfectly;
-  JSON is flat.
+- Per-condition **all-attempt** fidelity, 95% bootstrap CI: AXON **0.848 [0.775, 0.911]**,
+  json **0.938 [0.913, 0.961]**, json_schema **0.932 [0.887, 0.970]**, struct_english **0.928
+  [0.890, 0.959]**, fipa **0.915 [0.864, 0.955]**. AXON's CI is **disjoint only from JSON**;
+  it **overlaps** json_schema, struct_english, and fipa. So the defensible statistical claim is
+  "AXON is clearly below JSON and has the lowest point estimate," **not** "significantly lowest
+  vs every incumbent." (And recall §4.1: this all-attempt CI is depressed by AXON's emission
+  failures; the decoded-only fidelity gap is ~0.02.)
+- Capability floor as a rank effect (n=5 models, ad-hoc capability ordering — **exploratory
+  monotone evidence, not a settled effect**): **Spearman(capability, AXON fidelity) = +1.00**
+  (a genuine monotone climb, no ties) and **+0.90 for AXON validity**, vs **+0.20 for JSON
+  fidelity**. JSON validity is constant (100% across all 5 models), so its rank correlation is
+  **undefined** — the tie-correct helper now reports that rather than the spurious +1.00 a
+  plain argsort produced. AXON tracks capability steeply; the incumbents are flat-to-undefined.
 - Paired over 70 model×task cells, AXON **ties** JSON+Schema on 45, **loses** 16, **wins** 9
   (mean −0.084): AXON matches the incumbent on most cells and is dragged down by a minority
   of hard failures.
 
 ## 5. Verdict (against the pre-registered criteria)
 
-- **Falsified overall: YES.** In the OVERALL slice and at every individual task Level,
-  AXON fails the earn rule (its fidelity gap to the best incumbent, 0.07–0.12, far exceeds
-  the 0.02 tolerance). It is the worst format on the two metrics that gate real use —
-  parseability and recovered fidelity.
-- **Niche found: YES — and precisely located.** AXON earns its place on 2 of 5 models,
-  both large/structure-fluent (gpt-oss-120b, qwen3-coder-80b), where it ties the best
-  incumbent's fidelity at ~40% fewer tokens. It fails on all small/mid models.
+- **Falsified overall (per the pre-registered criterion): NO — but it fails as a
+  general/default format.** The pre-reg defines "falsified overall" as earning its place in
+  *no* slice **and** being Pareto-dominated overall. Neither holds: AXON earns 2 model slices
+  (below) and sits on the overall fidelity-vs-tokens Pareto frontier. What *is* true — and what
+  the earlier drafts conflated with "falsified overall" — is that AXON **fails the OVERALL
+  aggregate slice and every task-Level slice** (its all-attempt fidelity gap to the best
+  incumbent, 0.07–0.12, far exceeds the 0.02 tolerance). So: AXON does **not** earn the
+  general/default payload slot, but it is **not falsified** in the strict pre-registered sense.
+  The driver is parseability/emission (§4.1, §4.4), not faithfulness once decoded.
+- **Niche found: YES — and precisely located.** AXON earns its place on 2 of 5 models, both
+  large/structure-fluent (gpt-oss-120b, qwen3-coder-80b), where it matches the best incumbent's
+  fidelity at fewer tokens (~40% on the code model vs JSON+Schema; single-digit vs the best
+  incumbent on gpt-oss-120b — §4.2). It fails on all small/mid models.
 - **Direction vs prior work:** consistent. Frontier Exp 3 found AXON last on composition;
   here AXON is again last overall and worst on composition validity. The new contribution
   is the *capability-floor* result and the *code-model* niche — neither visible when every

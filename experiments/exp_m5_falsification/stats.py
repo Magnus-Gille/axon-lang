@@ -71,17 +71,40 @@ def boot_ci(vals, B=2000):
     return (st.mean(vals), means[int(0.025 * B)], means[int(0.975 * B)])
 
 
+def _avg_ranks(v):
+    """Fractional (average) ranks — tie-correct, unlike a plain argsort."""
+    order = sorted(range(len(v)), key=lambda i: v[i])
+    r = [0.0] * len(v)
+    i = 0
+    while i < len(v):
+        j = i
+        while j + 1 < len(v) and v[order[j + 1]] == v[order[i]]:
+            j += 1
+        rank = (i + j) / 2.0 + 1.0  # 1-based average rank for the tie block
+        for k in range(i, j + 1):
+            r[order[k]] = rank
+        i = j + 1
+    return r
+
+
 def spearman(xs, ys):
-    def ranks(v):
-        order = sorted(range(len(v)), key=lambda i: v[i])
-        r = [0] * len(v)
-        for rank, i in enumerate(order):
-            r[i] = rank
-        return r
-    rx, ry = ranks(xs), ranks(ys)
+    """Tie-aware Spearman rho. Returns None (undefined) for a constant vector —
+    a degenerate case the old plain-argsort version reported as a spurious +1.00
+    (e.g. JSON validity 100% across all 5 models)."""
+    if len(xs) < 2 or len(set(xs)) < 2 or len(set(ys)) < 2:
+        return None
+    rx, ry = _avg_ranks(xs), _avg_ranks(ys)
     n = len(xs)
-    d2 = sum((rx[i] - ry[i]) ** 2 for i in range(n))
-    return 1 - 6 * d2 / (n * (n * n - 1)) if n > 1 else 0.0
+    mx = sum(rx) / n
+    my = sum(ry) / n
+    cov = sum((rx[i] - mx) * (ry[i] - my) for i in range(n))
+    sx = sum((rx[i] - mx) ** 2 for i in range(n)) ** 0.5
+    sy = sum((ry[i] - my) ** 2 for i in range(n)) ** 0.5
+    return cov / (sx * sy) if sx and sy else None
+
+
+def _fmt_rho(v):
+    return "undef(const)" if v is None else f"{v:+.2f}"
 
 
 print("## Per-condition fidelity, 95% bootstrap CI (all models)")
@@ -97,9 +120,11 @@ caps = [CAP[m] for m in models]
 for c in ["axon", "json", "json_schema"]:
     fids = [st.mean([fid(k) for k in cells(cond=c, model=m)] or [0]) for m in models]
     valids = [100 * st.mean([enc[k]["valid"] for k in cells(cond=c, model=m)] or [0]) for m in models]
-    print(f"{c:<14} fidelity~capability rho={spearman(caps, fids):+.2f}   "
-          f"validity~capability rho={spearman(caps, valids):+.2f}")
+    print(f"{c:<14} fidelity~capability rho={_fmt_rho(spearman(caps, fids))}   "
+          f"validity~capability rho={_fmt_rho(spearman(caps, valids))}")
 print("(AXON should show strong positive rho; JSON should be ~flat near 0)")
+print("(n=5 over an ad-hoc capability ordering — read as exploratory monotone")
+print(" evidence, not a settled effect; rho is undefined for a constant vector.)")
 
 print("\n## Paired AXON vs json_schema (per model×task)")
 diffs = []

@@ -88,22 +88,36 @@ def main():
     enc = {json.loads(l)["key"]: json.loads(l) for l in open(args.enc)}
     dec = {json.loads(l)["key"]: json.loads(l) for l in open(args.dec)}
 
-    # stratified sample: spread across conditions and levels, prefer decoded cells
-    pool = defaultdict(list)
+    # Stratified sample over DECODED cells, bucketed by (condition, level) and
+    # spread across models within each bucket (round-robin), so the calibration
+    # set isn't skewed toward any one condition / level / model.
+    #
+    # NOTE: the COMMITTED results/calibration.jsonl (n=50) was produced by an
+    # earlier condition-only sampler and is therefore reproducible only from that
+    # file, not by re-running this (now level+model-stratified) sampler. The
+    # agreement stats below are recomputed over whatever rows are in --out, so a
+    # rerun reproduces the reported summary from the committed sample.
+    def model_of(k):
+        return enc[k]["model"]
+
+    buckets = defaultdict(list)
     for k, e in enc.items():
-        if not e.get("ok"):
+        if not e.get("ok") or k not in dec:
             continue
-        if k not in dec:
-            continue
-        pool[e["condition"]].append(k)
-    per = max(1, args.n // len(COND_ORDER))
+        buckets[(e["condition"], e["level"])].append(k)
+    # round-robin across models inside each bucket for even spread
+    for key in buckets:
+        buckets[key] = sorted(buckets[key], key=lambda k: (model_of(k), k))
+
+    bkeys = sorted(buckets)
+    per_bucket = max(1, args.n // max(1, len(bkeys)))
     sample = []
-    for c in COND_ORDER:
-        ks = sorted(pool.get(c, []))
-        # spread across the list deterministically
+    for bk in bkeys:
+        ks = buckets[bk]
         if ks:
-            step = max(1, len(ks) // per)
-            sample.extend(ks[::step][:per])
+            step = max(1, len(ks) // per_bucket)
+            sample.extend(ks[::step][:per_bucket])
+    sample = sample[: args.n]
 
     done = set()
     if os.path.exists(args.out):
@@ -136,8 +150,17 @@ def main():
         print(f"[calib {i+1}/{len(sample)}] {e['condition']}/{e['task_id']} "
               f"mach={mach_fid:.2f} judge_rec={rec_s} judge_enc={enc_s}", flush=True)
 
-    # quick agreement stats
-    pairs = [(r["machine_fidelity"], r["judge_rec"]) for r in rows if r["judge_rec"] is not None]
+    # quick agreement stats — over the FULL committed sample (existing rows that
+    # the resume logic skipped + any newly appended this run), not just new rows,
+    # so a rerun reproduces the reported summary instead of stats over a subset.
+    all_rows = []
+    if os.path.exists(args.out):
+        for l in open(args.out):
+            try:
+                all_rows.append(json.loads(l))
+            except Exception:
+                pass
+    pairs = [(r["machine_fidelity"], r["judge_rec"]) for r in all_rows if r.get("judge_rec") is not None]
     if len(pairs) >= 3:
         import statistics as st
         mae = st.mean(abs(a - b) for a, b in pairs)

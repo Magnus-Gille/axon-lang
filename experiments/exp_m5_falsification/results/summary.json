@@ -9,6 +9,9 @@
       "ntok": 27.042857142857144,
       "ctok": 1092.6666666666667,
       "latency": 28.059136363636362,
+      "decoded_n": 63,
+      "decoded_fidelity": 0.9419412698412698,
+      "emitted_ntok": 30.047619047619047,
       "eff_tokens": 31.899673588654302
     },
     "json": {
@@ -20,6 +23,9 @@
       "ntok": 37.57142857142857,
       "ctok": 747.9285714285714,
       "latency": 21.926714285714286,
+      "decoded_n": 70,
+      "decoded_fidelity": 0.9380442857142858,
+      "emitted_ntok": 37.57142857142857,
       "eff_tokens": 40.05293688540443
     },
     "json_schema": {
@@ -31,6 +37,9 @@
       "ntok": 50.57142857142857,
       "ctok": 642.8235294117648,
       "latency": 17.60125,
+      "decoded_n": 68,
+      "decoded_fidelity": 0.9590338235294118,
+      "emitted_ntok": 52.05882352941177,
       "eff_tokens": 54.28257299395991
     },
     "struct_english": {
@@ -42,6 +51,9 @@
       "ntok": 35.94285714285714,
       "ctok": 790.1014492753624,
       "latency": 21.457753623188406,
+      "decoded_n": 69,
+      "decoded_fidelity": 0.941304347826087,
+      "emitted_ntok": 36.46376811594203,
       "eff_tokens": 38.73749037721324
     },
     "fipa_acl": {
@@ -53,6 +65,9 @@
       "ntok": 42.67142857142857,
       "ctok": 976.0588235294117,
       "latency": 23.356411764705882,
+      "decoded_n": 68,
+      "decoded_fidelity": 0.9421661764705882,
+      "emitted_ntok": 43.9264705882353,
       "eff_tokens": 46.62284816123046
     }
   },
@@ -66,6 +81,9 @@
       "ntok": 18.35,
       "ctok": 754.3684210526316,
       "latency": 31.564,
+      "decoded_n": 18,
+      "decoded_fidelity": 0.9888888888888889,
+      "emitted_ntok": 20.38888888888889,
       "eff_tokens": 20.617977528089888
     },
     "json|L1": {
@@ -77,6 +95,9 @@
       "ntok": 25.75,
       "ctok": 509.75,
       "latency": 22.9919,
+      "decoded_n": 20,
+      "decoded_fidelity": 0.9675,
+      "emitted_ntok": 25.75,
       "eff_tokens": 26.614987080103358
     },
     "json_schema|L1": {
@@ -88,6 +109,9 @@
       "ntok": 39.45,
       "ctok": 424.4,
       "latency": 21.31425,
+      "decoded_n": 20,
+      "decoded_fidelity": 0.975,
+      "emitted_ntok": 39.45,
       "eff_tokens": 40.46153846153847
     },
     "struct_english|L1": {
@@ -99,6 +123,9 @@
       "ntok": 27.25,
       "ctok": 648.65,
       "latency": 25.0305,
+      "decoded_n": 20,
+      "decoded_fidelity": 0.9875,
+      "emitted_ntok": 27.25,
       "eff_tokens": 27.594936708860757
     },
     "fipa_acl|L1": {
@@ -110,6 +137,9 @@
       "ntok": 35.8,
       "ctok": 959.1,
       "latency": 29.0588,
+      "decoded_n": 20,
+      "decoded_fidelity": 0.9875,
+      "emitted_ntok": 35.8,
       "eff_tokens": 36.25316455696202
     },
     "axon|L2": {
@@ -121,6 +151,9 @@
       "ntok": 30.133333333333333,
       "ctok": 1064.2142857142858,
       "latency": 24.992142857142856,
+      "decoded_n": 26,
+      "decoded_fidelity": 0.9923076923076923,
+      "emitted_ntok": 34.76923076923077,
       "eff_tokens": 35.03875968992248
     },
     "json|L2": {
@@ -132,6 +165,9 @@
       "ntok": 41.53333333333333,
       "ctok": 854.9333333333333,
       "latency": 24.1781,
+      "decoded_n": 30,
+      "decoded_fidelity": 0.9366633333333333,
+      "emitted_ntok": 41.53333333333333,
       "eff_tokens": 44.34179481065769
     },
     "json_schema|L2": {
@@ -143,6 +179,9 @@
       "ntok": 54.7,
       "ctok": 697.3103448275862,
       "latency": 15.041344827586206,
+      "decoded_n": 29,
+      "decoded_fidelity": 0.9862068965517241,
+      "emitted_ntok": 56.58620689655172,
       "eff_tokens": 57.37762237762238
     },
     "struct_english|L2": {
@@ -154,6 +193,9 @@
       "ntok": 39.93333333333333,
       "ctok": 790.5,
       "latency": 19.627933333333335,
+      "decoded_n": 30,
+      "decoded_fidelity": 0.9100033333333333,
+      "emitted_ntok": 39.93333333333333,
       "eff_tokens": 43.88262314057457
     },
     "fipa_acl|L2": {
@@ -165,6 +207,9 @@
       "ntok": 46.2,
       "ctok": 911.8275862068965,
       "latency": 20.41862068965517,
+      "decoded_n": 29,
+      "decoded_fidelity": 0.993103448275862,
+      "emitted_ntok": 47.793103448275865,
       "eff_tokens": 48.12500000000001
     },
     "axon|L3": {
@@ -176,6 +221,9 @@
       "ntok": 31.1,
       "ctok": 1472.8947368421052,
       "latency": 29.074052631578947,
+      "decoded_n": 19,
+      "decoded_fidelity": 0.8285421052631579,
+      "emitted_ntok": 32.73684210526316,
       "eff_tokens": 39.51138016681171
     },
     "json|L3": {
@@ -187,6 +235,9 @@
       "ntok": 43.45,
       "ctok": 825.6,
       "latency": 17.48445,
+      "decoded_n": 20,
+      "decoded_fidelity": 0.91066,
+      "emitted_ntok": 43.45,
       "eff_tokens": 47.71264796960446
     },
     "json_schema|L3": {
@@ -198,6 +249,9 @@
       "ntok": 55.5,
       "ctok": 789.578947368421,
       "latency": 17.600052631578947,
+      "decoded_n": 19,
+      "decoded_fidelity": 0.9007526315789474,
+      "emitted_ntok": 58.421052631578945,
       "eff_tokens": 64.85804268944683
     },
     "struct_english|L3": {
@@ -209,6 +263,9 @@
       "ntok": 38.65,
       "ctok": 938.3684210526316,
       "latency": 20.586157894736843,
+      "decoded_n": 19,
+      "decoded_fidelity": 0.9421,
+      "emitted_ntok": 40.68421052631579,
       "eff_tokens": 43.18459879664132
     },
     "fipa_acl|L3": {
@@ -220,6 +277,9 @@
       "ntok": 44.25,
       "ctok": 1091.9473684210527,
       "latency": 21.837894736842106,
+      "decoded_n": 19,
+      "decoded_fidelity": 0.8167,
+      "emitted_ntok": 46.578947368421055,
       "eff_tokens": 57.03311787488803
     }
   },
@@ -233,6 +293,9 @@
       "ntok": 32.57142857142857,
       "ctok": 36.785714285714285,
       "latency": 0.8635,
+      "decoded_n": 14,
+      "decoded_fidelity": 0.9137071428571428,
+      "emitted_ntok": 32.57142857142857,
       "eff_tokens": 35.647558220436366
     },
     "json|qwen3-30b-instruct": {
@@ -244,6 +307,9 @@
       "ntok": 32.5,
       "ctok": 36.57142857142857,
       "latency": 0.8555,
+      "decoded_n": 14,
+      "decoded_fidelity": 0.9499928571428572,
+      "emitted_ntok": 32.5,
       "eff_tokens": 34.21078353972586
     },
     "json_schema|qwen3-30b-instruct": {
@@ -255,6 +321,9 @@
       "ntok": 54.642857142857146,
       "ctok": 58.285714285714285,
       "latency": 1.0483571428571428,
+      "decoded_n": 14,
+      "decoded_fidelity": 0.9544214285714285,
+      "emitted_ntok": 54.642857142857146,
       "eff_tokens": 57.25233686825976
     },
     "struct_english|qwen3-30b-instruct": {
@@ -266,6 +335,9 @@
       "ntok": 37.92857142857143,
       "ctok": 42.07142857142857,
       "latency": 0.8891428571428571,
+      "decoded_n": 14,
+      "decoded_fidelity": 0.9083357142857142,
+      "emitted_ntok": 37.92857142857143,
       "eff_tokens": 41.75611597348369
     },
     "fipa_acl|qwen3-30b-instruct": {
@@ -277,6 +349,9 @@
       "ntok": 41.07142857142857,
       "ctok": 44.785714285714285,
       "latency": 0.8921428571428571,
+      "decoded_n": 14,
+      "decoded_fidelity": 0.9195571428571429,
+      "emitted_ntok": 41.07142857142857,
       "eff_tokens": 44.664357066289675
     },
     "axon|gemma4": {
@@ -288,6 +363,9 @@
       "ntok": 22.428571428571427,
       "ctok": 2373.5,
       "latency": 44.53757142857143,
+      "decoded_n": 11,
+      "decoded_fidelity": 0.9330272727272727,
+      "emitted_ntok": 28.545454545454547,
       "eff_tokens": 30.594448179435464
     },
     "json|gemma4": {
@@ -299,6 +377,9 @@
       "ntok": 38.142857142857146,
       "ctok": 528.2857142857143,
       "latency": 11.272785714285714,
+      "decoded_n": 14,
+      "decoded_fidelity": 0.8973785714285715,
+      "emitted_ntok": 38.142857142857146,
       "eff_tokens": 42.50475591604117
     },
     "json_schema|gemma4": {
@@ -310,6 +391,9 @@
       "ntok": 53.214285714285715,
       "ctok": 968.1428571428571,
       "latency": 18.348642857142856,
+      "decoded_n": 14,
+      "decoded_fidelity": 0.9472785714285714,
+      "emitted_ntok": 53.214285714285715,
       "eff_tokens": 56.175962720273866
     },
     "struct_english|gemma4": {
@@ -321,6 +405,9 @@
       "ntok": 37.214285714285715,
       "ctok": 614,
       "latency": 12.803642857142856,
+      "decoded_n": 14,
+      "decoded_fidelity": 0.95,
+      "emitted_ntok": 37.214285714285715,
       "eff_tokens": 39.172932330827074
     },
     "fipa_acl|gemma4": {
@@ -332,6 +419,9 @@
       "ntok": 48,
       "ctok": 1152.357142857143,
       "latency": 21.476928571428573,
+      "decoded_n": 14,
+      "decoded_fidelity": 0.9625214285714285,
+      "emitted_ntok": 48,
       "eff_tokens": 49.86901961366352
     },
     "axon|qwen3-coder-next-80b": {
@@ -343,6 +433,9 @@
       "ntok": 30.5,
       "ctok": 34.714285714285715,
       "latency": 14.728571428571428,
+      "decoded_n": 14,
+      "decoded_fidelity": 0.9600357142857143,
+      "emitted_ntok": 30.5,
       "eff_tokens": 31.769651426658232
     },
     "json|qwen3-coder-next-80b": {
@@ -354,6 +447,9 @@
       "ntok": 39.07142857142857,
       "ctok": 43.285714285714285,
       "latency": 11.6075,
+      "decoded_n": 14,
+      "decoded_fidelity": 0.9452357142857143,
+      "emitted_ntok": 39.07142857142857,
       "eff_tokens": 41.33511671314033
     },
     "json_schema|qwen3-coder-next-80b": {
@@ -365,6 +461,9 @@
       "ntok": 51.214285714285715,
       "ctok": 55.57142857142857,
       "latency": 13.322071428571428,
+      "decoded_n": 14,
+      "decoded_fidelity": 0.9535714285714285,
+      "emitted_ntok": 51.214285714285715,
       "eff_tokens": 53.70786516853933
     },
     "struct_english|qwen3-coder-next-80b": {
@@ -376,6 +475,9 @@
       "ntok": 36.92857142857143,
       "ctok": 41.07142857142857,
       "latency": 15.523785714285713,
+      "decoded_n": 14,
+      "decoded_fidelity": 0.95,
+      "emitted_ntok": 36.92857142857143,
       "eff_tokens": 38.872180451127825
     },
     "fipa_acl|qwen3-coder-next-80b": {
@@ -387,6 +489,9 @@
       "ntok": 41.285714285714285,
       "ctok": 45.785714285714285,
       "latency": 12.505357142857143,
+      "decoded_n": 14,
+      "decoded_fidelity": 0.9364,
+      "emitted_ntok": 41.285714285714285,
       "eff_tokens": 44.089827302129734
     },
     "axon|gpt-oss-120b": {
@@ -398,6 +503,9 @@
       "ntok": 31.571428571428573,
       "ctok": 342.14285714285717,
       "latency": 31.489785714285716,
+      "decoded_n": 14,
+      "decoded_fidelity": 0.9473785714285714,
+      "emitted_ntok": 31.571428571428573,
       "eff_tokens": 33.325039771399275
     },
     "json|gpt-oss-120b": {
@@ -409,6 +517,9 @@
       "ntok": 40.142857142857146,
       "ctok": 197.78571428571428,
       "latency": 35.59271428571429,
+      "decoded_n": 14,
+      "decoded_fidelity": 0.95,
+      "emitted_ntok": 40.142857142857146,
       "eff_tokens": 42.255639097744364
     },
     "json_schema|gpt-oss-120b": {
@@ -420,6 +531,9 @@
       "ntok": 48.142857142857146,
       "ctok": 268,
       "latency": 23.40776923076923,
+      "decoded_n": 13,
+      "decoded_fidelity": 0.975276923076923,
+      "emitted_ntok": 51.84615384615385,
       "eff_tokens": 53.16044358209897
     },
     "struct_english|gpt-oss-120b": {
@@ -431,6 +545,9 @@
       "ntok": 32.857142857142854,
       "ctok": 259.2857142857143,
       "latency": 26.357142857142858,
+      "decoded_n": 14,
+      "decoded_fidelity": 0.9642857142857143,
+      "emitted_ntok": 32.857142857142854,
       "eff_tokens": 34.07407407407407
     },
     "fipa_acl|gpt-oss-120b": {
@@ -442,6 +559,9 @@
       "ntok": 45.57142857142857,
       "ctok": 339.2142857142857,
       "latency": 23.446214285714287,
+      "decoded_n": 14,
+      "decoded_fidelity": 0.9414285714285714,
+      "emitted_ntok": 45.57142857142857,
       "eff_tokens": 48.40667678300455
     },
     "axon|qwen35-a3b": {
@@ -453,6 +573,9 @@
       "ntok": 18.142857142857142,
       "ctok": 3309.6,
       "latency": 56.9231,
+      "decoded_n": 10,
+      "decoded_fidelity": 0.95833,
+      "emitted_ntok": 25.4,
       "eff_tokens": 26.504440015443528
     },
     "json|qwen35-a3b": {
@@ -464,6 +587,9 @@
       "ntok": 38,
       "ctok": 2933.714285714286,
       "latency": 50.30507142857143,
+      "decoded_n": 14,
+      "decoded_fidelity": 0.9476142857142857,
+      "emitted_ntok": 38,
       "eff_tokens": 40.10070402363831
     },
     "json_schema|qwen35-a3b": {
@@ -475,6 +601,9 @@
       "ntok": 45.642857142857146,
       "ctok": 1929.2307692307693,
       "latency": 33.42438461538462,
+      "decoded_n": 13,
+      "decoded_fidelity": 0.9663,
+      "emitted_ntok": 49.15384615384615,
       "eff_tokens": 50.86810116304062
     },
     "struct_english|qwen35-a3b": {
@@ -486,6 +615,9 @@
       "ntok": 34.785714285714285,
       "ctok": 3163.6153846153848,
       "latency": 54.04253846153846,
+      "decoded_n": 13,
+      "decoded_fidelity": 0.9333307692307692,
+      "emitted_ntok": 37.46153846153846,
       "eff_tokens": 40.137472905145344
     },
     "fipa_acl|qwen35-a3b": {
@@ -497,6 +629,9 @@
       "ntok": 37.42857142857143,
       "ctok": 3685.1666666666665,
       "latency": 64.31225,
+      "decoded_n": 12,
+      "decoded_fidelity": 0.9523833333333334,
+      "emitted_ntok": 43.666666666666664,
       "eff_tokens": 45.84988537528657
     }
   },

@@ -27,6 +27,7 @@ sys.path.insert(0, HERE)
 sys.path.insert(0, os.path.join(HERE, "..", "..", "src"))
 
 import conditions as C
+import validators as V
 from m5_client import chat
 
 try:
@@ -56,33 +57,17 @@ MAXTOK = {
 }
 
 
-def axon_valid(src: str) -> bool:
-    try:
-        import axon_parser as ap
+def validity(condition: str, msg: str, ok: bool = True) -> bool:
+    """Stored surface-validity bool for a cell.
 
-        msgs = ap.Parser(ap.Lexer(src).tokenize()).parse()
-        return len(msgs) >= 1
-    except Exception:
-        return False
-
-
-def validity(condition: str, msg: str) -> bool:
-    if not msg or not msg.strip():
-        return False
-    if condition == "axon":
-        return axon_valid(msg)
-    if condition in ("json", "json_schema"):
-        try:
-            json.loads(C.extract_json(msg))
-            return True
-        except Exception:
-            return False
-    if condition == "fipa_acl":
-        s = msg.strip()
-        return s.startswith("(") and s.count("(") == s.count(")") and s.count("(") >= 1
-    if condition == "struct_english":
-        return True  # prose is "valid" by construction
-    return False
+    Delegates to the shared strict per-condition validators (validators.py):
+    AXON via the reference parser, json_schema via the envelope contract,
+    fipa_acl via performative+slots, json via json.loads. struct_english has no
+    parser (surface_valid -> None, "valid by construction"); we store it as True
+    but it is reported as "n/a" and excluded from the validity comparison.
+    """
+    v = V.surface_valid(condition, msg, ok=ok)
+    return True if v is None else bool(v)
 
 
 def load_existing(path: str) -> set[str]:
