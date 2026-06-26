@@ -1,0 +1,554 @@
+{
+  "experiment": "exp_json_contracts",
+  "condition": "json_contracts",
+  "model": "claude-sonnet",
+  "model_display": "Claude Sonnet 4.5",
+  "timestamp": "2026-03-02T08:39:19.189940+00:00",
+  "total_runs": 27,
+  "valid_count": 27,
+  "results": [
+    {
+      "task_id": "L1-01",
+      "condition": "json_contracts",
+      "model": "claude-sonnet",
+      "run_number": 1,
+      "output": "```json\n{\n  \"performative\": \"command\",\n  \"from\": \"data-processing-agent\",\n  \"to\": \"worker-agent\",\n  \"id\": \"cmd-dp-001\",\n  \"timestamp\": 1740873600,\n  \"preconditions\": [\n    \"worker-agent is idle and available\",\n    \"data lake is accessible and dataset exists\",\n    \"warehouse endpoint is reachable\",\n    \"worker-agent has read permissions on data lake\",\n    \"worker-agent has write permissions on warehouse\"\n  ],\n  \"postconditions\": [\n    \"cleaned dataset has been written to warehouse\",\n    \"all null rows have been removed from the dataset\",\n    \"original dataset in data lake is unchanged\",\n    \"worker-agent returns to idle state\"\n  ],\n  \"lifecycle_stage\": \"execution\",\n  \"content\": {\n    \"task\": \"etl-pipeline\",\n    \"dataset_id\": \"ds-2026-03-02\",\n    \"description\": \"Download, clean, and upload dataset in strict sequence\"\n  },\n  \"steps\": [\n    {\n      \"step_id\": 1,\n      \"action\": \"download_dataset\",\n      \"params\": {\n        \"source\": \"data_lake\",\n        \"dataset_id\": \"ds-2026-03-02\",\n        \"destination\": \"local_staging/raw_dataset.parquet\"\n      },\n      \"relation\": \"sequence\"\n    },\n    {\n      \"step_id\": 2,\n      \"action\": \"clean_dataset\",\n      \"params\": {\n        \"input\": \"local_staging/raw_dataset.parquet\",\n        \"operation\": \"remove_null_rows\",\n        \"output\": \"local_staging/cleaned_dataset.parquet\"\n      },\n      \"relation\": \"sequence\",\n      \"caused_by\": \"step_id:1\"\n    },\n    {\n      \"step_id\": 3,\n      \"action\": \"upload_dataset\",\n      \"params\": {\n        \"source\": \"local_staging/cleaned_dataset.parquet\",\n        \"destination\": \"warehouse\",\n        \"target_table\": \"ds-2026-03-02-clean\"\n      },\n      \"relation\": \"sequence\",\n      \"caused_by\": \"step_id:2\"\n    }\n  ]\n}\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 459,
+        "o200k_base": 458
+      },
+      "latency_ms": 15168,
+      "timestamp": "2026-03-02T08:31:58.152164+00:00",
+      "complexity_level": 1,
+      "operators_tested": [
+        "->"
+      ]
+    },
+    {
+      "task_id": "L1-02",
+      "condition": "json_contracts",
+      "model": "claude-sonnet",
+      "run_number": 1,
+      "output": "```json\n{\n  \"performative\": \"command\",\n  \"from\": \"deployment-agent\",\n  \"to\": \"cluster-manager\",\n  \"id\": \"cmd-healthcheck-001\",\n  \"timestamp\": 1740873600,\n  \"preconditions\": [\n    \"cluster-manager is online and reachable\",\n    \"deployment-agent has authority to issue health check commands\",\n    \"cluster nodes are registered and accessible\"\n  ],\n  \"postconditions\": [\n    \"CPU usage check has been executed and result returned\",\n    \"memory usage check has been executed and result returned\",\n    \"disk space check has been executed and result returned\",\n    \"all three health check results are available to deployment-agent\"\n  ],\n  \"lifecycle_stage\": \"execution\",\n  \"content\": {\n    \"operation\": \"run_health_checks\",\n    \"target\": \"all_nodes\",\n    \"execution_mode\": \"parallel\",\n    \"checks\": [\n      \"cpu_usage\",\n      \"memory_usage\",\n      \"disk_space\"\n    ]\n  },\n  \"steps\": [\n    {\n      \"action\": \"check_cpu_usage\",\n      \"params\": {\n        \"metric\": \"cpu_usage\",\n        \"threshold_warn\": 80,\n        \"threshold_critical\": 95,\n        \"unit\": \"percent\"\n      },\n      \"relation\": \"parallel\"\n    },\n    {\n      \"action\": \"check_memory_usage\",\n      \"params\": {\n        \"metric\": \"memory_usage\",\n        \"threshold_warn\": 75,\n        \"threshold_critical\": 90,\n        \"unit\": \"percent\"\n      },\n      \"relation\": \"parallel\"\n    },\n    {\n      \"action\": \"check_disk_space\",\n      \"params\": {\n        \"metric\": \"disk_space\",\n        \"threshold_warn\": 70,\n        \"threshold_critical\": 85,\n        \"unit\": \"percent\"\n      },\n      \"relation\": \"parallel\"\n    }\n  ]\n}\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 390,
+        "o200k_base": 393
+      },
+      "latency_ms": 16576,
+      "timestamp": "2026-03-02T08:32:14.731308+00:00",
+      "complexity_level": 1,
+      "operators_tested": [
+        "&"
+      ]
+    },
+    {
+      "task_id": "L1-03",
+      "condition": "json_contracts",
+      "model": "claude-sonnet",
+      "run_number": 1,
+      "output": "```json\n{\n  \"performative\": \"inform\",\n  \"from\": \"routing-agent\",\n  \"to\": \"handler-agent\",\n  \"id\": \"msg-route-7f3a2b\",\n  \"timestamp\": 1740873600,\n  \"preconditions\": [\n    \"incoming request has been received and queued\",\n    \"availability check for primary API endpoint has been performed\",\n    \"availability check for fallback cache service has been performed\"\n  ],\n  \"postconditions\": [\n    \"handler-agent knows which endpoint to route the request to\",\n    \"handler-agent will attempt primary API endpoint if available, fallback cache if not\",\n    \"request will be processed without loss\"\n  ],\n  \"lifecycle_stage\": \"execution\",\n  \"content\": {\n    \"request_id\": \"req-4c91de\",\n    \"routing_decision\": {\n      \"primary\": {\n        \"endpoint\": \"api.primary.internal/v2/process\",\n        \"status\": \"available\",\n        \"priority\": 1\n      },\n      \"fallback\": {\n        \"endpoint\": \"cache.fallback.internal/serve\",\n        \"status\": \"available\",\n        \"priority\": 2\n      },\n      \"strategy\": \"primary-with-fallback\",\n      \"instruction\": \"Attempt primary endpoint first; on timeout or 5xx, immediately retry via fallback cache service.\"\n    }\n  },\n  \"steps\": [\n    {\n      \"action\": \"attempt_primary_endpoint\",\n      \"params\": {\n        \"endpoint\": \"api.primary.internal/v2/process\",\n        \"timeout_ms\": 3000\n      },\n      \"relation\": \"sequence\"\n    },\n    {\n      \"action\": \"evaluate_primary_response\",\n      \"params\": {\n        \"success_codes\": [200, 201, 204],\n        \"failure_codes\": [500, 502, 503, 504]\n      },\n      \"relation\": \"sequence\"\n    },\n    {\n      \"action\": \"route_to_fallback_cache\",\n      \"params\": {\n        \"endpoint\": \"cache.fallback.internal/serve\",\n        \"condition\": \"primary_unavailable_or_error\"\n      },\n      \"relation\": \"alternative\",\n      \"condition\": \"primary_response_is_failure_or_timeout\"\n    },\n    {\n      \"action\": \"return_processed_result\",\n      \"params\": {\n        \"source\": \"whichever_endpoint_succeeded\"\n      },\n      \"relation\": \"sequence\"\n    }\n  ]\n}\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 496,
+        "o200k_base": 497
+      },
+      "latency_ms": 14740,
+      "timestamp": "2026-03-02T08:32:29.474124+00:00",
+      "complexity_level": 1,
+      "operators_tested": [
+        "|"
+      ]
+    },
+    {
+      "task_id": "L2-01",
+      "condition": "json_contracts",
+      "model": "claude-sonnet",
+      "run_number": 1,
+      "output": "```json\n{\n  \"performative\": \"command\",\n  \"from\": \"orchestrator\",\n  \"to\": \"pipeline\",\n  \"id\": \"msg-orch-001\",\n  \"timestamp\": 1740873600,\n  \"preconditions\": [\n    \"input data is available and non-empty\",\n    \"pipeline agent is idle and ready to accept commands\",\n    \"sentiment analysis module is reachable\",\n    \"topic classification module is reachable\",\n    \"merge/report module is reachable\"\n  ],\n  \"postconditions\": [\n    \"input schema has been validated and confirmed well-formed\",\n    \"sentiment analysis result is produced for validated data\",\n    \"topic classification result is produced for validated data\",\n    \"a single merged report consolidating both results is available\"\n  ],\n  \"lifecycle_stage\": \"execution\",\n  \"content\": {\n    \"workflow\": \"validate-analyze-merge\",\n    \"description\": \"Validate input schema, run sentiment and topic classification in parallel, then merge into a unified report.\",\n    \"input\": \"raw_input_data\",\n    \"output\": \"merged_report\"\n  },\n  \"steps\": [\n    {\n      \"id\": \"step-1\",\n      \"action\": \"validate_schema\",\n      \"params\": {\n        \"target\": \"raw_input_data\",\n        \"schema_version\": \"latest\",\n        \"on_failure\": \"abort_pipeline\"\n      },\n      \"relation\": \"sequence\"\n    },\n    {\n      \"id\": \"step-2\",\n      \"action\": \"run_sentiment_analysis\",\n      \"params\": {\n        \"input\": \"validated_data\",\n        \"model\": \"default_sentiment_model\",\n        \"output_key\": \"sentiment_result\"\n      },\n      \"relation\": \"parallel\",\n      \"depends_on\": \"step-1\"\n    },\n    {\n      \"id\": \"step-3\",\n      \"action\": \"run_topic_classification\",\n      \"params\": {\n        \"input\": \"validated_data\",\n        \"model\": \"default_topic_model\",\n        \"output_key\": \"topic_result\"\n      },\n      \"relation\": \"parallel\",\n      \"depends_on\": \"step-1\"\n    },\n    {\n      \"id\": \"step-4\",\n      \"action\": \"merge_results\",\n      \"params\": {\n        \"inputs\": [\"sentiment_result\", \"topic_result\"],\n        \"output_format\": \"unified_report\",\n        \"output_key\": \"merged_report\"\n      },\n      \"relation\": \"sequence\",\n      \"depends_on\": [\"step-2\", \"step-3\"]\n    }\n  ]\n}\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 527,
+        "o200k_base": 529
+      },
+      "latency_ms": 15350,
+      "timestamp": "2026-03-02T08:32:44.825981+00:00",
+      "complexity_level": 2,
+      "operators_tested": [
+        "->",
+        "&"
+      ]
+    },
+    {
+      "task_id": "L2-02",
+      "condition": "json_contracts",
+      "model": "claude-sonnet",
+      "run_number": 1,
+      "output": "```json\n{\n  \"performative\": \"command\",\n  \"from\": \"query-agent\",\n  \"to\": \"data-agent\",\n  \"id\": \"cmd-7f3a1c9e-2b84-4d60-a1f2-8e5c0d3b7a12\",\n  \"timestamp\": 1740873600,\n  \"preconditions\": [\n    \"data-agent is online and idle\",\n    \"cache service is reachable\",\n    \"database connection is available\",\n    \"query parameters are fully specified\"\n  ],\n  \"postconditions\": [\n    \"result set is returned to query-agent\",\n    \"cache contains up-to-date result for the given query key\",\n    \"database was queried only if cache miss occurred\"\n  ],\n  \"lifecycle_stage\": \"execution\",\n  \"content\": {\n    \"operation\": \"resolve_query\",\n    \"query_key\": \"users:active:region=eu:page=1\",\n    \"query\": {\n      \"entity\": \"users\",\n      \"filters\": { \"status\": \"active\", \"region\": \"eu\" },\n      \"pagination\": { \"page\": 1, \"page_size\": 50 }\n    },\n    \"cache_ttl_seconds\": 300\n  },\n  \"steps\": [\n    {\n      \"action\": \"check_cache\",\n      \"params\": {\n        \"key\": \"users:active:region=eu:page=1\"\n      },\n      \"relation\": \"sequence\"\n    },\n    {\n      \"action\": \"return_cached_result\",\n      \"params\": {\n        \"source\": \"cache\",\n        \"key\": \"users:active:region=eu:page=1\"\n      },\n      \"relation\": \"alternative\",\n      \"condition\": \"cache_hit == true\"\n    },\n    {\n      \"action\": \"query_database\",\n      \"params\": {\n        \"entity\": \"users\",\n        \"filters\": { \"status\": \"active\", \"region\": \"eu\" },\n        \"pagination\": { \"page\": 1, \"page_size\": 50 }\n      },\n      \"relation\": \"alternative\",\n      \"condition\": \"cache_hit == false\"\n    },\n    {\n      \"action\": \"update_cache\",\n      \"params\": {\n        \"key\": \"users:active:region=eu:page=1\",\n        \"ttl_seconds\": 300,\n        \"source\": \"database_result\"\n      },\n      \"relation\": \"causal\",\n      \"caused_by\": \"query_database\"\n    },\n    {\n      \"action\": \"return_fresh_result\",\n      \"params\": {\n        \"source\": \"database\",\n        \"key\": \"users:active:region=eu:page=1\"\n      },\n      \"relation\": \"sequence\"\n    }\n  ]\n}\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 575,
+        "o200k_base": 576
+      },
+      "latency_ms": 15796,
+      "timestamp": "2026-03-02T08:33:00.623869+00:00",
+      "complexity_level": 2,
+      "operators_tested": [
+        "|",
+        "->"
+      ]
+    },
+    {
+      "task_id": "L2-03",
+      "condition": "json_contracts",
+      "model": "claude-sonnet",
+      "run_number": 1,
+      "output": "```json\n{\n  \"performative\": \"command\",\n  \"from\": \"security-agent\",\n  \"to\": \"audit-agent\",\n  \"id\": \"sec-cmd-20260302-001\",\n  \"timestamp\": 1740873600,\n  \"preconditions\": [\n    \"audit-agent is online and idle\",\n    \"scan scope manifest is loaded and current\",\n    \"internal-only service registry is available\",\n    \"audit-agent has network access to target hosts\"\n  ],\n  \"postconditions\": [\n    \"all non-internal hosts scanned for open ports\",\n    \"all non-internal hosts checked for SSL certificate validity\",\n    \"internal-only services excluded from all scan results\",\n    \"audit report delivered to security-agent\"\n  ],\n  \"lifecycle_stage\": \"execution\",\n  \"content\": {\n    \"task\": \"security_audit\",\n    \"scope\": {\n      \"exclude\": {\n        \"tag\": \"internal-only\",\n        \"description\": \"Services marked internal-only must not appear in scan scope or results\"\n      },\n      \"include\": \"all_registered_services\"\n    },\n    \"output\": {\n      \"report_to\": \"security-agent\",\n      \"format\": \"structured_audit_report\",\n      \"include_fields\": [\"host\", \"open_ports\", \"ssl_status\", \"ssl_expiry\", \"findings\", \"severity\"]\n    }\n  },\n  \"steps\": [\n    {\n      \"action\": \"resolve_scan_scope\",\n      \"params\": {\n        \"source\": \"service_registry\",\n        \"filter_out_tag\": \"internal-only\"\n      },\n      \"relation\": \"sequence\"\n    },\n    {\n      \"action\": \"scan_open_ports\",\n      \"params\": {\n        \"targets\": \"resolved_scope\",\n        \"port_range\": \"1-65535\",\n        \"protocol\": [\"tcp\", \"udp\"]\n      },\n      \"relation\": \"parallel\"\n    },\n    {\n      \"action\": \"check_ssl_certificates\",\n      \"params\": {\n        \"targets\": \"resolved_scope\",\n        \"checks\": [\"validity\", \"expiry\", \"chain\", \"cipher_suite\"],\n        \"warn_expiry_days\": 30\n      },\n      \"relation\": \"parallel\"\n    },\n    {\n      \"action\": \"merge_and_correlate_results\",\n      \"params\": {\n        \"inputs\": [\"open_ports_results\", \"ssl_check_results\"],\n        \"deduplicate\": true,\n        \"flag_anomalies\": true\n      },\n      \"relation\": \"sequence\"\n    },\n    {\n      \"action\": \"emit_audit_report\",\n      \"params\": {\n        \"destination\": \"security-agent\",\n        \"classification\": \"confidential\",\n        \"include_summary\": true\n      },\n      \"relation\": \"sequence\"\n    }\n  ]\n}\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 561,
+        "o200k_base": 566
+      },
+      "latency_ms": 17597,
+      "timestamp": "2026-03-02T08:33:18.223949+00:00",
+      "complexity_level": 2,
+      "operators_tested": [
+        "&",
+        "!"
+      ]
+    },
+    {
+      "task_id": "L3-01",
+      "condition": "json_contracts",
+      "model": "claude-sonnet",
+      "run_number": 1,
+      "output": "```json\n{\n  \"performative\": \"command\",\n  \"from\": \"etl-orchestrator\",\n  \"to\": \"pipeline\",\n  \"id\": \"msg-etl-20260302-001\",\n  \"protocol_version\": \"1.0\",\n  \"preconditions\": [\n    \"pipeline is idle and ready to accept commands\",\n    \"API source endpoint is reachable\",\n    \"database source connection is established\",\n    \"data warehouse is online and accepting writes\",\n    \"error queue is initialized and accepting messages\"\n  ],\n  \"postconditions\": [\n    \"data has been extracted from both API source and database source\",\n    \"combined data has been validated against transformation rules\",\n    \"validated data is loaded into the data warehouse OR rejected data is routed to the error queue\",\n    \"pipeline returns to idle state with execution report\"\n  ],\n  \"lifecycle_stage\": \"execution\",\n  \"content\": {\n    \"workflow\": \"etl-full-pipeline\",\n    \"description\": \"Extract from API and DB simultaneously, transform and validate, then load or error-route based on validation outcome\"\n  },\n  \"steps\": [\n    {\n      \"id\": \"step-1a\",\n      \"action\": \"extract\",\n      \"params\": {\n        \"source_type\": \"api\",\n        \"source_id\": \"api-source\",\n        \"format\": \"json\"\n      },\n      \"relation\": \"parallel\"\n    },\n    {\n      \"id\": \"step-1b\",\n      \"action\": \"extract\",\n      \"params\": {\n        \"source_type\": \"database\",\n        \"source_id\": \"db-source\",\n        \"format\": \"tabular\"\n      },\n      \"relation\": \"parallel\"\n    },\n    {\n      \"id\": \"step-2\",\n      \"action\": \"transform\",\n      \"params\": {\n        \"operation\": \"combine_and_validate\",\n        \"inputs\": [\"step-1a\", \"step-1b\"],\n        \"rules\": \"validation-ruleset-v1\"\n      },\n      \"relation\": \"sequence\",\n      \"caused_by\": [\"step-1a\", \"step-1b\"]\n    },\n    {\n      \"id\": \"step-3a\",\n      \"action\": \"load\",\n      \"params\": {\n        \"destination\": \"data-warehouse\",\n        \"mode\": \"append\"\n      },\n      \"relation\": \"alternative\",\n      \"condition\": \"step-2.validation_passed === true\",\n      \"caused_by\": \"step-2\"\n    },\n    {\n      \"id\": \"step-3b\",\n      \"action\": \"route\",\n      \"params\": {\n        \"destination\": \"error-queue\",\n        \"include_validation_report\": true\n      },\n      \"relation\": \"alternative\",\n      \"condition\": \"step-2.validation_passed === false\",\n      \"caused_by\": \"step-2\"\n    }\n  ]\n}\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 596,
+        "o200k_base": 595
+      },
+      "latency_ms": 15500,
+      "timestamp": "2026-03-02T08:33:33.727109+00:00",
+      "complexity_level": 3,
+      "operators_tested": [
+        "->",
+        "&",
+        "|"
+      ]
+    },
+    {
+      "task_id": "L3-02",
+      "condition": "json_contracts",
+      "model": "claude-sonnet",
+      "run_number": 1,
+      "output": "```json\n{\n  \"performative\": \"publish\",\n  \"from\": \"monitoring-agent\",\n  \"to\": [\"remediation-agent\", \"ops-orchestrator\", \"incident-manager\"],\n  \"id\": \"alert-20260302-cache-001\",\n  \"timestamp\": 1740873600,\n  \"preconditions\": [\n    \"service degradation detected on cache layer\",\n    \"root cause analysis complete: memory leak confirmed\",\n    \"causal chain established: missing eviction policy \u2192 memory leak \u2192 cache layer degradation \u2192 service degradation\",\n    \"monitoring-agent has publish rights to incident channel\",\n    \"remediation-agent is reachable and idle\"\n  ],\n  \"postconditions\": [\n    \"alert is published to all subscribers\",\n    \"remediation workflow is initiated\",\n    \"cache service is restarted and healthy\",\n    \"hotfix is deployed and active\",\n    \"service recovery is confirmed\",\n    \"incident is closed and post-mortem queued\"\n  ],\n  \"lifecycle_stage\": \"execution\",\n  \"content\": {\n    \"alert_type\": \"SERVICE_DEGRADATION\",\n    \"severity\": \"critical\",\n    \"incident_id\": \"INC-20260302-0047\",\n    \"affected_service\": \"cache-layer\",\n    \"symptom\": \"Service degradation observed: elevated latency p99 > 4000ms, error rate 18.3%, cache hit rate dropped from 94% to 11%\",\n    \"root_cause\": {\n      \"description\": \"Memory leak in cache layer due to missing eviction policy\",\n      \"causal_chain\": [\n        {\n          \"cause\": \"missing eviction policy\",\n          \"effect\": \"unbounded memory growth in cache layer\",\n          \"evidence\": \"cache process RSS grew from 2.1GB to 14.8GB over 6 hours; no TTL or LRU eviction configured on hot-path keyspace 'session:*'\"\n        },\n        {\n          \"cause\": \"unbounded memory growth in cache layer\",\n          \"effect\": \"memory leak triggers OOM pressure and GC thrashing\",\n          \"evidence\": \"GC pause times >800ms, host free memory < 200MB, swap utilization 100%\"\n        },\n        {\n          \"cause\": \"memory leak and OOM pressure\",\n          \"effect\": \"service degradation: high latency, elevated error rate, low cache hit rate\",\n          \"evidence\": \"Datadog trace waterfall confirms cache timeout cascades to upstream services\"\n        }\n      ]\n    },\n    \"remediation_plan\": {\n      \"strategy\": \"parallel restart and hotfix, then sequential verification\",\n      \"steps_ref\": \"see top-level steps field\"\n    },\n    \"metrics_at_detection\": {\n      \"p99_latency_ms\": 4200,\n      \"error_rate_pct\": 18.3,\n      \"cache_hit_rate_pct\": 11.0,\n      \"cache_rss_gb\": 14.8,\n      \"host_free_memory_mb\": 187\n    }\n  },\n  \"steps\": [\n    {\n      \"step_id\": \"s1\",\n      \"action\": \"publish_alert_and_page_oncall\",\n      \"relation\": \"sequence\",\n      \"params\": {\n        \"channel\": \"incident-alerts\",\n        \"pagerduty_policy\": \"cache-oncall\",\n        \"incident_id\": \"INC-20260302-0047\",\n        \"severity\": \"critical\"\n      },\n      \"performed_by\": \"monitoring-agent\"\n    },\n    {\n      \"step_id\": \"s2a\",\n      \"action\": \"restart_cache_service\",\n      \"relation\": \"parallel\",\n      \"depends_on\": \"s1\",\n      \"params\": {\n        \"service\": \"cache-layer\",\n        \"target_hosts\": [\"cache-01\", \"cache-02\", \"cache-03\"],\n        \"strategy\": \"rolling\",\n        \"pre_drain_connections\": true,\n        \"drain_timeout_sec\": 30,\n        \"expected_duration_sec\": 120\n      },\n      \"performed_by\": \"remediation-agent\"\n    },\n    {\n      \"step_id\": \"s2b\",\n      \"action\": \"deploy_hotfix\",\n      \"relation\": \"parallel\",\n      \"depends_on\": \"s1\",\n      \"params\": {\n        \"hotfix_id\": \"HF-2026-0302-eviction-policy\",\n        \"description\": \"Add LRU eviction policy with max-memory 8GB and TTL 3600s for keyspace 'session:*'\",\n        \"deployment_target\": \"cache-layer\",\n        \"config_change\": {\n          \"maxmemory\": \"8gb\",\n          \"maxmemory-policy\": \"allkeys-lru\",\n          \"session_ttl_sec\": 3600\n        },\n        \"rollback_artifact\": \"config-snapshot-INC-20260302-0047-pre\",\n        \"expected_duration_sec\": 90\n      },\n      \"performed_by\": \"remediation-agent\"\n    },\n    {\n      \"step_id\": \"s3\",\n      \"action\": \"verify_service_recovery\",\n      \"relation\": \"sequence\",\n      \"depends_on\": [\"s2a\", \"s2b\"],\n      \"params\": {\n        \"checks\": [\n          {\n            \"metric\": \"cache_hit_rate_pct\",\n            \"threshold\": \">= 85\",\n            \"window_sec\": 120\n          },\n          {\n            \"metric\": \"p99_latency_ms\",\n            \"threshold\": \"<= 200\",\n            \"window_sec\": 120\n          },\n          {\n            \"metric\": \"error_rate_pct\",\n            \"threshold\": \"<= 0.5\",\n            \"window_sec\": 120\n          },\n          {\n            \"metric\": \"cache_rss_gb\",\n            \"threshold\": \"<= 9\",\n            \"window_sec\": 120\n          }\n        ],\n        \"all_checks_must_pass\": true,\n        \"timeout_sec\": 300\n      },\n      \"performed_by\": \"monitoring-agent\",\n      \"on_failure\": {\n        \"action\": \"escalate_and_rollback\",\n        \"rollback_artifact\": \"config-snapshot-INC-20260302-0047-pre\",\n        \"notify\": [\"incident-manager\", \"ops-orchestrator\"]\n      }\n    },\n    {\n      \"step_id\": \"s4\",\n      \"action\": \"close_incident_and_queue_postmortem\",\n      \"relation\": \"sequence\",\n      \"depends_on\": \"s3\",\n      \"condition\": \"s3.all_checks_passed == true\",\n      \"params\": {\n        \"incident_id\": \"INC-20260302-0047\",\n        \"resolution_summary\": \"Cache service restarted and eviction policy hotfix deployed; service metrics recovered to baseline\",\n        \"postmortem_template\": \"memory-leak-eviction\",\n        \"assign_to\": \"cache-platform-team\",\n        \"due_date\": \"2026-03-09\"\n      },\n      \"performed_by\": \"incident-manager\"\n    }\n  ]\n}\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 1438,
+        "o200k_base": 1434
+      },
+      "latency_ms": 32496,
+      "timestamp": "2026-03-02T08:34:06.226699+00:00",
+      "complexity_level": 3,
+      "operators_tested": [
+        "<-",
+        "&",
+        "->"
+      ]
+    },
+    {
+      "task_id": "L3-03",
+      "condition": "json_contracts",
+      "model": "claude-sonnet",
+      "run_number": 1,
+      "output": "```json\n{\n  \"performative\": \"propose\",\n  \"from\": \"negotiation_agent\",\n  \"to\": \"supplier_agent\",\n  \"id\": \"msg-neg-001\",\n  \"timestamp\": 1740873600,\n  \"preconditions\": [\n    \"market_rates_current_and_verified\",\n    \"supplier_agent_is_active\",\n    \"negotiation_session_is_open\",\n    \"product_A_and_product_B_are_known_to_supplier\"\n  ],\n  \"postconditions\": [\n    \"supplier_has_received_proposal\",\n    \"supplier_must_select_product_A_or_product_B\",\n    \"delivery_workflow_is_defined_and_agreed_upon_pending_acceptance\",\n    \"pricing_terms_are_communicated\"\n  ],\n  \"lifecycle_stage\": \"negotiation\",\n  \"content\": {\n    \"proposal_id\": \"prop-2026-0302-001\",\n    \"description\": \"Product delivery proposal with alternative pricing and sequential fulfillment workflow\",\n    \"pricing_options\": [\n      {\n        \"option_id\": \"opt_A\",\n        \"product\": \"product_A\",\n        \"unit_price_usd\": 100,\n        \"pricing_justification\": \"current_market_rates\"\n      },\n      {\n        \"option_id\": \"opt_B\",\n        \"product\": \"product_B\",\n        \"unit_price_usd\": 85,\n        \"pricing_justification\": \"current_market_rates\"\n      }\n    ],\n    \"selection_constraint\": \"exactly_one_of: [opt_A, opt_B]\"\n  },\n  \"steps\": [\n    {\n      \"step_id\": 1,\n      \"action\": \"select_product\",\n      \"description\": \"Supplier selects either product_A ($100/unit) or product_B ($85/unit)\",\n      \"params\": {\n        \"options\": [\"opt_A\", \"opt_B\"],\n        \"cardinality\": \"exactly_one\"\n      },\n      \"relation\": \"sequence\"\n    },\n    {\n      \"step_id\": 2,\n      \"action\": \"confirm_inventory\",\n      \"description\": \"Supplier confirms available inventory for the selected product\",\n      \"params\": {\n        \"depends_on_selection\": true\n      },\n      \"relation\": \"sequence\"\n    },\n    {\n      \"step_id\": 3,\n      \"action\": \"ship_to_warehouse\",\n      \"description\": \"Supplier ships the selected product to the designated warehouse\",\n      \"params\": {\n        \"trigger\": \"inventory_confirmed\"\n      },\n      \"relation\": \"parallel\"\n    },\n    {\n      \"step_id\": 4,\n      \"action\": \"send_invoice\",\n      \"description\": \"Supplier sends invoice for the selected product at agreed unit price\",\n      \"params\": {\n        \"trigger\": \"inventory_confirmed\",\n        \"invoice_basis\": \"selected_option_unit_price\"\n      },\n      \"relation\": \"parallel\"\n    },\n    {\n      \"step_id\": 5,\n      \"action\": \"await_payment_confirmation\",\n      \"description\": \"Both parties await payment confirmation before closing the transaction\",\n      \"params\": {\n        \"depends_on\": [\"ship_to_warehouse\", \"send_invoice\"]\n      },\n      \"relation\": \"sequence\"\n    }\n  ]\n}\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 648,
+        "o200k_base": 648
+      },
+      "latency_ms": 15652,
+      "timestamp": "2026-03-02T08:34:21.881547+00:00",
+      "complexity_level": 3,
+      "operators_tested": [
+        "->",
+        "|",
+        "&",
+        "<-"
+      ]
+    },
+    {
+      "task_id": "L1-01",
+      "condition": "json_contracts",
+      "model": "claude-sonnet",
+      "run_number": 2,
+      "output": "```json\n{\n  \"performative\": \"command\",\n  \"from\": \"data-processing-agent\",\n  \"to\": \"worker-agent\",\n  \"id\": \"msg-dp-001\",\n  \"timestamp\": 1740873600,\n  \"preconditions\": [\n    \"worker-agent is idle and available\",\n    \"data lake endpoint is reachable\",\n    \"warehouse endpoint is reachable\",\n    \"worker-agent has read access to data lake\",\n    \"worker-agent has write access to warehouse\"\n  ],\n  \"postconditions\": [\n    \"cleaned dataset is uploaded to warehouse\",\n    \"null rows have been removed from the dataset\",\n    \"original dataset remains unchanged in data lake\",\n    \"worker-agent returns to idle state\"\n  ],\n  \"lifecycle_stage\": \"execution\",\n  \"content\": {\n    \"task\": \"etl-pipeline\",\n    \"description\": \"Execute a three-step ETL pipeline: download, clean, upload\",\n    \"dataset_id\": \"ds-2026-03-02\",\n    \"source\": \"data-lake://raw/ds-2026-03-02\",\n    \"destination\": \"warehouse://clean/ds-2026-03-02\"\n  },\n  \"steps\": [\n    {\n      \"step_id\": \"step-1\",\n      \"action\": \"download_dataset\",\n      \"params\": {\n        \"source_uri\": \"data-lake://raw/ds-2026-03-02\",\n        \"local_staging_path\": \"/tmp/staging/ds-2026-03-02.parquet\"\n      },\n      \"relation\": \"sequence\"\n    },\n    {\n      \"step_id\": \"step-2\",\n      \"action\": \"clean_dataset\",\n      \"params\": {\n        \"input_path\": \"/tmp/staging/ds-2026-03-02.parquet\",\n        \"output_path\": \"/tmp/staging/ds-2026-03-02-clean.parquet\",\n        \"operations\": [\"remove_null_rows\"]\n      },\n      \"relation\": \"sequence\"\n    },\n    {\n      \"step_id\": \"step-3\",\n      \"action\": \"upload_dataset\",\n      \"params\": {\n        \"local_path\": \"/tmp/staging/ds-2026-03-02-clean.parquet\",\n        \"destination_uri\": \"warehouse://clean/ds-2026-03-02\"\n      },\n      \"relation\": \"sequence\"\n    }\n  ]\n}\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 503,
+        "o200k_base": 502
+      },
+      "latency_ms": 13809,
+      "timestamp": "2026-03-02T08:34:35.692289+00:00",
+      "complexity_level": 1,
+      "operators_tested": [
+        "->"
+      ]
+    },
+    {
+      "task_id": "L1-02",
+      "condition": "json_contracts",
+      "model": "claude-sonnet",
+      "run_number": 2,
+      "output": "```json\n{\n  \"performative\": \"command\",\n  \"from\": \"deployment-agent\",\n  \"to\": \"cluster-manager\",\n  \"id\": \"cmd-healthcheck-001\",\n  \"timestamp\": 1740873600,\n  \"lifecycle_stage\": \"execution\",\n  \"preconditions\": [\n    \"cluster-manager is online and reachable\",\n    \"deployment-agent has authority to issue health check commands\",\n    \"cluster nodes are registered and accessible\"\n  ],\n  \"postconditions\": [\n    \"CPU usage check has been initiated\",\n    \"memory usage check has been initiated\",\n    \"disk space check has been initiated\",\n    \"all three health check results are collected and available to deployment-agent\"\n  ],\n  \"content\": {\n    \"action\": \"run_health_checks\",\n    \"target\": \"all_nodes\",\n    \"priority\": \"high\"\n  },\n  \"steps\": [\n    {\n      \"action\": \"check_cpu_usage\",\n      \"params\": {\n        \"metric\": \"cpu\",\n        \"threshold_warn\": 80,\n        \"threshold_critical\": 95,\n        \"unit\": \"percent\"\n      },\n      \"relation\": \"parallel\"\n    },\n    {\n      \"action\": \"check_memory_usage\",\n      \"params\": {\n        \"metric\": \"memory\",\n        \"threshold_warn\": 75,\n        \"threshold_critical\": 90,\n        \"unit\": \"percent\"\n      },\n      \"relation\": \"parallel\"\n    },\n    {\n      \"action\": \"check_disk_space\",\n      \"params\": {\n        \"metric\": \"disk\",\n        \"threshold_warn\": 70,\n        \"threshold_critical\": 85,\n        \"unit\": \"percent\",\n        \"paths\": [\"/\", \"/var\", \"/tmp\"]\n      },\n      \"relation\": \"parallel\"\n    },\n    {\n      \"action\": \"report_health_summary\",\n      \"params\": {\n        \"report_to\": \"deployment-agent\",\n        \"format\": \"structured\",\n        \"include_raw_metrics\": true\n      },\n      \"relation\": \"sequence\"\n    }\n  ]\n}\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 421,
+        "o200k_base": 424
+      },
+      "latency_ms": 11673,
+      "timestamp": "2026-03-02T08:34:47.366835+00:00",
+      "complexity_level": 1,
+      "operators_tested": [
+        "&"
+      ]
+    },
+    {
+      "task_id": "L1-03",
+      "condition": "json_contracts",
+      "model": "claude-sonnet",
+      "run_number": 2,
+      "output": "```json\n{\n  \"performative\": \"inform\",\n  \"from\": \"routing_agent\",\n  \"to\": \"handler_agent\",\n  \"id\": \"msg-route-001\",\n  \"timestamp\": 1740873600,\n  \"lifecycle_stage\": \"execution\",\n  \"preconditions\": [\n    \"incoming request has been received and parsed\",\n    \"routing agent has completed availability check\",\n    \"handler agent is active and listening\"\n  ],\n  \"postconditions\": [\n    \"handler agent knows the target endpoint for the request\",\n    \"request will be routed to primary API or fallback cache based on availability\",\n    \"routing decision is recorded for observability\"\n  ],\n  \"content\": {\n    \"routing_decision\": {\n      \"request_id\": \"req-7f3a91b2\",\n      \"strategy\": \"availability_based_failover\",\n      \"primary\": {\n        \"endpoint\": \"https://api.internal/v2/process\",\n        \"type\": \"primary_api\",\n        \"availability\": \"unknown\",\n        \"priority\": 1\n      },\n      \"fallback\": {\n        \"endpoint\": \"https://cache.internal/serve\",\n        \"type\": \"cache_service\",\n        \"availability\": \"confirmed\",\n        \"priority\": 2\n      },\n      \"instruction\": \"Attempt primary endpoint first; on timeout or 5xx, fall through to fallback cache service.\"\n    }\n  },\n  \"steps\": [\n    {\n      \"action\": \"probe_primary_endpoint\",\n      \"params\": {\n        \"url\": \"https://api.internal/v2/process\",\n        \"timeout_ms\": 300\n      },\n      \"relation\": \"sequence\"\n    },\n    {\n      \"action\": \"route_to_primary\",\n      \"params\": {\n        \"endpoint\": \"https://api.internal/v2/process\",\n        \"condition\": \"primary is available\"\n      },\n      \"relation\": \"alternative\",\n      \"condition\": \"primary_available == true\"\n    },\n    {\n      \"action\": \"route_to_fallback_cache\",\n      \"params\": {\n        \"endpoint\": \"https://cache.internal/serve\",\n        \"condition\": \"primary is unavailable or timed out\"\n      },\n      \"relation\": \"alternative\",\n      \"condition\": \"primary_available == false\"\n    },\n    {\n      \"action\": \"log_routing_outcome\",\n      \"params\": {\n        \"request_id\": \"req-7f3a91b2\",\n        \"selected_route\": \"primary | fallback\"\n      },\n      \"relation\": \"sequence\",\n      \"caused_by\": \"route_to_primary or route_to_fallback_cache\"\n    }\n  ]\n}\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 537,
+        "o200k_base": 539
+      },
+      "latency_ms": 14754,
+      "timestamp": "2026-03-02T08:35:02.122995+00:00",
+      "complexity_level": 1,
+      "operators_tested": [
+        "|"
+      ]
+    },
+    {
+      "task_id": "L2-01",
+      "condition": "json_contracts",
+      "model": "claude-sonnet",
+      "run_number": 2,
+      "output": "```json\n{\n  \"performative\": \"request\",\n  \"from\": \"orchestrator\",\n  \"to\": \"pipeline\",\n  \"id\": \"msg-001-orchestrator-pipeline\",\n  \"timestamp\": 1740873600,\n  \"preconditions\": [\n    \"input schema is available and accessible\",\n    \"pipeline agent is idle and ready to accept tasks\",\n    \"sentiment analysis module is operational\",\n    \"topic classification module is operational\",\n    \"merge/report module is operational\"\n  ],\n  \"postconditions\": [\n    \"input schema has been validated successfully\",\n    \"sentiment analysis has been completed on validated data\",\n    \"topic classification has been completed on validated data\",\n    \"results from both analyses have been merged into a single unified report\",\n    \"final report is available for downstream consumption\"\n  ],\n  \"lifecycle_stage\": \"execution\",\n  \"content\": {\n    \"workflow\": \"validate-analyze-merge\",\n    \"description\": \"Validate input schema, run parallel analyses, then merge results into a unified report.\",\n    \"input\": {\n      \"source\": \"incoming_data_payload\",\n      \"schema_ref\": \"schemas/input_schema_v1.json\"\n    },\n    \"output\": {\n      \"format\": \"unified_report\",\n      \"destination\": \"reports/output_report\"\n    }\n  },\n  \"steps\": [\n    {\n      \"id\": \"step-1\",\n      \"action\": \"validate_schema\",\n      \"description\": \"Validate the input data against the registered schema before any processing begins.\",\n      \"params\": {\n        \"schema_ref\": \"schemas/input_schema_v1.json\",\n        \"data_source\": \"incoming_data_payload\",\n        \"strict_mode\": true\n      },\n      \"relation\": \"sequence\",\n      \"on_failure\": \"abort_workflow\"\n    },\n    {\n      \"id\": \"step-2a\",\n      \"action\": \"run_sentiment_analysis\",\n      \"description\": \"Perform sentiment analysis on the validated data.\",\n      \"params\": {\n        \"model\": \"sentiment-classifier-v2\",\n        \"input\": \"validated_data\",\n        \"output_key\": \"sentiment_result\"\n      },\n      \"relation\": \"parallel\",\n      \"depends_on\": \"step-1\"\n    },\n    {\n      \"id\": \"step-2b\",\n      \"action\": \"run_topic_classification\",\n      \"description\": \"Perform topic classification on the validated data simultaneously with sentiment analysis.\",\n      \"params\": {\n        \"model\": \"topic-classifier-v3\",\n        \"input\": \"validated_data\",\n        \"output_key\": \"topic_result\"\n      },\n      \"relation\": \"parallel\",\n      \"depends_on\": \"step-1\"\n    },\n    {\n      \"id\": \"step-3\",\n      \"action\": \"merge_results\",\n      \"description\": \"Merge sentiment and topic classification results into a single consolidated report.\",\n      \"params\": {\n        \"inputs\": [\"sentiment_result\", \"topic_result\"],\n        \"merge_strategy\": \"unified_report\",\n        \"output_destination\": \"reports/output_report\"\n      },\n      \"relation\": \"sequence\",\n      \"depends_on\": [\"step-2a\", \"step-2b\"],\n      \"on_failure\": \"escalate_to_orchestrator\"\n    }\n  ]\n}\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 674,
+        "o200k_base": 675
+      },
+      "latency_ms": 15877,
+      "timestamp": "2026-03-02T08:35:18.002239+00:00",
+      "complexity_level": 2,
+      "operators_tested": [
+        "->",
+        "&"
+      ]
+    },
+    {
+      "task_id": "L2-02",
+      "condition": "json_contracts",
+      "model": "claude-sonnet",
+      "run_number": 2,
+      "output": "```json\n{\n  \"performative\": \"command\",\n  \"from\": \"query_agent\",\n  \"to\": \"data_agent\",\n  \"id\": \"msg-qa-001\",\n  \"timestamp\": 1740873600,\n  \"lifecycle_stage\": \"execution\",\n  \"preconditions\": [\n    \"data_agent is idle and reachable\",\n    \"cache service is available\",\n    \"database connection is established\",\n    \"query parameters are fully specified\"\n  ],\n  \"postconditions\": [\n    \"results are returned to query_agent\",\n    \"cache contains fresh results for the given query key\",\n    \"data_agent returns to idle state\"\n  ],\n  \"content\": {\n    \"operation\": \"resolve_query\",\n    \"query_key\": \"user_report:region=west&period=Q1-2026\",\n    \"query_params\": {\n      \"region\": \"west\",\n      \"period\": \"Q1-2026\"\n    },\n    \"cache_ttl_seconds\": 300\n  },\n  \"steps\": [\n    {\n      \"action\": \"check_cache\",\n      \"params\": {\n        \"key\": \"user_report:region=west&period=Q1-2026\"\n      },\n      \"relation\": \"sequence\"\n    },\n    {\n      \"action\": \"return_cached_results\",\n      \"params\": {\n        \"source\": \"cache\",\n        \"notify\": \"query_agent\"\n      },\n      \"relation\": \"alternative\",\n      \"condition\": \"cache_hit == true\"\n    },\n    {\n      \"action\": \"query_database\",\n      \"params\": {\n        \"region\": \"west\",\n        \"period\": \"Q1-2026\",\n        \"timeout_ms\": 5000\n      },\n      \"relation\": \"alternative\",\n      \"condition\": \"cache_hit == false\"\n    },\n    {\n      \"action\": \"update_cache\",\n      \"params\": {\n        \"key\": \"user_report:region=west&period=Q1-2026\",\n        \"ttl_seconds\": 300,\n        \"value\": \"$$db_results\"\n      },\n      \"relation\": \"sequence\",\n      \"caused_by\": \"query_database\"\n    },\n    {\n      \"action\": \"return_fresh_results\",\n      \"params\": {\n        \"source\": \"database\",\n        \"notify\": \"query_agent\"\n      },\n      \"relation\": \"sequence\",\n      \"caused_by\": \"update_cache\"\n    }\n  ]\n}\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 502,
+        "o200k_base": 500
+      },
+      "latency_ms": 15336,
+      "timestamp": "2026-03-02T08:35:33.339852+00:00",
+      "complexity_level": 2,
+      "operators_tested": [
+        "|",
+        "->"
+      ]
+    },
+    {
+      "task_id": "L2-03",
+      "condition": "json_contracts",
+      "model": "claude-sonnet",
+      "run_number": 2,
+      "output": "```json\n{\n  \"performative\": \"command\",\n  \"from\": \"security-agent\",\n  \"to\": \"audit-agent\",\n  \"id\": \"cmd-audit-20260302-001\",\n  \"timestamp\": 1740873600,\n  \"preconditions\": [\n    \"audit-agent is idle and ready to accept tasks\",\n    \"network scan permissions are granted for external and DMZ segments\",\n    \"SSL certificate check toolchain is available\",\n    \"internal-only service registry is loaded and accessible\"\n  ],\n  \"postconditions\": [\n    \"open port scan results are recorded for all non-internal hosts\",\n    \"SSL certificate validity and chain data are recorded for all non-internal endpoints\",\n    \"internal-only services are excluded from both scan results\",\n    \"audit report artifact is produced and available for security-agent review\"\n  ],\n  \"lifecycle_stage\": \"execution\",\n  \"content\": {\n    \"task\": \"concurrent_security_audit\",\n    \"scope\": {\n      \"include\": [\"external\", \"dmz\", \"public-facing\"],\n      \"exclude\": [\"internal-only\"],\n      \"exclusion_source\": \"service-registry://internal-only-services\",\n      \"exclusion_rationale\": \"Internal-only services are not in scope per security policy SP-04\"\n    },\n    \"output\": {\n      \"format\": \"structured-report\",\n      \"destination\": \"security-agent://audit-results/20260302\"\n    }\n  },\n  \"steps\": [\n    {\n      \"action\": \"load_exclusion_list\",\n      \"params\": {\n        \"source\": \"service-registry://internal-only-services\",\n        \"tag_filter\": \"internal-only\"\n      },\n      \"relation\": \"sequence\"\n    },\n    {\n      \"action\": \"scan_open_ports\",\n      \"params\": {\n        \"protocol\": [\"TCP\", \"UDP\"],\n        \"port_range\": \"1-65535\",\n        \"targets\": \"scope.include\",\n        \"exclude\": \"exclusion_list\"\n      },\n      \"relation\": \"parallel\"\n    },\n    {\n      \"action\": \"check_ssl_certificates\",\n      \"params\": {\n        \"checks\": [\"validity\", \"expiry\", \"chain\", \"cipher_suite\", \"revocation\"],\n        \"targets\": \"scope.include\",\n        \"exclude\": \"exclusion_list\"\n      },\n      \"relation\": \"parallel\"\n    },\n    {\n      \"action\": \"compile_audit_report\",\n      \"params\": {\n        \"merge_sources\": [\"scan_open_ports.results\", \"check_ssl_certificates.results\"],\n        \"include_exclusion_log\": true,\n        \"severity_classify\": true\n      },\n      \"relation\": \"sequence\"\n    }\n  ]\n}\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 550,
+        "o200k_base": 552
+      },
+      "latency_ms": 16788,
+      "timestamp": "2026-03-02T08:35:50.130328+00:00",
+      "complexity_level": 2,
+      "operators_tested": [
+        "&",
+        "!"
+      ]
+    },
+    {
+      "task_id": "L3-01",
+      "condition": "json_contracts",
+      "model": "claude-sonnet",
+      "run_number": 2,
+      "output": "```json\n{\n  \"performative\": \"command\",\n  \"from\": \"etl-orchestrator\",\n  \"to\": \"pipeline\",\n  \"id\": \"msg-etl-20260302-001\",\n  \"timestamp\": 1740873600,\n  \"content\": {\n    \"protocol_version\": \"1.0.0\",\n    \"workflow\": \"etl-pipeline\",\n    \"description\": \"Extract from API and DB simultaneously, transform with validation, then load or error-route\"\n  },\n  \"preconditions\": [\n    \"pipeline is idle and ready to accept commands\",\n    \"API source endpoint is reachable\",\n    \"database source connection is established\",\n    \"data warehouse is available for writes\",\n    \"error queue is available for routing\"\n  ],\n  \"postconditions\": [\n    \"data is extracted from both API and database sources\",\n    \"combined data has been validated against transformation rules\",\n    \"validated data is loaded into the data warehouse OR invalid data is routed to the error queue\"\n  ],\n  \"lifecycle_stage\": \"execution\",\n  \"steps\": [\n    {\n      \"id\": \"step-1a\",\n      \"action\": \"extract\",\n      \"params\": {\n        \"source_type\": \"api\",\n        \"source_id\": \"api-source\"\n      },\n      \"relation\": \"parallel\"\n    },\n    {\n      \"id\": \"step-1b\",\n      \"action\": \"extract\",\n      \"params\": {\n        \"source_type\": \"database\",\n        \"source_id\": \"db-source\"\n      },\n      \"relation\": \"parallel\"\n    },\n    {\n      \"id\": \"step-2\",\n      \"action\": \"transform\",\n      \"params\": {\n        \"operation\": \"merge_and_validate\",\n        \"inputs\": [\"step-1a\", \"step-1b\"],\n        \"rules\": \"validation-ruleset-v1\"\n      },\n      \"relation\": \"sequence\",\n      \"caused_by\": [\"step-1a\", \"step-1b\"]\n    },\n    {\n      \"id\": \"step-3a\",\n      \"action\": \"load\",\n      \"params\": {\n        \"destination\": \"data-warehouse\",\n        \"mode\": \"append\"\n      },\n      \"relation\": \"alternative\",\n      \"condition\": \"validation == passed\",\n      \"caused_by\": \"step-2\"\n    },\n    {\n      \"id\": \"step-3b\",\n      \"action\": \"route\",\n      \"params\": {\n        \"destination\": \"error-queue\",\n        \"include_validation_report\": true\n      },\n      \"relation\": \"alternative\",\n      \"condition\": \"validation == failed\",\n      \"caused_by\": \"step-2\"\n    }\n  ]\n}\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 565,
+        "o200k_base": 562
+      },
+      "latency_ms": 13911,
+      "timestamp": "2026-03-02T08:36:04.043677+00:00",
+      "complexity_level": 3,
+      "operators_tested": [
+        "->",
+        "&",
+        "|"
+      ]
+    },
+    {
+      "task_id": "L3-02",
+      "condition": "json_contracts",
+      "model": "claude-sonnet",
+      "run_number": 2,
+      "output": "```json\n{\n  \"performative\": \"publish\",\n  \"from\": \"monitoring-agent\",\n  \"to\": [\"orchestrator\", \"ops-team\", \"incident-manager\"],\n  \"id\": \"alert-2026-03-02-cache-degradation-001\",\n  \"timestamp\": 1740873600,\n  \"lifecycle_stage\": \"initiation\",\n  \"preconditions\": [\n    \"service degradation detected on cache layer\",\n    \"root cause analysis complete\",\n    \"memory leak confirmed via heap profiling\",\n    \"missing eviction policy identified as root cause\"\n  ],\n  \"postconditions\": [\n    \"alert is published to all subscribers\",\n    \"remediation workflow is initiated\",\n    \"cache service is restarted and hotfix is deployed in parallel\",\n    \"service recovery is verified after remediation completes\"\n  ],\n  \"content\": {\n    \"alert\": {\n      \"severity\": \"critical\",\n      \"service\": \"cache-layer\",\n      \"symptom\": \"service_degradation\",\n      \"root_cause_chain\": [\n        {\n          \"cause\": \"missing_eviction_policy\",\n          \"effect\": \"memory_leak\",\n          \"component\": \"cache-layer\",\n          \"evidence\": \"heap profiler shows unbounded growth in cache allocations\"\n        },\n        {\n          \"cause\": \"memory_leak\",\n          \"effect\": \"service_degradation\",\n          \"component\": \"cache-layer\",\n          \"evidence\": \"latency p99 elevated 4.2x baseline, OOM kills observed\"\n        }\n      ],\n      \"remediation_plan\": \"parallel restart + hotfix, followed by recovery verification\"\n    }\n  },\n  \"steps\": [\n    {\n      \"id\": \"step-1\",\n      \"action\": \"publish_alert\",\n      \"params\": {\n        \"alert_id\": \"alert-2026-03-02-cache-degradation-001\",\n        \"severity\": \"critical\",\n        \"summary\": \"Cache service degradation caused by memory leak from missing eviction policy\",\n        \"affected_service\": \"cache-layer\",\n        \"notified_parties\": [\"orchestrator\", \"ops-team\", \"incident-manager\"]\n      },\n      \"relation\": \"sequence\"\n    },\n    {\n      \"id\": \"step-2a\",\n      \"action\": \"restart_cache_service\",\n      \"params\": {\n        \"service\": \"cache-layer\",\n        \"restart_mode\": \"graceful\",\n        \"drain_timeout_seconds\": 30,\n        \"rationale\": \"flush leaked memory and restore baseline heap state\"\n      },\n      \"relation\": \"parallel\",\n      \"depends_on\": \"step-1\"\n    },\n    {\n      \"id\": \"step-2b\",\n      \"action\": \"deploy_hotfix\",\n      \"params\": {\n        \"target_service\": \"cache-layer\",\n        \"fix_description\": \"add LRU eviction policy with max_size=2GB and ttl=3600s\",\n        \"deployment_strategy\": \"rolling\",\n        \"rollback_on_failure\": true,\n        \"rationale\": \"prevent recurrence by enforcing eviction policy that was absent\"\n      },\n      \"relation\": \"parallel\",\n      \"depends_on\": \"step-1\"\n    },\n    {\n      \"id\": \"step-3\",\n      \"action\": \"verify_service_recovery\",\n      \"params\": {\n        \"service\": \"cache-layer\",\n        \"checks\": [\n          { \"metric\": \"latency_p99\", \"threshold_ms\": 50, \"operator\": \"lte\" },\n          { \"metric\": \"memory_usage_bytes\", \"threshold_gb\": 1.5, \"operator\": \"lte\" },\n          { \"metric\": \"error_rate\", \"threshold_pct\": 0.1, \"operator\": \"lte\" },\n          { \"metric\": \"eviction_policy_active\", \"expected\": true }\n        ],\n        \"observation_window_seconds\": 120,\n        \"on_failure\": \"escalate_to_incident_manager\"\n      },\n      \"relation\": \"sequence\",\n      \"depends_on\": [\"step-2a\", \"step-2b\"],\n      \"causal\": {\n        \"caused_by\": [\"step-2a\", \"step-2b\"],\n        \"rationale\": \"recovery can only be verified after both restart and hotfix have completed\"\n      }\n    }\n  ]\n}\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 887,
+        "o200k_base": 888
+      },
+      "latency_ms": 24305,
+      "timestamp": "2026-03-02T08:36:28.350999+00:00",
+      "complexity_level": 3,
+      "operators_tested": [
+        "<-",
+        "&",
+        "->"
+      ]
+    },
+    {
+      "task_id": "L3-03",
+      "condition": "json_contracts",
+      "model": "claude-sonnet",
+      "run_number": 2,
+      "output": "```json\n{\n  \"performative\": \"propose\",\n  \"from\": \"negotiation-agent\",\n  \"to\": \"supplier-agent\",\n  \"id\": \"msg-deal-001\",\n  \"timestamp\": 1740960000,\n  \"lifecycle_stage\": \"negotiation\",\n  \"preconditions\": [\n    \"supplier-agent is reachable and accepting proposals\",\n    \"current market rates for product A and product B are validated\",\n    \"negotiation-agent has authority to commit to proposed pricing\"\n  ],\n  \"postconditions\": [\n    \"supplier-agent has received and acknowledged the deal proposal\",\n    \"one product (A or B) is selected and delivery workflow is initiated\",\n    \"payment confirmation is received upon workflow completion\"\n  ],\n  \"content\": {\n    \"deal_id\": \"DEAL-2026-0302\",\n    \"description\": \"Proposal to procure either Product A or Product B under a structured delivery and payment workflow.\",\n    \"pricing_justification\": \"Pricing reflects current market rates: Product A at $100/unit (standard tier), Product B at $85/unit (economy tier).\"\n  },\n  \"steps\": [\n    {\n      \"action\": \"select_product_A\",\n      \"params\": {\n        \"product\": \"A\",\n        \"price_per_unit\": 100,\n        \"currency\": \"USD\"\n      },\n      \"relation\": \"alternative\",\n      \"condition\": \"supplier selects Product A\"\n    },\n    {\n      \"action\": \"select_product_B\",\n      \"params\": {\n        \"product\": \"B\",\n        \"price_per_unit\": 85,\n        \"currency\": \"USD\"\n      },\n      \"relation\": \"alternative\",\n      \"condition\": \"supplier selects Product B\"\n    },\n    {\n      \"action\": \"confirm_inventory\",\n      \"params\": {\n        \"description\": \"Supplier verifies available stock for the selected product before proceeding.\"\n      },\n      \"relation\": \"sequence\"\n    },\n    {\n      \"action\": \"ship_to_warehouse\",\n      \"params\": {\n        \"description\": \"Supplier dispatches the selected product to the designated warehouse.\"\n      },\n      \"relation\": \"parallel\"\n    },\n    {\n      \"action\": \"send_invoice\",\n      \"params\": {\n        \"description\": \"Supplier issues invoice for the shipment at the agreed unit price.\"\n      },\n      \"relation\": \"parallel\"\n    },\n    {\n      \"action\": \"await_payment_confirmation\",\n      \"params\": {\n        \"description\": \"Transaction is finalized once payment confirmation is received by the supplier.\"\n      },\n      \"relation\": \"sequence\"\n    }\n  ]\n}\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 539,
+        "o200k_base": 538
+      },
+      "latency_ms": 16815,
+      "timestamp": "2026-03-02T08:36:45.167842+00:00",
+      "complexity_level": 3,
+      "operators_tested": [
+        "->",
+        "|",
+        "&",
+        "<-"
+      ]
+    },
+    {
+      "task_id": "L1-01",
+      "condition": "json_contracts",
+      "model": "claude-sonnet",
+      "run_number": 3,
+      "output": "```json\n{\n  \"performative\": \"command\",\n  \"from\": \"data-processing-agent\",\n  \"to\": \"worker-agent\",\n  \"id\": \"cmd-etl-pipeline-001\",\n  \"timestamp\": 1740873600,\n  \"preconditions\": [\n    \"worker-agent is idle and available\",\n    \"data lake endpoint is reachable\",\n    \"warehouse endpoint is reachable\",\n    \"dataset identifier is known and valid\"\n  ],\n  \"postconditions\": [\n    \"cleaned dataset is uploaded to the warehouse\",\n    \"null rows have been removed from the dataset\",\n    \"worker-agent returns to idle state\",\n    \"original raw dataset remains unchanged in the data lake\"\n  ],\n  \"lifecycle_stage\": \"execution\",\n  \"content\": {\n    \"task\": \"etl-pipeline\",\n    \"description\": \"Execute a three-step ETL pipeline: download from data lake, clean nulls, upload to warehouse.\",\n    \"dataset_id\": \"ds-2026-03-02-raw\",\n    \"output_dataset_id\": \"ds-2026-03-02-clean\"\n  },\n  \"steps\": [\n    {\n      \"step_id\": 1,\n      \"action\": \"download_dataset\",\n      \"params\": {\n        \"source\": \"data_lake\",\n        \"dataset_id\": \"ds-2026-03-02-raw\",\n        \"destination\": \"local_staging\"\n      },\n      \"relation\": \"sequence\"\n    },\n    {\n      \"step_id\": 2,\n      \"action\": \"clean_dataset\",\n      \"params\": {\n        \"input\": \"local_staging\",\n        \"operation\": \"remove_null_rows\",\n        \"output\": \"local_staging_clean\"\n      },\n      \"relation\": \"sequence\"\n    },\n    {\n      \"step_id\": 3,\n      \"action\": \"upload_dataset\",\n      \"params\": {\n        \"source\": \"local_staging_clean\",\n        \"destination\": \"warehouse\",\n        \"dataset_id\": \"ds-2026-03-02-clean\"\n      },\n      \"relation\": \"sequence\"\n    }\n  ]\n}\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 437,
+        "o200k_base": 436
+      },
+      "latency_ms": 13525,
+      "timestamp": "2026-03-02T08:36:58.695738+00:00",
+      "complexity_level": 1,
+      "operators_tested": [
+        "->"
+      ]
+    },
+    {
+      "task_id": "L1-02",
+      "condition": "json_contracts",
+      "model": "claude-sonnet",
+      "run_number": 3,
+      "output": "```json\n{\n  \"performative\": \"command\",\n  \"from\": \"deployment-agent\",\n  \"to\": \"cluster-manager\",\n  \"id\": \"msg-hc-001\",\n  \"timestamp\": 1740873600,\n  \"preconditions\": [\n    \"cluster-manager is online and reachable\",\n    \"cluster nodes are registered and accessible\",\n    \"deployment-agent has authority to issue health check commands\"\n  ],\n  \"postconditions\": [\n    \"CPU usage check has been executed on all nodes\",\n    \"memory usage check has been executed on all nodes\",\n    \"disk space check has been executed on all nodes\",\n    \"health check results are available for aggregation\"\n  ],\n  \"lifecycle_stage\": \"execution\",\n  \"content\": {\n    \"operation\": \"run_health_checks\",\n    \"execution_mode\": \"parallel\",\n    \"checks\": [\n      {\n        \"check_id\": \"hc-cpu\",\n        \"type\": \"cpu_usage\",\n        \"target\": \"all_nodes\",\n        \"threshold_warn\": 80,\n        \"threshold_crit\": 95,\n        \"unit\": \"percent\"\n      },\n      {\n        \"check_id\": \"hc-mem\",\n        \"type\": \"memory_usage\",\n        \"target\": \"all_nodes\",\n        \"threshold_warn\": 85,\n        \"threshold_crit\": 95,\n        \"unit\": \"percent\"\n      },\n      {\n        \"check_id\": \"hc-disk\",\n        \"type\": \"disk_space\",\n        \"target\": \"all_nodes\",\n        \"threshold_warn\": 80,\n        \"threshold_crit\": 90,\n        \"unit\": \"percent\"\n      }\n    ]\n  },\n  \"steps\": [\n    {\n      \"action\": \"check_cpu_usage\",\n      \"params\": {\n        \"check_id\": \"hc-cpu\",\n        \"target\": \"all_nodes\",\n        \"metric\": \"cpu_utilization_percent\"\n      },\n      \"relation\": \"parallel\"\n    },\n    {\n      \"action\": \"check_memory_usage\",\n      \"params\": {\n        \"check_id\": \"hc-mem\",\n        \"target\": \"all_nodes\",\n        \"metric\": \"memory_utilization_percent\"\n      },\n      \"relation\": \"parallel\"\n    },\n    {\n      \"action\": \"check_disk_space\",\n      \"params\": {\n        \"check_id\": \"hc-disk\",\n        \"target\": \"all_nodes\",\n        \"metric\": \"disk_utilization_percent\"\n      },\n      \"relation\": \"parallel\"\n    },\n    {\n      \"action\": \"aggregate_and_report_results\",\n      \"params\": {\n        \"report_to\": \"deployment-agent\",\n        \"reply_to_msg\": \"msg-hc-001\",\n        \"include_check_ids\": [\"hc-cpu\", \"hc-mem\", \"hc-disk\"]\n      },\n      \"relation\": \"sequence\"\n    }\n  ]\n}\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 585,
+        "o200k_base": 588
+      },
+      "latency_ms": 13306,
+      "timestamp": "2026-03-02T08:37:12.003738+00:00",
+      "complexity_level": 1,
+      "operators_tested": [
+        "&"
+      ]
+    },
+    {
+      "task_id": "L1-03",
+      "condition": "json_contracts",
+      "model": "claude-sonnet",
+      "run_number": 3,
+      "output": "```json\n{\n  \"performative\": \"inform\",\n  \"from\": \"routing-agent\",\n  \"to\": \"handler-agent\",\n  \"id\": \"msg-route-001\",\n  \"timestamp\": 1740873600,\n  \"preconditions\": [\n    \"incoming request has been received and validated\",\n    \"routing-agent has performed availability check on primary API endpoint\",\n    \"routing-agent has performed availability check on fallback cache service\"\n  ],\n  \"postconditions\": [\n    \"handler-agent knows the target processing endpoint\",\n    \"handler-agent will attempt primary API endpoint first\",\n    \"handler-agent will fall back to cache service if primary is unavailable\"\n  ],\n  \"lifecycle_stage\": \"execution\",\n  \"content\": {\n    \"request_id\": \"req-7842\",\n    \"routing_decision\": \"conditional\",\n    \"primary\": {\n      \"endpoint\": \"api.primary.internal/process\",\n      \"status\": \"unknown\",\n      \"priority\": 1\n    },\n    \"fallback\": {\n      \"endpoint\": \"cache.service.internal/serve\",\n      \"status\": \"available\",\n      \"priority\": 2\n    },\n    \"instruction\": \"attempt primary endpoint; on timeout or 5xx, immediately route to fallback cache service\"\n  },\n  \"steps\": [\n    {\n      \"action\": \"attempt_primary_endpoint\",\n      \"params\": {\n        \"endpoint\": \"api.primary.internal/process\",\n        \"timeout_ms\": 3000\n      },\n      \"relation\": \"sequence\"\n    },\n    {\n      \"action\": \"evaluate_primary_response\",\n      \"params\": {\n        \"success_codes\": [200, 201, 202],\n        \"failure_codes\": [500, 502, 503, 504]\n      },\n      \"relation\": \"sequence\"\n    },\n    {\n      \"action\": \"route_to_fallback_cache\",\n      \"params\": {\n        \"endpoint\": \"cache.service.internal/serve\",\n        \"condition\": \"primary_unavailable_or_timeout\"\n      },\n      \"relation\": \"alternative\",\n      \"condition\": \"primary_endpoint_failed_or_timed_out\"\n    }\n  ]\n}\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 434,
+        "o200k_base": 435
+      },
+      "latency_ms": 14707,
+      "timestamp": "2026-03-02T08:37:26.712508+00:00",
+      "complexity_level": 1,
+      "operators_tested": [
+        "|"
+      ]
+    },
+    {
+      "task_id": "L2-01",
+      "condition": "json_contracts",
+      "model": "claude-sonnet",
+      "run_number": 3,
+      "output": "```json\n{\n  \"performative\": \"request\",\n  \"from\": \"orchestrator\",\n  \"to\": \"pipeline\",\n  \"id\": \"msg-orch-001\",\n  \"timestamp\": 1740873600,\n  \"preconditions\": [\n    \"input schema is available and accessible\",\n    \"pipeline agent is idle and ready to receive tasks\",\n    \"sentiment analysis service is online\",\n    \"topic classification service is online\",\n    \"merge/report service is online\"\n  ],\n  \"postconditions\": [\n    \"input schema has been validated\",\n    \"sentiment analysis has been completed on validated data\",\n    \"topic classification has been completed on validated data\",\n    \"results from both analyses have been merged into a single report\",\n    \"final report is available to orchestrator\"\n  ],\n  \"lifecycle_stage\": \"execution\",\n  \"content\": {\n    \"workflow\": \"validate-analyze-merge\",\n    \"description\": \"Validate input schema, run parallel analyses, then merge into unified report\",\n    \"input\": {\n      \"schema_ref\": \"input_schema_v1\",\n      \"data_ref\": \"raw_data_payload\"\n    },\n    \"output\": {\n      \"format\": \"unified_report\",\n      \"destination\": \"orchestrator\"\n    }\n  },\n  \"steps\": [\n    {\n      \"id\": \"step-1\",\n      \"action\": \"validate_schema\",\n      \"params\": {\n        \"schema_ref\": \"input_schema_v1\",\n        \"data_ref\": \"raw_data_payload\",\n        \"strict_mode\": true\n      },\n      \"relation\": \"sequence\",\n      \"postconditions\": [\"schema validation passed\", \"validated_data is available for downstream steps\"]\n    },\n    {\n      \"id\": \"step-2a\",\n      \"action\": \"run_sentiment_analysis\",\n      \"params\": {\n        \"input_ref\": \"validated_data\",\n        \"model\": \"sentiment-classifier-v2\",\n        \"output_key\": \"sentiment_result\"\n      },\n      \"relation\": \"parallel\",\n      \"depends_on\": \"step-1\",\n      \"preconditions\": [\"validated_data is available\"],\n      \"postconditions\": [\"sentiment_result is populated\"]\n    },\n    {\n      \"id\": \"step-2b\",\n      \"action\": \"run_topic_classification\",\n      \"params\": {\n        \"input_ref\": \"validated_data\",\n        \"model\": \"topic-classifier-v3\",\n        \"output_key\": \"topic_result\"\n      },\n      \"relation\": \"parallel\",\n      \"depends_on\": \"step-1\",\n      \"preconditions\": [\"validated_data is available\"],\n      \"postconditions\": [\"topic_result is populated\"]\n    },\n    {\n      \"id\": \"step-3\",\n      \"action\": \"merge_results\",\n      \"params\": {\n        \"inputs\": [\"sentiment_result\", \"topic_result\"],\n        \"output_format\": \"unified_report\",\n        \"report_destination\": \"orchestrator\"\n      },\n      \"relation\": \"sequence\",\n      \"depends_on\": [\"step-2a\", \"step-2b\"],\n      \"preconditions\": [\"sentiment_result is populated\", \"topic_result is populated\"],\n      \"postconditions\": [\"unified_report is generated and delivered to orchestrator\"]\n    }\n  ]\n}\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 676,
+        "o200k_base": 677
+      },
+      "latency_ms": 18017,
+      "timestamp": "2026-03-02T08:37:44.732817+00:00",
+      "complexity_level": 2,
+      "operators_tested": [
+        "->",
+        "&"
+      ]
+    },
+    {
+      "task_id": "L2-02",
+      "condition": "json_contracts",
+      "model": "claude-sonnet",
+      "run_number": 3,
+      "output": "```json\n{\n  \"performative\": \"command\",\n  \"from\": \"query_agent\",\n  \"to\": \"data_agent\",\n  \"id\": \"msg-7f3a2b91\",\n  \"timestamp\": 1740873600,\n  \"preconditions\": [\n    \"data_agent is online and idle\",\n    \"cache service is reachable\",\n    \"database connection is available\"\n  ],\n  \"postconditions\": [\n    \"query results are returned to query_agent\",\n    \"cache contains fresh results if database was queried\",\n    \"cache hit or miss is recorded in audit log\"\n  ],\n  \"lifecycle_stage\": \"execution\",\n  \"content\": {\n    \"operation\": \"resolve_query\",\n    \"query_id\": \"qry-4419\",\n    \"query\": \"SELECT * FROM orders WHERE status = 'pending'\",\n    \"cache_key\": \"orders:status:pending\",\n    \"ttl_seconds\": 300\n  },\n  \"steps\": [\n    {\n      \"action\": \"check_cache\",\n      \"params\": {\n        \"cache_key\": \"orders:status:pending\"\n      },\n      \"relation\": \"sequence\"\n    },\n    {\n      \"action\": \"return_cached_results\",\n      \"params\": {\n        \"source\": \"cache\",\n        \"cache_key\": \"orders:status:pending\"\n      },\n      \"relation\": \"alternative\",\n      \"condition\": \"cache_hit == true\"\n    },\n    {\n      \"action\": \"query_database\",\n      \"params\": {\n        \"query\": \"SELECT * FROM orders WHERE status = 'pending'\",\n        \"timeout_ms\": 5000\n      },\n      \"relation\": \"alternative\",\n      \"condition\": \"cache_hit == false\"\n    },\n    {\n      \"action\": \"update_cache\",\n      \"params\": {\n        \"cache_key\": \"orders:status:pending\",\n        \"ttl_seconds\": 300,\n        \"source\": \"fresh_db_result\"\n      },\n      \"relation\": \"causal\",\n      \"caused_by\": \"query_database\"\n    },\n    {\n      \"action\": \"return_results\",\n      \"params\": {\n        \"source\": \"database\",\n        \"cache_updated\": true\n      },\n      \"relation\": \"sequence\"\n    }\n  ]\n}\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 464,
+        "o200k_base": 464
+      },
+      "latency_ms": 15077,
+      "timestamp": "2026-03-02T08:37:59.811435+00:00",
+      "complexity_level": 2,
+      "operators_tested": [
+        "|",
+        "->"
+      ]
+    },
+    {
+      "task_id": "L2-03",
+      "condition": "json_contracts",
+      "model": "claude-sonnet",
+      "run_number": 3,
+      "output": "```json\n{\n  \"performative\": \"command\",\n  \"from\": \"security-agent\",\n  \"to\": \"audit-agent\",\n  \"id\": \"sec-cmd-20260302-001\",\n  \"timestamp\": 1740873600,\n  \"preconditions\": [\n    \"audit-agent is online and idle\",\n    \"service registry is available and up-to-date\",\n    \"internal-only service list has been loaded and is current\",\n    \"audit-agent has network access to scan scope targets\"\n  ],\n  \"postconditions\": [\n    \"all externally-reachable open ports have been enumerated\",\n    \"SSL certificate validity, expiry, and chain integrity checked for all in-scope services\",\n    \"internal-only services have been explicitly excluded from scan scope\",\n    \"scan results are stored and made available to security-agent\"\n  ],\n  \"lifecycle_stage\": \"execution\",\n  \"content\": {\n    \"task\": \"security-audit\",\n    \"scope\": {\n      \"include\": \"all-services\",\n      \"exclude\": \"internal-only-services\",\n      \"exclusion_basis\": \"service-registry:tag=internal-only\"\n    },\n    \"priority\": \"high\",\n    \"report_to\": \"security-agent\",\n    \"report_format\": \"structured-json\"\n  },\n  \"steps\": [\n    {\n      \"id\": \"step-1\",\n      \"action\": \"load_exclusion_list\",\n      \"params\": {\n        \"source\": \"service-registry\",\n        \"filter\": \"tag=internal-only\"\n      },\n      \"relation\": \"sequence\"\n    },\n    {\n      \"id\": \"step-2a\",\n      \"action\": \"scan_open_ports\",\n      \"params\": {\n        \"protocol\": [\"tcp\", \"udp\"],\n        \"port_range\": \"1-65535\",\n        \"exclude\": \"$exclusion_list\"\n      },\n      \"relation\": \"parallel\"\n    },\n    {\n      \"id\": \"step-2b\",\n      \"action\": \"check_ssl_certificates\",\n      \"params\": {\n        \"checks\": [\"validity\", \"expiry\", \"chain-integrity\", \"cipher-strength\"],\n        \"warn_days_before_expiry\": 30,\n        \"exclude\": \"$exclusion_list\"\n      },\n      \"relation\": \"parallel\"\n    },\n    {\n      \"id\": \"step-3\",\n      \"action\": \"merge_and_report\",\n      \"params\": {\n        \"inputs\": [\"step-2a:results\", \"step-2b:results\"],\n        \"destination\": \"security-agent\",\n        \"format\": \"structured-json\"\n      },\n      \"relation\": \"sequence\"\n    }\n  ]\n}\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 543,
+        "o200k_base": 544
+      },
+      "latency_ms": 17082,
+      "timestamp": "2026-03-02T08:38:16.895706+00:00",
+      "complexity_level": 2,
+      "operators_tested": [
+        "&",
+        "!"
+      ]
+    },
+    {
+      "task_id": "L3-01",
+      "condition": "json_contracts",
+      "model": "claude-sonnet",
+      "run_number": 3,
+      "output": "```json\n{\n  \"performative\": \"command\",\n  \"from\": \"etl_orchestrator\",\n  \"to\": \"pipeline\",\n  \"id\": \"msg-etl-20260302-001\",\n  \"protocol_version\": \"1.0\",\n  \"preconditions\": [\n    \"pipeline is idle and ready to receive commands\",\n    \"API source endpoint is reachable\",\n    \"database source connection is established\",\n    \"data warehouse is online and accepting writes\",\n    \"error queue is initialized and accessible\",\n    \"validation rules are loaded and current\"\n  ],\n  \"postconditions\": [\n    \"data from API source and database source has been extracted\",\n    \"combined dataset has been subjected to validation rules\",\n    \"validated data is loaded into data warehouse OR failed data is routed to error queue\",\n    \"pipeline returns to idle state with execution report\"\n  ],\n  \"lifecycle_stage\": \"execution\",\n  \"content\": {\n    \"workflow\": \"etl_pipeline_run\",\n    \"description\": \"Full ETL cycle: parallel extract \u2192 transform+validate \u2192 conditional load or error-route\"\n  },\n  \"steps\": [\n    {\n      \"action\": \"extract\",\n      \"params\": {\n        \"source\": \"api\",\n        \"source_id\": \"api_source_primary\",\n        \"output_ref\": \"raw_api_data\"\n      },\n      \"relation\": \"parallel\"\n    },\n    {\n      \"action\": \"extract\",\n      \"params\": {\n        \"source\": \"database\",\n        \"source_id\": \"db_source_primary\",\n        \"output_ref\": \"raw_db_data\"\n      },\n      \"relation\": \"parallel\"\n    },\n    {\n      \"action\": \"transform\",\n      \"params\": {\n        \"inputs\": [\"raw_api_data\", \"raw_db_data\"],\n        \"operation\": \"merge_and_validate\",\n        \"validation_rules\": \"ruleset_v3\",\n        \"output_ref\": \"transformed_data\",\n        \"validation_result_ref\": \"validation_status\"\n      },\n      \"relation\": \"sequence\"\n    },\n    {\n      \"action\": \"load\",\n      \"params\": {\n        \"destination\": \"data_warehouse\",\n        \"input_ref\": \"transformed_data\"\n      },\n      \"relation\": \"alternative\",\n      \"condition\": \"validation_status == PASSED\"\n    },\n    {\n      \"action\": \"route_to_error_queue\",\n      \"params\": {\n        \"destination\": \"error_queue\",\n        \"input_ref\": \"transformed_data\",\n        \"include_validation_report\": true\n      },\n      \"relation\": \"alternative\",\n      \"condition\": \"validation_status == FAILED\"\n    }\n  ]\n}\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 540,
+        "o200k_base": 537
+      },
+      "latency_ms": 14401,
+      "timestamp": "2026-03-02T08:38:31.300995+00:00",
+      "complexity_level": 3,
+      "operators_tested": [
+        "->",
+        "&",
+        "|"
+      ]
+    },
+    {
+      "task_id": "L3-02",
+      "condition": "json_contracts",
+      "model": "claude-sonnet",
+      "run_number": 3,
+      "output": "```json\n{\n  \"performative\": \"publish\",\n  \"from\": \"monitoring-agent\",\n  \"to\": [\"remediation-agent\", \"ops-agent\", \"alerting-bus\"],\n  \"id\": \"alert-20260302-001\",\n  \"timestamp\": 1740873600,\n  \"preconditions\": [\n    \"monitoring-agent has detected anomalous memory growth in cache layer\",\n    \"service degradation is confirmed and measurable\",\n    \"missing eviction policy has been identified as root cause\",\n    \"hotfix artifact is available in deployment pipeline\",\n    \"remediation-agent and ops-agent are subscribed and reachable\"\n  ],\n  \"postconditions\": [\n    \"alert is published to all subscribers\",\n    \"remediation workflow is initiated\",\n    \"cache service is restarted\",\n    \"hotfix is deployed\",\n    \"service recovery is verified\"\n  ],\n  \"lifecycle_stage\": \"initiation\",\n  \"content\": {\n    \"alert\": {\n      \"severity\": \"critical\",\n      \"type\": \"service_degradation\",\n      \"affected_service\": \"cache-layer\",\n      \"root_cause_chain\": [\n        {\n          \"cause\": \"missing_eviction_policy\",\n          \"effect\": \"memory_leak\",\n          \"layer\": \"cache-layer\"\n        },\n        {\n          \"cause\": \"memory_leak\",\n          \"effect\": \"service_degradation\",\n          \"layer\": \"cache-layer\"\n        }\n      ],\n      \"diagnosis\": {\n        \"symptom\": \"service degradation\",\n        \"immediate_cause\": \"memory leak in cache layer\",\n        \"root_cause\": \"missing eviction policy on cache configuration\"\n      }\n    },\n    \"remediation_plan\": {\n      \"strategy\": \"parallel-fix-then-verify\",\n      \"steps\": [\n        {\n          \"step_id\": \"step-1a\",\n          \"action\": \"restart_cache_service\",\n          \"params\": {\n            \"service\": \"cache-layer\",\n            \"restart_mode\": \"graceful\",\n            \"timeout_seconds\": 30\n          },\n          \"relation\": \"parallel\",\n          \"assigned_to\": \"ops-agent\"\n        },\n        {\n          \"step_id\": \"step-1b\",\n          \"action\": \"deploy_hotfix\",\n          \"params\": {\n            \"hotfix_id\": \"hotfix-cache-eviction-policy\",\n            \"target\": \"cache-layer\",\n            \"change\": \"add_eviction_policy\",\n            \"policy_type\": \"LRU\",\n            \"max_memory_mb\": 512\n          },\n          \"relation\": \"parallel\",\n          \"assigned_to\": \"remediation-agent\"\n        },\n        {\n          \"step_id\": \"step-2\",\n          \"action\": \"verify_service_recovery\",\n          \"params\": {\n            \"service\": \"cache-layer\",\n            \"checks\": [\n              \"memory_usage_within_bounds\",\n              \"eviction_policy_active\",\n              \"service_response_time_normal\",\n              \"error_rate_below_threshold\"\n            ],\n            \"success_threshold\": 0.95,\n            \"timeout_seconds\": 120\n          },\n          \"relation\": \"sequence\",\n          \"depends_on\": [\"step-1a\", \"step-1b\"],\n          \"assigned_to\": \"monitoring-agent\"\n        }\n      ]\n    }\n  },\n  \"steps\": [\n    {\n      \"action\": \"publish_alert\",\n      \"params\": {\n        \"alert_id\": \"alert-20260302-001\",\n        \"severity\": \"critical\",\n        \"root_cause\": \"missing eviction policy \u2192 memory leak \u2192 service degradation\"\n      },\n      \"relation\": \"sequence\"\n    },\n    {\n      \"action\": \"restart_cache_service\",\n      \"params\": {\n        \"service\": \"cache-layer\",\n        \"mode\": \"graceful\"\n      },\n      \"relation\": \"parallel\"\n    },\n    {\n      \"action\": \"deploy_hotfix\",\n      \"params\": {\n        \"hotfix_id\": \"hotfix-cache-eviction-policy\",\n        \"policy\": \"LRU\",\n        \"max_memory_mb\": 512\n      },\n      \"relation\": \"parallel\"\n    },\n    {\n      \"action\": \"verify_service_recovery\",\n      \"params\": {\n        \"checks\": [\n          \"memory_usage_within_bounds\",\n          \"eviction_policy_active\",\n          \"response_time_normal\",\n          \"error_rate_below_threshold\"\n        ],\n        \"timeout_seconds\": 120\n      },\n      \"relation\": \"sequence\",\n      \"causal\": \"caused_by: restart_cache_service AND deploy_hotfix both complete\"\n    }\n  ]\n}\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 935,
+        "o200k_base": 939
+      },
+      "latency_ms": 24619,
+      "timestamp": "2026-03-02T08:38:55.924300+00:00",
+      "complexity_level": 3,
+      "operators_tested": [
+        "<-",
+        "&",
+        "->"
+      ]
+    },
+    {
+      "task_id": "L3-03",
+      "condition": "json_contracts",
+      "model": "claude-sonnet",
+      "run_number": 3,
+      "output": "```json\n{\n  \"performative\": \"propose\",\n  \"from\": \"negotiation-agent\",\n  \"to\": \"supplier-agent\",\n  \"id\": \"neg-001-proposal\",\n  \"timestamp\": 1740873600,\n  \"lifecycle_stage\": \"negotiation\",\n  \"preconditions\": [\n    \"supplier-agent is available and responsive\",\n    \"current market rates have been verified for product A and product B\",\n    \"negotiation-agent has authority to commit to stated pricing\"\n  ],\n  \"postconditions\": [\n    \"supplier-agent has received and acknowledged the proposal\",\n    \"one product line (A or B) is selected for the deal\",\n    \"delivery workflow is initiated in the agreed sequence\",\n    \"payment confirmation is received upon workflow completion\"\n  ],\n  \"content\": {\n    \"proposal_id\": \"deal-2026-0302\",\n    \"description\": \"Delivery deal proposal: select one product line and execute the fulfillment workflow.\",\n    \"pricing_justification\": \"Prices reflect verified current market rates for both product lines.\"\n  },\n  \"steps\": [\n    {\n      \"step_id\": \"s1\",\n      \"action\": \"select_product\",\n      \"params\": {\n        \"option\": \"product_A\",\n        \"price_per_unit\": 100,\n        \"currency\": \"USD\"\n      },\n      \"relation\": \"alternative\",\n      \"condition\": \"supplier chooses product A\"\n    },\n    {\n      \"step_id\": \"s2\",\n      \"action\": \"select_product\",\n      \"params\": {\n        \"option\": \"product_B\",\n        \"price_per_unit\": 85,\n        \"currency\": \"USD\"\n      },\n      \"relation\": \"alternative\",\n      \"condition\": \"supplier chooses product B\"\n    },\n    {\n      \"step_id\": \"s3\",\n      \"action\": \"confirm_inventory\",\n      \"params\": {\n        \"product\": \"selected_from_s1_or_s2\",\n        \"required_quantity\": \"per_order_terms\"\n      },\n      \"relation\": \"sequence\",\n      \"depends_on\": [\"s1\", \"s2\"]\n    },\n    {\n      \"step_id\": \"s4a\",\n      \"action\": \"ship_to_warehouse\",\n      \"params\": {\n        \"destination\": \"buyer_warehouse\",\n        \"method\": \"standard_freight\"\n      },\n      \"relation\": \"parallel\",\n      \"depends_on\": [\"s3\"]\n    },\n    {\n      \"step_id\": \"s4b\",\n      \"action\": \"send_invoice\",\n      \"params\": {\n        \"recipient\": \"negotiation-agent\",\n        \"basis\": \"confirmed_quantity_x_unit_price\"\n      },\n      \"relation\": \"parallel\",\n      \"depends_on\": [\"s3\"]\n    },\n    {\n      \"step_id\": \"s5\",\n      \"action\": \"await_payment_confirmation\",\n      \"params\": {\n        \"trigger\": \"invoice_received_and_shipment_dispatched\",\n        \"payment_terms\": \"net_30\"\n      },\n      \"relation\": \"sequence\",\n      \"depends_on\": [\"s4a\", \"s4b\"]\n    }\n  ]\n}\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 647,
+        "o200k_base": 648
+      },
+      "latency_ms": 23263,
+      "timestamp": "2026-03-02T08:39:19.189573+00:00",
+      "complexity_level": 3,
+      "operators_tested": [
+        "->",
+        "|",
+        "&",
+        "<-"
+      ]
+    }
+  ]
+}

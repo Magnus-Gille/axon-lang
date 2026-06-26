@@ -26,6 +26,7 @@ CONDITIONS = [
     "fipa_acl",
     "axon",
     "aisp",
+    "json_contracts",
 ]
 
 
@@ -49,6 +50,7 @@ def validate_output(condition: str, output: str) -> dict:
         "fipa_acl": _validate_fipa_acl,
         "axon": _validate_axon,
         "aisp": _validate_aisp,
+        "json_contracts": _validate_json_contracts,
     }
 
     if condition not in validators:
@@ -154,3 +156,22 @@ def _validate_aisp(output: str) -> dict:
             errors.append(f"Missing required AISP blocks: {', '.join(missing)}")
 
     return {"valid": len(errors) == 0, "errors": errors, "condition": "aisp", "stripped_fences": stripped}
+
+
+def _validate_json_contracts(output: str) -> dict:
+    """JSON + Contracts: must be valid JSON with contract fields present."""
+    errors = []
+    cleaned, stripped = _strip_code_fences(output)
+    try:
+        parsed = json.loads(cleaned)
+        if not isinstance(parsed, dict):
+            errors.append("Top-level JSON must be object")
+        else:
+            # Check for required contract fields
+            required = ["preconditions", "postconditions", "lifecycle_stage"]
+            missing = [f for f in required if f not in parsed]
+            if missing:
+                errors.append(f"Missing contract fields: {', '.join(missing)}")
+    except json.JSONDecodeError as e:
+        errors.append(f"Invalid JSON: {e}")
+    return {"valid": len(errors) == 0, "errors": errors, "condition": "json_contracts", "stripped_fences": stripped}

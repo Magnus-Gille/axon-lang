@@ -1,0 +1,554 @@
+{
+  "experiment": "exp_json_contracts",
+  "condition": "json_contracts",
+  "model": "claude-haiku",
+  "model_display": "Claude Haiku 4.5",
+  "timestamp": "2026-03-02T08:38:39.124744+00:00",
+  "total_runs": 27,
+  "valid_count": 27,
+  "results": [
+    {
+      "task_id": "L1-01",
+      "condition": "json_contracts",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "```json\n{\n  \"performative\": \"request\",\n  \"from\": \"data-processing-agent\",\n  \"to\": \"worker-agent\",\n  \"preconditions\": [\n    \"worker-agent is available and idle\",\n    \"data lake is accessible with valid credentials\",\n    \"warehouse is accessible with valid credentials\",\n    \"source dataset exists in data lake\"\n  ],\n  \"postconditions\": [\n    \"cleaned dataset is uploaded to warehouse\",\n    \"all null rows removed from dataset\",\n    \"source dataset remains in data lake\"\n  ],\n  \"lifecycle_stage\": \"execution\",\n  \"content\": {\n    \"workflow\": \"data-pipeline-processing\",\n    \"description\": \"Three-step ETL: download, clean, upload\"\n  },\n  \"steps\": [\n    {\n      \"action\": \"download_dataset\",\n      \"params\": {\n        \"source\": \"data-lake\",\n        \"dataset_name\": \"source_data\"\n      },\n      \"relation\": \"sequence\"\n    },\n    {\n      \"action\": \"clean_dataset\",\n      \"params\": {\n        \"dataset\": \"source_data\",\n        \"cleaning_operation\": \"remove_null_rows\"\n      },\n      \"relation\": \"sequence\"\n    },\n    {\n      \"action\": \"upload_dataset\",\n      \"params\": {\n        \"source\": \"source_data_cleaned\",\n        \"destination\": \"warehouse\",\n        \"dataset_name\": \"cleaned_data\"\n      },\n      \"relation\": \"sequence\"\n    }\n  ]\n}\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 303,
+        "o200k_base": 303
+      },
+      "latency_ms": 13876,
+      "timestamp": "2026-03-02T08:31:55.804921+00:00",
+      "complexity_level": 1,
+      "operators_tested": [
+        "->"
+      ]
+    },
+    {
+      "task_id": "L1-02",
+      "condition": "json_contracts",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "```json\n{\n  \"performative\": \"command\",\n  \"from\": \"deployment-agent\",\n  \"to\": \"cluster-manager\",\n  \"preconditions\": [\n    \"cluster-manager is operational\",\n    \"health check service is available\"\n  ],\n  \"postconditions\": [\n    \"CPU usage check is running\",\n    \"memory usage check is running\",\n    \"disk space check is running\",\n    \"health check results are collected\"\n  ],\n  \"lifecycle_stage\": \"execution\",\n  \"content\": {\n    \"action\": \"run_health_checks\",\n    \"target\": \"cluster\"\n  },\n  \"steps\": [\n    {\n      \"action\": \"check_cpu_usage\",\n      \"params\": {\n        \"metric\": \"cpu\",\n        \"timeout\": 30\n      },\n      \"relation\": \"parallel\"\n    },\n    {\n      \"action\": \"check_memory_usage\",\n      \"params\": {\n        \"metric\": \"memory\",\n        \"timeout\": 30\n      },\n      \"relation\": \"parallel\"\n    },\n    {\n      \"action\": \"check_disk_space\",\n      \"params\": {\n        \"metric\": \"disk\",\n        \"timeout\": 30\n      },\n      \"relation\": \"parallel\"\n    }\n  ]\n}\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 255,
+        "o200k_base": 255
+      },
+      "latency_ms": 10164,
+      "timestamp": "2026-03-02T08:32:05.971045+00:00",
+      "complexity_level": 1,
+      "operators_tested": [
+        "&"
+      ]
+    },
+    {
+      "task_id": "L1-03",
+      "condition": "json_contracts",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "```json\n{\n  \"performative\": \"inform\",\n  \"from\": \"routing_agent\",\n  \"to\": \"handler_agent\",\n  \"preconditions\": [\n    \"request received and validated\",\n    \"primary API endpoint availability status determined\",\n    \"fallback cache service availability status determined\"\n  ],\n  \"postconditions\": [\n    \"handler agent receives routing options\",\n    \"handler agent ready to execute processing\"\n  ],\n  \"lifecycle_stage\": \"execution\",\n  \"id\": \"route-incoming-001\",\n  \"content\": {\n    \"request_id\": \"req-5847\",\n    \"routing_status\": \"conditional\"\n  },\n  \"steps\": [\n    {\n      \"action\": \"route_to_primary_api\",\n      \"params\": {\n        \"endpoint\": \"api.primary.production\",\n        \"timeout_ms\": 3000\n      },\n      \"relation\": \"alternative\",\n      \"condition\": \"primary_api.available == true\"\n    },\n    {\n      \"action\": \"route_to_fallback_cache\",\n      \"params\": {\n        \"service\": \"cache.fallback\",\n        \"max_age_seconds\": 300\n      },\n      \"relation\": \"alternative\",\n      \"condition\": \"primary_api.available == false AND fallback_cache.available == true\"\n    }\n  ]\n}\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 262,
+        "o200k_base": 262
+      },
+      "latency_ms": 12182,
+      "timestamp": "2026-03-02T08:32:18.155674+00:00",
+      "complexity_level": 1,
+      "operators_tested": [
+        "|"
+      ]
+    },
+    {
+      "task_id": "L2-01",
+      "condition": "json_contracts",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "```json\n{\n  \"performative\": \"request\",\n  \"from\": \"orchestrator\",\n  \"to\": \"pipeline\",\n  \"preconditions\": [\n    \"input data is available\",\n    \"schema definition is loaded\",\n    \"pipeline is idle and ready to process\"\n  ],\n  \"postconditions\": [\n    \"input schema is validated\",\n    \"sentiment analysis is completed\",\n    \"topic classification is completed\",\n    \"results are merged into a single report\",\n    \"report is available for delivery\"\n  ],\n  \"lifecycle_stage\": \"execution\",\n  \"content\": {\n    \"workflow\": \"process_and_report\",\n    \"data_source\": \"input\",\n    \"report_format\": \"merged\"\n  },\n  \"steps\": [\n    {\n      \"action\": \"validate_schema\",\n      \"params\": {\n        \"target\": \"input\",\n        \"schema\": \"validation_schema\"\n      },\n      \"relation\": \"sequence\"\n    },\n    {\n      \"action\": \"sentiment_analysis\",\n      \"params\": {\n        \"target\": \"validated_input\"\n      },\n      \"relation\": \"parallel\",\n      \"caused_by\": \"validate_schema\"\n    },\n    {\n      \"action\": \"topic_classification\",\n      \"params\": {\n        \"target\": \"validated_input\"\n      },\n      \"relation\": \"parallel\",\n      \"caused_by\": \"validate_schema\"\n    },\n    {\n      \"action\": \"merge_results\",\n      \"params\": {\n        \"sentiment_output\": \"sentiment_analysis\",\n        \"topic_output\": \"topic_classification\",\n        \"format\": \"single_report\"\n      },\n      \"relation\": \"sequence\"\n    }\n  ]\n}\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 342,
+        "o200k_base": 344
+      },
+      "latency_ms": 22147,
+      "timestamp": "2026-03-02T08:32:40.304792+00:00",
+      "complexity_level": 2,
+      "operators_tested": [
+        "->",
+        "&"
+      ]
+    },
+    {
+      "task_id": "L2-02",
+      "condition": "json_contracts",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "```json\n{\n  \"performative\": \"request\",\n  \"from\": \"query-agent\",\n  \"to\": \"data-agent\",\n  \"preconditions\": [\n    \"data-agent is online and ready\",\n    \"cache service is accessible\",\n    \"database connection is available\"\n  ],\n  \"postconditions\": [\n    \"results are returned to query-agent\",\n    \"cache contains fresh data if queried\",\n    \"response time is optimal\"\n  ],\n  \"lifecycle_stage\": \"execution\",\n  \"content\": {\n    \"task\": \"fetch_or_query_and_cache\",\n    \"query_params\": {\n      \"resource\": \"string\",\n      \"filters\": \"object\"\n    }\n  },\n  \"steps\": [\n    {\n      \"action\": \"check_cache\",\n      \"params\": {\n        \"key\": \"{{resource}}\"\n      },\n      \"relation\": \"sequence\"\n    },\n    {\n      \"action\": \"return_cached_results\",\n      \"params\": {\n        \"data\": \"{{cache_hit}}\"\n      },\n      \"relation\": \"alternative\",\n      \"condition\": \"cache_hit !== null\"\n    },\n    {\n      \"action\": \"query_database\",\n      \"params\": {\n        \"resource\": \"{{resource}}\",\n        \"filters\": \"{{filters}}\"\n      },\n      \"relation\": \"alternative\",\n      \"condition\": \"cache_hit === null\"\n    },\n    {\n      \"action\": \"update_cache\",\n      \"params\": {\n        \"key\": \"{{resource}}\",\n        \"value\": \"{{db_results}}\"\n      },\n      \"relation\": \"sequence\",\n      \"caused_by\": \"query_database\"\n    },\n    {\n      \"action\": \"return_fresh_results\",\n      \"params\": {\n        \"data\": \"{{db_results}}\"\n      },\n      \"relation\": \"sequence\"\n    }\n  ]\n}\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 367,
+        "o200k_base": 372
+      },
+      "latency_ms": 9894,
+      "timestamp": "2026-03-02T08:32:50.201022+00:00",
+      "complexity_level": 2,
+      "operators_tested": [
+        "|",
+        "->"
+      ]
+    },
+    {
+      "task_id": "L2-03",
+      "condition": "json_contracts",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "```json\n{\n  \"performative\": \"request\",\n  \"from\": \"security_agent\",\n  \"to\": \"audit_agent\",\n  \"preconditions\": [\n    \"audit_agent is initialized and ready\",\n    \"scan scope configuration is available\",\n    \"internal services registry is loaded\"\n  ],\n  \"postconditions\": [\n    \"open ports identified and reported\",\n    \"SSL certificates validated and reported\",\n    \"internal-only services excluded from scan results\",\n    \"consolidated security report generated\"\n  ],\n  \"lifecycle_stage\": \"execution\",\n  \"content\": {\n    \"task\": \"security_audit_scan\",\n    \"scope_filter\": {\n      \"exclude\": \"internal_only_services\"\n    }\n  },\n  \"steps\": [\n    {\n      \"action\": \"apply_scope_filter\",\n      \"params\": {\n        \"exclude_category\": \"internal_only_services\"\n      },\n      \"relation\": \"sequence\"\n    },\n    {\n      \"action\": \"scan_open_ports\",\n      \"params\": {\n        \"target_scope\": \"filtered_hosts\"\n      },\n      \"relation\": \"parallel\"\n    },\n    {\n      \"action\": \"check_ssl_certificates\",\n      \"params\": {\n        \"target_scope\": \"filtered_hosts\"\n      },\n      \"relation\": \"parallel\"\n    },\n    {\n      \"action\": \"merge_results\",\n      \"params\": {\n        \"include\": [\"open_ports\", \"ssl_status\", \"excluded_services\"]\n      },\n      \"relation\": \"sequence\"\n    }\n  ]\n}\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 308,
+        "o200k_base": 308
+      },
+      "latency_ms": 12487,
+      "timestamp": "2026-03-02T08:33:02.690352+00:00",
+      "complexity_level": 2,
+      "operators_tested": [
+        "&",
+        "!"
+      ]
+    },
+    {
+      "task_id": "L3-01",
+      "condition": "json_contracts",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "```json\n{\n  \"performative\": \"request\",\n  \"from\": \"orchestrator\",\n  \"to\": \"pipeline\",\n  \"id\": \"msg-etl-001-2026-03-02-1200\",\n  \"timestamp\": 1740974400,\n  \"content\": {\n    \"protocol_version\": \"1.0\",\n    \"workflow\": \"etl-extract-transform-load\",\n    \"description\": \"Extract from dual sources, validate combined data, and route by validation result\"\n  },\n  \"preconditions\": [\n    \"pipeline is idle\",\n    \"API source is reachable\",\n    \"database source is accessible\",\n    \"data warehouse is available\",\n    \"error queue is available\"\n  ],\n  \"postconditions\": [\n    \"combined data is validated\",\n    \"valid data is in warehouse or invalid data is in error queue\"\n  ],\n  \"lifecycle_stage\": \"execution\",\n  \"steps\": [\n    {\n      \"action\": \"extract\",\n      \"params\": {\"source\": \"api\"},\n      \"relation\": \"parallel\"\n    },\n    {\n      \"action\": \"extract\",\n      \"params\": {\"source\": \"database\"},\n      \"relation\": \"parallel\"\n    },\n    {\n      \"action\": \"transform\",\n      \"params\": {\"operation\": \"apply_validation_rules\"},\n      \"relation\": \"sequence\"\n    },\n    {\n      \"action\": \"load\",\n      \"params\": {\"destination\": \"data_warehouse\"},\n      \"relation\": \"alternative\",\n      \"condition\": \"validation_passed == true\"\n    },\n    {\n      \"action\": \"route\",\n      \"params\": {\"destination\": \"error_queue\"},\n      \"relation\": \"alternative\",\n      \"condition\": \"validation_passed == false\"\n    }\n  ]\n}\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 363,
+        "o200k_base": 364
+      },
+      "latency_ms": 14711,
+      "timestamp": "2026-03-02T08:33:17.403645+00:00",
+      "complexity_level": 3,
+      "operators_tested": [
+        "->",
+        "&",
+        "|"
+      ]
+    },
+    {
+      "task_id": "L3-02",
+      "condition": "json_contracts",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "```json\n{\n  \"performative\": \"request\",\n  \"from\": \"monitoring-agent\",\n  \"to\": \"remediation-orchestrator\",\n  \"id\": \"alert-cache-memory-leak-20260302\",\n  \"timestamp\": 1740960000,\n  \"preconditions\": [\n    \"memory leak in cache layer confirmed via metrics\",\n    \"root cause identified as missing eviction policy\",\n    \"cache service is running but degraded\",\n    \"remediation-orchestrator has deployment credentials\"\n  ],\n  \"postconditions\": [\n    \"cache service restarted with clean memory state\",\n    \"hotfix deployed with eviction policy implementation\",\n    \"service recovery verified through health checks\",\n    \"alert severity downgraded to resolved\"\n  ],\n  \"lifecycle_stage\": \"execution\",\n  \"content\": {\n    \"alert_id\": \"CACHE_LAYER_MEMLEAK_20260302_001\",\n    \"severity\": \"high\",\n    \"component\": \"cache-layer\",\n    \"diagnosis\": \"Service degradation caused by memory leak due to missing eviction policy\",\n    \"immediate_action_required\": true\n  },\n  \"steps\": [\n    {\n      \"action\": \"restart_cache_service\",\n      \"params\": {\n        \"service\": \"cache-service\",\n        \"graceful\": true,\n        \"drain_timeout\": 15\n      },\n      \"relation\": \"parallel\"\n    },\n    {\n      \"action\": \"deploy_hotfix\",\n      \"params\": {\n        \"package\": \"cache-service-hotfix\",\n        \"version\": \"1.2.4\",\n        \"change_description\": \"Add LRU eviction policy implementation\"\n      },\n      \"relation\": \"parallel\"\n    },\n    {\n      \"action\": \"verify_recovery\",\n      \"params\": {\n        \"checks\": [\"memory_utilization\", \"latency\", \"error_rate\"],\n        \"success_criteria\": {\n          \"memory_utilization\": \"< 80%\",\n          \"p99_latency_ms\": 100,\n          \"error_rate_percent\": 0.1\n        }\n      },\n      \"relation\": \"sequence\",\n      \"caused_by\": [\"restart_cache_service\", \"deploy_hotfix\"]\n    }\n  ]\n}\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 452,
+        "o200k_base": 451
+      },
+      "latency_ms": 17976,
+      "timestamp": "2026-03-02T08:33:35.381759+00:00",
+      "complexity_level": 3,
+      "operators_tested": [
+        "<-",
+        "&",
+        "->"
+      ]
+    },
+    {
+      "task_id": "L3-03",
+      "condition": "json_contracts",
+      "model": "claude-haiku",
+      "run_number": 1,
+      "output": "```json\n{\n  \"performative\": \"propose\",\n  \"from\": \"negotiation_agent\",\n  \"to\": \"supplier\",\n  \"preconditions\": [\n    \"supplier_contact_established\",\n    \"market_rate_analysis_completed\",\n    \"inventory_verification_capability_available\"\n  ],\n  \"postconditions\": [\n    \"deal_proposal_communicated_to_supplier\",\n    \"awaiting_product_selection_confirmation\",\n    \"delivery_workflow_parameters_documented\"\n  ],\n  \"lifecycle_stage\": \"negotiation\",\n  \"id\": \"prop_deal_001\",\n  \"timestamp\": 1746316800,\n  \"content\": {\n    \"proposal_type\": \"conditional_product_delivery\",\n    \"options\": [\n      {\n        \"option_id\": \"A\",\n        \"product\": \"A\",\n        \"unit_price\": 100,\n        \"currency\": \"USD\",\n        \"pricing_basis\": \"current_market_rates\"\n      },\n      {\n        \"option_id\": \"B\",\n        \"product\": \"B\",\n        \"unit_price\": 85,\n        \"currency\": \"USD\",\n        \"pricing_basis\": \"current_market_rates\"\n      }\n    ],\n    \"workflow_description\": \"sequential_with_parallel_phase\"\n  },\n  \"steps\": [\n    {\n      \"action\": \"confirm_inventory\",\n      \"params\": {\n        \"product\": \"selected_option\",\n        \"verify\": \"stock_availability\"\n      },\n      \"relation\": \"sequence\"\n    },\n    {\n      \"action\": \"ship_to_warehouse\",\n      \"params\": {\n        \"destination\": \"buyer_warehouse\",\n        \"product\": \"selected_option\"\n      },\n      \"relation\": \"parallel\"\n    },\n    {\n      \"action\": \"send_invoice\",\n      \"params\": {\n        \"product\": \"selected_option\",\n        \"unit_price\": \"selected_option.unit_price\",\n        \"pricing_justification\": \"current_market_rates\"\n      },\n      \"relation\": \"parallel\"\n    },\n    {\n      \"action\": \"await_payment_confirmation\",\n      \"params\": {\n        \"invoice_reference\": \"from_send_invoice\"\n      },\n      \"relation\": \"sequence\"\n    }\n  ]\n}\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 441,
+        "o200k_base": 444
+      },
+      "latency_ms": 26476,
+      "timestamp": "2026-03-02T08:34:01.859163+00:00",
+      "complexity_level": 3,
+      "operators_tested": [
+        "->",
+        "|",
+        "&",
+        "<-"
+      ]
+    },
+    {
+      "task_id": "L1-01",
+      "condition": "json_contracts",
+      "model": "claude-haiku",
+      "run_number": 2,
+      "output": "```json\n{\n  \"performative\": \"request\",\n  \"from\": \"data-processing-agent\",\n  \"to\": \"worker-agent\",\n  \"preconditions\": [\n    \"worker-agent is available and idle\",\n    \"data lake is accessible and contains target dataset\",\n    \"warehouse has write permissions enabled\",\n    \"worker-agent has download, transform, and upload capabilities\"\n  ],\n  \"postconditions\": [\n    \"dataset downloaded from data lake to local storage\",\n    \"null rows removed from dataset\",\n    \"cleaned dataset uploaded to warehouse\",\n    \"original dataset persists in data lake\"\n  ],\n  \"lifecycle_stage\": \"execution\",\n  \"content\": {\n    \"workflow_id\": \"dataset-processing-pipeline\",\n    \"description\": \"Three-step data processing: download \u2192 clean \u2192 upload\"\n  },\n  \"steps\": [\n    {\n      \"action\": \"download\",\n      \"params\": {\n        \"source\": \"data-lake\",\n        \"dataset_name\": \"raw_dataset\"\n      },\n      \"relation\": \"sequence\"\n    },\n    {\n      \"action\": \"clean\",\n      \"params\": {\n        \"operation\": \"remove_null_rows\",\n        \"input_file\": \"raw_dataset\"\n      },\n      \"relation\": \"sequence\"\n    },\n    {\n      \"action\": \"upload\",\n      \"params\": {\n        \"destination\": \"warehouse\",\n        \"cleaned_file\": \"cleaned_dataset\"\n      },\n      \"relation\": \"sequence\"\n    }\n  ]\n}\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 304,
+        "o200k_base": 304
+      },
+      "latency_ms": 18348,
+      "timestamp": "2026-03-02T08:34:20.209209+00:00",
+      "complexity_level": 1,
+      "operators_tested": [
+        "->"
+      ]
+    },
+    {
+      "task_id": "L1-02",
+      "condition": "json_contracts",
+      "model": "claude-haiku",
+      "run_number": 2,
+      "output": "```json\n{\n  \"performative\": \"request\",\n  \"from\": \"deployment-agent\",\n  \"to\": \"cluster-manager\",\n  \"preconditions\": [\n    \"cluster-manager is online\",\n    \"cluster-manager has access to all nodes\"\n  ],\n  \"postconditions\": [\n    \"cpu usage check completed\",\n    \"memory usage check completed\",\n    \"disk space check completed\",\n    \"all results aggregated and returned\"\n  ],\n  \"lifecycle_stage\": \"execution\",\n  \"content\": {\n    \"action\": \"health_check\",\n    \"target\": \"cluster_nodes\"\n  },\n  \"steps\": [\n    {\n      \"action\": \"check_cpu_usage\",\n      \"params\": {\n        \"nodes\": \"all\"\n      },\n      \"relation\": \"parallel\"\n    },\n    {\n      \"action\": \"check_memory_usage\",\n      \"params\": {\n        \"nodes\": \"all\"\n      },\n      \"relation\": \"parallel\"\n    },\n    {\n      \"action\": \"check_disk_space\",\n      \"params\": {\n        \"nodes\": \"all\"\n      },\n      \"relation\": \"parallel\"\n    }\n  ]\n}\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 233,
+        "o200k_base": 233
+      },
+      "latency_ms": 10391,
+      "timestamp": "2026-03-02T08:34:30.601453+00:00",
+      "complexity_level": 1,
+      "operators_tested": [
+        "&"
+      ]
+    },
+    {
+      "task_id": "L1-03",
+      "condition": "json_contracts",
+      "model": "claude-haiku",
+      "run_number": 2,
+      "output": "```json\n{\n  \"performative\": \"propose\",\n  \"from\": \"routing_agent\",\n  \"to\": \"handler_agent\",\n  \"id\": \"route_req_001\",\n  \"timestamp\": 1740960000,\n  \"preconditions\": [\n    \"incoming_request_received\",\n    \"primary_api_availability_checked\",\n    \"fallback_cache_availability_checked\"\n  ],\n  \"postconditions\": [\n    \"handler_agent_has_routing_decision\",\n    \"request_queued_for_processing\"\n  ],\n  \"lifecycle_stage\": \"initiation\",\n  \"content\": {\n    \"request_id\": \"req_8274\",\n    \"client_id\": \"client_gateway_01\",\n    \"priority\": \"normal\"\n  },\n  \"steps\": [\n    {\n      \"action\": \"process_via_primary\",\n      \"params\": {\n        \"endpoint\": \"primary_api\",\n        \"request_id\": \"req_8274\"\n      },\n      \"relation\": \"alternative\",\n      \"condition\": \"primary_api_available\"\n    },\n    {\n      \"action\": \"process_via_fallback\",\n      \"params\": {\n        \"endpoint\": \"fallback_cache\",\n        \"request_id\": \"req_8274\"\n      },\n      \"relation\": \"alternative\",\n      \"condition\": \"primary_api_unavailable\"\n    }\n  ]\n}\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 270,
+        "o200k_base": 274
+      },
+      "latency_ms": 13485,
+      "timestamp": "2026-03-02T08:34:44.087849+00:00",
+      "complexity_level": 1,
+      "operators_tested": [
+        "|"
+      ]
+    },
+    {
+      "task_id": "L2-01",
+      "condition": "json_contracts",
+      "model": "claude-haiku",
+      "run_number": 2,
+      "output": "```json\n{\n  \"performative\": \"request\",\n  \"from\": \"orchestrator\",\n  \"to\": \"pipeline\",\n  \"preconditions\": [\n    \"input data is available\",\n    \"pipeline agent is idle\",\n    \"schema validation rules are loaded\"\n  ],\n  \"postconditions\": [\n    \"input schema is validated\",\n    \"sentiment analysis is completed on validated data\",\n    \"topic classification is completed on validated data\",\n    \"results are merged into single report\"\n  ],\n  \"lifecycle_stage\": \"execution\",\n  \"content\": {\n    \"workflow\": \"validate-classify-merge\"\n  },\n  \"steps\": [\n    {\n      \"action\": \"validate_schema\",\n      \"params\": {\n        \"target\": \"input_data\"\n      },\n      \"relation\": \"sequence\"\n    },\n    {\n      \"action\": \"sentiment_analysis\",\n      \"params\": {\n        \"input\": \"validated_data\"\n      },\n      \"relation\": \"parallel\"\n    },\n    {\n      \"action\": \"topic_classification\",\n      \"params\": {\n        \"input\": \"validated_data\"\n      },\n      \"relation\": \"parallel\"\n    },\n    {\n      \"action\": \"merge_results\",\n      \"params\": {\n        \"sentiment_output\": \"sentiment_analysis\",\n        \"topic_output\": \"topic_classification\",\n        \"format\": \"report\"\n      },\n      \"relation\": \"sequence\"\n    }\n  ]\n}\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 295,
+        "o200k_base": 297
+      },
+      "latency_ms": 16031,
+      "timestamp": "2026-03-02T08:35:00.120772+00:00",
+      "complexity_level": 2,
+      "operators_tested": [
+        "->",
+        "&"
+      ]
+    },
+    {
+      "task_id": "L2-02",
+      "condition": "json_contracts",
+      "model": "claude-haiku",
+      "run_number": 2,
+      "output": "```json\n{\n  \"performative\": \"request\",\n  \"from\": \"query_agent\",\n  \"to\": \"data_agent\",\n  \"id\": \"msg_fe5c9e3f-1a2b-4c3d-9e8f-2b1c3d4e5f6a\",\n  \"timestamp\": 1740969600,\n  \"preconditions\": [\n    \"data_agent is available\",\n    \"cache service is accessible\",\n    \"database service is accessible\"\n  ],\n  \"postconditions\": [\n    \"results are returned to query_agent\",\n    \"cache is updated with fresh data if retrieved from database\",\n    \"data source is documented in response\"\n  ],\n  \"lifecycle_stage\": \"execution\",\n  \"content\": {\n    \"request_id\": \"req_001\",\n    \"query\": \"SELECT * FROM users WHERE status='active'\",\n    \"cache_key\": \"active_users\",\n    \"cache_ttl\": 3600\n  },\n  \"steps\": [\n    {\n      \"action\": \"check_cache\",\n      \"params\": {\n        \"key\": \"active_users\"\n      },\n      \"relation\": \"sequence\"\n    },\n    {\n      \"action\": \"fetch_from_cache\",\n      \"params\": {\n        \"key\": \"active_users\"\n      },\n      \"relation\": \"alternative\",\n      \"condition\": \"cache_hit == true\"\n    },\n    {\n      \"action\": \"query_database\",\n      \"params\": {\n        \"query\": \"SELECT * FROM users WHERE status='active'\"\n      },\n      \"relation\": \"alternative\",\n      \"condition\": \"cache_hit == false\"\n    },\n    {\n      \"action\": \"update_cache\",\n      \"params\": {\n        \"key\": \"active_users\",\n        \"value\": \"db_results\",\n        \"ttl\": 3600\n      },\n      \"relation\": \"sequence\",\n      \"caused_by\": \"query_database\"\n    },\n    {\n      \"action\": \"return_results\",\n      \"params\": {\n        \"data\": \"results\",\n        \"source\": \"cache_or_fresh\"\n      },\n      \"relation\": \"sequence\"\n    }\n  ]\n}\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 447,
+        "o200k_base": 448
+      },
+      "latency_ms": 19874,
+      "timestamp": "2026-03-02T08:35:19.996941+00:00",
+      "complexity_level": 2,
+      "operators_tested": [
+        "|",
+        "->"
+      ]
+    },
+    {
+      "task_id": "L2-03",
+      "condition": "json_contracts",
+      "model": "claude-haiku",
+      "run_number": 2,
+      "output": "```json\n{\n  \"performative\": \"command\",\n  \"from\": \"security_agent\",\n  \"to\": \"audit_agent\",\n  \"preconditions\": [\n    \"audit_agent is online\",\n    \"network scope is defined\",\n    \"internal service registry is accessible\"\n  ],\n  \"postconditions\": [\n    \"open ports identified\",\n    \"SSL certificates validated\",\n    \"internal-only services excluded from results\"\n  ],\n  \"lifecycle_stage\": \"execution\",\n  \"content\": {\n    \"task\": \"security audit\",\n    \"scope\": \"external-facing services only\",\n    \"exclusions\": [\"internal-only services\"]\n  },\n  \"steps\": [\n    {\n      \"action\": \"scan_open_ports\",\n      \"params\": {\n        \"exclude_internal\": true\n      },\n      \"relation\": \"parallel\"\n    },\n    {\n      \"action\": \"check_ssl_certificates\",\n      \"params\": {\n        \"exclude_internal\": true\n      },\n      \"relation\": \"parallel\"\n    },\n    {\n      \"action\": \"aggregate_findings\",\n      \"params\": {\n        \"sources\": [\"port_scan\", \"ssl_check\"]\n      },\n      \"relation\": \"sequence\"\n    }\n  ]\n}\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 248,
+        "o200k_base": 248
+      },
+      "latency_ms": 20394,
+      "timestamp": "2026-03-02T08:35:40.392046+00:00",
+      "complexity_level": 2,
+      "operators_tested": [
+        "&",
+        "!"
+      ]
+    },
+    {
+      "task_id": "L3-01",
+      "condition": "json_contracts",
+      "model": "claude-haiku",
+      "run_number": 2,
+      "output": "```json\n{\n  \"performative\": \"command\",\n  \"from\": \"etl-orchestrator\",\n  \"to\": \"etl-pipeline\",\n  \"id\": \"msg-etl-2026-03-02-001\",\n  \"timestamp\": 1740945600,\n  \"protocol_version\": \"1.0\",\n  \"preconditions\": [\n    \"pipeline is idle and ready\",\n    \"API source is accessible\",\n    \"database source is accessible\",\n    \"data warehouse connection is available\",\n    \"error queue is operational\"\n  ],\n  \"postconditions\": [\n    \"data extraction complete from both sources\",\n    \"validation rules applied to combined data\",\n    \"valid data loaded into warehouse OR invalid data routed to error queue\",\n    \"pipeline execution logged\"\n  ],\n  \"lifecycle_stage\": \"execution\",\n  \"content\": {\n    \"workflow\": \"etl-pipeline-execute\",\n    \"workflow_id\": \"wf-daily-batch-2026-03-02\"\n  },\n  \"steps\": [\n    {\n      \"action\": \"extract\",\n      \"params\": {\n        \"source\": \"api\",\n        \"endpoint\": \"data-api/v2/records\",\n        \"format\": \"json\"\n      },\n      \"relation\": \"parallel\"\n    },\n    {\n      \"action\": \"extract\",\n      \"params\": {\n        \"source\": \"database\",\n        \"query\": \"SELECT * FROM source_tables WHERE status='active'\",\n        \"format\": \"tabular\"\n      },\n      \"relation\": \"parallel\"\n    },\n    {\n      \"action\": \"transform\",\n      \"params\": {\n        \"merge_strategy\": \"union\",\n        \"apply_validations\": true,\n        \"validation_rules\": [\n          \"schema_conformance\",\n          \"data_type_check\",\n          \"null_check\",\n          \"business_logic_rules\"\n        ]\n      },\n      \"relation\": \"sequence\"\n    },\n    {\n      \"action\": \"load\",\n      \"params\": {\n        \"destination\": \"data_warehouse\",\n        \"table\": \"staging_combined_data\",\n        \"mode\": \"upsert\"\n      },\n      \"relation\": \"alternative\",\n      \"condition\": \"validation_passed == true\"\n    },\n    {\n      \"action\": \"route\",\n      \"params\": {\n        \"destination\": \"error_queue\",\n        \"queue_name\": \"etl-failures\",\n        \"include_metadata\": true\n      },\n      \"relation\": \"alternative\",\n      \"condition\": \"validation_passed == false\"\n    }\n  ]\n}\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 522,
+        "o200k_base": 520
+      },
+      "latency_ms": 13078,
+      "timestamp": "2026-03-02T08:35:53.472615+00:00",
+      "complexity_level": 3,
+      "operators_tested": [
+        "->",
+        "&",
+        "|"
+      ]
+    },
+    {
+      "task_id": "L3-02",
+      "condition": "json_contracts",
+      "model": "claude-haiku",
+      "run_number": 2,
+      "output": "```json\n{\n  \"performative\": \"acknowledge\",\n  \"from\": \"remediation-orchestrator\",\n  \"to\": \"monitoring-agent\",\n  \"id\": \"rmdy-cache-degradation-20260302\",\n  \"timestamp\": 1740921600,\n  \"preconditions\": [\n    \"alert received from monitoring agent\",\n    \"cache service is accessible\",\n    \"hotfix artifact available in deployment repository\",\n    \"service health verification endpoint operational\"\n  ],\n  \"postconditions\": [\n    \"cache service restarted with active configuration\",\n    \"hotfix deployed and verified as live\",\n    \"service health metrics within normal thresholds\",\n    \"eviction policy enforced on cache layer\"\n  ],\n  \"lifecycle_stage\": \"execution\",\n  \"content\": {\n    \"alert_id\": \"cache-degradation-memory-leak\",\n    \"root_cause_confirmed\": \"missing eviction policy in cache layer\",\n    \"remediation_strategy\": \"parallel restart and hotfix deployment\"\n  },\n  \"steps\": [\n    {\n      \"action\": \"restart_cache_service\",\n      \"params\": {\n        \"service\": \"cache-layer\",\n        \"graceful_shutdown_timeout\": 15,\n        \"health_check_enabled\": true\n      },\n      \"relation\": \"parallel\"\n    },\n    {\n      \"action\": \"deploy_hotfix\",\n      \"params\": {\n        \"artifact\": \"cache-eviction-policy-fix\",\n        \"target\": \"cache-layer\",\n        \"deployment_strategy\": \"rolling\",\n        \"rollback_on_failure\": true\n      },\n      \"relation\": \"parallel\"\n    },\n    {\n      \"action\": \"verify_service_recovery\",\n      \"params\": {\n        \"health_endpoint\": \"/health/status\",\n        \"memory_utilization_threshold\": 80,\n        \"latency_baseline_ms\": 100,\n        \"verification_duration_seconds\": 60\n      },\n      \"relation\": \"sequence\",\n      \"caused_by\": [\"restart_cache_service\", \"deploy_hotfix\"]\n    }\n  ]\n}\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 414,
+        "o200k_base": 416
+      },
+      "latency_ms": 13242,
+      "timestamp": "2026-03-02T08:36:06.716352+00:00",
+      "complexity_level": 3,
+      "operators_tested": [
+        "<-",
+        "&",
+        "->"
+      ]
+    },
+    {
+      "task_id": "L3-03",
+      "condition": "json_contracts",
+      "model": "claude-haiku",
+      "run_number": 2,
+      "output": "```json\n{\n  \"performative\": \"propose\",\n  \"from\": \"negotiation_agent\",\n  \"to\": \"supplier\",\n  \"preconditions\": [\n    \"supplier is available for negotiation\",\n    \"supplier maintains inventory records\",\n    \"current market rates have been established\"\n  ],\n  \"postconditions\": [\n    \"supplier has received product options and pricing\",\n    \"supplier understands delivery workflow sequence\",\n    \"supplier can accept or counter-propose\"\n  ],\n  \"lifecycle_stage\": \"initiation\",\n  \"content\": {\n    \"deal_proposal\": {\n      \"product_options\": [\n        {\n          \"product\": \"A\",\n          \"price_per_unit\": \"$100\",\n          \"rationale\": \"current market rates\"\n        },\n        {\n          \"product\": \"B\",\n          \"price_per_unit\": \"$85\",\n          \"rationale\": \"current market rates\"\n        }\n      ],\n      \"pricing_justification\": \"rates aligned with current market conditions\"\n    }\n  },\n  \"steps\": [\n    {\n      \"action\": \"select_product\",\n      \"params\": {\n        \"options\": [\"A\", \"B\"]\n      },\n      \"relation\": \"alternative\",\n      \"condition\": \"supplier chooses product A or product B\"\n    },\n    {\n      \"action\": \"confirm_inventory\",\n      \"params\": {\n        \"product\": \"selected_from_step_1\"\n      },\n      \"relation\": \"sequence\"\n    },\n    {\n      \"action\": \"ship_to_warehouse\",\n      \"params\": {\n        \"product\": \"selected_from_step_1\"\n      },\n      \"relation\": \"parallel\"\n    },\n    {\n      \"action\": \"send_invoice\",\n      \"params\": {\n        \"product\": \"selected_from_step_1\"\n      },\n      \"relation\": \"parallel\"\n    },\n    {\n      \"action\": \"await_payment_confirmation\",\n      \"params\": {},\n      \"relation\": \"sequence\"\n    }\n  ]\n}\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 403,
+        "o200k_base": 403
+      },
+      "latency_ms": 17287,
+      "timestamp": "2026-03-02T08:36:24.005145+00:00",
+      "complexity_level": 3,
+      "operators_tested": [
+        "->",
+        "|",
+        "&",
+        "<-"
+      ]
+    },
+    {
+      "task_id": "L1-01",
+      "condition": "json_contracts",
+      "model": "claude-haiku",
+      "run_number": 3,
+      "output": "```json\n{\n  \"performative\": \"command\",\n  \"from\": \"DataProcessor\",\n  \"to\": \"Worker\",\n  \"preconditions\": [\n    \"Worker is idle and ready\",\n    \"Data lake is accessible and authenticated\",\n    \"Warehouse is accessible and authenticated\",\n    \"Network connectivity is stable\"\n  ],\n  \"postconditions\": [\n    \"Dataset downloaded from data lake\",\n    \"Null rows removed from dataset\",\n    \"Cleaned dataset uploaded to warehouse\",\n    \"Worker task completed successfully\"\n  ],\n  \"lifecycle_stage\": \"execution\",\n  \"content\": {\n    \"workflow\": \"etl_pipeline\",\n    \"dataset_id\": \"raw_data_001\"\n  },\n  \"steps\": [\n    {\n      \"action\": \"download_dataset\",\n      \"params\": {\n        \"source\": \"data_lake://raw_data_001\",\n        \"destination\": \"local://staging/raw_data_001\"\n      },\n      \"relation\": \"sequence\"\n    },\n    {\n      \"action\": \"clean_dataset\",\n      \"params\": {\n        \"input\": \"local://staging/raw_data_001\",\n        \"output\": \"local://staging/cleaned_data_001\",\n        \"operation\": \"remove_null_rows\"\n      },\n      \"relation\": \"sequence\"\n    },\n    {\n      \"action\": \"upload_dataset\",\n      \"params\": {\n        \"source\": \"local://staging/cleaned_data_001\",\n        \"destination\": \"warehouse://cleaned_data_001\"\n      },\n      \"relation\": \"sequence\"\n    }\n  ]\n}\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 326,
+        "o200k_base": 325
+      },
+      "latency_ms": 11612,
+      "timestamp": "2026-03-02T08:36:35.618332+00:00",
+      "complexity_level": 1,
+      "operators_tested": [
+        "->"
+      ]
+    },
+    {
+      "task_id": "L1-02",
+      "condition": "json_contracts",
+      "model": "claude-haiku",
+      "run_number": 3,
+      "output": "```json\n{\n  \"performative\": \"request\",\n  \"from\": \"deployment_agent\",\n  \"to\": \"cluster_manager\",\n  \"preconditions\": [\n    \"cluster_manager is available\",\n    \"health check endpoints are accessible\",\n    \"monitoring system is operational\"\n  ],\n  \"postconditions\": [\n    \"CPU usage check completed\",\n    \"memory usage check completed\",\n    \"disk space check completed\",\n    \"health status report generated\"\n  ],\n  \"lifecycle_stage\": \"execution\",\n  \"content\": {\n    \"request_type\": \"health_check\",\n    \"priority\": \"normal\",\n    \"timeout\": 30\n  },\n  \"steps\": [\n    {\n      \"action\": \"check_cpu_usage\",\n      \"params\": {\n        \"metric\": \"cpu_utilization\",\n        \"threshold\": \"85%\"\n      },\n      \"relation\": \"parallel\"\n    },\n    {\n      \"action\": \"check_memory_usage\",\n      \"params\": {\n        \"metric\": \"memory_utilization\",\n        \"threshold\": \"90%\"\n      },\n      \"relation\": \"parallel\"\n    },\n    {\n      \"action\": \"check_disk_space\",\n      \"params\": {\n        \"metric\": \"disk_utilization\",\n        \"threshold\": \"95%\"\n      },\n      \"relation\": \"parallel\"\n    }\n  ]\n}\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 272,
+        "o200k_base": 272
+      },
+      "latency_ms": 12981,
+      "timestamp": "2026-03-02T08:36:48.601209+00:00",
+      "complexity_level": 1,
+      "operators_tested": [
+        "&"
+      ]
+    },
+    {
+      "task_id": "L1-03",
+      "condition": "json_contracts",
+      "model": "claude-haiku",
+      "run_number": 3,
+      "output": "```json\n{\n  \"performative\": \"inform\",\n  \"from\": \"routing-agent\",\n  \"to\": \"handler-agent\",\n  \"preconditions\": [\n    \"incoming request received\",\n    \"availability checks performed on primary endpoint and fallback service\"\n  ],\n  \"postconditions\": [\n    \"handler receives routing directive\",\n    \"handler selects appropriate service based on availability\"\n  ],\n  \"lifecycle_stage\": \"execution\",\n  \"id\": \"msg-route-001\",\n  \"timestamp\": 1740902400,\n  \"content\": {\n    \"request_id\": \"req-incoming-123\",\n    \"routing_decision\": {\n      \"primary\": {\n        \"endpoint\": \"api-primary\",\n        \"available\": true,\n        \"priority\": 1\n      },\n      \"fallback\": {\n        \"service\": \"cache-fallback\",\n        \"available\": true,\n        \"priority\": 2\n      },\n      \"selection_rule\": \"use primary if available; failover to fallback on timeout or error\"\n    }\n  },\n  \"steps\": [\n    {\n      \"action\": \"attempt_route\",\n      \"params\": {\n        \"target\": \"api-primary\"\n      },\n      \"relation\": \"sequence\"\n    },\n    {\n      \"action\": \"failover_route\",\n      \"params\": {\n        \"target\": \"cache-fallback\"\n      },\n      \"relation\": \"alternative\",\n      \"condition\": \"primary unavailable or timeout\"\n    }\n  ]\n}\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 301,
+        "o200k_base": 302
+      },
+      "latency_ms": 13139,
+      "timestamp": "2026-03-02T08:37:01.742044+00:00",
+      "complexity_level": 1,
+      "operators_tested": [
+        "|"
+      ]
+    },
+    {
+      "task_id": "L2-01",
+      "condition": "json_contracts",
+      "model": "claude-haiku",
+      "run_number": 3,
+      "output": "```json\n{\n  \"performative\": \"request\",\n  \"from\": \"orchestrator\",\n  \"to\": \"pipeline\",\n  \"preconditions\": [\n    \"input data is available\",\n    \"pipeline is idle\",\n    \"schema validation rules are loaded\"\n  ],\n  \"postconditions\": [\n    \"input schema is validated\",\n    \"sentiment analysis is complete\",\n    \"topic classification is complete\",\n    \"merged report is generated\"\n  ],\n  \"lifecycle_stage\": \"execution\",\n  \"content\": {\n    \"workflow\": \"validate_and_analyze\"\n  },\n  \"steps\": [\n    {\n      \"action\": \"validate_schema\",\n      \"params\": {\n        \"target\": \"input_data\"\n      },\n      \"relation\": \"sequence\"\n    },\n    {\n      \"action\": \"analyze_sentiment\",\n      \"params\": {\n        \"source\": \"validated_data\"\n      },\n      \"relation\": \"parallel\"\n    },\n    {\n      \"action\": \"classify_topic\",\n      \"params\": {\n        \"source\": \"validated_data\"\n      },\n      \"relation\": \"parallel\"\n    },\n    {\n      \"action\": \"merge_results\",\n      \"params\": {\n        \"sentiment_output\": \"from_analyze_sentiment\",\n        \"topic_output\": \"from_classify_topic\"\n      },\n      \"relation\": \"sequence\",\n      \"caused_by\": [\"analyze_sentiment\", \"classify_topic\"]\n    }\n  ]\n}\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 297,
+        "o200k_base": 301
+      },
+      "latency_ms": 12266,
+      "timestamp": "2026-03-02T08:37:14.009972+00:00",
+      "complexity_level": 2,
+      "operators_tested": [
+        "->",
+        "&"
+      ]
+    },
+    {
+      "task_id": "L2-02",
+      "condition": "json_contracts",
+      "model": "claude-haiku",
+      "run_number": 3,
+      "output": "```json\n{\n  \"performative\": \"request\",\n  \"from\": \"query_agent\",\n  \"to\": \"data_agent\",\n  \"preconditions\": [\n    \"data_agent is available\",\n    \"cache system is operational\",\n    \"database connection is active\",\n    \"query parameters are valid\"\n  ],\n  \"postconditions\": [\n    \"results are returned to query_agent\",\n    \"cache contains fresh results if database was queried\",\n    \"data_agent completes operation\"\n  ],\n  \"lifecycle_stage\": \"execution\",\n  \"id\": \"msg_cache_or_fetch_001\",\n  \"timestamp\": 1740945600,\n  \"content\": {\n    \"task\": \"fetch_with_cache_fallback\",\n    \"query_id\": \"analytics_2026_q1\",\n    \"cache_key\": \"results:analytics:q1\",\n    \"cache_ttl_seconds\": 3600\n  },\n  \"steps\": [\n    {\n      \"action\": \"check_cache\",\n      \"params\": {\n        \"cache_key\": \"results:analytics:q1\"\n      },\n      \"relation\": \"sequence\"\n    },\n    {\n      \"action\": \"return_cached_results\",\n      \"params\": {},\n      \"relation\": \"alternative\",\n      \"condition\": \"cache_hit\"\n    },\n    {\n      \"action\": \"query_database\",\n      \"params\": {\n        \"query_id\": \"analytics_2026_q1\"\n      },\n      \"relation\": \"alternative\",\n      \"condition\": \"cache_miss\"\n    },\n    {\n      \"action\": \"update_cache\",\n      \"params\": {\n        \"cache_key\": \"results:analytics:q1\",\n        \"ttl_seconds\": 3600\n      },\n      \"relation\": \"sequence\",\n      \"caused_by\": \"query_database\"\n    },\n    {\n      \"action\": \"return_results\",\n      \"params\": {},\n      \"relation\": \"sequence\"\n    }\n  ]\n}\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 394,
+        "o200k_base": 393
+      },
+      "latency_ms": 13326,
+      "timestamp": "2026-03-02T08:37:27.338126+00:00",
+      "complexity_level": 2,
+      "operators_tested": [
+        "|",
+        "->"
+      ]
+    },
+    {
+      "task_id": "L2-03",
+      "condition": "json_contracts",
+      "model": "claude-haiku",
+      "run_number": 3,
+      "output": "```json\n{\n  \"performative\": \"command\",\n  \"from\": \"security_agent\",\n  \"to\": \"audit_agent\",\n  \"preconditions\": [\n    \"audit_agent is available\",\n    \"internal services list is defined\",\n    \"network access permissions verified\"\n  ],\n  \"postconditions\": [\n    \"open ports scan completed\",\n    \"SSL certificates validated\",\n    \"internal-only services excluded from results\"\n  ],\n  \"lifecycle_stage\": \"execution\",\n  \"content\": {\n    \"task\": \"security_audit\",\n    \"scope\": \"external_facing_services_only\"\n  },\n  \"steps\": [\n    {\n      \"action\": \"scan_open_ports\",\n      \"params\": {\n        \"exclude\": \"internal_only\",\n        \"report_format\": \"json\"\n      },\n      \"relation\": \"parallel\"\n    },\n    {\n      \"action\": \"validate_ssl_certificates\",\n      \"params\": {\n        \"exclude\": \"internal_only\",\n        \"report_format\": \"json\"\n      },\n      \"relation\": \"parallel\"\n    },\n    {\n      \"action\": \"aggregate_findings\",\n      \"params\": {\n        \"merge_strategy\": \"union\"\n      },\n      \"relation\": \"sequence\",\n      \"caused_by\": [\"scan_open_ports\", \"validate_ssl_certificates\"]\n    }\n  ]\n}\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 271,
+        "o200k_base": 272
+      },
+      "latency_ms": 15128,
+      "timestamp": "2026-03-02T08:37:42.468130+00:00",
+      "complexity_level": 2,
+      "operators_tested": [
+        "&",
+        "!"
+      ]
+    },
+    {
+      "task_id": "L3-01",
+      "condition": "json_contracts",
+      "model": "claude-haiku",
+      "run_number": 3,
+      "output": "```json\n{\n  \"performative\": \"command\",\n  \"from\": \"etl_orchestrator\",\n  \"to\": \"pipeline\",\n  \"id\": \"cmd_etl_001_20260302\",\n  \"protocol_version\": \"1.0\",\n  \"preconditions\": [\n    \"API source is reachable\",\n    \"database source is accessible\",\n    \"pipeline is idle\",\n    \"validation rules are loaded\"\n  ],\n  \"postconditions\": [\n    \"data extracted from both sources\",\n    \"combined data transformed and validated\",\n    \"valid data loaded to warehouse or invalid data routed to error queue\"\n  ],\n  \"lifecycle_stage\": \"initiation\",\n  \"content\": {\n    \"operation\": \"etl_pipeline\",\n    \"protocol_version\": \"1.0\"\n  },\n  \"steps\": [\n    {\n      \"action\": \"extract_api\",\n      \"params\": {\n        \"source\": \"api_endpoint\",\n        \"timeout_ms\": 30000\n      },\n      \"relation\": \"parallel\"\n    },\n    {\n      \"action\": \"extract_database\",\n      \"params\": {\n        \"source\": \"primary_database\",\n        \"connection_pool\": \"default\"\n      },\n      \"relation\": \"parallel\"\n    },\n    {\n      \"action\": \"combine_data\",\n      \"params\": {\n        \"merge_key\": \"record_id\",\n        \"join_type\": \"outer\"\n      },\n      \"relation\": \"sequence\"\n    },\n    {\n      \"action\": \"transform_validate\",\n      \"params\": {\n        \"validation_rules\": \"strict\",\n        \"transformations\": [\"normalize\", \"deduplicate\"]\n      },\n      \"relation\": \"sequence\"\n    },\n    {\n      \"action\": \"load_warehouse\",\n      \"params\": {\n        \"destination\": \"data_warehouse\",\n        \"mode\": \"upsert\"\n      },\n      \"relation\": \"alternative\",\n      \"condition\": \"validation_status == pass\"\n    },\n    {\n      \"action\": \"route_error_queue\",\n      \"params\": {\n        \"destination\": \"error_queue\",\n        \"include_failure_log\": true\n      },\n      \"relation\": \"alternative\",\n      \"condition\": \"validation_status == fail\"\n    }\n  ]\n}\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 456,
+        "o200k_base": 453
+      },
+      "latency_ms": 17169,
+      "timestamp": "2026-03-02T08:37:59.638778+00:00",
+      "complexity_level": 3,
+      "operators_tested": [
+        "->",
+        "&",
+        "|"
+      ]
+    },
+    {
+      "task_id": "L3-02",
+      "condition": "json_contracts",
+      "model": "claude-haiku",
+      "run_number": 3,
+      "output": "```json\n{\n  \"performative\": \"request\",\n  \"from\": \"remediation_orchestrator\",\n  \"to\": [\"cache_service\", \"deployment_service\"],\n  \"id\": \"remediation-alert-001\",\n  \"timestamp\": 1740960000,\n  \"preconditions\": [\n    \"monitoring alert received: cache layer degradation\",\n    \"root cause diagnosis: missing eviction policy causing memory leak\",\n    \"hotfix package prepared and validated\",\n    \"deployment authorization granted\"\n  ],\n  \"postconditions\": [\n    \"cache service restarted with clean memory state\",\n    \"eviction policy hotfix deployed to cache layer\",\n    \"service health verified and baseline metrics confirmed\",\n    \"alert cleared and monitoring resumed\"\n  ],\n  \"lifecycle_stage\": \"execution\",\n  \"content\": {\n    \"alert_id\": \"SVC-DEGRADE-002\",\n    \"severity\": \"high\",\n    \"root_cause_chain\": \"missing_eviction_policy \u2192 memory_leak \u2192 cache_degradation\",\n    \"remediation_strategy\": \"concurrent_restart_and_deploy\"\n  },\n  \"steps\": [\n    {\n      \"action\": \"restart_cache_service\",\n      \"params\": {\n        \"drain_timeout\": 30,\n        \"reset_state\": true\n      },\n      \"relation\": \"parallel\"\n    },\n    {\n      \"action\": \"deploy_hotfix\",\n      \"params\": {\n        \"package\": \"cache-eviction-policy-fix\",\n        \"version\": \"1.1.2\",\n        \"target\": \"cache_layer\"\n      },\n      \"relation\": \"parallel\"\n    },\n    {\n      \"action\": \"verify_recovery\",\n      \"params\": {\n        \"checks\": [\"memory_utilization\", \"eviction_policy_status\", \"response_latency\"],\n        \"timeout_seconds\": 120,\n        \"success_criteria\": \"all_metrics_nominal\"\n      },\n      \"relation\": \"sequence\"\n    }\n  ]\n}\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 399,
+        "o200k_base": 399
+      },
+      "latency_ms": 24321,
+      "timestamp": "2026-03-02T08:38:23.961616+00:00",
+      "complexity_level": 3,
+      "operators_tested": [
+        "<-",
+        "&",
+        "->"
+      ]
+    },
+    {
+      "task_id": "L3-03",
+      "condition": "json_contracts",
+      "model": "claude-haiku",
+      "run_number": 3,
+      "output": "```json\n{\n  \"performative\": \"propose\",\n  \"from\": \"negotiation_agent\",\n  \"to\": \"supplier\",\n  \"preconditions\": [\n    \"supplier is active and ready to negotiate\",\n    \"current market rates are verified and documented\",\n    \"supplier can confirm inventory availability\"\n  ],\n  \"postconditions\": [\n    \"supplier accepts or rejects the deal terms\",\n    \"product selection and pricing are confirmed\",\n    \"delivery workflow is mutually agreed\"\n  ],\n  \"lifecycle_stage\": \"negotiation\",\n  \"content\": {\n    \"proposal\": \"two-product option with sequential delivery workflow\",\n    \"options\": [\n      {\n        \"product\": \"Product A\",\n        \"unit_price\": 100,\n        \"currency\": \"USD\",\n        \"justification\": \"current market rates\"\n      },\n      {\n        \"product\": \"Product B\",\n        \"unit_price\": 85,\n        \"currency\": \"USD\",\n        \"justification\": \"current market rates\"\n      }\n    ],\n    \"selected_product\": \"to_be_determined_by_supplier\"\n  },\n  \"steps\": [\n    {\n      \"action\": \"product_selection\",\n      \"params\": {\n        \"options\": [\"Product A ($100/unit)\", \"Product B ($85/unit)\"]\n      },\n      \"relation\": \"alternative\",\n      \"condition\": \"supplier chooses preferred product\"\n    },\n    {\n      \"action\": \"confirm_inventory\",\n      \"params\": {\n        \"product\": \"selected_product\",\n        \"verification_required\": true\n      },\n      \"relation\": \"sequence\"\n    },\n    {\n      \"action\": \"ship_to_warehouse\",\n      \"params\": {\n        \"destination\": \"buyer_warehouse\",\n        \"product\": \"selected_product\"\n      },\n      \"relation\": \"sequence\"\n    },\n    {\n      \"action\": \"send_invoice\",\n      \"params\": {\n        \"product\": \"selected_product\",\n        \"unit_price\": \"market_rate_per_selection\"\n      },\n      \"relation\": \"parallel\",\n      \"caused_by\": \"ship_to_warehouse\"\n    },\n    {\n      \"action\": \"await_payment_confirmation\",\n      \"params\": {\n        \"confirm_receipt\": true\n      },\n      \"relation\": \"sequence\"\n    }\n  ]\n}\n```",
+      "valid": true,
+      "errors": [],
+      "token_counts": {
+        "cl100k_base": 467,
+        "o200k_base": 468
+      },
+      "latency_ms": 15157,
+      "timestamp": "2026-03-02T08:38:39.123883+00:00",
+      "complexity_level": 3,
+      "operators_tested": [
+        "->",
+        "|",
+        "&",
+        "<-"
+      ]
+    }
+  ]
+}

@@ -42,15 +42,22 @@ Parser and validator are stdlib Python only. Experiments require `tiktoken` (`pi
 - `experiments/` — Experiment infrastructure (Exp 0–5)
   - `experiments/lib/` — Shared utilities (token counter, condition adapters)
   - `experiments/exp0_learnability/` — Learnability gate experiment
+  - `experiments/exp1_token_efficiency/` — Token efficiency evaluation
+  - `experiments/exp2_parse_accuracy/` — Parse accuracy under perturbation (noise robustness)
   - `experiments/exp3_compositionality/` — Composition operator evaluation (co-primary with Exp 1)
-  - `experiments/exp_aisp_comparison/` — AISP competitive analysis benchmarks (B, C complete; A pending)
-  - `experiments/FAIRNESS.md` — Fairness protocol for 7-condition design
+  - `experiments/exp3_compositionality/phase2/` — Round-trip decomposition (cross-model)
+  - `experiments/exp5_cross_model/` — Cross-model generalization analysis
+  - `experiments/exp_aisp_comparison/` — AISP competitive analysis benchmarks (A, B, C complete)
+  - `experiments/exp_json_contracts/` — JSON+Contracts (SEMAP-inspired, exploratory)
+  - `experiments/exp_m5_falsification/` — Falsification campaign on local open models (M5); round-trip fidelity, capability-floor finding (REPORT.md, VENUES.md)
+  - `experiments/FAIRNESS.md` — Fairness protocol for 8-condition design
   - `experiments/PREREGISTRATION.md` — Pre-registered analysis plan
   - `experiments/MASSGEN_ADDENDUM.md` — Exploratory MassGen ecosystem-validity extension
+- `paper/` — Paper outline and related work drafts
 - `RESEARCH.md` — Evidence-backed rationale (20+ sources)
 - `debate/` — Adversarial review transcripts and outcomes
 
-### 7 Experimental Conditions
+### 8 Experimental Conditions
 1. Free-form English (baseline)
 2. Structured English
 3. Instruction-matched English
@@ -58,6 +65,7 @@ Parser and validator are stdlib Python only. Experiments require `tiktoken` (`pi
 5. FIPA-ACL
 6. AXON
 7. AISP (exploratory, post-pre-registration — see `experiments/exp_aisp_comparison/DEVIATION.md`)
+8. JSON+Contracts (exploratory, SEMAP-inspired — see `experiments/exp_json_contracts/DEVIATION.md`)
 
 ## Adversarial Debate Workflow
 
@@ -89,15 +97,18 @@ Every debate feeds Track B. All future debates must capture: per-point metadata,
 - Conformance test corpus: 69 tests passing
 - Validator: 3-level checker (syntax, tier compliance, semantics)
 - **Exp 0 complete**: AXON passes learnability gate on all 3 models (3x replications). See `experiments/exp0_learnability/RESULTS.md`.
-- **Exp 1 Track A scoring complete**: 486 outputs scored. AXON #1 in tok/unit (15.4 mean, ~32% better than JSON FC). Statistical analysis pending. See `experiments/exp1_token_efficiency/RESULTS.md`.
-- **Exp 3 design complete**: Compositionality experiment (co-primary with Exp 1). 9 tasks, 7 conditions, composition-structure scoring via AST walking. Ready for data generation. See `experiments/exp3_compositionality/DESIGN.md`.
+- **Exp 1 complete**: 486 outputs scored + statistical analysis. AXON #1 in tok/unit (15.4 mean, ~32% better than JSON FC). See `experiments/exp1_token_efficiency/RESULTS.md`.
+- **Exp 2 complete**: Parse accuracy under perturbation. 1,656 outputs. AXON 16.2% preservation (strict syntax = fragile). See `experiments/exp2_parse_accuracy/RESULTS.md`.
+- **Exp 3 complete**: Compositionality — 567 outputs, full judge scoring. **AXON ranks last (67.0%)** — English conditions dominate (94-96%). See `experiments/exp3_compositionality/RESULTS.md`.
+- **Exp 3 Phase 2 complete**: Round-trip decomposition. 177 cross-model calls, 99% parseable. See `experiments/exp3_compositionality/phase2/`.
+- **Exp 5 complete**: Cross-model variance. AXON lowest SD (0.048 composition). See `experiments/exp5_cross_model/RESULTS.md`.
+- **JSON+Contracts complete**: 81 cells. 51.6% composition rate — contracts help but don't match AXON. See `experiments/exp_json_contracts/RESULTS.md`.
+- **M5 falsification complete** (2026-06-26, branch `axon-m5-falsification` / PR #2): first eval on **local open models** via round-trip fidelity. AXON **fails as a general format** (last on *all-attempt* fidelity 0.85, only 64% parse-valid) — but the deficit is **emission reliability, not faithfulness**: once decoded its fidelity is **0.94 (mid-pack)**. It **earns a niche on large/code-tuned models** (on the Pareto frontier; ~40% fewer tokens on the code model vs JSON+Schema, ~4% vs the best incumbent on gpt-oss). NOT "falsified overall" per the pre-reg (earns slices + frontier). **Capability floor is sender-side** (Spearman(capability, AXON fidelity)=+1.00, n=5 exploratory; easy to read, hard to write). Constrained-decoding rescue is partial (validity≠correctness). Scorer validated vs frontier judge (r=0.875). Post-PR Codex review fixes applied (denominator labeling, per-model token claim, Spearman ties, strict validators). See `experiments/exp_m5_falsification/REPORT.md`; venues in `VENUES.md`.
+- **AISP comparison complete**: All benchmarks (A, B, C, 1, 2, 3). AISP 5.1x more tokens than AXON. See `experiments/exp_aisp_comparison/RESULTS.md`.
 - Exp 0/1/3 runner uses CLI tools (`claude -p`, `codex exec`) — zero API cost
 - ~100 critique points raised, ~85% resolved
-- Paper A framing: "Benchmarking agent communication formats for LLM-to-LLM communication" (advisor debate consensus)
-- Methodology paper (Track B): publishable as registered pilot + prospective protocol paper if 6-item checklist is met
-- **MassGen addendum** (exploratory): Frozen plan to replicate Exp 3 + Exp 4 through MassGen multi-agent orchestration after prereg experiments complete. Tests ecological validity — whether format advantages survive real orchestration. Activates only if prereg shows significant AXON advantage. See `experiments/MASSGEN_ADDENDUM.md` and `debate/massgen-integration-summary.md`.
-- **AISP comparison** (exploratory): AISP (github.com/bar181/aisp-open-core) added as 7th condition. Benchmarks B (validation rigor: AXON 65% vs AISP 30% detection) and C (methodology: AXON 20/20 vs AISP 0/20) complete. Benchmark A (token efficiency, 81 cells) pending. See `experiments/exp_aisp_comparison/` and `debate/aisp-analysis.md`.
-- **Ecosystem landscape** (Feb 2026): 15+ protocols mapped across 5 layers. AXON = Layer 3 (content format), complementary to A2A/MCP. Pivot consensus: C+B hybrid (methodology paper + minimal A2A adapter). See `debate/ecosystem-landscape-2026.md` and `debate/ecosystem-pivot-summary.md`.
+- **Paper reframing needed**: Original thesis (intrinsic compositionality > extrinsic) not supported by judge-scored data. See `STATUS.md`.
+- **Ecosystem landscape** (Mar 2026): 15+ protocols mapped across 5 layers. AXON = Layer 3 (content format). See `debate/ecosystem-landscape-2026.md`.
 
 ## Conventions
 
