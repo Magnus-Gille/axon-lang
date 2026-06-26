@@ -323,9 +323,10 @@ it carries no signal.
   fidelity at fewer tokens (~40% on the code model vs JSON+Schema; single-digit vs the best
   incumbent on gpt-oss-120b — §4.2). It fails on all small/mid models.
 - **Direction vs prior work:** consistent. Frontier Exp 3 found AXON last on composition;
-  here AXON is again last overall and worst on composition validity. The new contribution
-  is the *capability-floor* result and the *code-model* niche — neither visible when every
-  model is frontier-grade.
+  here AXON is again last on the all-attempt headline and worst on composition validity
+  (though mid-pack on fidelity once decoded — §4.1). The new contribution is the
+  *capability-floor* result and the *code-model* niche — neither visible when every model
+  is frontier-grade.
 
 ## 6. Where — if anywhere — AXON could earn its place
 
