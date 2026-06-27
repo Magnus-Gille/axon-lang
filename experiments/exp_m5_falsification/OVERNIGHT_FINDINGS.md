@@ -48,6 +48,38 @@ gaps and re-measure; (b) a proper constrained-decoding arm (needs vLLM `guided_g
 
 ---
 
+## Postscript — does AXON earn its keep at all? (use-case falsification) — DONE
+
+After the firming, an adversarial panel (7 use-case generators × diverse lenses → a skeptic
+tries to *kill* each candidate with the full arsenal: custom-API / JSON+FC / protobuf-CBOR /
+TOON / grammar-constrained schema / the emission floor → honest synthesis). **0 of 14 candidate
+use cases survived.** They die to a recurring contradiction and two measured economics:
+
+- **The counting-unit dilemma (structural kill).** AXON's two needs are mutually exclusive: for
+  strict validity to pay, the receiver must be a *deterministic parser* → then the wire bills
+  **bytes**, where free `gzip` and binary codecs dominate; for cost to be **tokens**, the receiver
+  must be an *LLM* → then validity is moot (sloppy AXON reads fine) and JSON ties-or-beats AXON
+  on read-fidelity (our data: json_schema 0.959, json 0.938 vs AXON 0.942). You can't have both.
+- **Wire economics, measured (`wire_economics.py`).** Killer 1: raw AXON 75 B/msg, but
+  **gzip(JSON) on a stream = 12 B/msg — 84% smaller than raw AXON**, and gzip(AXON)=10 ≈
+  gzip(JSON)=12, so **after gzip AXON's density edge vanishes** (it was just uncompressed
+  redundancy). Killer 2: AXON's 11.3-tok saving over JSON is **~100% structural overhead** (the
+  irreducible content ≈10 tok is identical across formats); model prompt-caching of that
+  structure @0.1× and AXON's token edge **collapses 31% → ~9%**.
+- The **codec reframe self-destructs**: decode-before-LLM ⇒ byte wire ⇒ gzip/protobuf win;
+  raw-AXON-to-LLM ⇒ reader reintroduced, validity moot, JSON ties on fidelity (and AXON's
+  *acting* score was 66%, last, in Exp 3).
+
+**Conclusion / recommended pivot:** the language does **not** survive its own evidence. The
+defensible, novel contribution is the **negative result + falsification methodology**:
+*"When does a general dense agent-communication notation beat JSON / a custom API? Essentially
+never — caching + gzip + LLM read-tolerance erase the density premium, and there is no
+comprehension upside."* The capability-floor, hard-to-write/easy-to-read, and repair findings
+all become *evidence for* that result. (Caveat: the panel was adversarial/pessimistic by design,
+but its killers are grounded in our own data + standard engineering.)
+
+---
+
 ## Phase A — Headline replication (3 models, run0 vs run1) — DONE
 
 - **Decoded-only fidelity is rock-stable**: run0 vs run1 |Δ| ≤ 0.006 for *every* condition
