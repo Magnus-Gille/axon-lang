@@ -10,6 +10,44 @@ fresh from `m5-auth` and auto-refreshes on 401), so long batches survive the ~20
 
 ---
 
+## Executive summary (TL;DR)
+
+I spent the night turning the single-run M5 headline into a replicated, decomposed result. Six
+box phases (≈1,500 new model calls: 2nd–4th runs on the headline models, weak-model runs, a
+cross-reader sweep, a repaired-decode pass) plus box-free analysis. **The central thesis got
+stronger; two single-run claims got corrected.**
+
+1. **The capability floor is a *syntactic-emission* floor, not a semantic one.** Decoded-only
+   fidelity is flat and high across *every* model (0.91–0.98, run-to-run SD ≈ 0). AXON is
+   recovered faithfully once it parses — **all** capability dependence lives in *validity*
+   (can the model emit parseable AXON).
+2. **Validity is a *threshold*, not a smooth ladder — and there is no code-model peak.**
+   Replicated (n=4): weak models gemma4 36±6 / qwen35 39±18, capable models tightly clustered
+   and indistinguishable (qwen3-30b 66±8, gpt-oss 70±8, coder 68±11). The published single-run
+   "code model is the best host, 86% valid" was **noise** — this is the firming's key correction.
+3. **The floor is purely sender-side.** A cross-reader sweep shows AXON fidelity flat across
+   reader capability (0.93–0.95): hard to *write*, easy to *read*.
+4. **~Half the floor is removable for free and safely.** A 15-line deterministic, meaning-
+   preserving normalizer recovers **49%** of invalid AXON (0 valid-but-wrong), lifting capable
+   models to ~82–85% parse-valid — uniformly across capability. The residual splits into
+   multi-error slips and **genuine expressiveness gaps** (comparisons/member-access in
+   conditionals, units-in-identifiers) the grammar can't express — an AXON *design* limit.
+5. **Strict validity only matters for AXON's *own* pitch.** For an LLM reader, even *invalid*
+   AXON decodes at ~0.88 — validity is nearly irrelevant and JSON would serve as well. Validity
+   is decisive only for the deterministic-parse use case (machine-read, no LLM), which is exactly
+   AXON's reason to exist; there, the free preprocessor is the highest-leverage fix.
+
+**For the paper:** the headline tightens to *"AXON has a sender-side syntactic-emission
+threshold; ~half of it is a free, safe grammar-surface fix, the rest splits into model error and
+genuine expressiveness gaps; strict validity only pays off for AXON's no-LLM-parse niche."* The
+over-precise per-model validity ladder (incl. the 86% code peak) is retired. New artifacts:
+`replication_stats.py`, `axon_repair.py`, `run_replication.sh`, and a self-healing `m5_client`.
+**Suggested follow-ups:** (a) extend `axon_repair` + relax the AXON grammar for the 3 surface
+gaps and re-measure; (b) a proper constrained-decoding arm (needs vLLM `guided_grammar`);
+(c) more qwen35 runs (still under-sampled, pathologically verbose).
+
+---
+
 ## Phase A — Headline replication (3 models, run0 vs run1) — DONE
 
 - **Decoded-only fidelity is rock-stable**: run0 vs run1 |Δ| ≤ 0.006 for *every* condition
