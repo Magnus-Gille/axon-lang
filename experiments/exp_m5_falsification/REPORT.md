@@ -325,9 +325,11 @@ thesis but corrects two single-run claims**:
   recovered faithfully *once it parses*; **all** capability dependence lives in **validity**.
 - **Validity is a *threshold*, not a smooth ladder — and there is no code-model peak.** With
   n=4, the three capable models are statistically indistinguishable (qwen3-30b 66±8, gpt-oss
-  70±8, qwen3-coder 68±11); the weak models sit far below (gemma4 36±7, qwen35 45±12). **The
-  §4.2 single-run "code model 86% valid, best host" was noise** — the corrected picture is a
-  weak-vs-capable step (~40% → ~68% plateau), not a monotonic climb.
+  70±8, qwen3-coder 68±11); the weak models sit far below (gemma4 36±6, qwen35 39±18,
+  *complete runs only*). **The §4.2 single-run "code model 86% valid, best host" was noise** —
+  the corrected picture is a weak-vs-capable **step** (~37% → ~68% plateau, a clean ~30-pt gap),
+  not a monotonic climb. *(Methodological note: time-boxed **partial** runs bias validity
+  upward — they cover only the early/easy L1 tasks — so the ladder uses complete runs only.)*
 - **The floor is purely sender-side (firmed).** Decoding the same AXON messages with readers of
   differing capability gives flat fidelity (qwen3-30b 0.945, gpt-oss 0.951, qwen3-coder 0.930):
   hard to *write*, easy to *read*.

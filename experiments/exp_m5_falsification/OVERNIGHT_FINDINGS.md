@@ -171,7 +171,17 @@ hard to *write* (steep validity floor on the sender) but easy to *read* (any cap
 recovers it, and even a deterministic parser would once it's valid). The sender-vs-reader
 asymmetry — the §4.7 claim — is now firmed with a proper reader-capability curve (was 2 points).
 
-## Phase G — Weak-end replication (gemma4/qwen35 → n=4) — RUNNING/NEXT (firm the threshold)
+## Phase G — Weak-end replication (gemma4/qwen35) — DONE
+
+Added runs on the weak models (gemma4 now 3 complete + 1 partial; qwen35 2 complete + 1 partial).
+**Threshold confirmed and clean** (complete runs only): gemma4 **36 ± 6**, qwen35 **39 ± 18**
+vs capable **66–70**. A ~30-pt step with no overlap for gemma4 (36±6 upper ≈ 42% < qwen3-30b
+66±8 lower ≈ 58%); qwen35 is noisy (±18) but clearly below.
+
+⚠ **Methodological catch:** the first pass (with time-boxed *partial* runs) read gemma4 at 46%,
+because a partial run covers only the **early/easy L1 tasks** and so inflates validity. Using
+**complete runs only** removes that bias and tightens the weak end (gemma4 36±6). Lesson logged
+for the paper: never average a truncated run's validity against full runs.
 
 ---
 
