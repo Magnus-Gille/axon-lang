@@ -28,7 +28,7 @@ stronger; two single-run claims got corrected.**
 3. **The floor is purely sender-side.** A cross-reader sweep shows AXON fidelity flat across
    reader capability (0.93–0.95): hard to *write*, easy to *read*.
 4. **~Half the floor is removable for free and safely.** A 15-line deterministic, meaning-
-   preserving normalizer recovers **49%** of invalid AXON (0 valid-but-wrong), lifting capable
+   preserving normalizer recovers **~half** (47–49% across n) of invalid AXON (0 valid-but-wrong), lifting capable
    models to ~82–85% parse-valid — uniformly across capability. The residual splits into
    multi-error slips and **genuine expressiveness gaps** (comparisons/member-access in
    conditionals, units-in-identifiers) the grammar can't express — an AXON *design* limit.
