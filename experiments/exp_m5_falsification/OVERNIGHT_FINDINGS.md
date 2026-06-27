@@ -63,9 +63,12 @@ use cases survived.** They die to a recurring contradiction and two measured eco
 - **Wire economics, measured (`wire_economics.py`).** Killer 1: raw AXON 75 B/msg, but
   **gzip(JSON) on a stream = 12 B/msg — 84% smaller than raw AXON**, and gzip(AXON)=10 ≈
   gzip(JSON)=12, so **after gzip AXON's density edge vanishes** (it was just uncompressed
-  redundancy). Killer 2: AXON's 11.3-tok saving over JSON is **~100% structural overhead** (the
-  irreducible content ≈10 tok is identical across formats); model prompt-caching of that
-  structure @0.1× and AXON's token edge **collapses 31% → ~9%**.
+  redundancy). Killer 1b (binary): schemaless binary-with-keys (CBOR/msgpack ≈98 B) is the
+  *only* thing raw AXON beats — but **schema-stripped positional binary (protobuf-like) = 56 B
+  raw / 8 B gzipped beats AXON (75/10)**, and the deterministic-parser regime where AXON's
+  validity matters IS the schema regime where binary wins. Killer 2: AXON's 11.3-tok saving over
+  JSON is **~100% structural overhead** (irreducible content ≈10 tok identical across formats);
+  model prompt-caching of that structure @0.1× and AXON's token edge **collapses 31% → ~9%**.
 - The **codec reframe self-destructs**: decode-before-LLM ⇒ byte wire ⇒ gzip/protobuf win;
   raw-AXON-to-LLM ⇒ reader reintroduced, validity moot, JSON ties on fidelity (and AXON's
   *acting* score was 66%, last, in Exp 3).

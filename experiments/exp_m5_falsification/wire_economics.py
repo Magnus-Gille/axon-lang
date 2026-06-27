@@ -34,6 +34,54 @@ def gt_value_tokens(tid):
     return ntok(" ".join(str(s.get("value")) for s in tasks[tid]["fields"].values()))
 
 
+def binary_kill(axon_stats):
+    """KILLER 1b: binary codecs on the byte wire (CBOR/msgpack, +schema-stripped)."""
+    try:
+        import cbor2, msgpack
+        import conditions as C
+    except Exception:
+        print("\n=== KILLER 1b — binary codecs: SKIPPED (pip install cbor2 msgpack) ===")
+        return
+    objs = []
+    for r in rows:
+        if r["condition"] == "json" and r.get("valid") and (r.get("msg") or "").strip():
+            try:
+                o = json.loads(C.extract_json(r["msg"]))
+                if isinstance(o, dict):
+                    objs.append(o)
+            except Exception:
+                pass
+
+    def leaves(o):
+        if isinstance(o, dict):
+            return [x for v in o.values() for x in leaves(v)]
+        if isinstance(o, list):
+            return [x for v in o for x in leaves(v)]
+        return [o]
+
+    def sz(encoder):
+        raw = st.mean(len(encoder(o)) for o in objs)
+        sgz = len(gzip.compress(b"".join(encoder(o) for o in objs), 9)) / len(objs)
+        return raw, sgz
+
+    variants = {
+        "CBOR (binary, keys)": lambda o: cbor2.dumps(o),
+        "msgpack (binary, keys)": lambda o: msgpack.packb(o),
+        "CBOR values-only (protobuf-like)": lambda o: cbor2.dumps(leaves(o)),
+    }
+    print("\n=== KILLER 1b — binary codecs on the byte wire (n=%d) ===" % len(objs))
+    print(f"{'encoding':<34}{'raw_B':>7}{'gz_stream_B':>13}")
+    print(f"{'AXON (dense text)':<34}{axon_stats['raw']:>7.0f}{axon_stats['sgz']:>13.0f}")
+    for name, enc in variants.items():
+        raw, sgz = sz(enc)
+        flag = "< AXON raw" if raw < axon_stats["raw"] else ">= AXON raw"
+        print(f"{name:<34}{raw:>7.0f}{sgz:>13.0f}   ({flag})")
+    print("AXON's only raw-byte win is over SCHEMALESS binary (keys-as-strings). But the")
+    print("deterministic-parser regime where AXON's validity matters IS the schema regime,")
+    print("where schema-stripped positional binary (~56B) beats AXON (~75B); after gzip all")
+    print("formats land within a few B/msg and protobuf-like is smallest. Bytes -> binary wins.")
+
+
 def main():
     from collections import defaultdict
     msgs = defaultdict(list)
@@ -61,6 +109,8 @@ def main():
           f"-> after gzip, AXON's edge is ~{(j['sgz']-a['sgz']):.0f}B (gone)")
     print(f"gzip's free saving on JSON = {(j['raw']-j['sgz'])/j['raw']*100:.0f}%  "
           f"vs AXON's token saving over JSON = {(j['tok']-a['tok'])/j['tok']*100:.0f}%")
+
+    binary_kill(a)
 
     print("\n=== KILLER 2 — AXON's saving is structural, not content ===")
     gtv = st.mean(gt_value_tokens(r["task_id"]) for r in rows if r["condition"] == "axon" and r.get("valid"))

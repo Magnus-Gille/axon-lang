@@ -391,10 +391,13 @@ contradiction and two measured economics (`wire_economics.py`):
   **tokens**, the receiver must be an **LLM** — but then validity is moot (sloppy AXON decodes
   fine) and JSON ties-or-beats AXON on read-fidelity (§4.1: json_schema 0.959, json 0.938 vs
   AXON 0.942). The regime where AXON wins is empty.
-- **gzip erases the density on the wire.** Raw AXON is 75 B/msg; **gzip(JSON) on a stream is
-  12 B/msg — 84% smaller than raw AXON** — and gzip(AXON) ≈ gzip(JSON) (10 vs 12 B). AXON's
-  raw density is just uncompressed redundancy that one `Content-Encoding: gzip` setting removes
-  for free, on either format.
+- **gzip and binary erase the density on the wire.** Raw AXON is 75 B/msg; **gzip(JSON) on a
+  stream is 12 B/msg — 84% smaller than raw AXON** — and gzip(AXON) ≈ gzip(JSON) (10 vs 12 B):
+  AXON's raw density is uncompressed redundancy a single `Content-Encoding: gzip` removes for
+  free. Binary settles it: AXON's *only* raw-byte win is over schemaless binary-with-keys
+  (CBOR/msgpack ≈98 B), but **schema-stripped positional binary (protobuf-like) is 56 B raw /
+  8 B gzipped, beating AXON (75 / 10)** — and the deterministic-parser regime where AXON's
+  validity matters is exactly the schema regime where positional binary applies.
 - **AXON's token saving is ~100% structural overhead.** Decomposed against the irreducible
   ground-truth content (≈10 tok, identical across formats), AXON's 11.3-token edge over JSON is
   *entirely* keys/envelope/syntax — exactly the redundancy that prompt-caching also discounts.
