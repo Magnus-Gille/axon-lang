@@ -1,0 +1,484 @@
+{
+ "tasks": [
+  {
+   "id": "F01",
+   "level": 1,
+   "nl_intent": "Have @order-router pull the @VWAP-order from the NYSE book.",
+   "fields": {
+    "subject": {
+     "kind": "ref",
+     "value": "@VWAP-order"
+    },
+    "dest": {
+     "kind": "enum",
+     "value": "NYSE"
+    }
+   },
+   "hints": {
+    "subject": "The order to cancel/pull \u2014 the content @entity @VWAP-order, NOT the recipient @order-router.",
+    "dest": "The venue/exchange the order sits on (one of NYSE|NASDAQ|ARCA|BATS) \u2014 a market, not the recipient and not a destination agent."
+   }
+  },
+  {
+   "id": "F02",
+   "level": 2,
+   "nl_intent": "Tell @exec-desk to route the @block-order to @dark-pool-7, sized 50000 shares, marked urgent.",
+   "fields": {
+    "target": {
+     "kind": "ref",
+     "value": "@block-order"
+    },
+    "dest": {
+     "kind": "ref",
+     "value": "@dark-pool-7"
+    },
+    "size": {
+     "kind": "num",
+     "value": 50000
+    },
+    "priority": {
+     "kind": "enum",
+     "value": "urgent"
+    }
+   },
+   "hints": {
+    "target": "The order being routed (content @entity @block-order), NOT the recipient @exec-desk and NOT the destination venue.",
+    "dest": "The destination venue @dark-pool-7 that receives the order \u2014 a content @entity, NOT the recipient @exec-desk.",
+    "size": "Share quantity as an integer (50000).",
+    "priority": "Execution urgency, one of low|normal|urgent."
+   }
+  },
+  {
+   "id": "F03",
+   "level": 2,
+   "nl_intent": "Notify @compliance that @trader-jung breached the position limit on @AAPL, cause was an unhedged delta.",
+   "fields": {
+    "subject": {
+     "kind": "ref",
+     "value": "@trader-jung"
+    },
+    "ref": {
+     "kind": "ref",
+     "value": "@AAPL"
+    },
+    "cause": {
+     "kind": "text",
+     "value": "unhedged delta"
+    }
+   },
+   "hints": {
+    "subject": "The actor who breached the limit (@trader-jung) \u2014 a content @entity that is itself an agent, NOT the recipient @compliance.",
+    "ref": "The instrument involved in the breach (@AAPL), NOT the recipient and NOT the trader.",
+    "cause": "Free-text reason for the breach, verbatim: 'unhedged delta'."
+   }
+  },
+  {
+   "id": "F04",
+   "level": 1,
+   "nl_intent": "Ask @pricing-svc for the bid on @EURUSD.",
+   "fields": {
+    "ref": {
+     "kind": "ref",
+     "value": "@EURUSD"
+    },
+    "side": {
+     "kind": "enum",
+     "value": "bid"
+    }
+   },
+   "hints": {
+    "ref": "The instrument to be quoted (@EURUSD), NOT the recipient @pricing-svc.",
+    "side": "Quote side requested, one of bid|ask|mid."
+   }
+  },
+  {
+   "id": "F05",
+   "level": 3,
+   "nl_intent": "Instruct @settlement to settle @trade-9981 against @counterparty-DB, value date T+2, in EUR, netting enabled.",
+   "fields": {
+    "subject": {
+     "kind": "ref",
+     "value": "@trade-9981"
+    },
+    "owner": {
+     "kind": "ref",
+     "value": "@counterparty-DB"
+    },
+    "term": {
+     "kind": "enum",
+     "value": "T+2"
+    },
+    "ccy": {
+     "kind": "enum",
+     "value": "EUR"
+    },
+    "net": {
+     "kind": "bool",
+     "value": true
+    }
+   },
+   "hints": {
+    "subject": "The trade to be settled (@trade-9981) \u2014 content @entity, NOT the recipient @settlement.",
+    "owner": "The counterparty on the trade (@counterparty-DB) \u2014 the other party, NOT the recipient and NOT the trade.",
+    "term": "Settlement value date, one of T+0|T+1|T+2|T+3.",
+    "ccy": "Settlement currency ISO code (EUR).",
+    "net": "Whether netting is enabled \u2014 boolean true."
+   }
+  },
+  {
+   "id": "F06",
+   "level": 3,
+   "nl_intent": "Tell @strategy-engine to rebalance the @growth-portfolio toward tech, then energy, then healthcare, capping each name at 5%, sourcing the cash from @reserve-account.",
+   "fields": {
+    "target": {
+     "kind": "ref",
+     "value": "@growth-portfolio"
+    },
+    "order": {
+     "kind": "list_ordered",
+     "value": [
+      "tech",
+      "energy",
+      "healthcare"
+     ]
+    },
+    "cap": {
+     "kind": "num",
+     "value": 0.05
+    },
+    "source": {
+     "kind": "ref",
+     "value": "@reserve-account"
+    }
+   },
+   "hints": {
+    "target": "The portfolio being rebalanced (@growth-portfolio) \u2014 content @entity, NOT the recipient @strategy-engine.",
+    "order": "Sector tilt priority in the stated sequence ['tech','energy','healthcare'] \u2014 order is significant.",
+    "cap": "Per-name weight cap as a fraction (0.05), NOT the percent integer 5.",
+    "source": "The account funding the rebalance (@reserve-account) \u2014 content @entity, NOT the recipient and NOT the target portfolio."
+   }
+  },
+  {
+   "id": "H01",
+   "level": 1,
+   "nl_intent": "Ask @radiology to schedule @patient-4471 for a chest CT.",
+   "fields": {
+    "subject": {
+     "kind": "ref",
+     "value": "@patient-4471"
+    },
+    "ref": {
+     "kind": "enum",
+     "value": "chest-CT"
+    }
+   },
+   "hints": {
+    "subject": "The patient to be scheduled (@patient-4471) \u2014 content @entity, NOT the recipient @radiology.",
+    "ref": "The procedure to schedule, one of chest-CT|head-MRI|abdomen-US|chest-XR."
+   }
+  },
+  {
+   "id": "H02",
+   "level": 2,
+   "nl_intent": "Notify @dr-okafor that @patient-2208's potassium is critically high, sample drawn from the ICU.",
+   "fields": {
+    "subject": {
+     "kind": "ref",
+     "value": "@patient-2208"
+    },
+    "ref": {
+     "kind": "enum",
+     "value": "potassium"
+    },
+    "flag": {
+     "kind": "enum",
+     "value": "critical"
+    },
+    "source": {
+     "kind": "enum",
+     "value": "ICU"
+    }
+   },
+   "hints": {
+    "subject": "The patient with the abnormal lab (@patient-2208) \u2014 content @entity, NOT the recipient @dr-okafor.",
+    "ref": "The analyte/lab in question, one of potassium|sodium|glucose|creatinine.",
+    "flag": "Severity of the result, one of normal|abnormal|critical.",
+    "source": "The ward where the sample was drawn (one of ICU|ER|ward-3|OR) \u2014 a location, NOT the recipient and NOT the patient."
+   }
+  },
+  {
+   "id": "H03",
+   "level": 2,
+   "nl_intent": "Tell @pharmacy to dispense @med-order-77 for @patient-6650, cause is post-op pain.",
+   "fields": {
+    "subject": {
+     "kind": "ref",
+     "value": "@med-order-77"
+    },
+    "owner": {
+     "kind": "ref",
+     "value": "@patient-6650"
+    },
+    "cause": {
+     "kind": "text",
+     "value": "post-op pain"
+    }
+   },
+   "hints": {
+    "subject": "The medication order to dispense (@med-order-77) \u2014 content @entity, NOT the recipient @pharmacy.",
+    "owner": "The patient the order is for (@patient-6650) \u2014 content @entity, NOT the recipient and NOT the order.",
+    "cause": "Clinical indication, verbatim text 'post-op pain'."
+   }
+  },
+  {
+   "id": "H04",
+   "level": 1,
+   "nl_intent": "Ask @bed-mgmt to free @bed-12B on ward-3.",
+   "fields": {
+    "target": {
+     "kind": "ref",
+     "value": "@bed-12B"
+    },
+    "dest": {
+     "kind": "enum",
+     "value": "ward-3"
+    }
+   },
+   "hints": {
+    "target": "The bed to be freed (@bed-12B) \u2014 content @entity, NOT the recipient @bed-mgmt.",
+    "dest": "The ward where the bed is located, one of ward-3|ward-5|ICU|ER \u2014 a location, not the recipient."
+   }
+  },
+  {
+   "id": "H05",
+   "level": 3,
+   "nl_intent": "Instruct @transport to move @patient-3390 from @ward-5 to @OR-2, priority stat, with cardiac monitoring.",
+   "fields": {
+    "subject": {
+     "kind": "ref",
+     "value": "@patient-3390"
+    },
+    "source": {
+     "kind": "ref",
+     "value": "@ward-5"
+    },
+    "dest": {
+     "kind": "ref",
+     "value": "@OR-2"
+    },
+    "priority": {
+     "kind": "enum",
+     "value": "stat"
+    },
+    "monitor": {
+     "kind": "bool",
+     "value": true
+    }
+   },
+   "hints": {
+    "subject": "The patient to transport (@patient-3390) \u2014 content @entity, NOT the recipient @transport.",
+    "source": "Origin location (@ward-5) \u2014 content @entity, NOT the recipient and NOT the destination.",
+    "dest": "Destination location (@OR-2) \u2014 content @entity, NOT the recipient and NOT the origin.",
+    "priority": "Transport urgency, one of routine|urgent|stat.",
+    "monitor": "Whether cardiac monitoring is required during transport \u2014 boolean true."
+   }
+  },
+  {
+   "id": "H06",
+   "level": 3,
+   "nl_intent": "Tell @care-team to run the discharge checklist for @patient-1102 in order stop-IV, remove-catheter, final-labs, sign-off; owner is @dr-singh, cause stable vitals.",
+   "fields": {
+    "subject": {
+     "kind": "ref",
+     "value": "@patient-1102"
+    },
+    "order": {
+     "kind": "list_ordered",
+     "value": [
+      "stop-IV",
+      "remove-catheter",
+      "final-labs",
+      "sign-off"
+     ]
+    },
+    "owner": {
+     "kind": "ref",
+     "value": "@dr-singh"
+    },
+    "cause": {
+     "kind": "text",
+     "value": "stable vitals"
+    }
+   },
+   "hints": {
+    "subject": "The patient being discharged (@patient-1102) \u2014 content @entity, NOT the recipient @care-team.",
+    "order": "Discharge steps in the stated sequence ['stop-IV','remove-catheter','final-labs','sign-off'] \u2014 order is significant.",
+    "owner": "The physician responsible for sign-off (@dr-singh) \u2014 content @entity that is an agent, NOT the recipient @care-team.",
+    "cause": "Reason for discharge, verbatim text 'stable vitals'."
+   }
+  },
+  {
+   "id": "C01",
+   "level": 1,
+   "nl_intent": "Ask @deploy-bot to roll back @release-2.4.1 in staging.",
+   "fields": {
+    "target": {
+     "kind": "ref",
+     "value": "@release-2.4.1"
+    },
+    "dest": {
+     "kind": "enum",
+     "value": "staging"
+    }
+   },
+   "hints": {
+    "target": "The release to roll back (@release-2.4.1) \u2014 content @entity, NOT the recipient @deploy-bot.",
+    "dest": "The environment to act on, one of dev|staging|prod \u2014 not the recipient."
+   }
+  },
+  {
+   "id": "C02",
+   "level": 2,
+   "nl_intent": "Tell @ci-runner to rebuild @service-auth from the main branch on linux, mac and windows runners; cause was a flaky test.",
+   "fields": {
+    "target": {
+     "kind": "ref",
+     "value": "@service-auth"
+    },
+    "source": {
+     "kind": "ref",
+     "value": "main"
+    },
+    "dest": {
+     "kind": "list_set",
+     "value": [
+      "linux",
+      "mac",
+      "windows"
+     ]
+    },
+    "cause": {
+     "kind": "text",
+     "value": "flaky test"
+    }
+   },
+   "hints": {
+    "target": "The service to rebuild (@service-auth) \u2014 content @entity, NOT the recipient @ci-runner.",
+    "source": "The branch to build from ('main') \u2014 content @entity, NOT the recipient.",
+    "dest": "The set of runner platforms to build on (['linux','mac','windows']) \u2014 order irrelevant, membership is what matters.",
+    "cause": "Reason for the rebuild, verbatim text 'flaky test'."
+   }
+  },
+  {
+   "id": "C03",
+   "level": 2,
+   "nl_intent": "Notify @on-call that @pipeline-338 failed at the deploy stage, owner is @team-payments.",
+   "fields": {
+    "subject": {
+     "kind": "ref",
+     "value": "@pipeline-338"
+    },
+    "ref": {
+     "kind": "enum",
+     "value": "deploy"
+    },
+    "owner": {
+     "kind": "ref",
+     "value": "@team-payments"
+    }
+   },
+   "hints": {
+    "subject": "The pipeline that failed (@pipeline-338) \u2014 content @entity, NOT the recipient @on-call.",
+    "ref": "The stage that failed, one of build|test|deploy|verify.",
+    "owner": "The team that owns the pipeline (@team-payments) \u2014 content @entity that is an agent/group, NOT the recipient @on-call."
+   }
+  },
+  {
+   "id": "C04",
+   "level": 1,
+   "nl_intent": "Ask @registry to promote @image-v9 to prod.",
+   "fields": {
+    "target": {
+     "kind": "ref",
+     "value": "@image-v9"
+    },
+    "dest": {
+     "kind": "enum",
+     "value": "prod"
+    }
+   },
+   "hints": {
+    "target": "The image to promote (@image-v9) \u2014 content @entity, NOT the recipient @registry.",
+    "dest": "The destination environment, one of dev|staging|prod \u2014 not the recipient."
+   }
+  },
+  {
+   "id": "C05",
+   "level": 3,
+   "nl_intent": "Instruct @orchestrator to migrate @db-orders from @cluster-east to @cluster-west with zero-downtime, restoring from snapshot snap-4412.",
+   "fields": {
+    "subject": {
+     "kind": "ref",
+     "value": "@db-orders"
+    },
+    "source": {
+     "kind": "ref",
+     "value": "@cluster-east"
+    },
+    "dest": {
+     "kind": "ref",
+     "value": "@cluster-west"
+    },
+    "ref": {
+     "kind": "ref",
+     "value": "snap-4412"
+    },
+    "mode": {
+     "kind": "enum",
+     "value": "zero-downtime"
+    }
+   },
+   "hints": {
+    "subject": "The database to migrate (@db-orders) \u2014 content @entity, NOT the recipient @orchestrator.",
+    "source": "Origin cluster (@cluster-east) \u2014 content @entity, NOT the recipient and NOT the destination.",
+    "dest": "Destination cluster (@cluster-west) \u2014 content @entity, NOT the recipient and NOT the origin.",
+    "ref": "The snapshot to restore from ('snap-4412') \u2014 content @entity, NOT a cluster and NOT the recipient.",
+    "mode": "Migration mode, one of zero-downtime|maintenance-window|best-effort."
+   }
+  },
+  {
+   "id": "C06",
+   "level": 3,
+   "nl_intent": "Tell @release-mgr to ship @feature-flags through canary, then 10pct, then 50pct, then full; owner @team-growth, gating on the error-rate SLO.",
+   "fields": {
+    "target": {
+     "kind": "ref",
+     "value": "@feature-flags"
+    },
+    "order": {
+     "kind": "list_ordered",
+     "value": [
+      "canary",
+      "10pct",
+      "50pct",
+      "full"
+     ]
+    },
+    "owner": {
+     "kind": "ref",
+     "value": "@team-growth"
+    },
+    "ref": {
+     "kind": "enum",
+     "value": "error-rate"
+    }
+   },
+   "hints": {
+    "target": "The change being shipped (@feature-flags) \u2014 content @entity, NOT the recipient @release-mgr.",
+    "order": "Rollout stages in the stated sequence ['canary','10pct','50pct','full'] \u2014 order is significant.",
+    "owner": "The team owning the rollout (@team-growth) \u2014 content @entity that is a group, NOT the recipient @release-mgr.",
+    "ref": "The SLO gating each promotion, one of error-rate|latency|saturation|availability."
+   }
+  }
+ ]
+}

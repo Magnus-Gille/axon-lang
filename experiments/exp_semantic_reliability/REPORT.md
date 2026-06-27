@@ -60,7 +60,8 @@ in *combining* them with the feedback-coding bounds.
 | 8 | **stacked** thesaurus + ARQ (the ceiling) | 0.950 → 0.950 (**+0.000**) | prevention & detect-correct are **SUBSTITUTES, not complements** — both target role-confusion; stacking adds nothing once it's prevented |
 | 9 | **fidelity-aware (semantic) re-scoring** of thesaurus outputs (claude judge, 0 FP on controls) | exact-match 0.950 → **SEMANTIC 1.000** | ✅ the residual ~0.05 was **scorer strictness** (synonyms/case); thesaurus alignment is **semantically ~perfect** on a capable sender — the role-confusion bottleneck is *solved at the source* |
 | 10 | **schema disambiguation** (rename confusable fields to self-describing ROLE names, same 14 tasks) | bare 0.905 → **0.952** (+0.048) | ✅ the root cause is **schema-name ambiguity**; good field naming fixes it **for free at design time** — equivalent to the runtime thesaurus |
-| 11 | **external validity** (10 fresh tasks, smart-home + e-commerce, claude-generated) | bare **1.000** = thesaurus 1.000 | the fresh tasks used self-describing names → **no role confusion to fix** (confirms #10); the bottleneck appears only with *ambiguous* schemas |
+| 11 | **external validity A** (10 fresh tasks, smart-home + e-commerce, *self-describing* names) | bare **1.000** = thesaurus 1.000 | well-named fresh tasks trigger **no role confusion** (confirms #10) |
+| 12 | **external validity B** (18 fresh tasks, financial/hospital/devops, *deliberately ambiguous* names) | bare **0.339** (semantic) → thesaurus **1.000** (**+0.661**) | ✅✅ the bottleneck **and** its fix **generalize to new domains**; effect is *larger* with more ambiguity. Rows 11+12 = a clean natural experiment isolating name-ambiguity as the cause |
 
 ### The diagnosis (why exp.1 & 3 had to fail before 2b & 4 could work)
 The persistent errors are **semantic-role confusion**: the model puts the *recipient* in `target`,
@@ -106,11 +107,12 @@ high-stakes, verify with a different capable model.** No new notation — just a
 independent channel when it matters).
 
 ## 6. Limitations (honest)
-- **Small benchmark:** n=14 (+10 fresh) tasks, one scorer; headline ladder on one sender
-  (qwen3-30b), robustness on 4 senders. External validity is *partially* addressed (fresh
-  smart-home/e-commerce set replicated the no-error-when-well-named result; disambiguation was a
-  controlled within-task test) but still needs a large, multi-domain, multi-sender benchmark and a
-  standard function-calling dataset.
+- **Benchmark size/scope:** original n=14, plus **28 fresh independently-generated tasks across 5
+  new domains** (smart-home, e-commerce, finance, hospital, devops). External validity is now
+  **well-supported** — the bottleneck *and* the thesaurus fix replicate on fresh domains
+  (ambiguous-named: 0.34→1.00). Still one scorer (mitigated by the fidelity-aware judge) and mostly
+  one sender for the detailed ladder; a standard function-calling dataset + multi-sender sweep
+  would further harden it.
 - **Exact-match scorer inflates the error rate:** several "errors" are synonyms (`notify`≈`inform`)
   the scorer marks wrong but a verifier rightly accepts. So fidelity numbers (0.95–0.98) are
   **lower bounds**; the detection "0.50 organic" is artificially depressed by these. The injection
@@ -159,8 +161,10 @@ information theory) showing up as semantic-role confusion** (the model puts the 
     lifts bare 0.905→**0.952** (= the runtime thesaurus); a fresh, well-named benchmark (smart-home
     + e-commerce) never triggered the error (bare **1.000**). Most schemas should just do this.
   - **Runtime prevention: thesaurus in the *emitter prompt*** (for terse/third-party schemas you
-    can't rename) → 0.89→**0.95** exact-match, **1.000 under a fidelity-aware judge** (the 0.05 gap
-    was scorer strictness). Schema *descriptions* don't work — the constraint engine drops them.
+    can't rename) → 0.89→**0.95** exact-match, **1.000 under a fidelity-aware judge**. **Generalizes
+    strongly:** on 18 fresh, deliberately-ambiguous tasks across finance/hospital/devops, it lifts
+    semantic fidelity **0.34 → 1.000 (+0.66)** — the effect is *larger* the more ambiguous the
+    schema. Schema *descriptions* don't work (the constraint engine drops them); use the prompt.
   - **Runtime detection** (below).
 - **Detection of valid-but-wrong is essentially solvable** — but *only* with a verifier that is
   both **independent and capable** (holding the thesaurus): **recall 1.00 / precision 1.00** on a
