@@ -25,12 +25,13 @@
 > a *tokens-per-correct-message* basis AXON is best overall (31.9), but it buys **no latency
 > win** — reasoning models spend 3–5× more generation tokens "thinking" to emit valid AXON.
 > **Net:** not a general-purpose payload format. We initially conceded a "narrow seam" (terse
-> payloads between strong code-tuned agents) — but a follow-up falsification of that seam
-> **closes it** (§6): an adversarial use-case panel kills 0/14 candidates, and on the corpus
-> free `gzip` beats raw AXON on the wire (12 vs 75 B/msg) while AXON's token edge is ~100%
-> structural overhead that prompt-caching erases (31%→~9%). The durable contribution is the
-> **negative result + falsification method**, not the language: *a general dense agent notation
-> essentially never beats JSON or a purpose-built schema, and here is why.*
+> payloads between strong code-tuned agents); a follow-up falsification **closes that wire-format
+> seam** (§6): an adversarial panel kills 0/14 candidates, and on the corpus *stream*-`gzip` beats
+> raw AXON (12 vs 75 B/msg) while AXON's token edge is ~100% structural overhead. **Scoped after
+> cross-model debate (§6, `debate/`):** the falsification holds for **free-form/weakly-scaffolded
+> LLM-emitted** AXON; two regimes stay *untested* — in-context deterministic-DSL use and
+> human-authored constrained-channel use (drone-C2). The durable contribution is the **negative
+> result + falsification method + decision boundary**, not the language.
 
 ---
 
@@ -390,11 +391,18 @@ contradiction and two measured economics (`wire_economics.py`):
   bills **bytes**, where free `gzip` and binary codecs dominate. For cost to be denominated in
   **tokens**, the receiver must be an **LLM** — but then validity is moot (sloppy AXON decodes
   fine) and JSON ties-or-beats AXON on read-fidelity (§4.1: json_schema 0.959, json 0.938 vs
-  AXON 0.942). The regime where AXON wins is empty.
-- **gzip and binary erase the density on the wire.** Raw AXON is 75 B/msg; **gzip(JSON) on a
-  stream is 12 B/msg — 84% smaller than raw AXON** — and gzip(AXON) ≈ gzip(JSON) (10 vs 12 B):
-  AXON's raw density is uncompressed redundancy a single `Content-Encoding: gzip` removes for
-  free. Binary settles it: AXON's *only* raw-byte win is over schemaless binary-with-keys
+  AXON 0.942). *Caveat (cross-model debate, `debate/axon-falsification-pivot-*`): the dilemma has
+  one **untested** mixed regime — an LLM emits a message **in-prompt** (token-billed) that a
+  deterministic tool parses (validity matters) with **no compression layer** (you can't gzip a
+  prompt). Both horns coincide. We have not measured it, so we do not claim it empty — see §9.*
+- **gzip and binary erase the density on the wire (for batched streams).** Raw AXON is 75 B/msg;
+  **gzip(JSON) on a *stream* is 12 B/msg — 84% smaller than raw AXON** — and gzip(AXON) ≈
+  gzip(JSON) (10 vs 12 B): AXON's raw density is cross-message redundancy `Content-Encoding: gzip`
+  removes for free. **Caveat:** this is *stream* gzip (shared compression context); **per-message
+  gzip of an isolated tiny message is 119 B for JSON > 75 B raw AXON** (gzip overhead dominates),
+  so for event-driven single messages raw AXON's density *does* survive — the kill is the batched
+  case. Binary settles the byte wire regardless: AXON's *only* raw-byte win is over schemaless
+  binary-with-keys
   (CBOR/msgpack ≈98 B), but **schema-stripped positional binary (protobuf-like) is 56 B raw /
   8 B gzipped, beating AXON (75 / 10)** — and the deterministic-parser regime where AXON's
   validity matters is exactly the schema regime where positional binary applies.
@@ -407,15 +415,21 @@ contradiction and two measured economics (`wire_economics.py`):
   raw-AXON-to-LLM ⇒ the reader returns, validity is moot, JSON ties on fidelity (and AXON was
   *last* on composition *acting* in Exp 3, 66%).
 
-> **Verdict: AXON earns no defensible general place.** A purpose-built schema beats a general
-> notation on any known message type; JSON beats it for LLM readers; gzip + binary beat it on
-> any byte wire; caching erases its token edge; TOON owns the tabular case. The honest, novel
-> contribution is therefore **not the language but the falsification**: *when does a general
-> dense agent-communication notation beat JSON or a custom API? Essentially never — and here is
-> the measured decision boundary (read-tolerance, gzip, caching) that explains why.* The
-> capability-floor, write-hard/read-easy asymmetry, and deterministic-repair findings all stand
-> as evidence *for* that negative result. Venues fit it directly (`VENUES.md`): arXiv now;
-> Negative-Results@EMNLP, ICBINB, MOSS@COLM.
+> **Verdict (scoped — narrowed after cross-model debate, `debate/axon-falsification-pivot-summary.md`).**
+> The evidence falsifies AXON as a **free-form / weakly-scaffolded LLM-emitted general/default
+> payload notation** under the tested distribution, and closes the large-model token-**wire**
+> pitch under *stream*-gzip + binary-schema + LLM-reader assumptions: a purpose-built schema beats
+> a general notation on any known message type, JSON beats it for LLM readers, gzip+binary beat it
+> on the batched byte wire, caching plausibly erases its token edge, and TOON owns the tabular
+> case. **Two regimes remain UNTESTED — separate theses, not falsified:** (i) *in-context
+> deterministic-DSL* use (token-billed, deterministically parsed, no compression layer); (ii)
+> *human/planner-authored* AXON for constrained tactical channels (the stored drone-C2 scoped-use
+> decision, which sidesteps the sender-side emission floor entirely — see §9). The durable, novel
+> contribution is **not the language but the falsification method + the decision boundary**: the
+> write-hard/read-easy asymmetry, the sender-side syntactic-emission floor, validity-vs-fidelity
+> separation, deterministic repair, and a reusable adversarial-falsification harness. Venues
+> (`VENUES.md`): arXiv now; Negative-Results@EMNLP, ICBINB, MOSS@COLM — **after** the in-context-DSL
+> pilot (§9) and with the scope label disciplined (payload-notation vs communication-protocol).
 
 ## 7. Limitations & honesty notes
 
@@ -435,3 +449,40 @@ contradiction and two measured economics (`wire_economics.py`):
 ## 8. Reproduce
 
 See `README.md`. `bash run_all.sh`, then `python analyze.py`.
+
+## 9. Scope, untested regimes & next step (post cross-model debate)
+
+A Claude↔Codex adversarial debate (`debate/axon-falsification-pivot-summary.md`, 2026-06-27)
+upheld the *direction* of the pivot but **narrowed the universal claim**. Two corrections and a
+required scope split:
+
+**Two distinct theses — do not conflate.** This study tests *one* of them.
+1. **AXON as a free-form / weakly-scaffolded LLM-emitted general/default payload notation** — the
+   object of this study. Falsified under the tested distribution (sender-side emission floor, no
+   read-fidelity upside over JSON, weak economics under stream-gzip/binary/cached regimes).
+2. **AXON as a human/planner-authored constrained-channel intent DSL** — *not* tested here. A
+   stored first-principles decision (`decisions/drone-lab-c2-protocol/axon-fit-evaluation`,
+   2026-04-24, "use it, but scoped") evaluates AXON as the intent layer over **kbps tactical
+   radios**, explicitly **human/planner-authored with LLMs only on the read side** — which
+   *sidesteps the emission floor entirely* — valued for mission-command semantics, ASCII
+   inspectability, and bandwidth on channels with no compression layer. Our evidence says nothing
+   about this thesis; "essentially never" wrongly swept it in.
+
+**Untested mixed regime (the counting-unit dilemma's hole).** In-context deterministic-DSL use —
+an LLM emits a message in-prompt (token-billed) that a deterministic tool parses (validity
+matters) with no gzip/binary layer — satisfies both horns at once and is unmeasured.
+
+**Required edits before any paper claim:** (a) scope the negative to "free-form/weakly-scaffolded
+LLM-emitted" (not "LLM-emitted," which would include constrained decoding / structured outputs);
+(b) the title/abstract must **pick** "payload notation emitted by LLMs" (protocol deferral OK) or
+"agent-communication notation" (then NAK/ERR/reject-retry state-machine accounting is mandatory —
+AXON's spec defines these and they are untested); (c) label the prompt-caching 31%→9% as a
+sensitivity model, and report per-message / stream / no-compression byte regimes separately.
+
+**Single most important next step (agreed): a minimal in-context deterministic-DSL falsification
+pilot** — reuse the 14 tasks; arms = AXON / AXON+repair / AXON+true-constrained-decoding / compact
+minified JSON / JSON structured-outputs / TOON / one hand-built task-specific DSL; ≥1 capable local
++ 1 frontier sender; account marginal-vs-cached tokens, per-message+stream gzip, binary-schema
+bytes, and live parse→validate→NAK/repair/retry/fallback cost. If AXON loses there too, the scoped
+negative result has a clean boundary and is publishable; if it ties/wins, the thesis becomes "the
+only surviving niche for dense agent notation is in-prompt deterministic DSLs — here is the boundary."

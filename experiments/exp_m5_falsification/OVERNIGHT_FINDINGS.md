@@ -73,13 +73,13 @@ use cases survived.** They die to a recurring contradiction and two measured eco
   raw-AXON-to-LLM ⇒ reader reintroduced, validity moot, JSON ties on fidelity (and AXON's
   *acting* score was 66%, last, in Exp 3).
 
-**Conclusion / recommended pivot:** the language does **not** survive its own evidence. The
-defensible, novel contribution is the **negative result + falsification methodology**:
-*"When does a general dense agent-communication notation beat JSON / a custom API? Essentially
-never — caching + gzip + LLM read-tolerance erase the density premium, and there is no
-comprehension upside."* The capability-floor, hard-to-write/easy-to-read, and repair findings
-all become *evidence for* that result. (Caveat: the panel was adversarial/pessimistic by design,
-but its killers are grounded in our own data + standard engineering.)
+**Conclusion / recommended pivot — NARROWED after cross-model debate** (`debate/axon-falsification-pivot-summary.md`, codex, 2 rounds). The pivot *direction* holds, but the universal phrasing was retired. Defensible claim: *the evidence falsifies AXON as a **free-form / weakly-scaffolded LLM-emitted general/default payload notation** under the tested distribution, and closes the large-model token-**wire** pitch under stream-gzip + binary-schema + LLM-reader assumptions.* The durable, novel contribution is the **falsification method + decision boundary** (asymmetry, emission floor, validity-vs-fidelity, deterministic repair, the harness) — not "essentially never."
+
+**Two corrections the debate forced** (both classes self-review missed):
+- The 12 B/msg gzip win is **stream** gzip; **per-message gzip(JSON) = 119 B > raw AXON 75 B**, so for isolated low-latency messages raw AXON's density *does* survive — the kill is the batched case (binary still wins the byte wire regardless).
+- A stored decision (`decisions/drone-lab-c2-protocol/axon-fit-evaluation`, "use it, but scoped") is a real counterexample: **human/planner-authored** AXON over kbps tactical radios sidesteps the emission floor on a no-compression channel for non-cost value — a **separate, untested thesis**, not falsified.
+
+**Two regimes remain explicitly UNTESTED** (scheduled, not dismissed): (i) in-context deterministic-DSL use (token-billed + deterministically parsed + no compression layer — the counting-unit dilemma's hole); (ii) human-authored constrained-channel use (drone-C2). **Next step: a minimal in-context-DSL falsification pilot** before drafting (design in REPORT §9). Caveat: the panel was adversarial-by-design; its killers are grounded in our data + standard engineering, but "essentially never" was over-reach.
 
 ---
 
