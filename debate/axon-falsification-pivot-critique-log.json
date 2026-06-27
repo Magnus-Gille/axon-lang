@@ -1,0 +1,137 @@
+[
+  {
+    "id": "axon-pivot-C01",
+    "source": "codex-round-1",
+    "text": "Counting-unit dilemma has an untested hole: the in-context deterministic-DSL regime (LLM emits in-prompt = token-billed, a deterministic tool parses = validity matters, no gzip/binary layer) satisfies both horns at once, so 'the winning regime is empty' overreaches.",
+    "classification": "valid",
+    "impact": "changed",
+    "severity": "critical",
+    "caught_by_self_review": true
+  },
+  {
+    "id": "axon-pivot-C02",
+    "source": "codex-round-1",
+    "text": "The 12 B/msg gzip figure is STREAM gzip (shared compression context); per-message gzip(JSON)=119 B > raw AXON 75 B. 'gzip beats raw AXON 84%' holds only for batched streams, not isolated low-latency messages.",
+    "classification": "valid",
+    "impact": "changed",
+    "severity": "major",
+    "caught_by_self_review": false
+  },
+  {
+    "id": "axon-pivot-C03",
+    "source": "codex-round-1",
+    "text": "Prompt-caching @0.1x is a model, not a measurement, and may discount the wrong tokens (the marginal incoming message is not in the cached prefix on first read).",
+    "classification": "valid",
+    "impact": "partially_changed",
+    "severity": "major",
+    "caught_by_self_review": true
+  },
+  {
+    "id": "axon-pivot-C04",
+    "source": "codex-round-1",
+    "text": "'0 of 14 survived' is adversarial-search evidence, not a representative use-case survey; the 14 candidates, rubric, and threshold aren't published.",
+    "classification": "valid",
+    "impact": "changed",
+    "severity": "major",
+    "caught_by_self_review": true
+  },
+  {
+    "id": "axon-pivot-C05",
+    "source": "codex-round-1",
+    "text": "Live Munin holds a prior decision (decisions/drone-lab-c2-protocol/axon-fit-evaluation, 'use it, but scoped') that the '0/14 / essentially never' claim omits — a stored scoped-use counterexample requiring reconciliation.",
+    "classification": "valid",
+    "impact": "changed",
+    "severity": "critical",
+    "caught_by_self_review": false
+  },
+  {
+    "id": "axon-pivot-C06",
+    "source": "codex-round-1",
+    "text": "The strongest surviving use case is AXON as a compact, human-auditable, deterministically-parsed in-context protocol-trace/tool-call DSL; non-cost value (audit/determinism/readability) was dismissed without any experiment.",
+    "classification": "valid",
+    "impact": "changed",
+    "severity": "critical",
+    "caught_by_self_review": true
+  },
+  {
+    "id": "axon-pivot-C07",
+    "source": "codex-round-1",
+    "text": "Protocol-level costs/benefits under-modeled: AXON's spec has NAK/ERR/versioning; a deterministic receiver facing ~33% invalid emissions incurs reject/retry/fallback latency the offline table ignores.",
+    "classification": "valid",
+    "impact": "partially_changed",
+    "severity": "major",
+    "caught_by_self_review": false
+  },
+  {
+    "id": "axon-pivot-C08",
+    "source": "codex-round-1",
+    "text": "JSON's '~0 invalid' isn't the whole client-behavior comparison (schema-invalid, version-unsupported, semantically-wrong-but-parseable all matter); validity is format-specific.",
+    "classification": "partially_valid",
+    "impact": "acknowledged",
+    "severity": "minor",
+    "caught_by_self_review": false
+  },
+  {
+    "id": "axon-pivot-C09",
+    "source": "codex-round-1",
+    "text": "Grammar-constrained decoding dismissed too fast: the study used retry-until-valid proxies, not true constrained decoding; the in-context regime with real constraints is untested.",
+    "classification": "partially_valid",
+    "impact": "partially_changed",
+    "severity": "major",
+    "caught_by_self_review": false
+  },
+  {
+    "id": "axon-pivot-C10",
+    "source": "codex-round-1",
+    "text": "External validity too thin for 'essentially never': 5 local models, 14 short composition tasks, one fixed decoder, one tokenizer, no frontier sender, no true constrained-decoding arm.",
+    "classification": "valid",
+    "impact": "changed",
+    "severity": "major",
+    "caught_by_self_review": true
+  },
+  {
+    "id": "axon-pivot-C11",
+    "source": "codex-round-1",
+    "text": "Publication novelty under-specified: 'JSON+gzip beats a dense text format' is folklore-adjacent; the novel contributions are the asymmetry, emission floor, validity-vs-fidelity split, deterministic repair, and the falsification harness/decision-boundary framework.",
+    "classification": "valid",
+    "impact": "changed",
+    "severity": "major",
+    "caught_by_self_review": true
+  },
+  {
+    "id": "axon-pivot-C12",
+    "source": "codex-round-1",
+    "text": "Reversibility is not as cheap as claimed: publishing 'AXON earns no defensible place' burns the language brand; the reversible move is publishing the falsification framework + scoped negative result with surviving hypotheses scheduled.",
+    "classification": "valid",
+    "impact": "changed",
+    "severity": "major",
+    "caught_by_self_review": false
+  },
+  {
+    "id": "axon-pivot-C13",
+    "source": "codex-round-2",
+    "text": "'LLM-emitted' is still too broad; it can be read to include grammar-constrained decoding / structured outputs. The earned claim is 'free-form / weakly-scaffolded LLM-emitted general/default payload notation.'",
+    "classification": "valid",
+    "impact": "changed",
+    "severity": "major",
+    "caught_by_self_review": false
+  },
+  {
+    "id": "axon-pivot-C14",
+    "source": "codex-round-2",
+    "text": "drone-C2 is not a footnote: it reframes the object under test into TWO distinct theses (LLM-emitted payload notation vs human/planner-authored constrained-channel intent DSL) needing a scope table, not an apology paragraph.",
+    "classification": "valid",
+    "impact": "changed",
+    "severity": "major",
+    "caught_by_self_review": false
+  },
+  {
+    "id": "axon-pivot-C15",
+    "source": "codex-round-2",
+    "text": "The title/abstract must pick a scope: 'payload notation emitted by LLMs' (protocol-accounting deferral OK) OR 'agent-communication notation' (NAK/ERR/reject-retry state-machine accounting becomes mandatory).",
+    "classification": "valid",
+    "impact": "acknowledged",
+    "severity": "major",
+    "caught_by_self_review": false
+  }
+]
