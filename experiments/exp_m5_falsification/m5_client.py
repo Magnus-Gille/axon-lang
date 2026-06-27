@@ -86,11 +86,13 @@ def chat(
     timeout: int = 200,
     retries: int = 4,
     backoff: float = 6.0,
+    response_format: dict | None = None,
 ) -> dict:
     """Single chat completion. Returns a result dict (never raises).
 
     Result keys: ok, content, reasoning, usage, latency_s, finish_reason,
-    error, attempts.
+    error, attempts. `response_format` is passed through (the box honors
+    {"type":"json_schema", ...} but ignores grammar-constraint params).
     """
     url = f"{BASE}/chat/completions"
     payload = {
@@ -99,6 +101,8 @@ def chat(
         "max_tokens": max_tokens,
         "temperature": temperature,
     }
+    if response_format is not None:
+        payload["response_format"] = response_format
     data = json.dumps(payload).encode()
     last_err = None
     refreshed = False  # whether we've already force-refreshed the token on a 401

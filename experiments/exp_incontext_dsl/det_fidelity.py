@@ -44,13 +44,31 @@ def main():
                 for r in rows if r["condition"] == cond and r.get("valid")
                 and r["model"] in CAP and (r.get("msg") or "").strip()]
         print(f"{cond:<16}{st.mean(fids):>11.3f}{len(fids):>6}")
-    dslf = os.path.join(HERE, "results", "dsl.jsonl")
-    if os.path.exists(dslf):
-        dsl = [json.loads(l) for l in open(dslf) if json.loads(l).get("valid")]
-        print(f"{'dsl':<16}{st.mean(r['det_fidelity'] for r in dsl):>11.3f}{len(dsl):>6}")
+    for name, fn in [("dsl", "results/dsl.jsonl"), ("structured", "results/structured.jsonl")]:
+        p = os.path.join(HERE, fn)
+        if os.path.exists(p):
+            rs = [json.loads(l) for l in open(p) if json.loads(l).get("valid")]
+            print(f"{name:<16}{st.mean(r['det_fidelity'] for r in rs):>11.3f}{len(rs):>6}")
+
     print("\nM5 reported JSON fidelity 0.94 used an LLM decoder + aliases; the gap to strict (0.27)")
-    print("is pure alias-tolerance. The regime rewards SCHEMA-CONSTRAINED emission (structured")
-    print("outputs), not a dense notation — see RESULTS.md.")
+    print("is pure alias-tolerance. Only SCHEMA-CONSTRAINED emission (structured outputs, ~0.88)")
+    print("survives strict deterministic extraction — a JSON technique, orthogonal to AXON.")
+
+    # effective marginal-token cost under REAL strict deterministic fidelity
+    def stats(fn, tokkey="neutral_tokens"):
+        rs = [json.loads(l) for l in open(os.path.join(HERE, fn))]
+        v = [r for r in rs if r.get("valid")]
+        return (st.mean(r[tokkey] for r in v), len(v) / len(rs), st.mean(r["det_fidelity"] for r in v))
+    print(f"\nEffective marginal tok/correct = tok / (parse_rate x strict_fidelity):")
+    print(f"{'format':<16}{'tok':>6}{'parse':>7}{'fid':>6}{'eff':>8}")
+    for name, fn in [("dsl", "results/dsl.jsonl"), ("structured", "results/structured.jsonl")]:
+        p = os.path.join(HERE, fn)
+        if os.path.exists(p):
+            tok, pr, fid = stats(fn)
+            eff = tok / (pr * fid) if pr * fid else float("inf")
+            print(f"{name:<16}{tok:>6.1f}{pr:>7.2f}{fid:>6.2f}{eff:>8.1f}")
+    print("(plain JSON strict eff = 37/(1.0x0.27) ~= 137; json_schema ~96. At MATCHED high")
+    print(" fidelity, only structured outputs qualifies — AXON/DSL are cheap-but-wrong.)")
 
 
 if __name__ == "__main__":
