@@ -62,6 +62,7 @@ in *combining* them with the feedback-coding bounds.
 | 10 | **schema disambiguation** (rename confusable fields to self-describing ROLE names, same 14 tasks) | bare 0.905 → **0.952** (+0.048) | ✅ the root cause is **schema-name ambiguity**; good field naming fixes it **for free at design time** — equivalent to the runtime thesaurus |
 | 11 | **external validity A** (10 fresh tasks, smart-home + e-commerce, *self-describing* names) | bare **1.000** = thesaurus 1.000 | well-named fresh tasks trigger **no role confusion** (confirms #10) |
 | 12 | **external validity B** (18 fresh tasks, financial/hospital/devops, *deliberately ambiguous* names) | bare **0.339** (semantic) → thesaurus **1.000** (**+0.661**) | ✅✅ the bottleneck **and** its fix **generalize to new domains**; effect is *larger* with more ambiguity. Rows 11+12 = a clean natural experiment isolating name-ambiguity as the cause |
+| 13 | **fresh-ambiguous set, capability gradient** (mid / capable / frontier senders) | bare **0.34 / 0.51 / 0.81** → thesaurus **1.00 / 1.00 / 1.00** (Δ +0.66 / +0.49 / +0.19) | ✅ definitive: ambiguity hurts **every** model (capability only *mitigates*, never eliminates); thesaurus alignment **fully fixes it for all**. Weak/reasoner senders (gemma4) fail to emit at all. |
 
 ### The diagnosis (why exp.1 & 3 had to fail before 2b & 4 could work)
 The persistent errors are **semantic-role confusion**: the model puts the *recipient* in `target`,
@@ -160,6 +161,9 @@ information theory) showing up as semantic-role confusion** (the model puts the 
   - **Design-time (free, first-line): unambiguous field names.** Renaming the confusable fields
     lifts bare 0.905→**0.952** (= the runtime thesaurus); a fresh, well-named benchmark (smart-home
     + e-commerce) never triggered the error (bare **1.000**). Most schemas should just do this.
+    **Ambiguity hurts every model** — on a fresh deliberately-ambiguous set, bare is 0.34 (mid) /
+    0.51 (capable) / 0.81 (frontier): capability *mitigates* but never *eliminates* it, and the
+    fix takes all three to **1.000**.
   - **Runtime prevention: thesaurus in the *emitter prompt*** (for terse/third-party schemas you
     can't rename) → 0.89→**0.95** exact-match, **1.000 under a fidelity-aware judge**. **Generalizes
     strongly:** on 18 fresh, deliberately-ambiguous tasks across finance/hospital/devops, it lifts
