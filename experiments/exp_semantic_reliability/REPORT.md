@@ -59,6 +59,8 @@ in *combining* them with the feedback-coding bounds.
 | 7 | **robustness across senders** (thesaurus) | coder-80b 0.940→**0.986**; gpt-oss 0.850→**0.981**; gemma4/qwen35 → **0.000** (empty under constraint) | ✅ generalizes & **stronger on capable senders** (prevention alone → ~0.98); but **weak/heavy-reasoner senders fail constrained emission entirely** (capability floor at the structured-output layer) |
 | 8 | **stacked** thesaurus + ARQ (the ceiling) | 0.950 → 0.950 (**+0.000**) | prevention & detect-correct are **SUBSTITUTES, not complements** — both target role-confusion; stacking adds nothing once it's prevented |
 | 9 | **fidelity-aware (semantic) re-scoring** of thesaurus outputs (claude judge, 0 FP on controls) | exact-match 0.950 → **SEMANTIC 1.000** | ✅ the residual ~0.05 was **scorer strictness** (synonyms/case); thesaurus alignment is **semantically ~perfect** on a capable sender — the role-confusion bottleneck is *solved at the source* |
+| 10 | **schema disambiguation** (rename confusable fields to self-describing ROLE names, same 14 tasks) | bare 0.905 → **0.952** (+0.048) | ✅ the root cause is **schema-name ambiguity**; good field naming fixes it **for free at design time** — equivalent to the runtime thesaurus |
+| 11 | **external validity** (10 fresh tasks, smart-home + e-commerce, claude-generated) | bare **1.000** = thesaurus 1.000 | the fresh tasks used self-describing names → **no role confusion to fix** (confirms #10); the bottleneck appears only with *ambiguous* schemas |
 
 ### The diagnosis (why exp.1 & 3 had to fail before 2b & 4 could work)
 The persistent errors are **semantic-role confusion**: the model puts the *recipient* in `target`,
@@ -89,15 +91,26 @@ predicts the *entire* landscape:
    stacking them adds nothing (0.950→0.950). The residual ~0.05 is a *different* class (subtle
    value errors + exact-match scorer strictness), so the real fidelity is a lower bound.
 
-Practical recipe: **(1) thesaurus in the emitter prompt** (cheap, cacheable; the default move);
-**(2) for high-stakes messages, verify with a *different* model holding the thesaurus**
-(near-perfect catch of role-confusion); **(3) ARQ-patch flagged fields.** No new notation — just
-alignment + an independent channel.
+5. **The root cause is thesaurus *ambiguity*, and there are three equivalent fixes** — all of
+   which make the receiver's slot-semantics explicit to the sender:
+   - **(0) Design-time — unambiguous, self-describing field names.** *Free*, first-line: renaming
+     the confusable fields lifts bare 0.905→0.952 (= the runtime thesaurus), and a fresh
+     well-named benchmark never triggered the error at all. **Most schemas should just do this.**
+   - **(1) Runtime prevention — thesaurus in the emitter prompt.** For when you *can't* control the
+     schema (terse formats, third-party/open-ecosystem schemas): 0.89→0.95 (~1.000 semantic).
+   - **(2) Runtime detection — independent capable verifier + thesaurus.** For high-stakes
+     messages: catches role-confusion at recall/precision 1.00; ARQ-patch the flagged fields.
+
+Practical recipe: **name fields unambiguously; if you can't, ship the thesaurus in the prompt; for
+high-stakes, verify with a different capable model.** No new notation — just alignment (+ an
+independent channel when it matters).
 
 ## 6. Limitations (honest)
-- **Small benchmark:** n=14 tasks, one task family, one scorer. Headline ladder on one sender
-  (qwen3-30b); robustness checked on 4 senders. External validity to other schemas/datasets/domains
-  is untested — the single most important gap.
+- **Small benchmark:** n=14 (+10 fresh) tasks, one scorer; headline ladder on one sender
+  (qwen3-30b), robustness on 4 senders. External validity is *partially* addressed (fresh
+  smart-home/e-commerce set replicated the no-error-when-well-named result; disambiguation was a
+  controlled within-task test) but still needs a large, multi-domain, multi-sender benchmark and a
+  standard function-calling dataset.
 - **Exact-match scorer inflates the error rate:** several "errors" are synonyms (`notify`≈`inform`)
   the scorer marks wrong but a verifier rightly accepts. So fidelity numbers (0.95–0.98) are
   **lower bounds**; the detection "0.50 organic" is artificially depressed by these. The injection
@@ -141,12 +154,14 @@ everything: the dominant failure is a sender↔receiver *thesaurus mismatch* (Sh
 information theory) showing up as semantic-role confusion** (the model puts the recipient in
 `target`, the source in `root_cause`, the same way every time). From it:
 
-- **Prevention works, is cheap, and on a capable sender is ~complete:** ship the shared
-  field-semantics thesaurus in the *emitter prompt* → exact-match 0.89→**0.95** (qwen3-30b),
-  **~0.98** on capable senders — and under a **fidelity-aware judge it is 1.000** (the residual
-  0.05 was exact-match scorer strictness on synonyms). So thesaurus alignment essentially *solves*
-  the role-confusion bottleneck at the source. (Schema descriptions don't work — the constraint
-  engine drops them; the thesaurus must be in the prompt.)
+- **Root cause = schema/thesaurus *ambiguity*, with three equivalent fixes:**
+  - **Design-time (free, first-line): unambiguous field names.** Renaming the confusable fields
+    lifts bare 0.905→**0.952** (= the runtime thesaurus); a fresh, well-named benchmark (smart-home
+    + e-commerce) never triggered the error (bare **1.000**). Most schemas should just do this.
+  - **Runtime prevention: thesaurus in the *emitter prompt*** (for terse/third-party schemas you
+    can't rename) → 0.89→**0.95** exact-match, **1.000 under a fidelity-aware judge** (the 0.05 gap
+    was scorer strictness). Schema *descriptions* don't work — the constraint engine drops them.
+  - **Runtime detection** (below).
 - **Detection of valid-but-wrong is essentially solvable** — but *only* with a verifier that is
   both **independent and capable** (holding the thesaurus): **recall 1.00 / precision 1.00** on a
   controlled injection benchmark. Same-model self-check/self-consistency **can't** (0.14 / +0.000,
@@ -164,10 +179,15 @@ carried real weight — Shreider (thesaurus) *was* the diagnosis; Burnashev (dec
 Berger/VT codes seed the future work. The combination is, as far as the survey found, unassembled.
 
 **Recommendation.** This is a self-contained contribution worth writing up (*"reliable agent
-communication is semantic-channel alignment, not notation"*) — pair it with the AXON negative result
-as a two-part story. Before publishing, prioritize (§7): VoI-gated ARQ (the cheap-reliability
-mechanism), fidelity-aware scoring (remove the lower-bound confound), and external validity on a
-standard dataset + frontier sender. Highest-leverage single next experiment: **VoI-gated ARQ.**
+communication is semantic-channel alignment, not notation"*) — pair it with the AXON negative
+result as a two-part story: *AXON optimized density (the wrong variable); the right variable is
+thesaurus alignment, and naming/prompt/verification beat any notation.* The **immediately
+actionable** takeaway for practitioners: **name agent-message fields unambiguously** (free,
+eliminates most role confusion); ship the thesaurus in the prompt for schemas you can't rename;
+verify high-stakes messages with a different capable model. Before publishing, the remaining work
+(§7): a **larger multi-domain, multi-sender benchmark + a standard function-calling dataset** (to
+firm external validity past the n=24 here) and **VoI-gated ARQ** (the cheap-reliability mechanism).
+Highest-leverage next experiments: **the larger external benchmark**, then **VoI-gated ARQ**.
 
 *Artifacts:* `PROBLEM.md`, `crosslingual-synthesis.md`, `FINDINGS.md`, runnable
 `run_{selfconsistency,thesaurus,structured,detect,indep_verify,pipeline,compare,panel,inject}.py`.

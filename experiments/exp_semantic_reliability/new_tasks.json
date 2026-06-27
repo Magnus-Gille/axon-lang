@@ -1,0 +1,267 @@
+{
+ "tasks": [
+  {
+   "id": "E01",
+   "level": 1,
+   "nl_intent": "@home_hub, set the @living_room_thermostat to 21 degrees in heat mode.",
+   "fields": {
+    "target_device": {
+     "kind": "ref",
+     "value": "@living_room_thermostat"
+    },
+    "setpoint_celsius": {
+     "kind": "num",
+     "value": 21
+    },
+    "mode": {
+     "kind": "enum",
+     "value": "heat"
+    }
+   },
+   "hints": {
+    "target_device": "The device whose state is being changed \u2014 NOT @home_hub, which is the recipient executing the command.",
+    "setpoint_celsius": "The target temperature value in Celsius.",
+    "mode": "The thermostat operating mode: one of heat|cool|auto|off."
+   }
+  },
+  {
+   "id": "E02",
+   "level": 1,
+   "nl_intent": "@fulfillment, ship order #ORD-4821 to customer @maria_chen via express shipping.",
+   "fields": {
+    "order_id": {
+     "kind": "ref",
+     "value": "#ORD-4821"
+    },
+    "ship_to": {
+     "kind": "ref",
+     "value": "@maria_chen"
+    },
+    "shipping_method": {
+     "kind": "enum",
+     "value": "express"
+    }
+   },
+   "hints": {
+    "order_id": "The order being shipped \u2014 NOT @fulfillment (the recipient agent) and NOT the customer.",
+    "ship_to": "The customer who receives the parcel \u2014 NOT @fulfillment, which only performs the action.",
+    "shipping_method": "Delivery service tier: one of standard|express|overnight."
+   }
+  },
+  {
+   "id": "E03",
+   "level": 2,
+   "nl_intent": "@automation_engine, create a rule: when @front_door_sensor detects motion, turn on @porch_light.",
+   "fields": {
+    "trigger_device": {
+     "kind": "ref",
+     "value": "@front_door_sensor"
+    },
+    "trigger_event": {
+     "kind": "enum",
+     "value": "motion_detected"
+    },
+    "action_device": {
+     "kind": "ref",
+     "value": "@porch_light"
+    },
+    "action": {
+     "kind": "enum",
+     "value": "turn_on"
+    }
+   },
+   "hints": {
+    "trigger_device": "The device whose event STARTS the rule (the cause) \u2014 NOT the device that gets actuated.",
+    "trigger_event": "The sensed event that fires the rule: one of motion_detected|door_opened|temperature_high.",
+    "action_device": "The device acted upon as a RESULT (the effect) \u2014 NOT the trigger sensor.",
+    "action": "What is done to the action_device: one of turn_on|turn_off|toggle."
+   }
+  },
+  {
+   "id": "E04",
+   "level": 2,
+   "nl_intent": "@billing, refund $45.00 to @james_wong for order #ORD-7733 because the item arrived damaged.",
+   "fields": {
+    "order_id": {
+     "kind": "ref",
+     "value": "#ORD-7733"
+    },
+    "refund_recipient": {
+     "kind": "ref",
+     "value": "@james_wong"
+    },
+    "amount_usd": {
+     "kind": "num",
+     "value": 45.0
+    },
+    "reason": {
+     "kind": "enum",
+     "value": "damaged"
+    }
+   },
+   "hints": {
+    "order_id": "The order the refund is against \u2014 NOT @billing (the actor) and NOT the customer.",
+    "refund_recipient": "Who receives the money back \u2014 NOT @billing, which issues the refund.",
+    "amount_usd": "Refund amount in USD.",
+    "reason": "Cause of the refund: one of damaged|wrong_item|not_delivered|customer_request."
+   }
+  },
+  {
+   "id": "E05",
+   "level": 2,
+   "nl_intent": "@home_hub, have the @bedroom_speaker play playlist #chill-evening at volume 30.",
+   "fields": {
+    "target_device": {
+     "kind": "ref",
+     "value": "@bedroom_speaker"
+    },
+    "content_id": {
+     "kind": "ref",
+     "value": "#chill-evening"
+    },
+    "volume": {
+     "kind": "num",
+     "value": 30
+    }
+   },
+   "hints": {
+    "target_device": "The speaker that plays the audio \u2014 NOT @home_hub, which relays the command.",
+    "content_id": "The playlist resource to play \u2014 a content reference, NOT the device.",
+    "volume": "Playback volume level, 0\u2013100."
+   }
+  },
+  {
+   "id": "E06",
+   "level": 3,
+   "nl_intent": "@warehouse, for order #ORD-9001 pick items in this exact sequence \u2014 #SKU-A, then #SKU-B, then #SKU-C \u2014 and assign the job to picker @raj.",
+   "fields": {
+    "order_id": {
+     "kind": "ref",
+     "value": "#ORD-9001"
+    },
+    "pick_sequence": {
+     "kind": "list_ordered",
+     "value": [
+      "#SKU-A",
+      "#SKU-B",
+      "#SKU-C"
+     ]
+    },
+    "assignee": {
+     "kind": "ref",
+     "value": "@raj"
+    }
+   },
+   "hints": {
+    "order_id": "The order being fulfilled \u2014 NOT @warehouse (recipient) and NOT the picker.",
+    "pick_sequence": "SKUs in the REQUIRED pick order; sequence is meaningful, do not reorder or dedupe.",
+    "assignee": "The picker who performs the job \u2014 NOT @warehouse, the recipient agent."
+   }
+  },
+  {
+   "id": "E07",
+   "level": 3,
+   "nl_intent": "@home_hub, activate the scene named Movie Night, which affects @living_room_light, @blinds, and @kitchen_light.",
+   "fields": {
+    "scene_name": {
+     "kind": "text",
+     "value": "Movie Night"
+    },
+    "affected_devices": {
+     "kind": "list_set",
+     "value": [
+      "@living_room_light",
+      "@blinds",
+      "@kitchen_light"
+     ]
+    }
+   },
+   "hints": {
+    "scene_name": "The human-readable scene label as free text \u2014 NOT a device reference.",
+    "affected_devices": "The unordered SET of devices the scene controls; membership matters, order does not \u2014 NOT @home_hub."
+   }
+  },
+  {
+   "id": "E08",
+   "level": 3,
+   "nl_intent": "@logistics, transfer order #ORD-5500 from warehouse @wh_north to warehouse @wh_south.",
+   "fields": {
+    "order_id": {
+     "kind": "ref",
+     "value": "#ORD-5500"
+    },
+    "source_warehouse": {
+     "kind": "ref",
+     "value": "@wh_north"
+    },
+    "dest_warehouse": {
+     "kind": "ref",
+     "value": "@wh_south"
+    }
+   },
+   "hints": {
+    "order_id": "The order being moved \u2014 NOT @logistics (the actor).",
+    "source_warehouse": "The ORIGIN the order leaves (from) \u2014 NOT the destination.",
+    "dest_warehouse": "The DESTINATION the order arrives at (to) \u2014 NOT the source."
+   }
+  },
+  {
+   "id": "E09",
+   "level": 2,
+   "nl_intent": "@home_hub, if @smoke_detector_kitchen triggers, send a critical alert to @homeowner_phone \u2014 do not alert the hub itself.",
+   "fields": {
+    "trigger_device": {
+     "kind": "ref",
+     "value": "@smoke_detector_kitchen"
+    },
+    "alert_recipient": {
+     "kind": "ref",
+     "value": "@homeowner_phone"
+    },
+    "severity": {
+     "kind": "enum",
+     "value": "critical"
+    }
+   },
+   "hints": {
+    "trigger_device": "The device whose event raises the alert (the cause) \u2014 NOT the alert's recipient.",
+    "alert_recipient": "Where the alert is delivered \u2014 NOT @home_hub and NOT the triggering detector.",
+    "severity": "Alert urgency level: one of info|warning|critical."
+   }
+  },
+  {
+   "id": "E10",
+   "level": 3,
+   "nl_intent": "@support_bot, escalate ticket #TKT-330 (for order #ORD-8120) to agent @supervisor_lin, mark it urgent, and note that customer @nina_patel is waiting.",
+   "fields": {
+    "ticket_id": {
+     "kind": "ref",
+     "value": "#TKT-330"
+    },
+    "order_id": {
+     "kind": "ref",
+     "value": "#ORD-8120"
+    },
+    "escalate_to": {
+     "kind": "ref",
+     "value": "@supervisor_lin"
+    },
+    "urgent": {
+     "kind": "bool",
+     "value": true
+    },
+    "customer": {
+     "kind": "ref",
+     "value": "@nina_patel"
+    }
+   },
+   "hints": {
+    "ticket_id": "The support ticket being escalated \u2014 NOT the order it concerns.",
+    "order_id": "The order the ticket is about \u2014 NOT the ticket id and NOT the customer.",
+    "escalate_to": "The agent who receives the escalation \u2014 NOT @support_bot (the actor) and NOT the customer.",
+    "urgent": "Boolean urgency flag; true here.",
+    "customer": "The end customer awaiting resolution \u2014 NOT the escalation target agent."
+   }
+  }
+ ]
+}

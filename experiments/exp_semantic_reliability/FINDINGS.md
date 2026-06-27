@@ -1,3 +1,5 @@
+> **Authoritative final report: `REPORT.md`** (executive summary + all results + future research).
+
 # Semantic-reliability research — findings (live)
 
 Attacking the real bottleneck (`PROBLEM.md`): reliable *semantic* encoding for agent messages.
