@@ -24,9 +24,13 @@
 > host is the **code-tuned** model (0.96 fidelity, 86% valid, best of all five formats). On
 > a *tokens-per-correct-message* basis AXON is best overall (31.9), but it buys **no latency
 > win** — reasoning models spend 3–5× more generation tokens "thinking" to emit valid AXON.
-> **Net:** not a general-purpose payload format, but a real, narrow seam — terse machine-
-> payloads between strong, structure-fluent (especially code-tuned) agents, where token cost
-> matters more than the last few points of fidelity.
+> **Net:** not a general-purpose payload format. We initially conceded a "narrow seam" (terse
+> payloads between strong code-tuned agents) — but a follow-up falsification of that seam
+> **closes it** (§6): an adversarial use-case panel kills 0/14 candidates, and on the corpus
+> free `gzip` beats raw AXON on the wire (12 vs 75 B/msg) while AXON's token edge is ~100%
+> structural overhead that prompt-caching erases (31%→~9%). The durable contribution is the
+> **negative result + falsification method**, not the language: *a general dense agent notation
+> essentially never beats JSON or a purpose-built schema, and here is why.*
 
 ---
 
@@ -371,28 +375,44 @@ thesis but corrects two single-run claims**:
 
 Given the honest landscape (§2), AXON should **not** chase the general payload slot: JSON
 owns it (universal, 100%-valid, training-ubiquitous), and TOON already owns token-efficient
-*tabular* payloads with real adoption. The seam this experiment actually supports is
-narrow but real:
+*tabular* payloads with real adoption. Earlier drafts of this report held out a "narrow but
+real seam" (terse payloads between strong code-tuned agents). **A follow-up falsification of
+that seam closes it.**
 
-> **Terse machine-to-machine payloads between strong, structure-fluent agents — especially
-> code-tuned models — in token-metered or bandwidth-constrained settings, where ~40% fewer
-> tokens is worth a few points of fidelity and both ends are known to be capable.**
+We ran an adversarial use-case panel — diverse generators propose candidate deployments where
+a general dense notation beats the alternatives; a skeptic then tries to *kill* each with the
+full arsenal (custom API / JSON+function-calling / protobuf-CBOR / TOON / grammar-constrained
+schema / the emission floor). **0 of 14 candidates survived.** They die to one structural
+contradiction and two measured economics (`wire_economics.py`):
 
-Conditions for that seam to pay off, all evidenced above: (1) both agents are large/
-code-tuned (capability floor); (2) cost is dominated by *payload* tokens, not generation
-*reasoning* tokens (else the thinking overhead erases the saving); (3) ideally paired with
-**grammar-constrained decoding** (unavailable on this box) to lift validity from 64% toward
-100% by construction — the single highest-leverage fix, since validity, not expressiveness,
-is AXON's binding constraint. Absent constrained decoding, AXON does not earn a general
-place; with it, the contest moves toward tokens-per-correct-message, where AXON leads on
-cost (~40% fewer wire tokens). But the follow-up (§4.6) shows the rescue is **partial, not
-clean**: forcing validity helps *weak* models a lot (gemma4 0.73→0.95) yet can *hurt* strong
-ones by turning honest parse-failures into valid-but-wrong messages on complex payloads. So
-the realistic niche is narrower still: **constrained-decoded AXON between strong/code-tuned
-agents for mostly-flat (non-deeply-compositional) payloads, with payload validation kept on
-the complex ones.** Venues for writing this up are scouted in `VENUES.md` (arXiv now;
-workshop targets MOSS@COLM, REALM@EMNLP, Negative-Results@EMNLP — several deadlines in the
-next 1–3 weeks).
+- **The counting-unit dilemma.** AXON's two requirements are mutually exclusive. For strict
+  validity to *matter*, the receiver must be a **deterministic parser** — but then the wire
+  bills **bytes**, where free `gzip` and binary codecs dominate. For cost to be denominated in
+  **tokens**, the receiver must be an **LLM** — but then validity is moot (sloppy AXON decodes
+  fine) and JSON ties-or-beats AXON on read-fidelity (§4.1: json_schema 0.959, json 0.938 vs
+  AXON 0.942). The regime where AXON wins is empty.
+- **gzip erases the density on the wire.** Raw AXON is 75 B/msg; **gzip(JSON) on a stream is
+  12 B/msg — 84% smaller than raw AXON** — and gzip(AXON) ≈ gzip(JSON) (10 vs 12 B). AXON's
+  raw density is just uncompressed redundancy that one `Content-Encoding: gzip` setting removes
+  for free, on either format.
+- **AXON's token saving is ~100% structural overhead.** Decomposed against the irreducible
+  ground-truth content (≈10 tok, identical across formats), AXON's 11.3-token edge over JSON is
+  *entirely* keys/envelope/syntax — exactly the redundancy that prompt-caching also discounts.
+  Model that structure cached at 0.1× and AXON's edge collapses from 31% to **~9%**.
+- The **codec reframe** (LLM never writes AXON; deterministic JSON↔AXON on the wire) is the
+  cleverest rescue and self-destructs: decode-before-LLM ⇒ byte wire ⇒ gzip/protobuf win;
+  raw-AXON-to-LLM ⇒ the reader returns, validity is moot, JSON ties on fidelity (and AXON was
+  *last* on composition *acting* in Exp 3, 66%).
+
+> **Verdict: AXON earns no defensible general place.** A purpose-built schema beats a general
+> notation on any known message type; JSON beats it for LLM readers; gzip + binary beat it on
+> any byte wire; caching erases its token edge; TOON owns the tabular case. The honest, novel
+> contribution is therefore **not the language but the falsification**: *when does a general
+> dense agent-communication notation beat JSON or a custom API? Essentially never — and here is
+> the measured decision boundary (read-tolerance, gzip, caching) that explains why.* The
+> capability-floor, write-hard/read-easy asymmetry, and deterministic-repair findings all stand
+> as evidence *for* that negative result. Venues fit it directly (`VENUES.md`): arXiv now;
+> Negative-Results@EMNLP, ICBINB, MOSS@COLM.
 
 ## 7. Limitations & honesty notes
 
