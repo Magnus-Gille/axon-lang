@@ -55,9 +55,10 @@ in *combining* them with the feedback-coding bounds.
 | 3 | same-model detection (self / receiver / +thesaurus) | recall **0.14** | the model can't catch its *own* systematic error — **shared-bias blind spot** |
 | 4 | **independent-verifier detection** (claude -p + thesaurus) | recall **0.50** (organic) | ✅ an independent view breaks the blind spot |
 | 5 | **bare + ARQ** (independent detect + patch) | **0.963 ± 0.011** | ✅ detect-and-correct is the **strongest single mechanism** |
-| 6 | **rigorous detection** (error-injection benchmark: 20 known role-swaps + 14 controls) | independent verifier **recall 1.00, precision 1.00, FPR 0.00** (direct & roundtrip & panel-majority) | ✅ valid-but-wrong is **reliably detectable** on the characteristic error — *not* an unsolvable silent killer |
+| 6 | **rigorous detection** (error-injection benchmark: 20 known role-swaps + 14 controls) | **capable independent** verifier (claude) **recall 1.00, prec 1.00, FPR 0.00**; **peer-tier** verifier (qwen3-30b) only **0.35** (vs 0.14 on its *own* errors) | ✅ detectable — but needs a verifier that is **both independent AND capable**; a peer-tier model is a poor judge even of errors it didn't make |
 | 7 | **robustness across senders** (thesaurus) | coder-80b 0.940→**0.986**; gpt-oss 0.850→**0.981**; gemma4/qwen35 → **0.000** (empty under constraint) | ✅ generalizes & **stronger on capable senders** (prevention alone → ~0.98); but **weak/heavy-reasoner senders fail constrained emission entirely** (capability floor at the structured-output layer) |
 | 8 | **stacked** thesaurus + ARQ (the ceiling) | 0.950 → 0.950 (**+0.000**) | prevention & detect-correct are **SUBSTITUTES, not complements** — both target role-confusion; stacking adds nothing once it's prevented |
+| 9 | **fidelity-aware (semantic) re-scoring** of thesaurus outputs (claude judge, 0 FP on controls) | exact-match 0.950 → **SEMANTIC 1.000** | ✅ the residual ~0.05 was **scorer strictness** (synonyms/case); thesaurus alignment is **semantically ~perfect** on a capable sender — the role-confusion bottleneck is *solved at the source* |
 
 ### The diagnosis (why exp.1 & 3 had to fail before 2b & 4 could work)
 The persistent errors are **semantic-role confusion**: the model puts the *recipient* in `target`,
@@ -140,17 +141,22 @@ everything: the dominant failure is a sender↔receiver *thesaurus mismatch* (Sh
 information theory) showing up as semantic-role confusion** (the model puts the recipient in
 `target`, the source in `root_cause`, the same way every time). From it:
 
-- **Prevention works and is cheap:** ship the shared field-semantics thesaurus in the *emitter
-  prompt* → 0.89→**0.95** (qwen3-30b), **~0.98** on capable senders (coder, gpt-oss). (Schema
-  descriptions don't work — the constraint engine drops them.)
-- **Detection of valid-but-wrong is essentially solvable** — but *only* with a **genuinely
-  independent** verifier holding the thesaurus: **recall 1.00 / precision 1.00** on a controlled
-  injection benchmark. Same-model self-check/self-consistency **can't** (0.14 / +0.000) — a
-  shared-bias blind spot. This refutes the "silent killer" pessimism *for the characteristic error*.
-- **Prevention and detect-correct are substitutes** (both reach ~0.96); the residual gap is a
-  harder, partly-artifactual class.
+- **Prevention works, is cheap, and on a capable sender is ~complete:** ship the shared
+  field-semantics thesaurus in the *emitter prompt* → exact-match 0.89→**0.95** (qwen3-30b),
+  **~0.98** on capable senders — and under a **fidelity-aware judge it is 1.000** (the residual
+  0.05 was exact-match scorer strictness on synonyms). So thesaurus alignment essentially *solves*
+  the role-confusion bottleneck at the source. (Schema descriptions don't work — the constraint
+  engine drops them; the thesaurus must be in the prompt.)
+- **Detection of valid-but-wrong is essentially solvable** — but *only* with a verifier that is
+  both **independent and capable** (holding the thesaurus): **recall 1.00 / precision 1.00** on a
+  controlled injection benchmark. Same-model self-check/self-consistency **can't** (0.14 / +0.000,
+  a shared-bias blind spot), and a *peer-tier* verifier is weak (0.35). This refutes the "silent
+  killer" pessimism for the characteristic error.
+- **Prevention and detect-correct are substitutes** (both target role-confusion; stacking → +0.000).
 - **The fix is alignment + an independent channel, not a denser format** — closing the AXON arc:
   AXON optimized the wrong variable; the right one is the shared thesaurus + cross-model verification.
+- **Capability floor:** the whole approach needs an instruct/capable sender — weak/heavy-reasoner
+  models (gemma4, qwen35-a3b) fail constrained emission entirely (empty output).
 
 **Cross-lingual payoff (the requested synthesis):** genuine, citation-sparse Soviet→LLM transfers
 carried real weight — Shreider (thesaurus) *was* the diagnosis; Burnashev (decision-feedback coding)

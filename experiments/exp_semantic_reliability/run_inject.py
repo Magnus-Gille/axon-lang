@@ -17,14 +17,16 @@ corrupted copy where that field's value is SWAPPED with another entity-role fiel
 Usage: python run_inject.py
 """
 from __future__ import annotations
-import json, os, subprocess, sys, copy, statistics as st
+import argparse, json, os, subprocess, sys, copy, statistics as st
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 M5 = os.path.join(HERE, "..", "exp_m5_falsification")
 sys.path.insert(0, M5)
 import conditions as C
+from m5_client import chat
 
 ENTITY_KINDS = {"ref", "text", "list_set", "list_ordered"}
+VERIFIER = "claude"  # "claude" (independent frontier) or a box model id (e.g. qwen3-30b-instruct)
 
 
 def gt_fields(t):
@@ -47,12 +49,15 @@ def injections(t):
     return out
 
 
-def claude(prompt):
-    try:
-        r = subprocess.run(["claude", "-p", prompt], capture_output=True, text=True, timeout=120, stdin=subprocess.DEVNULL)
-        return C.extract_json(r.stdout)
-    except Exception:
-        return ""
+def verify_call(prompt):
+    if VERIFIER == "claude":
+        try:
+            r = subprocess.run(["claude", "-p", prompt], capture_output=True, text=True, timeout=120, stdin=subprocess.DEVNULL)
+            return C.extract_json(r.stdout)
+        except Exception:
+            return ""
+    r = chat(VERIFIER, [{"role": "user", "content": prompt}], max_tokens=300, temperature=0.0)
+    return C.extract_json(r["content"]) if r["ok"] else ""
 
 
 def framing(t, fields, mode):
@@ -63,13 +68,16 @@ def framing(t, fields, mode):
            "roundtrip": 'Restate what each field asserts, then mark each correct/wrong vs the intent. ONLY JSON like {"target": false}.',
            "adversarial": 'Assume an entity was swapped into the wrong slot; name the wrong field(s). ONLY JSON like {"target": false}.'}[mode]
     try:
-        a = json.loads(claude(base + ask))
+        a = json.loads(verify_call(base + ask))
         return {k for k in t["fields"] if a.get(k) is False}
     except Exception:
         return set()
 
 
 def main():
+    global VERIFIER
+    ap=argparse.ArgumentParser(); ap.add_argument('--verifier',default='claude'); VERIFIER=ap.parse_args().verifier
+    print(f'verifier = {VERIFIER}')
     tasks = json.load(open(os.path.join(M5, "tasks.json")))["tasks"]
     cases = []  # (task, fields, injected_field_or_None)
     for t in tasks:
