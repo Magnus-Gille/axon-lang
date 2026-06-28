@@ -55,7 +55,7 @@ in *combining* them with the feedback-coding bounds.
 | 3 | same-model detection (self / receiver / +thesaurus) | recall **0.14** | the model can't catch its *own* systematic error — **shared-bias blind spot** |
 | 4 | **independent-verifier detection** (claude -p + thesaurus) | recall **0.50** (organic) | ✅ an independent view breaks the blind spot |
 | 5 | **bare + ARQ** (independent detect + patch) | **0.963 ± 0.011** | ✅ detect-and-correct is the **strongest single mechanism** |
-| 6 | **rigorous detection** (error-injection benchmark: 20 known role-swaps + 14 controls) | **capable independent** verifier (claude) **recall 1.00, prec 1.00, FPR 0.00**; **peer-tier** verifier (qwen3-30b) only **0.35** (vs 0.14 on its *own* errors) | ✅ detectable — but needs a verifier that is **both independent AND capable**; a peer-tier model is a poor judge even of errors it didn't make |
+| 6 | **rigorous detection** (error-injection benchmark: 20 known role-swaps + 14 controls) | **capable independent** verifier (claude) **recall 1.00, prec 1.00, FPR 0.00**; **peer-tier** verifier (qwen3-30b) only **0.35** (vs 0.14 on its *own* errors) | ✅ detectable for the *anticipated* error with a *focused* detector — needs a verifier **both independent AND capable**. **⚠ but see row 16:** a *generic* detector across diverse error types is weak (0.47) — detection is prompt-sensitive, not a general solution |
 | 7 | **robustness across senders** (thesaurus) | coder-80b 0.940→**0.986**; gpt-oss 0.850→**0.981**; gemma4/qwen35 → **0.000** (empty under constraint) | ✅ generalizes & **stronger on capable senders** (prevention alone → ~0.98); but **weak/heavy-reasoner senders fail constrained emission entirely** (capability floor at the structured-output layer) |
 | 8 | **stacked** thesaurus + ARQ (the ceiling) | 0.950 → 0.950 (**+0.000**) | prevention & detect-correct are **SUBSTITUTES, not complements** — both target role-confusion; stacking adds nothing once it's prevented |
 | 9 | **fidelity-aware (semantic) re-scoring** of thesaurus outputs (claude judge, 0 FP on controls) | exact-match 0.950 → **SEMANTIC 1.000** | ✅ the residual ~0.05 was **scorer strictness** (synonyms/case); thesaurus alignment is **semantically ~perfect** on a capable sender — the role-confusion bottleneck is *solved at the source* |
@@ -65,6 +65,7 @@ in *combining* them with the feedback-coding bounds.
 | 13 | **fresh-ambiguous set, capability gradient** (mid / capable / frontier senders) | bare **0.34 / 0.51 / 0.81** → thesaurus **1.00 / 1.00 / 1.00** (Δ +0.66 / +0.49 / +0.19) | ✅ definitive: ambiguity hurts **every** model (capability only *mitigates*, never eliminates); thesaurus alignment **fully fixes it for all**. Weak/reasoner senders (gemma4) fail to emit at all. |
 | 14 | **VoI-gated ARQ** (Kharkevich value-of-information × independent verifier) | high-VoI recall **1.00** at **0.60×** the verify cost | ✅ cheap reliability — verify only fields where an error changes the receiver's *action*; full protection on what matters at ~40% less cost (more savings in field-heavier domains; here VoI-median=5/5) |
 | 15 | **multi-hop relay** (A→B→C, ambiguous tasks, 3 hops) | bare **flat 0.48** every hop; thesaurus **flat 1.00** | errors don't *compound* — relaying just **copies**, so a role-confusion is *frozen in at first encoding* and persists unchanged (never self-corrects). **Encoding decides reliability; relays neither help nor hurt.** Alignment holds the whole chain. |
+| 16 | **detection across DIVERSE error types** (role-swap, ref-hallucination, enum/num/bool/list, 72 known errors) — *generic* verifier prompt | overall recall **0.47** (FPR **0.000**); role-swap fell **1.00→0.40** vs the *focused* detector | ⚠️ **detection is prompt-sensitive and does NOT generalize cheaply.** A *focused* detector for an *anticipated* error is near-perfect; a *generic* "check-everything" detector is weak-but-precise (catches <half, never false-flags). **Tempers row 6** and **reinforces prevention-first** — naming/alignment is robust; detection is a fragile backstop. |
 
 ### The diagnosis (why exp.1 & 3 had to fail before 2b & 4 could work)
 The persistent errors are **semantic-role confusion**: the model puts the *recipient* in `target`,
@@ -176,11 +177,13 @@ information theory) showing up as semantic-role confusion** (the model puts the 
     semantic fidelity **0.34 → 1.000 (+0.66)** — the effect is *larger* the more ambiguous the
     schema. Schema *descriptions* don't work (the constraint engine drops them); use the prompt.
   - **Runtime detection** (below).
-- **Detection of valid-but-wrong is essentially solvable** — but *only* with a verifier that is
-  both **independent and capable** (holding the thesaurus): **recall 1.00 / precision 1.00** on a
-  controlled injection benchmark. Same-model self-check/self-consistency **can't** (0.14 / +0.000,
-  a shared-bias blind spot), and a *peer-tier* verifier is weak (0.35). This refutes the "silent
-  killer" pessimism for the characteristic error.
+- **Detection of valid-but-wrong works for an *anticipated* error with a *focused* detector, but
+  does NOT generalize cheaply.** A capable *independent* verifier (holding the thesaurus) catches
+  the characteristic role-swap at **recall/precision 1.00** — but a *generic* "check-everything"
+  detector across six error types manages only **0.47 recall** (perfectly precise — never
+  false-flags). Same-model self-check/self-consistency **can't** detect at all (0.14 / +0.000, a
+  shared-bias blind spot); a *peer-tier* verifier is weak (0.35). **So detection is a fragile,
+  prompt-sensitive backstop — prevention (below) is the primary, robust mechanism.**
 - **Prevention and detect-correct are substitutes** (both target role-confusion; stacking → +0.000).
 - **The fix is alignment + an independent channel, not a denser format** — closing the AXON arc:
   AXON optimized the wrong variable; the right one is the shared thesaurus + cross-model verification.
