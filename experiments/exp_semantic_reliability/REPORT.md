@@ -63,6 +63,7 @@ in *combining* them with the feedback-coding bounds.
 | 11 | **external validity A** (10 fresh tasks, smart-home + e-commerce, *self-describing* names) | bare **1.000** = thesaurus 1.000 | well-named fresh tasks trigger **no role confusion** (confirms #10) |
 | 12 | **external validity B** (18 fresh tasks, financial/hospital/devops, *deliberately ambiguous* names) | bare **0.339** (semantic) → thesaurus **1.000** (**+0.661**) | ✅✅ the bottleneck **and** its fix **generalize to new domains**; effect is *larger* with more ambiguity. Rows 11+12 = a clean natural experiment isolating name-ambiguity as the cause |
 | 13 | **fresh-ambiguous set, capability gradient** (mid / capable / frontier senders) | bare **0.34 / 0.51 / 0.81** → thesaurus **1.00 / 1.00 / 1.00** (Δ +0.66 / +0.49 / +0.19) | ✅ definitive: ambiguity hurts **every** model (capability only *mitigates*, never eliminates); thesaurus alignment **fully fixes it for all**. Weak/reasoner senders (gemma4) fail to emit at all. |
+| 14 | **VoI-gated ARQ** (Kharkevich value-of-information × independent verifier) | high-VoI recall **1.00** at **0.60×** the verify cost | ✅ cheap reliability — verify only fields where an error changes the receiver's *action*; full protection on what matters at ~40% less cost (more savings in field-heavier domains; here VoI-median=5/5) |
 
 ### The diagnosis (why exp.1 & 3 had to fail before 2b & 4 could work)
 The persistent errors are **semantic-role confusion**: the model puts the *recipient* in `target`,
@@ -129,23 +130,27 @@ independent channel when it matters).
   the asymmetry result should be re-checked with a *peer-tier* independent box model.
 
 ## 7. Recommended future research
-1. **VoI-gated ARQ (the next novel mechanism).** Use Kharkevich/Stratonovich value-of-information
-   to verify only high-value × high-risk fields → most of the reliability at a fraction of the ARQ
-   cost. (RU value-of-info × ZH unequal-error-protection × the role-confusion risk model.) Directly
-   buildable on this harness.
-2. **Characterize the semantic confusion matrix** (which roles swap into which) across many
-   senders → a *matched* deterministic detector for the channel's known error pattern (Berger /
-   matched-code idea), pushing toward near-zero-cost detection of the common confusions.
-3. **Negotiated thesaurus (Clark grounding):** agents exchange/align field semantics *once* at
-   session start, then communicate — amortizes the thesaurus cost and handles open vocabularies.
-4. **Fidelity-aware (semantic) scoring** to remove the exact-match confound and get the true
-   ceiling; re-measure detection recall against semantic ground truth.
-5. **External validity:** replicate on a standard structured-extraction / function-calling dataset
-   and on a frontier sender, with a larger, multi-domain task set.
-6. **Abstain/epistemic-tagging at the source** (Gricean Quality × Relign): route low-evidence
+*(Done this session: VoI-gated ARQ — row 14; fidelity-aware scoring — row 9; frontier sender &
+capability gradient — row 13; external validity on 5 fresh domains — rows 11–13. Remaining:)*
+1. **External validity on a REAL/standard dataset** (function-calling / tool-use benchmark, not
+   synthetic) — the single most important remaining gap; our 42 tasks are all self-generated.
+2. **Open-vocabulary / negotiated thesaurus (Clark grounding):** sender and receiver with
+   *different* field names reconcile via a one-time mapping exchange — the open-ecosystem case
+   (different vendors) the pre-shared thesaurus assumes away.
+3. **Broader error model:** today's detection is validated on clean *role-swaps*; test value
+   errors, list drops, boolean flips, over-specification — does the mechanism generalize beyond
+   role-confusion?
+4. **Schema-ambiguity linter:** since ambiguous *names* are the root cause, build a design-time
+   tool that flags confusion-prone field names before deployment (prevention tooling).
+5. **Multi-hop compounding:** in an agent chain, does thesaurus-mismatch error compound, and does
+   alignment prevent it? (relevant to real multi-agent systems.)
+6. **Characterize the semantic confusion matrix** (which roles swap into which) → a matched
+   deterministic detector (Berger / matched-code).
+7. **Abstain/epistemic-tagging at the source** (Gricean Quality × Relign): route low-evidence
    values to a `hedged` slot so the receiver verifies only those — make silence audible.
-7. **Peer-tier independent verifier & 2-model panels** to confirm the listener-speaker asymmetry is
-   about *independence*, not just *capability*.
+
+*(Resolved this session: the verifier asymmetry is about **both** independence and capability — a
+peer-tier verifier got only 0.35 vs a capable independent one at 1.00; see row 6 of §4.)*
 
 ## Executive summary
 
@@ -193,9 +198,11 @@ thesaurus alignment, and naming/prompt/verification beat any notation.* The **im
 actionable** takeaway for practitioners: **name agent-message fields unambiguously** (free,
 eliminates most role confusion); ship the thesaurus in the prompt for schemas you can't rename;
 verify high-stakes messages with a different capable model. Before publishing, the remaining work
-(§7): a **larger multi-domain, multi-sender benchmark + a standard function-calling dataset** (to
-firm external validity past the n=24 here) and **VoI-gated ARQ** (the cheap-reliability mechanism).
-Highest-leverage next experiments: **the larger external benchmark**, then **VoI-gated ARQ**.
+(§7): a **standard function-calling / tool-use dataset** to firm external validity past our 42
+self-generated tasks (the single most important remaining gap), and the **open-vocabulary /
+negotiated-thesaurus** case (different agents, different field names). VoI-gated ARQ and the
+capability gradient are now done (§4 rows 13–14). Highest-leverage next experiment: **a real
+function-calling dataset.**
 
 *Artifacts:* `PROBLEM.md`, `crosslingual-synthesis.md`, `FINDINGS.md`, runnable
 `run_{selfconsistency,thesaurus,structured,detect,indep_verify,pipeline,compare,panel,inject}.py`.
