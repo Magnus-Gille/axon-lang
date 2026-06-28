@@ -15,8 +15,11 @@ confusion from ambiguous field *names*) — afflicts every model (bare 0.34 mid 
 frontier on ambiguous schemas). **Fix = thesaurus alignment, 3 equivalent forms → ~1.000:**
 unambiguous field names (free) · thesaurus in the emitter prompt · independent+capable verifier+ARQ.
 Externally validated on 28 fresh tasks / 5 domains. **Retired (don't reopen):** "make AXON better",
-"density wins", "intrinsic>extrinsic", "self-consistency/self-verify catches errors". **Next:**
-larger benchmark; VoI-gated ARQ.
+"density wins", "intrinsic>extrinsic", "self-consistency/self-verify catches errors". **Next (decided
+this session):** external validity on a REAL benchmark = **BFCL** (Berkeley Function Calling
+Leaderboard — Apache-2.0, local, deterministic per-arg scoring; derive "misrouted-value rate" =
+role-confusion), bare vs thesaurus; cross-validate on ComplexFuncBench travel traps. Plan in
+`experiments/exp_semantic_reliability/benchmark-plan.md`. (VoI-gated ARQ + multi-hop already done.)
 
 Two writeups: AXON negative-result (`exp_m5_falsification/REPORT.md`) + semantic-reliability
 (`exp_semantic_reliability/REPORT.md`) — a two-part story.
