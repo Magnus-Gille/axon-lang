@@ -134,8 +134,13 @@ independent channel when it matters).
 ## 7. Recommended future research
 *(Done this session: VoI-gated ARQ — row 14; fidelity-aware scoring — row 9; frontier sender &
 capability gradient — row 13; external validity on 5 fresh domains — rows 11–13. Remaining:)*
-1. **External validity on a REAL/standard dataset** (function-calling / tool-use benchmark, not
-   synthetic) — the single most important remaining gap; our 42 tasks are all self-generated.
+1. **External validity on a REAL/standard dataset** — the single most important remaining gap (42
+   tasks are all self-generated). **Plan decided (`benchmark-plan.md`): use BFCL** (Berkeley
+   Function Calling Leaderboard, Apache-2.0, local, deterministic per-arg scoring) — derive the
+   "misrouted-value rate" (right value, wrong slot) from its AST gold; run bare (names+types only)
+   vs thesaurus (arg-semantics gloss); first slice = 50 Parallel-Multiple on a local model.
+   Cross-validate on **ComplexFuncBench** travel traps (`fromId`/`toId`, `checkIn`/`checkOut`) for
+   genuinely confusable real-world names.
 2. **Open-vocabulary / negotiated thesaurus (Clark grounding):** sender and receiver with
    *different* field names reconcile via a one-time mapping exchange — the open-ecosystem case
    (different vendors) the pre-shared thesaurus assumes away.
