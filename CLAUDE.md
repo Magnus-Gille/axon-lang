@@ -1,6 +1,13 @@
-# AXON — Agent eXchange Optimized Notation
+# AXON — research repo (agent-to-agent communication)
 
-A research language for agent-to-agent communication. v0.1-experimental.
+> **⚠ READ BEFORE ASSUMING THE PROJECT GOAL.** This repo began as AXON, a dense agent-communication
+> *notation* (v0.1-experimental). **That thesis is FALSIFIED.** The project has pivoted to the
+> deeper question AXON exposed — **reliable *semantic* agent communication** — and found the answer
+> is **thesaurus alignment, not a notation**. The live research thread is
+> `experiments/exp_semantic_reliability/` (`REPORT.md`). Do **not** restart from "make AXON better",
+> "density/token-efficiency wins", or "intrinsic > extrinsic compositionality" — all retired (see
+> *Current State → Retired assumptions*). AXON parser/spec/tests below are kept as a working artifact
+> and the subject of the (now negative-result) AXON papers.
 
 ## Quick Reference
 
@@ -93,6 +100,34 @@ Every debate feeds Track B. All future debates must capture: per-point metadata,
 
 ## Current State
 
+### Current direction (2026-06-28) — the live thread
+**Reliable *semantic* agent communication** — `experiments/exp_semantic_reliability/REPORT.md`.
+The real bottleneck is a sender↔receiver **thesaurus mismatch** (semantic-role confusion: e.g. the
+recipient placed in a content field), triggered by **ambiguous field names** — it hits every model
+(bare fidelity mid 0.34 / capable 0.51 / frontier 0.81 on deliberately-ambiguous schemas).
+**Fix = thesaurus alignment, in three equivalent forms, all → ~1.000:** (1) unambiguous field names
+(free, design-time); (2) the thesaurus in the emitter *prompt* (schema descriptions are dropped);
+(3) an *independent + capable* verifier + ARQ for valid-but-wrong. Externally validated on 28 fresh
+tasks across 5 domains. Contribution: *"reliable agent comms is semantic-channel **alignment**, not
+notation."* On branch `axon-m5-replication`. **Next:** larger multi-domain/standard-dataset
+benchmark; VoI-gated ARQ (Kharkevich).
+
+### Retired assumptions — do NOT steer back to these
+- ❌ **"AXON (a dense notation) earns a place"** — falsified (M5 study + 0/14 use-case panel + wire
+  economics: gzip/binary/caching erase density; the deterministic regime favors structured outputs).
+- ❌ **"Intrinsic > extrinsic compositionality"** (the original thesis) — unsupported (Exp 3: AXON
+  last, 67% vs English 94–96%).
+- ❌ **"Token-density / a denser format is the win"** — the cost is *semantic alignment*, not density.
+- ❌ **"Self-consistency / self-verification catches the errors"** — no (shared-bias blind spot:
+  +0.000 fidelity / 0.14 recall). Detection needs an *independent, capable* verifier.
+
+### Two writeups in flight (a two-part story)
+1. **AXON negative result + falsification methodology** — `experiments/exp_m5_falsification/REPORT.md`
+   (PR #2 merged; firming/debate/in-context-pilot on PR #3). *"When does a dense agent notation beat
+   JSON or a custom API? Essentially never."*
+2. **Semantic-reliability (the constructive answer)** — `experiments/exp_semantic_reliability/REPORT.md`.
+
+### Historical experiment log (AXON evaluation — concluded; kept for provenance)
 - Spec frozen at `v0.1-experimental` — 4 gate-blocking parser bugs fixed
 - Conformance test corpus: 69 tests passing
 - Validator: 3-level checker (syntax, tier compliance, semantics)
@@ -107,7 +142,7 @@ Every debate feeds Track B. All future debates must capture: per-point metadata,
 - **AISP comparison complete**: All benchmarks (A, B, C, 1, 2, 3). AISP 5.1x more tokens than AXON. See `experiments/exp_aisp_comparison/RESULTS.md`.
 - Exp 0/1/3 runner uses CLI tools (`claude -p`, `codex exec`) — zero API cost
 - ~100 critique points raised, ~85% resolved
-- **Paper reframing needed**: Original thesis (intrinsic compositionality > extrinsic) not supported by judge-scored data. See `STATUS.md`.
+- **Paper reframing — RESOLVED** (don't reopen): original thesis unsupported → pivoted to the two-part negative-result + semantic-alignment story (see *Current direction* above). Not "needs a new thesis."
 - **Ecosystem landscape** (Mar 2026): 15+ protocols mapped across 5 layers. AXON = Layer 3 (content format). See `debate/ecosystem-landscape-2026.md`.
 
 ## Conventions

@@ -1,0 +1,24 @@
+{"key": "qwen3-30b-instruct|axon|T10|0", "level": 2, "orig_fid": 1.0, "rep_fid": 1.0, "rules": ["R2_quote_time"]}
+{"key": "qwen3-30b-instruct|axon|T14|0", "level": 3, "orig_fid": 0.68, "rep_fid": 0.68, "rules": ["R2_quote_time"]}
+{"key": "gemma4|axon|T10|0", "level": 2, "orig_fid": 1.0, "rep_fid": 1.0, "rules": ["R2_quote_time", "R3_tag_record"]}
+{"key": "gemma4|axon|T11|0", "level": 3, "orig_fid": 0.8333, "rep_fid": 0.8333, "rules": ["R3_tag_record"]}
+{"key": "qwen3-coder-next-80b|axon|T14|0", "level": 3, "orig_fid": 0.8572, "rep_fid": 0.8, "rules": ["R2_quote_time", "R3_tag_record"]}
+{"key": "gpt-oss-120b|axon|T10|0", "level": 2, "orig_fid": 1.0, "rep_fid": 1.0, "rules": ["R2_quote_time"]}
+{"key": "gpt-oss-120b|axon|T12|0", "level": 3, "orig_fid": 0.75, "rep_fid": 0.75, "rules": ["R3_tag_record"]}
+{"key": "gemma4|axon|T14|0", "level": 3, "orig_fid": 0.68, "rep_fid": 0.68, "rules": ["R2_quote_time"]}
+{"key": "qwen35-a3b|axon|T08|0", "level": 2, "orig_fid": 1.0, "rep_fid": 1.0, "rules": ["R3_tag_record"]}
+{"key": "qwen35-a3b|axon|T10|0", "level": 2, "orig_fid": 1.0, "rep_fid": 1.0, "rules": ["R2_quote_time"]}
+{"key": "qwen3-30b-instruct|axon|T09|1", "level": 2, "orig_fid": 0.8, "rep_fid": 0.8, "rules": ["R1_routing_list"]}
+{"key": "qwen3-30b-instruct|axon|T10|1", "level": 2, "orig_fid": 1.0, "rep_fid": 1.0, "rules": ["R2_quote_time"]}
+{"key": "qwen3-30b-instruct|axon|T14|1", "level": 3, "orig_fid": 0.68, "rep_fid": 0.68, "rules": ["R2_quote_time"]}
+{"key": "qwen3-coder-next-80b|axon|T08|1", "level": 2, "orig_fid": 1.0, "rep_fid": 1.0, "rules": ["R3_tag_record"]}
+{"key": "qwen3-coder-next-80b|axon|T14|1", "level": 3, "orig_fid": 0.8572, "rep_fid": 1.0, "rules": ["R2_quote_time", "R3_tag_record"]}
+{"key": "gpt-oss-120b|axon|T08|1", "level": 2, "orig_fid": 1.0, "rep_fid": 1.0, "rules": ["R3_tag_record"]}
+{"key": "gpt-oss-120b|axon|T09|1", "level": 2, "orig_fid": 1.0, "rep_fid": 1.0, "rules": ["R1_routing_list"]}
+{"key": "gpt-oss-120b|axon|T12|1", "level": 3, "orig_fid": 0.75, "rep_fid": 0.75, "rules": ["R3_tag_record"]}
+{"key": "gemma4|axon|T02|1", "level": 1, "orig_fid": 1.0, "rep_fid": 1.0, "rules": ["R3_tag_record"]}
+{"key": "qwen3-30b-instruct|axon|T10|2", "level": 2, "orig_fid": 1.0, "rep_fid": 1.0, "rules": ["R2_quote_time"]}
+{"key": "qwen3-30b-instruct|axon|T14|2", "level": 3, "orig_fid": 0.68, "rep_fid": 0.68, "rules": ["R2_quote_time"]}
+{"key": "qwen3-30b-instruct|axon|T09|3", "level": 2, "orig_fid": 0.8, "rep_fid": 0.8, "rules": ["R1_routing_list"]}
+{"key": "qwen3-30b-instruct|axon|T10|3", "level": 2, "orig_fid": 1.0, "rep_fid": 1.0, "rules": ["R2_quote_time"]}
+{"key": "qwen3-30b-instruct|axon|T14|3", "level": 3, "orig_fid": 0.68, "rep_fid": 0.68, "rules": ["R2_quote_time"]}

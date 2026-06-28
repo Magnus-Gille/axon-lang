@@ -24,9 +24,14 @@
 > host is the **code-tuned** model (0.96 fidelity, 86% valid, best of all five formats). On
 > a *tokens-per-correct-message* basis AXON is best overall (31.9), but it buys **no latency
 > win** — reasoning models spend 3–5× more generation tokens "thinking" to emit valid AXON.
-> **Net:** not a general-purpose payload format, but a real, narrow seam — terse machine-
-> payloads between strong, structure-fluent (especially code-tuned) agents, where token cost
-> matters more than the last few points of fidelity.
+> **Net:** not a general-purpose payload format. We initially conceded a "narrow seam" (terse
+> payloads between strong code-tuned agents); a follow-up falsification **closes that wire-format
+> seam** (§6): an adversarial panel kills 0/14 candidates, and on the corpus *stream*-`gzip` beats
+> raw AXON (12 vs 75 B/msg) while AXON's token edge is ~100% structural overhead. **Scoped after
+> cross-model debate (§6, `debate/`):** the falsification holds for **free-form/weakly-scaffolded
+> LLM-emitted** AXON; two regimes stay *untested* — in-context deterministic-DSL use and
+> human-authored constrained-channel use (drone-C2). The durable contribution is the **negative
+> result + falsification method + decision boundary**, not the language.
 
 ---
 
@@ -171,6 +176,12 @@ are roughly flat across the size axis:
 | gpt-oss-120b (large) | 0.947 | 71% | struct_eng 0.964 | **YES** |
 | qwen3-coder-80b (code) | **0.960** | 86% | json_schema 0.954 | **YES** |
 
+> ⚠ **These are single-run numbers; the validity column does not replicate.** With n=4 runs
+> (§4.9) the three capable models are statistically tied (~66–70% validity) and the
+> "86%" code-model peak is noise. Read the *fidelity* column (robust) and treat the per-model
+> *validity* figures as indicative only — the firmed structure is a weak→capable **threshold**,
+> not a smooth ladder.
+
 This is the headline. The intuition that a constrained notation would *scaffold* weak
 models is **falsified**: on the small/mid models AXON's validity collapses to 43–64% and
 its fidelity trails the incumbents by 0.04–0.23. AXON has a steep **capability floor** —
@@ -307,6 +318,39 @@ it carries no signal.
   (mean −0.084): AXON matches the incumbent on most cells and is dragged down by a minority
   of hard failures.
 
+### 4.9 Replication & robustness firming (multi-run + repair)
+
+A follow-up campaign added **2–4 runs per cell** on the headline models (3 models × 4 runs;
+gemma4 × 2–4; qwen35-a3b partial) plus a cross-reader sweep and a deterministic-repair probe
+(`replication_stats.py`, `axon_repair.py`, `OVERNIGHT_FINDINGS.md`). It **strengthens the core
+thesis but corrects two single-run claims**:
+
+- **The capability floor is a *syntactic-emission* floor, not a semantic one.** Decoded-only
+  fidelity is flat and high across *every* model (0.91–0.98, run-to-run SD ≈ 0). AXON is
+  recovered faithfully *once it parses*; **all** capability dependence lives in **validity**.
+- **Validity is a *threshold*, not a smooth ladder — and there is no code-model peak.** With
+  n=4, the three capable models are statistically indistinguishable (qwen3-30b 66±8, gpt-oss
+  70±8, qwen3-coder 68±11); the weak models sit far below (gemma4 36±6, qwen35 39±18,
+  *complete runs only*). **The §4.2 single-run "code model 86% valid, best host" was noise** —
+  the corrected picture is a weak-vs-capable **step** (~37% → ~68% plateau, a clean ~30-pt gap),
+  not a monotonic climb. *(Methodological note: time-boxed **partial** runs bias validity
+  upward — they cover only the early/easy L1 tasks — so the ladder uses complete runs only.)*
+- **The floor is purely sender-side (firmed).** Decoding the same AXON messages with readers of
+  differing capability gives flat fidelity (qwen3-30b 0.945, gpt-oss 0.951, qwen3-coder 0.930):
+  hard to *write*, easy to *read*.
+- **~Half the floor is removable for free, safely.** A 15-line deterministic, meaning-preserving
+  normalizer (quote bare times, tag bare records, bracket multi-receiver routing) makes **49%**
+  of invalid AXON parse — recovery is **uniform across capability** and produces **0 valid-but-
+  wrong** (the repaired messages decode at the same fidelity). Effective parse-validity rises
+  +13–21 pts (capable models → 82–85%). The residual decomposes into multi-error surface slips
+  and **genuine expressiveness gaps** (comparisons / member-access in conditionals,
+  units-glued-to-identifiers) that AXON's grammar cannot express — an AXON *design* limit, not
+  a model failure.
+- **Practical upshot:** AXON's strict validity matters **only for its own deterministic-parse
+  pitch** (machine-parse, no LLM). For an LLM reader, even *invalid* AXON decodes at ~0.88, so
+  validity is nearly irrelevant and JSON would serve as well. Where the no-LLM-parse pitch is
+  the point, the free preprocessor is the highest-leverage fix on the validity axis.
+
 ## 5. Verdict (against the pre-registered criteria)
 
 - **Falsified overall (per the pre-registered criterion): NO — but it fails as a
@@ -332,28 +376,60 @@ it carries no signal.
 
 Given the honest landscape (§2), AXON should **not** chase the general payload slot: JSON
 owns it (universal, 100%-valid, training-ubiquitous), and TOON already owns token-efficient
-*tabular* payloads with real adoption. The seam this experiment actually supports is
-narrow but real:
+*tabular* payloads with real adoption. Earlier drafts of this report held out a "narrow but
+real seam" (terse payloads between strong code-tuned agents). **A follow-up falsification of
+that seam closes it.**
 
-> **Terse machine-to-machine payloads between strong, structure-fluent agents — especially
-> code-tuned models — in token-metered or bandwidth-constrained settings, where ~40% fewer
-> tokens is worth a few points of fidelity and both ends are known to be capable.**
+We ran an adversarial use-case panel — diverse generators propose candidate deployments where
+a general dense notation beats the alternatives; a skeptic then tries to *kill* each with the
+full arsenal (custom API / JSON+function-calling / protobuf-CBOR / TOON / grammar-constrained
+schema / the emission floor). **0 of 14 candidates survived.** They die to one structural
+contradiction and two measured economics (`wire_economics.py`):
 
-Conditions for that seam to pay off, all evidenced above: (1) both agents are large/
-code-tuned (capability floor); (2) cost is dominated by *payload* tokens, not generation
-*reasoning* tokens (else the thinking overhead erases the saving); (3) ideally paired with
-**grammar-constrained decoding** (unavailable on this box) to lift validity from 64% toward
-100% by construction — the single highest-leverage fix, since validity, not expressiveness,
-is AXON's binding constraint. Absent constrained decoding, AXON does not earn a general
-place; with it, the contest moves toward tokens-per-correct-message, where AXON leads on
-cost (~40% fewer wire tokens). But the follow-up (§4.6) shows the rescue is **partial, not
-clean**: forcing validity helps *weak* models a lot (gemma4 0.73→0.95) yet can *hurt* strong
-ones by turning honest parse-failures into valid-but-wrong messages on complex payloads. So
-the realistic niche is narrower still: **constrained-decoded AXON between strong/code-tuned
-agents for mostly-flat (non-deeply-compositional) payloads, with payload validation kept on
-the complex ones.** Venues for writing this up are scouted in `VENUES.md` (arXiv now;
-workshop targets MOSS@COLM, REALM@EMNLP, Negative-Results@EMNLP — several deadlines in the
-next 1–3 weeks).
+- **The counting-unit dilemma.** AXON's two requirements are mutually exclusive. For strict
+  validity to *matter*, the receiver must be a **deterministic parser** — but then the wire
+  bills **bytes**, where free `gzip` and binary codecs dominate. For cost to be denominated in
+  **tokens**, the receiver must be an **LLM** — but then validity is moot (sloppy AXON decodes
+  fine) and JSON ties-or-beats AXON on read-fidelity (§4.1: json_schema 0.959, json 0.938 vs
+  AXON 0.942). *Caveat (cross-model debate, `debate/axon-falsification-pivot-*`): the dilemma has
+  one **untested** mixed regime — an LLM emits a message **in-prompt** (token-billed) that a
+  deterministic tool parses (validity matters) with **no compression layer** (you can't gzip a
+  prompt). Both horns coincide. We have not measured it, so we do not claim it empty — see §9.*
+- **gzip and binary erase the density on the wire (for batched streams).** Raw AXON is 75 B/msg;
+  **gzip(JSON) on a *stream* is 12 B/msg — 84% smaller than raw AXON** — and gzip(AXON) ≈
+  gzip(JSON) (10 vs 12 B): AXON's raw density is cross-message redundancy `Content-Encoding: gzip`
+  removes for free. **Caveat:** this is *stream* gzip (shared compression context); **per-message
+  gzip of an isolated tiny message is 119 B for JSON > 75 B raw AXON** (gzip overhead dominates),
+  so for event-driven single messages raw AXON's density *does* survive — the kill is the batched
+  case. Binary settles the byte wire regardless: AXON's *only* raw-byte win is over schemaless
+  binary-with-keys
+  (CBOR/msgpack ≈98 B), but **schema-stripped positional binary (protobuf-like) is 56 B raw /
+  8 B gzipped, beating AXON (75 / 10)** — and the deterministic-parser regime where AXON's
+  validity matters is exactly the schema regime where positional binary applies.
+- **AXON's token saving is ~100% structural overhead.** Decomposed against the irreducible
+  ground-truth content (≈10 tok, identical across formats), AXON's 11.3-token edge over JSON is
+  *entirely* keys/envelope/syntax — exactly the redundancy that prompt-caching also discounts.
+  Model that structure cached at 0.1× and AXON's edge collapses from 31% to **~9%**.
+- The **codec reframe** (LLM never writes AXON; deterministic JSON↔AXON on the wire) is the
+  cleverest rescue and self-destructs: decode-before-LLM ⇒ byte wire ⇒ gzip/protobuf win;
+  raw-AXON-to-LLM ⇒ the reader returns, validity is moot, JSON ties on fidelity (and AXON was
+  *last* on composition *acting* in Exp 3, 66%).
+
+> **Verdict (scoped — narrowed after cross-model debate, `debate/axon-falsification-pivot-summary.md`).**
+> The evidence falsifies AXON as a **free-form / weakly-scaffolded LLM-emitted general/default
+> payload notation** under the tested distribution, and closes the large-model token-**wire**
+> pitch under *stream*-gzip + binary-schema + LLM-reader assumptions: a purpose-built schema beats
+> a general notation on any known message type, JSON beats it for LLM readers, gzip+binary beat it
+> on the batched byte wire, caching plausibly erases its token edge, and TOON owns the tabular
+> case. **Two regimes remain UNTESTED — separate theses, not falsified:** (i) *in-context
+> deterministic-DSL* use (token-billed, deterministically parsed, no compression layer); (ii)
+> *human/planner-authored* AXON for constrained tactical channels (the stored drone-C2 scoped-use
+> decision, which sidesteps the sender-side emission floor entirely — see §9). The durable, novel
+> contribution is **not the language but the falsification method + the decision boundary**: the
+> write-hard/read-easy asymmetry, the sender-side syntactic-emission floor, validity-vs-fidelity
+> separation, deterministic repair, and a reusable adversarial-falsification harness. Venues
+> (`VENUES.md`): arXiv now; Negative-Results@EMNLP, ICBINB, MOSS@COLM — **after** the in-context-DSL
+> pilot (§9) and with the scope label disciplined (payload-notation vs communication-protocol).
 
 ## 7. Limitations & honesty notes
 
@@ -364,9 +440,49 @@ next 1–3 weeks).
 - `qwen35-a3b` and `gemma4` are heavy reasoners; early cells were budget-truncated and
   re-run with larger budgets (the truncations were a harness artifact, not a format
   failure — see §4).
-- Replication: single run per cell for the headline (the box's serial throughput and a
-  pathologically verbose small model made a full second pass infeasible overnight).
+- Replication: the *original* headline tables (§4.1–4.2) are single-run. A follow-up added
+  **2–4 runs** on the headline models and 2 runs on gemma4 (§4.9): decoded **fidelity is
+  stable** (run-to-run SD ≈ 0), but **per-model validity is noisier** than one run implied —
+  hence the §4.2 validity column is corrected to a threshold (not a ladder) in §4.9.
+  qwen35-a3b remains under-sampled (pathologically verbose; partial 2nd run).
 
 ## 8. Reproduce
 
 See `README.md`. `bash run_all.sh`, then `python analyze.py`.
+
+## 9. Scope, untested regimes & next step (post cross-model debate)
+
+A Claude↔Codex adversarial debate (`debate/axon-falsification-pivot-summary.md`, 2026-06-27)
+upheld the *direction* of the pivot but **narrowed the universal claim**. Two corrections and a
+required scope split:
+
+**Two distinct theses — do not conflate.** This study tests *one* of them.
+1. **AXON as a free-form / weakly-scaffolded LLM-emitted general/default payload notation** — the
+   object of this study. Falsified under the tested distribution (sender-side emission floor, no
+   read-fidelity upside over JSON, weak economics under stream-gzip/binary/cached regimes).
+2. **AXON as a human/planner-authored constrained-channel intent DSL** — *not* tested here. A
+   stored first-principles decision (`decisions/drone-lab-c2-protocol/axon-fit-evaluation`,
+   2026-04-24, "use it, but scoped") evaluates AXON as the intent layer over **kbps tactical
+   radios**, explicitly **human/planner-authored with LLMs only on the read side** — which
+   *sidesteps the emission floor entirely* — valued for mission-command semantics, ASCII
+   inspectability, and bandwidth on channels with no compression layer. Our evidence says nothing
+   about this thesis; "essentially never" wrongly swept it in.
+
+**Untested mixed regime (the counting-unit dilemma's hole).** In-context deterministic-DSL use —
+an LLM emits a message in-prompt (token-billed) that a deterministic tool parses (validity
+matters) with no gzip/binary layer — satisfies both horns at once and is unmeasured.
+
+**Required edits before any paper claim:** (a) scope the negative to "free-form/weakly-scaffolded
+LLM-emitted" (not "LLM-emitted," which would include constrained decoding / structured outputs);
+(b) the title/abstract must **pick** "payload notation emitted by LLMs" (protocol deferral OK) or
+"agent-communication notation" (then NAK/ERR/reject-retry state-machine accounting is mandatory —
+AXON's spec defines these and they are untested); (c) label the prompt-caching 31%→9% as a
+sensitivity model, and report per-message / stream / no-compression byte regimes separately.
+
+**Single most important next step (agreed): a minimal in-context deterministic-DSL falsification
+pilot** — reuse the 14 tasks; arms = AXON / AXON+repair / AXON+true-constrained-decoding / compact
+minified JSON / JSON structured-outputs / TOON / one hand-built task-specific DSL; ≥1 capable local
++ 1 frontier sender; account marginal-vs-cached tokens, per-message+stream gzip, binary-schema
+bytes, and live parse→validate→NAK/repair/retry/fallback cost. If AXON loses there too, the scoped
+negative result has a clean boundary and is publishable; if it ties/wins, the thesis becomes "the
+only surviving niche for dense agent notation is in-prompt deterministic DSLs — here is the boundary."

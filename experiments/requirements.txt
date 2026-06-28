@@ -3,3 +3,6 @@ numpy>=1.24.0
 scipy>=1.11.0
 statsmodels>=0.14.0
 pandas>=2.0.0
+# wire_economics.py — binary-codec byte comparison (KILLER 1b)
+cbor2>=5.0.0
+msgpack>=1.0.0

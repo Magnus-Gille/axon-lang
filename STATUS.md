@@ -1,7 +1,30 @@
 # AXON Project Status
 
-**Last session:** 2026-06-26 (overnight autonomous — M5 falsification campaign)
-**Branch:** axon-m5-falsification (PR pending)
+**Last session:** 2026-06-28 (autonomous — semantic-reliability research)
+**Branch:** axon-m5-replication (PRs #2 merged, #3 open)
+
+## ⚡ CURRENT DIRECTION (read first) — semantic-channel alignment, NOT notation
+
+The project pivoted twice and must not steer back. (1) The original *intrinsic-compositionality*
+thesis was **unsupported**. (2) AXON-as-a-dense-notation was **falsified** (M5 study + use-case
+panel + wire economics). (3) The live thread is now **reliable *semantic* agent communication**:
+`experiments/exp_semantic_reliability/REPORT.md` is authoritative.
+
+**Finding:** the real bottleneck is a sender↔receiver **thesaurus mismatch** (semantic-role
+confusion from ambiguous field *names*) — afflicts every model (bare 0.34 mid / 0.51 capable / 0.81
+frontier on ambiguous schemas). **Fix = thesaurus alignment, 3 equivalent forms → ~1.000:**
+unambiguous field names (free) · thesaurus in the emitter prompt · independent+capable verifier+ARQ.
+Externally validated on 28 fresh tasks / 5 domains. **Retired (don't reopen):** "make AXON better",
+"density wins", "intrinsic>extrinsic", "self-consistency/self-verify catches errors". **Next (decided
+this session):** external validity on a REAL benchmark = **BFCL** (Berkeley Function Calling
+Leaderboard — Apache-2.0, local, deterministic per-arg scoring; derive "misrouted-value rate" =
+role-confusion), bare vs thesaurus; cross-validate on ComplexFuncBench travel traps. Plan in
+`experiments/exp_semantic_reliability/benchmark-plan.md`. (VoI-gated ARQ + multi-hop already done.)
+
+Two writeups: AXON negative-result (`exp_m5_falsification/REPORT.md`) + semantic-reliability
+(`exp_semantic_reliability/REPORT.md`) — a two-part story.
+
+---
 
 ## Session 2026-06-26 — M5 Falsification Campaign (local open models)
 
