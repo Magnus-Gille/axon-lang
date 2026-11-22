@@ -28,7 +28,7 @@ sys.path.insert(0, os.path.join(HERE, "..", "..", "src"))
 
 import conditions as C
 import validators as V
-from m5_client import chat
+from m5_client import chat, offset_seed, seed_arg
 
 try:
     import tiktoken
@@ -92,6 +92,8 @@ def main():
     ap.add_argument("--out", default=os.path.join(HERE, "results", "encode.jsonl"))
     ap.add_argument("--tasks-file", default=os.path.join(HERE, "tasks.json"))
     ap.add_argument("--temp", type=float, default=0.2)
+    ap.add_argument("--seed", type=seed_arg, default=None,
+                    help="base sampling seed; run r is sent seed+r. Default: no seed (as in the 2026-06 campaign)")
     ap.add_argument("--max-tokens", type=int, default=0)
     ap.add_argument("--limit", type=int, default=0)
     args = ap.parse_args()
@@ -121,7 +123,8 @@ def main():
         if key in done:
             continue
         msgs = C.build_encode_messages(task, cond)
-        r = chat(args.model, msgs, max_tokens=maxtok, temperature=args.temp)
+        seed = offset_seed(args.seed, run)
+        r = chat(args.model, msgs, max_tokens=maxtok, temperature=args.temp, seed=seed)
         msg = C.extract_message(r["content"], cond) if r["ok"] else ""
         valid = validity(cond, msg) if r["ok"] else False
         usage = r.get("usage", {})
@@ -145,6 +148,8 @@ def main():
             "finish_reason": r.get("finish_reason"),
             "error": r["error"],
             "attempts": r.get("attempts"),
+            "temperature": r["sampling"]["temperature"],
+            "seed": r["sampling"]["seed"],
         }
         out.write(json.dumps(rec) + "\n")
         out.flush()
