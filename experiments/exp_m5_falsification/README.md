@@ -134,3 +134,19 @@ export M5_AUTH_FILE=/path/to/.m5auth
 bash run_all.sh
 python analyze.py            # re-aggregate at any time (safe on partial data)
 ```
+
+## Sampling and seeds (added 2026-11-22)
+
+The 2026-06 campaign ran **unseeded**: encode at temperature 0.2 (`run_encode.py`), the
+retry-until-valid rescue at 0.4 (`run_constrained.py`), and the decoder at 0.0
+(`run_decode.py`). The M5 gateway's `/v1/chat/completions` route sends these temperatures to
+llama.cpp unchanged. It has no temperature floor; that floor only exists in the gateway's own
+`/delegate` client. A rerun therefore reproduces the *distribution* of results, not the exact
+samples, and the published numbers stay as they are.
+
+All three runners now take `--seed <n>`. The default is still no seed, so a rerun matches the
+preregistered protocol. Each result row records the `temperature` and `seed` it was sent with
+(`seeds` per attempt for the constrained runner). Repeated samples get distinct seeds: encode run
+*r* uses `seed + r`, and retry attempt *a* uses `seed + a`. Transport retries inside
+`m5_client.chat` resend the same seed. The resume key does not include the seed, so use a new
+`--out` file when you change it. Offline client check: `python3 -m unittest test_m5_client`.

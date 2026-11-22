@@ -52,6 +52,8 @@ def main():
     ap.add_argument("--models", default=",".join(CAPABLE))
     ap.add_argument("--k", type=int, default=4)
     ap.add_argument("--temp", type=float, default=0.4)
+    ap.add_argument("--seed", type=int, default=None,
+                    help="base sampling seed; retry attempt a is sent seed+a so resamples differ. Default: no seed")
     ap.add_argument("--out", default=os.path.join(HERE, "results", "constrained_encode.jsonl"))
     ap.add_argument("--tasks-file", default=os.path.join(HERE, "tasks.json"))
     args = ap.parse_args()
@@ -75,8 +77,11 @@ def main():
             lat = 0.0
             attempts = 0
             final_msg, final_ok, final_valid = "", False, False
+            seeds = []
             for a in range(args.k):
-                r = chat(model, msgs, max_tokens=budget, temperature=args.temp)
+                seed = None if args.seed is None else args.seed + a
+                seeds.append(seed)
+                r = chat(model, msgs, max_tokens=budget, temperature=args.temp, seed=seed)
                 attempts += 1
                 if r["ok"]:
                     gen_tokens += (r["usage"].get("completion_tokens") or 0)
@@ -98,6 +103,8 @@ def main():
                 "gen_tokens": gen_tokens,
                 "completion_tokens": gen_tokens,
                 "latency_s": round(lat, 2),
+                "temperature": args.temp,
+                "seeds": seeds,  # one per attempt actually sent; None = no seed
             }
             out.write(json.dumps(rec) + "\n")
             out.flush()

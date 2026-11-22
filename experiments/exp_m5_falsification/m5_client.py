@@ -13,6 +13,12 @@ Operational facts learned by probing the box (2026-06-25):
   * Thinking models (qwen35-a3b, gpt-oss-120b, tongyi-dr) spend completion
     tokens on a hidden reasoning channel and return EMPTY content if the
     max_tokens budget is too small. Always give a generous budget.
+
+Sampling record (added 2026-11-22): every result carries ``sampling`` with the
+temperature and seed actually sent. The gateway's /v1/chat/completions route
+forwards both to llama.cpp unchanged (no temperature floor on that route).
+``seed=None`` sends no seed, which is how the 2026-06 campaign ran: those
+results are unseeded, so a rerun reproduces the distribution, not the samples.
 """
 from __future__ import annotations
 
@@ -49,12 +55,19 @@ def chat(
     timeout: int = 200,
     retries: int = 4,
     backoff: float = 6.0,
+    seed: int | None = None,
 ) -> dict:
     """Single chat completion. Returns a result dict (never raises).
 
     Result keys: ok, content, reasoning, usage, latency_s, finish_reason,
-    error, attempts.
+    error, attempts, sampling.
+
+    ``seed``: explicit sampling seed (non-negative int) or None for no seed.
+    Transport retries resend the same seed: they repeat one request, they are
+    not new samples.
     """
+    if seed is not None and (not isinstance(seed, int) or isinstance(seed, bool) or seed < 0):
+        raise ValueError(f"seed must be a non-negative int or None, got {seed!r}")
     url = f"{BASE}/chat/completions"
     payload = {
         "model": model,
@@ -62,6 +75,9 @@ def chat(
         "max_tokens": max_tokens,
         "temperature": temperature,
     }
+    if seed is not None:
+        payload["seed"] = seed
+    sampling = {"temperature": temperature, "seed": seed}
     data = json.dumps(payload).encode()
     last_err = None
     for attempt in range(retries):
@@ -91,6 +107,7 @@ def chat(
                 "finish_reason": choice.get("finish_reason"),
                 "error": None,
                 "attempts": attempt + 1,
+                "sampling": sampling,
             }
         except urllib.error.HTTPError as e:
             try:
@@ -112,6 +129,7 @@ def chat(
         "finish_reason": None,
         "error": last_err,
         "attempts": retries,
+        "sampling": sampling,
     }
 
 
