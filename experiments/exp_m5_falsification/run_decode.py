@@ -23,7 +23,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 
 import conditions as C
-from m5_client import chat
+from m5_client import chat, seed_arg
 
 
 def load_existing(path: str) -> set[str]:
@@ -45,8 +45,8 @@ def main():
     ap.add_argument("--out", default=os.path.join(HERE, "results", "decode.jsonl"))
     ap.add_argument("--tasks-file", default=os.path.join(HERE, "tasks.json"))
     ap.add_argument("--max-tokens", type=int, default=800)
-    ap.add_argument("--seed", type=int, default=None,
-                    help="sampling seed for the decoder (temperature 0). Default: no seed")
+    ap.add_argument("--seed", type=seed_arg, default=None,
+                    help="sampling seed for the decoder. Has no effect at temperature 0 (greedy); recorded anyway. Default: no seed")
     args = ap.parse_args()
 
     tasks = {t["id"]: t for t in json.load(open(args.tasks_file))["tasks"]}

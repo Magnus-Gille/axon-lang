@@ -42,8 +42,21 @@ class SeedTests(unittest.TestCase):
         self.assertEqual(r["sampling"], {"temperature": 0.0, "seed": 7})
 
     def test_rejects_bad_seed(self):
-        with self.assertRaises(ValueError):
-            m5_client.chat("m", [], seed=-1)
+        for bad in (-1, 0xFFFFFFFF, True):
+            with self.assertRaises(ValueError):
+                m5_client.chat("m", [], seed=bad)
+
+    def test_offset_seed_wraps_and_keeps_none(self):
+        self.assertIsNone(m5_client.offset_seed(None, 3))
+        self.assertEqual(m5_client.offset_seed(5, 2), 7)
+        self.assertEqual(m5_client.offset_seed(m5_client.MAX_SEED, 1), 0)
+
+    def test_seed_arg_validates(self):
+        import argparse
+        self.assertEqual(m5_client.seed_arg("3"), 3)
+        for bad in ("-1", "x", str(0xFFFFFFFF)):
+            with self.assertRaises(argparse.ArgumentTypeError):
+                m5_client.seed_arg(bad)
 
 
 if __name__ == "__main__":

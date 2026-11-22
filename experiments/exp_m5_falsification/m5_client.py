@@ -15,8 +15,10 @@ Operational facts learned by probing the box (2026-06-25):
     max_tokens budget is too small. Always give a generous budget.
 
 Sampling record (added 2026-11-22): every result carries ``sampling`` with the
-temperature and seed actually sent. The gateway's /v1/chat/completions route
-forwards both to llama.cpp unchanged (no temperature floor on that route).
+temperature and seed this client sent to the gateway. The gateway's M5
+/v1/chat/completions route passes both through to llama.cpp unchanged (no
+temperature floor on that route); its Orin branch drops the seed. Seeds do
+nothing at temperature 0 (greedy decoding).
 ``seed=None`` sends no seed, which is how the 2026-06 campaign ran: those
 results are unseeded, so a rerun reproduces the distribution, not the samples.
 """
@@ -41,6 +43,27 @@ DEFAULT_AUTH_FILE = os.environ.get(
 
 _RETRYABLE = {408, 409, 425, 429, 500, 502, 503, 504}
 
+# llama.cpp stores seeds as uint32 and treats 0xFFFFFFFF as "random".
+MAX_SEED = 0xFFFFFFFE
+
+
+def seed_arg(value: str) -> int:
+    """argparse type for --seed: an int in [0, MAX_SEED]."""
+    import argparse
+
+    try:
+        n = int(value)
+    except ValueError:
+        raise argparse.ArgumentTypeError(f"seed must be an integer, got {value!r}")
+    if not 0 <= n <= MAX_SEED:
+        raise argparse.ArgumentTypeError(f"seed must be in [0, {MAX_SEED}], got {n}")
+    return n
+
+
+def offset_seed(seed: int | None, k: int) -> int | None:
+    """seed + k wrapped into [0, MAX_SEED]; None stays None (no seed)."""
+    return None if seed is None else (seed + k) % (MAX_SEED + 1)
+
 
 def _auth() -> str:
     with open(DEFAULT_AUTH_FILE) as f:
@@ -57,7 +80,8 @@ def chat(
     backoff: float = 6.0,
     seed: int | None = None,
 ) -> dict:
-    """Single chat completion. Returns a result dict (never raises).
+    """Single chat completion. Returns a result dict (never raises on network
+    or HTTP errors; an invalid ``seed`` is a programming error and raises).
 
     Result keys: ok, content, reasoning, usage, latency_s, finish_reason,
     error, attempts, sampling.
@@ -66,8 +90,8 @@ def chat(
     Transport retries resend the same seed: they repeat one request, they are
     not new samples.
     """
-    if seed is not None and (not isinstance(seed, int) or isinstance(seed, bool) or seed < 0):
-        raise ValueError(f"seed must be a non-negative int or None, got {seed!r}")
+    if seed is not None and (not isinstance(seed, int) or isinstance(seed, bool) or not 0 <= seed <= MAX_SEED):
+        raise ValueError(f"seed must be an int in [0, {MAX_SEED}] or None, got {seed!r}")
     url = f"{BASE}/chat/completions"
     payload = {
         "model": model,
